@@ -770,7 +770,7 @@ return array (
   'show_wallet_feature_on_mobile_app' => 'Show Wallet Feature On Mobile App',
   'show_bank_info_feature_on_mobile_app' => 'Show Bank Info Feature On Mobile App',
   'how_many_times_a_driver_can_enable_the_my_route_booking_per_day' => 'How Many Times A Driver Can Enable My Route Booking Per Day',
-  'enable_my_route_booking_feature' => 'Enable My Route Booking Feature',
+  'enable_my_route_booking_feature' => 'Enable My Route Booking Feature:(Only For Normal Rides)',
   'add_banner_image' => 'Add Banner Image',
   'banner_image' => 'Banner Image',
   'loginbg' => 'Login Page Background Img',
