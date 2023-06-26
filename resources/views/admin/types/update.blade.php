@@ -147,6 +147,8 @@
                                                 <option value="" selected disabled>@lang('view_pages.select')</option>
                                                 <option
                                                     value="taxi" {{ old('icon_types_for', $type->icon_types_for) == 'taxi' ? 'selected' : '' }}>@lang('view_pages.taxi')</option>
+                                                 <option
+                                                    value="auto" {{ old('icon_types_for', $type->icon_types_for) == 'auto' ? 'selected' : '' }}>@lang('view_pages.auto')</option>    
                                                 <option
                                                     value="truck" {{ old('icon_types_for', $type->icon_types_for) == 'truck' ? 'selected' : '' }}>@lang('view_pages.truck')</option>
                                                     <option

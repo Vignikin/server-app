@@ -117,6 +117,7 @@
                                             <select name="icon_types_for" id="icon_types_for" class="form-control" required>
                                                 <option value="" selected disabled>@lang('view_pages.select')</option>
                                                 <option value="taxi" {{ old('icon_types_for') == 'taxi' ? 'selected' : '' }}>@lang('view_pages.taxi')</option>
+                                                <option value="auto" {{ old('icon_types_for') == 'auro' ? 'selected' : '' }}>@lang('view_pages.auto')</option>
                                                 <option value="truck" {{ old('icon_types_for') == 'truck' ? 'selected' : '' }}>@lang('view_pages.truck')</option>
                                                 <option value="motor_bike" {{ old('icon_types_for') == 'motor_bike' ? 'selected' : '' }}>@lang('view_pages.motor_bike')</option>
                                             </select>
