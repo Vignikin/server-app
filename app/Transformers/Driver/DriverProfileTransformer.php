@@ -92,6 +92,10 @@ class DriverProfileTransformer extends Transformer
         ];
 
         $params['vehicle_types'] = [];
+       
+        $params['enable_my_route_booking_feature'] =  false;
+
+
 
         if($user->driverVehicleTypeDetail()->exists()){
             foreach ($user->driverVehicleTypeDetail as $key => $type) {
@@ -101,6 +105,10 @@ class DriverProfileTransformer extends Transformer
                 if($type->vehicleType->trip_dispatch_type=='bidding'){
 
                     $params['enable_bidding'] = true;
+
+                }
+                if($type->vehicleType->trip_dispatch_type!='bidding'){
+                     $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
 
                 }
 
@@ -130,7 +138,7 @@ class DriverProfileTransformer extends Transformer
          $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
         $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');       
         $params['how_many_times_a_driver_can_enable_the_my_route_booking_per_day'] =  get_settings('how_many_times_a_driver_can_enable_the_my_route_booking_per_day');
-        $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
+
         
         $current_date = Carbon::now();
 
