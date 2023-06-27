@@ -118,7 +118,9 @@ class PaystackController extends ApiController
     public function webHook(Request $request)
     {
         $response = $request->all();
-
+        if($response == null){
+            goto end;
+        }
         $transaction_id = $request->data['id'];
 
         $exploded_reference = explode('-----', $request->data['reference']);
