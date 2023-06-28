@@ -123,7 +123,10 @@ class DriverSignupController extends LoginController
         }
         // DB::beginTransaction();
         // try {
-
+        if ($request->has('email_confirmed') == true) 
+        {
+            $data['email_confirmed'] = true;
+        }
         $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -429,7 +432,10 @@ class DriverSignupController extends LoginController
         if ($validate_exists_mobile) {
             $this->throwCustomException('Provided mobile has already been taken');
         }
-
+        if ($request->has('email_confirmed') == true) 
+        {
+            $data['email_confirmed'] = true;
+        }
         $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),

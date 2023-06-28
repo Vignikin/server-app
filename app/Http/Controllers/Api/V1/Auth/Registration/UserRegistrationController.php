@@ -215,7 +215,10 @@ class UserRegistrationController extends LoginController
             $profile_picture = $this->imageUploader->file($uploadedFile)
                 ->saveProfilePicture();
         }
-
+        if ($request->has('email_confirmed') == true) 
+        {
+            $user_params['email_confirmed']= true;
+        }
         // DB::beginTransaction();
         // try {
         $user_params = [
