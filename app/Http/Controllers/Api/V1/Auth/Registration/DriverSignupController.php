@@ -183,6 +183,8 @@ class DriverSignupController extends LoginController
         $driver_wallet = $driver->driverWallet()->create(['amount_added'=>0]);
 
         $user->attachRole(Role::DRIVER);
+   if(($user->email_confirmed) == true){
+
     /*mail Template*/
         $user_name = $user->name;
         $mail_template = MailTemplate::where('mail_type', 'welcome_mail_driver')->first();
@@ -200,6 +202,7 @@ class DriverSignupController extends LoginController
         // dispatch(new SendMailNotification($mail_template, $user_mail));
     
     /*mail Template*/
+    }
         event(new UserRegistered($user));
         // } catch (\Exception $e) {
         //     DB::rollBack();

@@ -394,11 +394,13 @@ class DriverEndRequestController extends BaseController
         $socket_data->success_message  = PushEnums::DRIVER_END_THE_TRIP;
         $socket_data->result = $request_result;
         // Form a socket sturcture using users'id and message with event name
+   if(($user->email_confirmed) == true){
+
   /*mail Template*/
 
         // dispatch(new SendInvoiceMailNotification($request_detail));
   /*mail Template End*/
-
+}
         dispatch(new SendPushNotification($user,$title,$body));
         dispatch_notify:
         // @TODO Send email & sms

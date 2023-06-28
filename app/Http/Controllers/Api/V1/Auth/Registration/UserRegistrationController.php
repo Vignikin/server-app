@@ -277,6 +277,8 @@ class UserRegistrationController extends LoginController
         //     Log::error('Error while Registering a user account. Input params : ' . json_encode($request->all()));
         //     return $this->respondBadRequest('Unknown error occurred. Please try again later or contact us if it continues.');
         // }
+   if(($user->email_confirmed) == true){
+
         /*mail Template*/
             $user_name = $user->name;
             $mail_template = MailTemplate::where('mail_type', 'welcome_mail')->first();
@@ -294,6 +296,7 @@ class UserRegistrationController extends LoginController
         // dispatch(new SendMailNotification($mail_template, $user_mail));
         
     /*mail Template*/
+}
         if ($user) {
             return $this->authenticateAndRespond($user, $request, $needsToken=true);
         }
