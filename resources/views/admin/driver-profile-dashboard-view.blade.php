@@ -197,22 +197,22 @@
                                 </div>
                             </div>
                            <div class="col-md-2 m-auto">
-                                <img class="w-fill" src="{{ $item->vehicleType->icon ?: asset('assets/images/2.jpg') }}"
+                                <img class="w-fill" src="{{$item->vehicleType ? $item->vehicleType->icon : asset('assets/images/2.jpg') }}"
                                     alt="">
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="profile-user-info">
                                     <h3>
-                                        <span class="text-gray">{{ $item->carMake->name }}</span>
+                                        <span class="text-gray">{{ $item->carMake ? $item->carMake->name : "vehicle Not Assigned" }}</span>
                                     </h3>
                                     <p>
                                         <span class="text-gray">
-                                            {{ $item->carModel->name }} ({{ $item->vehicleType->name }})
+                                            {{ $item->carModel ? $item->carModel->name : "vehicle Not Assigned"}} ({{ $item->vehicleType ? $item->vehicleType->name : "vehicle Not Assigned"}})
                                         </span>
                                     </p>
                                     <p>
                                         <span class="text-gray">
-                                            {{ $item->car_number }}
+                                            {{ $item->car_number ?? "Vehicle Not Assigned"}}
                                         </span>
                                     </p>
                                 </div>
