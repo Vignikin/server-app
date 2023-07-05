@@ -17,8 +17,8 @@
     "currency_symbol": "؋",
     "currency_decimals": "2",
     "flag": "AF.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tirana",
@@ -38,8 +38,8 @@
     "currency_symbol": "Lek",
     "currency_decimals": "2",
     "flag": "AL.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Antartica",
@@ -59,8 +59,8 @@
     "currency_symbol": "",
     "currency_decimals": "2",
     "flag": "AQ.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Algiers",
@@ -80,8 +80,8 @@
     "currency_symbol": "DZD",
     "currency_decimals": "2",
     "flag": "DZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Pago Pago",
@@ -102,7 +102,7 @@
     "currency_decimals": "2",
     "flag": "AS.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Andorra la Vella",
@@ -122,8 +122,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "AD.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 
 },
 {
@@ -144,8 +144,8 @@
     "currency_symbol": "Kz",
     "currency_decimals": "2",
     "flag": "AO.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "St John’s",
@@ -166,7 +166,7 @@
     "currency_decimals": "2",
     "flag": "AG.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Baku",
@@ -186,8 +186,8 @@
     "currency_symbol": "\u043c\u0430\u043d",
     "currency_decimals": "2",
     "flag": "AZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Buenos Aires",
@@ -207,8 +207,9 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "AR.png",
-    "minLength": 10,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Canberra",
@@ -228,8 +229,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "AU.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Vienna",
@@ -249,8 +250,9 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "AT.png",
-    "minLength": 13,
-    "maxLength": 13
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Nassau",
@@ -271,7 +273,7 @@
     "currency_decimals": "2",
     "flag": "BS.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Manama",
@@ -291,8 +293,8 @@
     "currency_symbol": "BHD",
     "currency_decimals": "3",
     "flag": "BH.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Dhaka",
@@ -312,8 +314,9 @@
     "currency_symbol": "BDT",
     "currency_decimals": "2",
     "flag": "BD.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Yerevan",
@@ -333,8 +336,8 @@
     "currency_symbol": "AMD",
     "currency_decimals": "2",
     "flag": "AM.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bridgetown",
@@ -355,7 +358,7 @@
     "currency_decimals": "2",
     "flag": "BB.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 
 },
 {
@@ -376,8 +379,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "BE.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Hamilton",
@@ -398,7 +401,7 @@
     "currency_decimals": "2",
     "flag": "BM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Thimphu",
@@ -418,8 +421,8 @@
     "currency_symbol": "BTN",
     "currency_decimals": "2",
     "flag": "BT.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Sucre (BO1)",
@@ -439,8 +442,8 @@
     "currency_symbol": "$b",
     "currency_decimals": "2",
     "flag": "BO.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Sarajevo",
@@ -460,8 +463,8 @@
     "currency_symbol": "KM",
     "currency_decimals": "2",
     "flag": "BA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Gaborone",
@@ -481,8 +484,8 @@
     "currency_symbol": "P",
     "currency_decimals": "2",
     "flag": "BW.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bouvet island",
@@ -502,8 +505,9 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "BV.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Brasilia",
@@ -523,8 +527,9 @@
     "currency_symbol": "R$",
     "currency_decimals": "2",
     "flag": "BR.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Belmopan",
@@ -545,7 +550,7 @@
     "currency_decimals": "2",
     "flag": "BZ.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Diego Garcia",
@@ -566,7 +571,7 @@
     "currency_decimals": "2",
     "flag": "IO.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Honiara",
@@ -586,8 +591,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "SB.png",
-    "minLength": 5,
-    "maxLength": 5
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Road Town",
@@ -608,7 +613,7 @@
     "currency_decimals": "2",
     "flag": "VG.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Bandar Seri Begawan",
@@ -629,7 +634,7 @@
     "currency_decimals": "2",
     "flag": "BN.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Sofia",
@@ -649,8 +654,8 @@
     "currency_symbol": "\u043b\u0432",
     "currency_decimals": "2",
     "flag": "BG.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Yangon",
@@ -670,8 +675,8 @@
     "currency_symbol": "K",
     "currency_decimals": "2",
     "flag": "MM.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bujumbura",
@@ -691,8 +696,8 @@
     "currency_symbol": "BIF",
     "currency_decimals": "0",
     "flag": "BI.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Minsk",
@@ -712,8 +717,9 @@
     "currency_symbol": "p.",
     "currency_decimals": "2",
     "flag": "BY.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Phnom Penh",
@@ -733,8 +739,8 @@
     "currency_symbol": "\u17db",
     "currency_decimals": "2",
     "flag": "KH.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Yaound\u00e9",
@@ -754,8 +760,8 @@
     "currency_symbol": "FCF",
     "currency_decimals": "0",
     "flag": "CM.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Ottawa",
@@ -775,8 +781,9 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "CA.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Praia",
@@ -797,7 +804,7 @@
     "currency_decimals": "2",
     "flag": "CV.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "George Town",
@@ -818,7 +825,7 @@
     "currency_decimals": "2",
     "flag": "KY.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Bangui",
@@ -838,8 +845,8 @@
     "currency_symbol": "CFA",
     "currency_decimals": "0",
     "flag": "CF.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Colombo",
@@ -859,8 +866,8 @@
     "currency_symbol": "\u20a8",
     "currency_decimals": "2",
     "flag": "LK.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "N\u2019Djamena",
@@ -881,7 +888,7 @@
     "currency_decimals": "0",
     "flag": "TD.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Santiago",
@@ -901,8 +908,8 @@
     "currency_symbol": "CLP",
     "currency_decimals": "0",
     "flag": "CL.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Beijing",
@@ -922,8 +929,9 @@
     "currency_symbol": "\u00a5",
     "currency_decimals": "2",
     "flag": "CN.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Taipei",
@@ -943,8 +951,9 @@
     "currency_symbol": "NT$",
     "currency_decimals": "2",
     "flag": "TW.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Flying Fish Cove",
@@ -964,8 +973,9 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "CX.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Bantam",
@@ -985,8 +995,9 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "CC.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
+
 },
 {
     "capital": "Santa Fe de Bogot\u00e1",
@@ -1006,8 +1017,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "CO.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Moroni",
@@ -1028,7 +1039,7 @@
     "currency_decimals": "0",
     "flag": "KM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Mamoudzou",
@@ -1048,8 +1059,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "YT.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Brazzaville",
@@ -1070,7 +1081,7 @@
     "currency_decimals": "0",
     "flag": "CG.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Kinshasa",
@@ -1090,8 +1101,8 @@
     "currency_symbol": "CDF",
     "currency_decimals": "2",
     "flag": "CD.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Avarua",
@@ -1111,8 +1122,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "CK.png",
-    "minLength": 5,
-    "maxLength": 5
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "San José",
@@ -1132,8 +1143,8 @@
     "currency_symbol": "\u20a1",
     "currency_decimals": "2",
     "flag": "CR.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Zagreb",
@@ -1153,8 +1164,8 @@
     "currency_symbol": "kn",
     "currency_decimals": "2",
     "flag": "HR.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Havana",
@@ -1174,8 +1185,8 @@
     "currency_symbol": "\u20b1",
     "currency_decimals": "2",
     "flag": "CU.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Nicosia",
@@ -1195,8 +1206,8 @@
     "currency_symbol": "CYP",
     "currency_decimals": "2",
     "flag": "CY.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Prague",
@@ -1216,8 +1227,8 @@
     "currency_symbol": "K\u010d",
     "currency_decimals": "2",
     "flag": "CZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Porto Novo (BJ1)",
@@ -1237,8 +1248,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "BJ.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Copenhagen",
@@ -1258,8 +1269,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "DK.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Roseau",
@@ -1280,7 +1291,7 @@
     "currency_decimals": "2",
     "flag": "DM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Santo Domingo",
@@ -1300,8 +1311,8 @@
     "currency_symbol": "RD$",
     "currency_decimals": "2",
     "flag": "DO.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Quito",
@@ -1321,8 +1332,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "EC.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "San Salvador",
@@ -1342,8 +1353,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "SV.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Malabo",
@@ -1363,8 +1374,8 @@
     "currency_symbol": "FCF",
     "currency_decimals": "2",
     "flag": "GQ.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Addis Ababa",
@@ -1384,8 +1395,8 @@
     "currency_symbol": "ETB",
     "currency_decimals": "2",
     "flag": "ET.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Asmara",
@@ -1406,7 +1417,7 @@
     "currency_decimals": "2",
     "flag": "ER.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Tallinn",
@@ -1426,8 +1437,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "EE.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "T\u00f3rshavn",
@@ -1447,8 +1458,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "FO.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Stanley",
@@ -1468,8 +1479,8 @@
     "currency_symbol": "\u00a3",
     "currency_decimals": "2",
     "flag": "FK.png",
-    "minLength": 5,
-    "maxLength": 5
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "King Edward Point (Grytviken)",
@@ -1489,8 +1500,8 @@
     "currency_symbol": "\u00a3",
     "currency_decimals": "2",
     "flag": "GS.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Suva",
@@ -1511,7 +1522,7 @@
     "currency_decimals": "2",
     "flag": "FJ.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Helsinki",
@@ -1531,8 +1542,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "FI.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Paris",
@@ -1552,8 +1563,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "FR.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Cayenne",
@@ -1573,8 +1584,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "GF.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Papeete",
@@ -1594,8 +1605,8 @@
     "currency_symbol": "XPF",
     "currency_decimals": "0",
     "flag": "PF.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Port-aux-Francais",
@@ -1615,8 +1626,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "TF.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Djibouti",
@@ -1636,8 +1647,8 @@
     "currency_symbol": "DJF",
     "currency_decimals": "0",
     "flag": "DJ.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Libreville",
@@ -1657,8 +1668,8 @@
     "currency_symbol": "FCF",
     "currency_decimals": "0",
     "flag": "GA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tbilisi",
@@ -1678,8 +1689,8 @@
     "currency_symbol": "GEL",
     "currency_decimals": "2",
     "flag": "GE.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Banjul",
@@ -1700,7 +1711,7 @@
     "currency_decimals": "2",
     "flag": "GM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "citizenship": "Palestinian",
@@ -1715,8 +1726,8 @@
     "currency_symbol": "\u20aa",
     "currency_decimals": "2",
     "flag": "PS.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Berlin",
@@ -1736,8 +1747,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "DE.png",
-    "minLength": 9,
-    "maxLength": 13
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Accra",
@@ -1757,8 +1768,8 @@
     "currency_symbol": "\u00a2",
     "currency_decimals": "2",
     "flag": "GH.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Gibraltar",
@@ -1778,8 +1789,8 @@
     "currency_symbol": "\u00a3",
     "currency_decimals": "2",
     "flag": "GI.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tarawa",
@@ -1799,8 +1810,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "KI.png",
-    "minLength": 5,
-    "maxLength": 5
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Athens",
@@ -1820,8 +1831,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "GR.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Nuuk",
@@ -1841,8 +1852,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "GL.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "St George\u2019s",
@@ -1863,7 +1874,7 @@
     "currency_decimals": "2",
     "flag": "GD.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Basse Terre",
@@ -1883,8 +1894,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "GP.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Aga\u00f1a (Hag\u00e5t\u00f1a)",
@@ -1905,7 +1916,7 @@
     "currency_decimals": "2",
     "flag": "GU.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Guatemala City",
@@ -1925,8 +1936,8 @@
     "currency_symbol": "Q",
     "currency_decimals": "2",
     "flag": "GT.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Conakry",
@@ -1946,8 +1957,8 @@
     "currency_symbol": "GNF",
     "currency_decimals": "0",
     "flag": "GN.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Georgetown",
@@ -1968,7 +1979,7 @@
     "currency_decimals": "2",
     "flag": "GY.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Port-au-Prince",
@@ -1988,8 +1999,8 @@
     "currency_symbol": "G",
     "currency_decimals": "2",
     "flag": "HT.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Territory of Heard Island and McDonald Islands",
@@ -2009,8 +2020,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "HM.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Vatican City",
@@ -2030,8 +2041,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "VA.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tegucigalpa",
@@ -2051,8 +2062,8 @@
     "currency_symbol": "L",
     "currency_decimals": "2",
     "flag": "HN.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "(HK3)",
@@ -2072,8 +2083,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "HK.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Budapest",
@@ -2093,8 +2104,8 @@
     "currency_symbol": "Ft",
     "currency_decimals": "2",
     "flag": "HU.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Reykjavik",
@@ -2114,8 +2125,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "0",
     "flag": "IS.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "New Delhi",
@@ -2135,8 +2146,8 @@
     "currency_symbol": "₹",
     "currency_decimals": "2",
     "flag": "IN.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Jakarta",
@@ -2156,8 +2167,8 @@
     "currency_symbol": "Rp",
     "currency_decimals": "2",
     "flag": "ID.png",
-    "minLength": 13,
-    "maxLength": 13
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tehran",
@@ -2177,8 +2188,8 @@
     "currency_symbol": "\ufdfc",
     "currency_decimals": "2",
     "flag": "IR.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Baghdad",
@@ -2198,8 +2209,8 @@
     "currency_symbol": "IQD",
     "currency_decimals": "3",
     "flag": "IQ.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Dublin",
@@ -2220,7 +2231,7 @@
     "currency_decimals": "2",
     "flag": "IE.png",
     "minLength": 7,
-    "maxLength": 9
+    "maxLength": 14
 },
 {
     "capital": "(IL1)",
@@ -2240,8 +2251,8 @@
     "currency_symbol": "\u20aa",
     "currency_decimals": "2",
     "flag": "IL.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Rome",
@@ -2261,8 +2272,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "IT.png",
-    "minLength": 13,
-    "maxLength": 13
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Yamoussoukro (CI1)",
@@ -2282,8 +2293,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "CI.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kingston",
@@ -2304,7 +2315,7 @@
     "currency_decimals": "2",
     "flag": "JM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Tokyo",
@@ -2324,8 +2335,8 @@
     "currency_symbol": "\u00a5",
     "currency_decimals": "0",
     "flag": "JP.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Astana",
@@ -2345,8 +2356,8 @@
     "currency_symbol": "\u043b\u0432",
     "currency_decimals": "2",
     "flag": "KZ.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Amman",
@@ -2366,8 +2377,8 @@
     "currency_symbol": "JOD",
     "currency_decimals": "2",
     "flag": "JO.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Nairobi",
@@ -2387,8 +2398,8 @@
     "currency_symbol": "KES",
     "currency_decimals": "2",
     "flag": "KE.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Pyongyang",
@@ -2408,8 +2419,8 @@
     "currency_symbol": "\u20a9",
     "currency_decimals": "2",
     "flag": "KP.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Seoul",
@@ -2429,8 +2440,8 @@
     "currency_symbol": "\u20a9",
     "currency_decimals": "0",
     "flag": "KR.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kuwait City",
@@ -2450,8 +2461,8 @@
     "currency_symbol": "KWD",
     "currency_decimals": "3",
     "flag": "KW.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bishkek",
@@ -2471,8 +2482,8 @@
     "currency_symbol": "\u043b\u0432",
     "currency_decimals": "2",
     "flag": "KG.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Vientiane",
@@ -2492,8 +2503,8 @@
     "currency_symbol": "\u20ad",
     "currency_decimals": "0",
     "flag": "LA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Beirut",
@@ -2513,8 +2524,8 @@
     "currency_symbol": "\u00a3",
     "currency_decimals": "2",
     "flag": "LB.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Maseru",
@@ -2534,8 +2545,8 @@
     "currency_symbol": "L",
     "currency_decimals": "2",
     "flag": "LS.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Riga",
@@ -2555,8 +2566,8 @@
     "currency_symbol": "Ls",
     "currency_decimals": "2",
     "flag": "LV.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Monrovia",
@@ -2576,8 +2587,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "LR.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tripoli",
@@ -2597,8 +2608,8 @@
     "currency_symbol": "LYD",
     "currency_decimals": "3",
     "flag": "LY.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Vaduz",
@@ -2618,8 +2629,8 @@
     "currency_symbol": "CHF",
     "currency_decimals": "2",
     "flag": "LI.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Vilnius",
@@ -2639,8 +2650,8 @@
     "currency_symbol": "Lt",
     "currency_decimals": "2",
     "flag": "LT.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Luxembourg",
@@ -2660,8 +2671,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "LU.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Macao (MO3)",
@@ -2681,8 +2692,8 @@
     "currency_symbol": "MOP",
     "currency_decimals": "2",
     "flag": "MO.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Antananarivo",
@@ -2702,8 +2713,8 @@
     "currency_symbol": "MGA",
     "currency_decimals": "2",
     "flag": "MG.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Lilongwe",
@@ -2724,7 +2735,7 @@
     "currency_decimals": "2",
     "flag": "MW.png",
     "minLength": 7,
-    "maxLength": 9
+    "maxLength": 14
 },
 {
     "capital": "Kuala Lumpur (MY1)",
@@ -2744,8 +2755,8 @@
     "currency_symbol": "RM",
     "currency_decimals": "2",
     "flag": "MY.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Mal\u00e9",
@@ -2766,7 +2777,7 @@
     "currency_decimals": "2",
     "flag": "MV.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Bamako",
@@ -2786,8 +2797,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "ML.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Valletta",
@@ -2807,8 +2818,8 @@
     "currency_symbol": "MTL",
     "currency_decimals": "2",
     "flag": "MT.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Fort-de-France",
@@ -2828,8 +2839,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "MQ.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Nouakchott",
@@ -2849,8 +2860,8 @@
     "currency_symbol": "UM",
     "currency_decimals": "2",
     "flag": "MR.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Port Louis",
@@ -2871,7 +2882,7 @@
     "currency_decimals": "2",
     "flag": "MU.png",
     "minLength": 7,
-    "maxLength": 8
+    "maxLength": 14
 },
 {
     "capital": "Mexico City",
@@ -2891,8 +2902,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "MX.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Monaco",
@@ -2912,8 +2923,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "MC.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Ulan Bator",
@@ -2933,8 +2944,8 @@
     "currency_symbol": "\u20ae",
     "currency_decimals": "2",
     "flag": "MN.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Chisinau",
@@ -2954,8 +2965,8 @@
     "currency_symbol": "MDL",
     "currency_decimals": "2",
     "flag": "MD.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Podgorica",
@@ -2975,8 +2986,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "ME.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Plymouth (MS2)",
@@ -2997,7 +3008,7 @@
     "currency_decimals": "2",
     "flag": "MS.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Rabat",
@@ -3017,8 +3028,8 @@
     "currency_symbol": "MAD",
     "currency_decimals": "2",
     "flag": "MA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Maputo",
@@ -3038,8 +3049,8 @@
     "currency_symbol": "MT",
     "currency_decimals": "2",
     "flag": "MZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Muscat",
@@ -3059,8 +3070,8 @@
     "currency_symbol": "\ufdfc",
     "currency_decimals": "3",
     "flag": "OM.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Windhoek",
@@ -3080,8 +3091,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "NA.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Yaren",
@@ -3102,7 +3113,7 @@
     "currency_decimals": "2",
     "flag": "NR.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Kathmandu",
@@ -3122,8 +3133,8 @@
     "currency_symbol": "\u20a8",
     "currency_decimals": "2",
     "flag": "NP.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Amsterdam (NL2)",
@@ -3143,8 +3154,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "NL.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Willemstad",
@@ -3161,8 +3172,8 @@
     "sub_region_code": "029",
     "eea": false,
     "dial_code": "+599",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Oranjestad",
@@ -3183,7 +3194,7 @@
     "currency_decimals": "2",
     "flag": "AW.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Noum\u00e9a",
@@ -3203,8 +3214,8 @@
     "currency_symbol": "XPF",
     "currency_decimals": "0",
     "flag": "NC.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Port Vila",
@@ -3225,7 +3236,7 @@
     "currency_decimals": "0",
     "flag": "VU.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Wellington",
@@ -3245,8 +3256,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "NZ.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Managua",
@@ -3266,8 +3277,8 @@
     "currency_symbol": "C$",
     "currency_decimals": "2",
     "flag": "NI.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Niamey",
@@ -3287,8 +3298,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "NE.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Abuja",
@@ -3308,8 +3319,8 @@
     "currency_symbol": "₦",
     "currency_decimals": "2",
     "flag": "NG.png",
-    "minLength": 10,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Alofi",
@@ -3329,8 +3340,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "NU.png",
-    "minLength": 4,
-    "maxLength": 4
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kingston",
@@ -3350,8 +3361,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "NF.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Oslo",
@@ -3371,8 +3382,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "NO.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Saipan",
@@ -3393,7 +3404,7 @@
     "currency_decimals": "2",
     "flag": "MP.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "United States Minor Outlying Islands",
@@ -3414,7 +3425,7 @@
     "currency_decimals": "2",
     "flag": "UM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Palikir",
@@ -3435,7 +3446,7 @@
     "currency_decimals": "2",
     "flag": "FM.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Majuro",
@@ -3456,7 +3467,7 @@
     "currency_decimals": "2",
     "flag": "MH.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Melekeok",
@@ -3477,7 +3488,7 @@
     "currency_decimals": "2",
     "flag": "PW.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Islamabad",
@@ -3497,8 +3508,8 @@
     "currency_symbol": "₨",
     "currency_decimals": "2",
     "flag": "PK.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Panama City",
@@ -3518,8 +3529,8 @@
     "currency_symbol": "B\/.",
     "currency_decimals": "2",
     "flag": "PA.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Port Moresby",
@@ -3539,8 +3550,8 @@
     "currency_symbol": "PGK",
     "currency_decimals": "2",
     "flag": "PG.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Asunci\u00f3n",
@@ -3560,8 +3571,8 @@
     "currency_symbol": "Gs",
     "currency_decimals": "0",
     "flag": "PY.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Lima",
@@ -3581,8 +3592,8 @@
     "currency_symbol": "S\/.",
     "currency_decimals": "2",
     "flag": "PE.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Manila",
@@ -3602,8 +3613,8 @@
     "currency_symbol": "Php",
     "currency_decimals": "2",
     "flag": "PH.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Adamstown",
@@ -3623,8 +3634,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "PN.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Warsaw",
@@ -3644,8 +3655,8 @@
     "currency_symbol": "zł",
     "currency_decimals": "2",
     "flag": "PL.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Lisbon",
@@ -3665,8 +3676,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "PT.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bissau",
@@ -3687,7 +3698,7 @@
     "currency_decimals": "0",
     "flag": "GW.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Dili",
@@ -3708,7 +3719,7 @@
     "currency_decimals": "2",
     "flag": "TL.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "San Juan",
@@ -3728,8 +3739,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "PR.png",
-    "minLength": 15,
-    "maxLength": 15
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Doha",
@@ -3749,8 +3760,8 @@
     "currency_symbol": "﷼",
     "currency_decimals": "2",
     "flag": "QA.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Saint-Denis",
@@ -3770,8 +3781,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "RE.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bucharest",
@@ -3791,8 +3802,8 @@
     "currency_symbol": "lei",
     "currency_decimals": "2",
     "flag": "RO.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Moscow",
@@ -3812,8 +3823,8 @@
     "currency_symbol": "руб",
     "currency_decimals": "2",
     "flag": "RU.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kigali",
@@ -3833,8 +3844,8 @@
     "currency_symbol": "RWF",
     "currency_decimals": "0",
     "flag": "RW.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Gustavia",
@@ -3851,8 +3862,8 @@
     "sub_region_code": "029",
     "eea": false,
     "dial_code": "+590",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Jamestown",
@@ -3872,8 +3883,8 @@
     "currency_symbol": "£",
     "currency_decimals": "2",
     "flag": "SH.png",
-    "minLength": 4,
-    "maxLength": 4
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Basseterre",
@@ -3894,7 +3905,7 @@
     "currency_decimals": "2",
     "flag": "KN.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "The Valley",
@@ -3915,7 +3926,7 @@
     "currency_decimals": "2",
     "flag": "AI.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Castries",
@@ -3936,7 +3947,7 @@
     "currency_decimals": "2",
     "flag": "LC.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Marigot",
@@ -3954,7 +3965,7 @@
     "eea": false,
     "dial_code": "+590",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Saint-Pierre",
@@ -3974,8 +3985,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "PM.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kingstown",
@@ -3996,7 +4007,7 @@
     "currency_decimals": "2",
     "flag": "VC.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "San Marino",
@@ -4016,8 +4027,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "SM.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "S\u00e3o Tom\u00e9",
@@ -4038,7 +4049,7 @@
     "currency_decimals": "2",
     "flag": "ST.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Riyadh",
@@ -4058,8 +4069,8 @@
     "currency_symbol": "﷼",
     "currency_decimals": "2",
     "flag": "SA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Dakar",
@@ -4079,8 +4090,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "SN.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Belgrade",
@@ -4097,8 +4108,8 @@
     "sub_region_code": "039",
     "eea": false,
     "dial_code": "+381",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Victoria",
@@ -4118,8 +4129,8 @@
     "currency_symbol": "₨",
     "currency_decimals": "2",
     "flag": "SC.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Freetown",
@@ -4139,8 +4150,8 @@
     "currency_symbol": "Le",
     "currency_decimals": "2",
     "flag": "SL.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Singapore",
@@ -4160,8 +4171,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "SG.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bratislava",
@@ -4181,8 +4192,8 @@
     "currency_symbol": "Sk",
     "currency_decimals": "2",
     "flag": "SK.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Hanoi",
@@ -4202,8 +4213,8 @@
     "currency_symbol": "₫",
     "currency_decimals": "2",
     "flag": "VN.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Ljubljana",
@@ -4223,8 +4234,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "SI.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Mogadishu",
@@ -4244,8 +4255,8 @@
     "currency_symbol": "S",
     "currency_decimals": "2",
     "flag": "SO.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Pretoria (ZA1)",
@@ -4265,8 +4276,8 @@
     "currency_symbol": "R",
     "currency_decimals": "2",
     "flag": "ZA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Harare",
@@ -4286,8 +4297,8 @@
     "currency_symbol": "Z$",
     "currency_decimals": "2",
     "flag": "ZW.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Madrid",
@@ -4307,8 +4318,8 @@
     "currency_symbol": "€",
     "currency_decimals": "2",
     "flag": "ES.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Juba",
@@ -4325,9 +4336,9 @@
     "sub_region_code": "015",
     "eea": false,
     "dial_code": "+211",
+    "minLength": 7,
     "flag": "SD.png",
-    "minLength": 9,
-    "maxLength": 9
+    "maxLength": 14
 },
 {
     "capital": "Khartoum",
@@ -4344,9 +4355,9 @@
     "sub_region_code": "015",
     "eea": false,
     "dial_code": "+249",
+    "minLength": 7,
     "flag": "SD.png",
-    "minLength": 9,
-    "maxLength": 9
+    "maxLength": 14
 },
 {
     "capital": "Al aaiun",
@@ -4366,8 +4377,8 @@
     "currency_symbol": "MAD",
     "currency_decimals": "2",
     "flag": "EH.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Paramaribo",
@@ -4388,7 +4399,7 @@
     "currency_decimals": "2",
     "flag": "SR.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Longyearbyen",
@@ -4408,8 +4419,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "SJ.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Mbabane",
@@ -4429,8 +4440,8 @@
     "currency_symbol": "SZL",
     "currency_decimals": "2",
     "flag": "SZ.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Stockholm",
@@ -4450,8 +4461,8 @@
     "currency_symbol": "kr",
     "currency_decimals": "2",
     "flag": "SE.png",
-    "minLength": 13,
-    "maxLength": 13
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Berne",
@@ -4471,8 +4482,8 @@
     "currency_symbol": "CHF",
     "currency_decimals": "2",
     "flag": "CH.png",
-    "minLength": 12,
-    "maxLength": 12
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Damascus",
@@ -4492,8 +4503,8 @@
     "currency_symbol": "£",
     "currency_decimals": "2",
     "flag": "SY.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Dushanbe",
@@ -4513,8 +4524,8 @@
     "currency_symbol": "TJS",
     "currency_decimals": "2",
     "flag": "TJ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Bangkok",
@@ -4534,8 +4545,8 @@
     "currency_symbol": "฿",
     "currency_decimals": "2",
     "flag": "TH.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Lom\u00e9",
@@ -4555,8 +4566,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "TG.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "(TK2)",
@@ -4576,8 +4587,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "TK.png",
-    "minLength": 4,
-    "maxLength": 4
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Nuku\u2019alofa",
@@ -4598,7 +4609,7 @@
     "currency_decimals": "2",
     "flag": "TO.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Port of Spain",
@@ -4619,7 +4630,7 @@
     "currency_decimals": "2",
     "flag": "TT.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Abu Dhabi",
@@ -4639,8 +4650,8 @@
     "currency_symbol": "AED",
     "currency_decimals": "2",
     "flag": "AE.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tunis",
@@ -4660,8 +4671,8 @@
     "currency_symbol": "TND",
     "currency_decimals": "3",
     "flag": "TN.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Ankara",
@@ -4681,8 +4692,8 @@
     "currency_symbol": "₺",
     "currency_decimals": "2",
     "flag": "TR.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Ashgabat",
@@ -4702,8 +4713,8 @@
     "currency_symbol": "m",
     "currency_decimals": "2",
     "flag": "TM.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Cockburn Town",
@@ -4724,7 +4735,7 @@
     "currency_decimals": "2",
     "flag": "TC.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Funafuti",
@@ -4744,8 +4755,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "TV.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kampala",
@@ -4765,8 +4776,8 @@
     "currency_symbol": "UGX",
     "currency_decimals": "0",
     "flag": "UG.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Kiev",
@@ -4786,8 +4797,8 @@
     "currency_symbol": "₴",
     "currency_decimals": "2",
     "flag": "UA.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Skopje",
@@ -4807,8 +4818,8 @@
     "currency_symbol": "ден",
     "currency_decimals": "2",
     "flag": "MK.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Cairo",
@@ -4828,8 +4839,8 @@
     "currency_symbol": "£",
     "currency_decimals": "2",
     "flag": "EG.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "London",
@@ -4849,8 +4860,8 @@
     "currency_symbol": "£",
     "currency_decimals": "2",
     "flag": "GB.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "St Peter Port",
@@ -4867,8 +4878,8 @@
     "sub_region_code": "154",
     "eea": false,
     "dial_code": "+44",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "St Helier",
@@ -4885,8 +4896,8 @@
     "sub_region_code": "154",
     "eea": false,
     "dial_code": "+44",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Douglas",
@@ -4903,8 +4914,8 @@
     "sub_region_code": "154",
     "eea": false,
     "dial_code": "+44",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Dodoma (TZ1)",
@@ -4924,8 +4935,8 @@
     "currency_symbol": "TZS",
     "currency_decimals": "2",
     "flag": "TZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Washington DC",
@@ -4945,8 +4956,8 @@
     "currency_symbol": "$",
     "currency_decimals": "2",
     "flag": "US.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Charlotte Amalie",
@@ -4967,7 +4978,7 @@
     "currency_decimals": "2",
     "flag": "VI.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "Ouagadougou",
@@ -4987,8 +4998,8 @@
     "currency_symbol": "XOF",
     "currency_decimals": "0",
     "flag": "BF.png",
-    "minLength": 8,
-    "maxLength": 8
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Montevideo",
@@ -5008,8 +5019,8 @@
     "currency_symbol": "$U",
     "currency_decimals": "0",
     "flag": "UY.png",
-    "minLength": 11,
-    "maxLength": 11
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Tashkent",
@@ -5029,8 +5040,8 @@
     "currency_symbol": "лв",
     "currency_decimals": "2",
     "flag": "UZ.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Caracas",
@@ -5050,8 +5061,8 @@
     "currency_symbol": "Bs",
     "currency_decimals": "2",
     "flag": "VE.png",
-    "minLength": 10,
-    "maxLength": 10
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Mata-Utu",
@@ -5071,8 +5082,8 @@
     "currency_symbol": "XPF",
     "currency_decimals": "0",
     "flag": "WF.png",
-    "minLength": 6,
-    "maxLength": 6
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Apia",
@@ -5093,7 +5104,7 @@
     "currency_decimals": "2",
     "flag": "WS.png",
     "minLength": 7,
-    "maxLength": 7
+    "maxLength": 14
 },
 {
     "capital": "San’a",
@@ -5113,8 +5124,8 @@
     "currency_symbol": "﷼",
     "currency_decimals": "2",
     "flag": "YE.png",
-    "minLength": 9,
-    "maxLength": 9
+    "minLength": 7,
+    "maxLength": 14
 },
 {
     "capital": "Lusaka",
@@ -5134,6 +5145,6 @@
     "currency_symbol": "ZK",
     "currency_decimals": "2",
     "flag": "ZM.png",
-    "minLength": 9,
-    "maxLength": 9
-}]
+    "minLength": 7,
+    "maxLength": 14
+    }]
