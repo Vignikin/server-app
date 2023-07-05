@@ -78,26 +78,43 @@
 
     <script src="{{ asset('assets/vendor_components/jquery/dist/jquery.js') }}"></script>
     <script>
-        $(document).on('change', '#transport_type', function() {
-            let value = $(this).val();
-// console.log(value);
-            $.ajax({
-                url: "{{ route('getVehicleMake') }}",
-                type: 'GET',
-                data: {
-                    'transport_type': value,
-                },
-                success: function(result) {            
-                    $('#make_id').empty();
-                    $("#make_id").append('<option value="" selected disabled>Select</option>');
-                    result.forEach(element => {
-                        $("#make_id").append('<option value=' + element.id + '>' + element
-                            .name + '</option>')
-                    });
-                    $('#make_id').select();
-                }
-            });
-        });
+$(document).ready(function() {
+  let initialTransportType = "{{ old('transport_type', $item->makeDetail->transport_type) }}";
+  let oldVehicleMake = "{{ old('make_id', $item->makeDetail->make_id) }}";
+
+  // Set the initial value of the transport_type select field
+  $('#transport_type').val(initialTransportType);
+
+  // Fetch the corresponding vehicle makes based on the initial value of transport_type
+  getVehicleMake(initialTransportType, oldVehicleMake);
+
+  // Attach the change event handler to the transport_type select field
+  $(document).on('change', '#transport_type', function() {
+    let value = $(this).val();
+    getVehicleMake(value, '');
+  });
+});
+
+// Function to fetch vehicle makes based on the transport type and populate the make_id select field
+function getVehicleMake(transportType, oldVehicleMake) {
+  $.ajax({
+    url: "{{ route('getVehicleMake') }}",
+    type: 'GET',
+    data: {
+      'transport_type': transportType,
+    },
+    success: function(result) {
+      $('#make_id').empty();
+      // $("#make_id").append('<option value="" selected disabled>Select</option>');
+      result.forEach(element => {
+        let selected = (element.id == oldVehicleMake) ? 'selected' : '';
+        $("#make_id").append('<option value=' + element.id + ' ' + selected + '>' + element.name + '</option>');
+      });
+      $('#make_id').select();
+    }
+  });
+}
+
    
 $(document).on('change','#transport_type',function(){
         getVehicleMake($(this).val());
