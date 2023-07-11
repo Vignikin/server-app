@@ -54,40 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
-       <!--                              <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="address">@lang('view_pages.address') <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" id="address" name="address"
-                                                value="{{ old('address', $item->address) }}" required=""
-                                                placeholder="@lang('view_pages.enter_address')">
-                                            <span class="text-danger">{{ $errors->first('address') }}</span>
-
-                                        </div>
-                                    </div>
-                                 </div> -->
-
                                 <div class="row">
-                                   <!--  <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="gender">@lang('view_pages.gender')
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <select name="gender" id="gender" class="form-control" required>
-                                                <option value="">@lang('view_pages.select_gender')</option>
-                                                <option value='male'
-                                                    {{ old('gender', $item->gender) == 'male' ? 'selected' : '' }}>
-                                                    @lang('view_pages.male')</option>
-                                                <option value='female'
-                                                    {{ old('gender', $item->gender) == 'female' ? 'selected' : '' }}>
-                                                    @lang('view_pages.female')</option>
-                                                <option value='others'
-                                                    {{ old('gender', $item->gender) == 'others' ? 'selected' : '' }}>
-                                                    @lang('view_pages.others')</option>
-                                            </select>
-                                            <span class="text-danger">{{ $errors->first('gender') }}</span>
-
-                                        </div>
-                                    </div> -->
                                 <div class="col-6">
                                     @if(env('APP_FOR')=='demo')
                                         <div class="form-group">
@@ -150,17 +117,16 @@
                                         <label for="type">@lang('view_pages.vehicle_type')
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <select name="type" id="type" class="form-control" required>
-                                            <option value="">@lang('view_pages.select_type')</option>
-                                            @foreach ($types as $key => $type)
-                                                <option value="{{ $type->id }}"
-                                                    {{ old('type', $item->vehicle_type) == $type->id ? 'selected' : '' }}>
-                                                    {{ $type->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <select name="type[]" id="type" class="form-control select2" multiple="multiple" required>
+
+                                       @foreach($types as $key=>$type)
+                                            <option value="{{ $type->id }}" {{ old('type[]', $item->driverVehicleTypeDetail()->Where('vehicle_type', $type->id)->pluck('vehicle_type')->first()) ? 'selected' : '' }}>
+                                            {{ $type->name }}</option>
+                                       @endforeach
+                                       </select>
                                     </div>
                                  </div>
-                                    </div>
+                               </div>
                                 <div class="row">
                                  <div class="col-6">
                                         <div class="form-group">
@@ -254,7 +220,63 @@
     <!-- content -->
     <!-- jQuery 3 -->
     <script src="{{ asset('assets/vendor_components/jquery/dist/jquery.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
+$(document).ready(function() {
+    // Retrieve the initial selected transport_type value
+    var initialTransportType = $('#transport_type').val();
+
+    // Perform an initial request to get the corresponding types based on the transport_type value
+    getTypesByTransportType(initialTransportType);
+
+    // On change event of transport_type select
+    $(document).on('change', '#transport_type', function() {
+        var transportType = $(this).val();
+
+        // Call the function to get the types based on the selected transport_type
+        getTypesByTransportType(transportType);
+    });
+
+    // Function to get types based on the transport_type
+    function getTypesByTransportType(transportType) {
+        $.ajax({
+            url: "{{ route('getType') }}",
+            type: 'GET',
+            data: {
+                'transport_type': transportType,
+            },
+            success: function(result) {
+                var selectedTypes = [];
+                
+                // Get the selected type values from the type select element
+                $('#type').find('option:selected').each(function() {
+                    selectedTypes.push($(this).val());
+                });
+
+                $('#type').empty();
+
+                result.forEach(element => {
+                    var option = $('<option>').val(element.id).text(element.name);
+
+                    // Check if the type value is in the selectedTypes array
+                    if (selectedTypes.includes(element.id.toString())) {
+                        option.attr('selected', 'selected');
+                    }
+
+                    $('#type').append(option);
+                });
+
+                $('#type').select2();
+            }
+        });
+    }
+});
+
+
+    $('.select2').select2({
+        placeholder : "Select ...",
+    });
         $('#is_company_driver').change(function() {
             var value = $(this).val();
             if (value == 1) {
@@ -331,7 +353,7 @@
                 },
                 success: function(result) {
                     $('#type').empty();
-                    $("#type").append('<option value="" selected disabled>Select</option>');
+                    // $("#type").append('<option value="" selected disabled>Select</option>');
                     result.forEach(element => {
                         $("#type").append('<option value=' + element.id + '>' + element
                             .name + '</option>')

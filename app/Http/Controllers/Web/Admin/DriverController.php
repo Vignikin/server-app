@@ -41,6 +41,7 @@ use App\Models\Payment\WalletWithdrawalRequest;
 use App\Base\Constants\Setting\Settings;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
+use App\Models\Admin\DriverVehicleType;
 
 /**
  * @resource Driver
@@ -190,7 +191,7 @@ class DriverController extends BaseController
   public function store(CreateDriverRequest $request)
     {
         // dd($request);
-        $created_params = $request->only(['service_location_id', 'name','mobile','email','address','gender','vehicle_type','car_make','car_model','car_color','car_number','transport_type']);
+        $created_params = $request->only(['service_location_id', 'name','mobile','email','address','gender','car_make','car_model','car_color','car_number','transport_type']);
 
         $validate_exists_email = $this->user->belongsTorole(Role::DRIVER)->where('email', $request->email)->exists();
 
@@ -202,8 +203,7 @@ class DriverController extends BaseController
         if ($validate_exists_mobile) {
             return redirect()->back()->withErrors(['mobile'=>'Provided mobile hs already been taken'])->withInput();
         }
-        $created_params['vehicle_type'] = $request->input('type');
-        // $created_params['postal_code'] = $request->postal_code;
+
         $created_params['uuid'] = driver_uuid();
         $created_params['owner_id'] = null;
 
@@ -238,7 +238,12 @@ class DriverController extends BaseController
         $driver_detail_data = $request->only(['is_company_driver','company']);
 
         $driver_detail = $driver->driverDetail()->create($driver_detail_data);
-
+       
+        foreach ($request->input('type') as $type) 
+        {
+                DriverVehicleType::create(['driver_id' => $driver->id,
+                'vehicle_type' => $type,]);        
+        }
         // Create Empty Wallet to the driver
         $driver_wallet = $driver->driverWallet()->create(['amount_added'=>0]);
 
@@ -271,7 +276,7 @@ class DriverController extends BaseController
       public function update(Driver $driver, UpdateDriverRequest $request)
     {
         // dd($request);
-        $updatedParams = $request->only(['service_location_id', 'name','mobile','email','gender','vehicle_type','car_make','car_model','car_color','car_number']);
+        $updatedParams = $request->only(['service_location_id', 'name','mobile','email','gender','car_make','car_model','car_color','car_number']);
 
         $user = $driver->user;
         $validate_exists_email = $this->user->belongsTorole(Role::DRIVER)->where('email', $request->email)->where('id', '!=', $user->id)->exists();
@@ -303,7 +308,7 @@ class DriverController extends BaseController
             'car_model'=>$request->input('car_model'),
             'car_color'=>$request->input('car_color'),
             'car_number'=>$request->input('car_number'),
-            'vehicle_type'=>$request->input('type'),
+            // 'vehicle_type'=>$request->input('type'),
             'service_location_id'=>$request->service_location_id
 
         ]);
@@ -313,6 +318,21 @@ class DriverController extends BaseController
             'mobile'=>$request->input('mobile'),
             'profile_picture'=>$user_param['profile']
         ]);
+
+      $driverVehicleTypes =  $driver->driverVehicleTypeDetail()->get();
+
+        // dd($driverVehicleTypes);
+
+        foreach ($driverVehicleTypes as $driverVehicleType) 
+        {
+            $driverVehicleType->delete();
+        }
+
+        foreach ($request->type as $type) 
+        {
+             DriverVehicleType::create(['driver_id' => $driver->id,
+                'vehicle_type' => $type,]);  
+        }
 
         $message = trans('succes_messages.driver_added_succesfully');
         cache()->tags('drivers_list')->flush();
@@ -488,7 +508,7 @@ class DriverController extends BaseController
         $sub_menu = 'driver_details';
         $item = $driver;
         // dd($item);
-
+        $bankInfo = $driver->user->bankInfo;
         $amount = DriverWallet::where('user_id',$driver->id)->first();
         
         if ($amount == null) {
@@ -511,7 +531,7 @@ class DriverController extends BaseController
 
           }
 
-        return view('admin.drivers.driver-payment-wallet', compact('card','main_menu','sub_menu','item','history'));
+        return view('admin.drivers.driver-payment-wallet', compact('card','main_menu','sub_menu','item','history','bankInfo'));
     }
 
     public function StoreDriverPaymentHistory(AddDriverMoneyToWalletRequest $request,Driver $driver)

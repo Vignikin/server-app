@@ -160,66 +160,20 @@
        </div>
 </div>
 
-{{-- <div class="row"> --}}
 
-{{-- <div class="col-6">
-<div class="form-group">
-<label for="country">@lang('view_pages.select_country')
-    <span class="text-danger">*</span>
-</label>
-<select name="country" id="country" class="form-control" required>
-    <option value="" >@lang('view_pages.select_country')</option>
-    @foreach($countries as $key=>$country)
-    <option value="{{$country->id}}" {{ old('country') == $country->id ? 'selected' : '' }}>{{$country->name}}</option>
-    @endforeach
-</select>
-<span class="text-danger">{{ $errors->first('country') }}</span>
-
-</div>
-</div> --}}
-
- {{--  <div class="col-sm-6">
-            <div class="form-group">
-            <label for="state">@lang('view_pages.state')</label>
-            <input class="form-control" type="text" id="state" name="state" value="{{old('state')}}" required="" placeholder="@lang('view_pages.enter_state')">
-            <span class="text-danger">{{ $errors->first('state') }}</span>
-
-        </div>
-    </div>
-</div> --}}
-
-{{-- <div class="row">
-      <div class="col-sm-6">
-            <div class="form-group">
-            <label for="city">@lang('view_pages.city')</label>
-            <input class="form-control" type="text" id="city" name="city" value="{{old('city')}}" required="" placeholder="@lang('view_pages.enter_city')">
-            <span class="text-danger">{{ $errors->first('city') }}</span>
-
-        </div>
-    </div>
-       <div class="col-sm-6">
-            <div class="form-group">
-            <label for="postal_code">@lang('view_pages.postal_code')</label>
-            <input class="form-control" type="number" id="city" name="postal_code" value="{{old('postal_code')}}" required="" placeholder="@lang('view_pages.enter_postal_code')">
-            <span class="text-danger">{{ $errors->first('postal_code') }}</span>
-
-        </div>
-    </div>
-</div> --}}
 <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="padding-right: 50px;">
         <div class="form-group">
-            <label for="type">@lang('view_pages.vehicle_type')
+            <label for="type">@lang('view_pages.select_type')
                 <span class="text-danger">*</span>
             </label>
-            <select name="type" id="type" class="form-control" required>
-                <option value="" >@lang('view_pages.select_type')</option>
-                @foreach($types as $key=>$type)
+            <select  name="type[]" id="type" class="form-control select2" multiple="multiple" required>
+                 @foreach($types as $key=>$type)
                 <option value="{{$type->id}}" {{ old('type') == $type->id ? 'selected' : '' }}>{{$type->name}}</option>
                 @endforeach
             </select>
-            </div>
+        </div>
     </div>
 
     <div class="col-6">
@@ -299,7 +253,12 @@
 <!-- content -->
 <!-- jQuery 3 -->
     <script src="{{asset('assets/vendor_components/jquery/dist/jquery.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
+   $('.select2').select2({
+        placeholder : "Select ...",
+    });
     let oldTransportType = "{{ old('transport_type') }}";
 
     let oldCarMake = "{{ old('car_make') }}";
@@ -388,7 +347,7 @@
             success: function(result)
             {
                 $('#type').empty();
-                $("#type").append('<option value="" selected disabled>Select</option>');
+                // $("#type").append('<option value="" selected disabled>Select</option>');
                 result.forEach(element => {
 
                     $("#type").append('<option value='+element.id+' '+selected+'>'+element.name+'</option>')
