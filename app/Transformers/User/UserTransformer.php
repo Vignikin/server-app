@@ -101,6 +101,8 @@ class UserTransformer extends Transformer
        
         $params['show_ride_without_destination'] = (get_settings(Settings::SHOW_RIDE_WITHOUT_DESTINATION));
         
+        $params['enable_country_restrict_on_map'] = (get_settings(Settings::ENABLE_COUNTRY_RESTRICT_ON_MAP));
+        
         return $params;
     }
 

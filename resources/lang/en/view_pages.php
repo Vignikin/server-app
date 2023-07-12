@@ -804,4 +804,6 @@ return array (
   'mail_configuration'=> 'Mail Configuration',
   'bidding' => 'Bidding',
   'normal' => 'Normal',
+  'enable_country_restrict_on_map' => 'Enable Country Restrict On Map',
+  
   );
