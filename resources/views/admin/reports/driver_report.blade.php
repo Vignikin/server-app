@@ -92,6 +92,7 @@
                                                 <option value="" selected disabled>@lang('view_pages.select')</option>
                                                 <option value="taxi" {{ old('transport_type') == 'taxi' ? 'selected' : '' }}>@lang('view_pages.taxi')</option>
                                                 <option value="delivery" {{ old('transport_type') == 'delivery' ? 'selected' : '' }}>@lang('view_pages.delivery')</option>
+                                                 <option value="both" {{ old('transport_type') == 'both' ? 'selected' : '' }}>@lang('view_pages.both')</option>
                                             </select>
                                             <span class="text-danger">{{ $errors->first('transport_type') }}</span>
                                         </div>
