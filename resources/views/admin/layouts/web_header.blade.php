@@ -37,7 +37,7 @@
     <div class="container-fluid">
 
       <!-- Brand -->
-      <a class="navbar-brand order-1 order-md-1" href="">
+      <a class="navbar-brand order-1 order-md-1" href="{{ url('/') }}">
         @if($data)
         
         <img src="{{ asset($p.$data->faviconfile) }}" alt="Logo" style="max-width: 100px;">
@@ -64,7 +64,7 @@
             <a class="nav-link active"  href="{{ url('/') }}">Rider</a>
           </li>
           <li class="nav-item dn-2">
-            <a class="nav-link" style="color:{{ $data->menutextcolor }} !important;" href="{{ url('/') }}">Rider</a>
+            <a class="nav-link" style="color:{{ $data->menutextcolor }} !important;" href="{{ url('/') }}">Home</a>
           </li>
           <li class="nav-item dropdown">
   
