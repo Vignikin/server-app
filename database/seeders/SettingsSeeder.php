@@ -279,6 +279,13 @@ class SettingsSeeder extends Seeder
              'option_value' => '{"yes":1,"no":0}',
              'group_name' => null,
         ],  
+        SettingSlug::ENABLE_COUNTRY_RESTRICT_ON_MAP => [
+            'category'=>SettingCategory::GENERAL,
+            'value' => '0',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"yes":1,"no":0}',
+            'group_name' => null,
+        ],        
         // SettingSlug::DEFAULT__LANGUAGE_CODE_FOR_MOBILE_APP => [
         //     'category'=>SettingCategory::GENERAL,
         //     'value' =>  'en-GB',
