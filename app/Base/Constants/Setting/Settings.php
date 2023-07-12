@@ -100,6 +100,7 @@ class Settings
     const ENABLE_SHIPMENT_LOAD_FEATURE='enable_shipment_load_feature';
     const ENABLE_SHIPMENT_UNLOAD_FEATURE='enable_shipment_unload_feature';
     const ENABLE_DIGITAL_SIGNATURE='enable_digital_signature';
+    const ENABLE_COUNTRY_RESTRICT_ON_MAP='enable_country_restrict_on_map';
 
     
     const DEFAULT_COUNTRY_CODE_FOR_MOBILE_APP='default_country_code_for_mobile_app';
