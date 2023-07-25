@@ -494,7 +494,69 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => SettingSubGroup::RAZOR_PAY_SETTINGS,
         ],
-     
+          // stripe
+        SettingSlug::ENABLE_STRIPE => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => '1',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"yes":1,"no":0}',
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+         SettingSlug::STRIPE_ENVIRONMENT => [
+            'category'=>SettingCategory::INSTALLATION,
+            'field' => SettingValueType::SELECT,
+             'option_value' => '{"test":"test","production":"production"}',
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+         SettingSlug::STRIPE_TEST_PUBLISHABLE_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'pk_test_51IuYWUSBCHfacuRqacrdy8IOlL3uUPq1XI0BZaRlqDPPcNsmywe6rSqjpM9HhVmELhXWhx95CH1pvNyQ8pvQEil900eGE0jXN8',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+        SettingSlug::STRIPE_LIVE_PUBLISHABLE_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'pk_test_51IuYWUSBCHfacuRqacrdy8IOlL3uUPq1XI0BZaRlqDPPcNsmywe6rSqjpM9HhVmELhXWhx95CH1pvNyQ8pvQEil900eGE0jXN8',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+        SettingSlug::STRIPE_TEST_SECRET_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'sk_test_51IuYWUSBCHfacuRqT79sG9pzvqyQqpwClyvlcrEm4ZvshYDdS5TGkYfIS2uYbcxcwhNES1J2cI03l8zxFPelK0yk007d8XvEAd',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+        SettingSlug::STRIPE_LIVE_SECRET_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'sk_test_51IuYWUSBCHfacuRqT79sG9pzvqyQqpwClyvlcrEm4ZvshYDdS5TGkYfIS2uYbcxcwhNES1J2cI03l8zxFPelK0yk007d8XvEAd',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::STRIPE_SETTINGS,
+        ],
+
+        SettingSlug::REFERRAL_COMMISION_FOR_USER => [
+            'category'=>SettingCategory::REFERRAL,
+            'value' => 30,
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => null,
+        ],
+          SettingSlug::REFERRAL_COMMISION_FOR_DRIVER => [
+            'category'=>SettingCategory::REFERRAL,
+            'value' => 30,
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => null,
+        ],
+     // stripe     
         SettingSlug::REFERRAL_COMMISION_FOR_USER => [
             'category'=>SettingCategory::REFERRAL,
             'value' => 30,
