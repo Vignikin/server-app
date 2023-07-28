@@ -283,21 +283,44 @@ class DispatcherCreateRequestController extends BaseController
             $i +=1; 
             $driver_updated_at = Carbon::createFromTimestamp($fire_driver['updated_at'] / 1000)->timestamp;
 
+
             if(array_key_exists('vehicle_type',$fire_driver) && $fire_driver['vehicle_type']==$vehicle_type && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at){
+
 
                 $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
 
-                $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
+
+            }elseif(array_key_exists('vehicle_types',$fire_driver)  && in_array($vehicle_type, $fire_driver['vehicle_types']) && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at)
+                {
+
+                Log::info("its coming in new loop");
+                Log::info($fire_driver);
+
+               
+
+                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
+
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
 
             }      
 
         }
+Log::info($firebase_drivers);
 
         asort($firebase_drivers);
 
         if (!empty($firebase_drivers)) {
            
-                $nearest_driver_ids = [];
+                 $nearest_driver_ids = [];
 
                 foreach ($firebase_drivers as $key => $firebase_driver) {
                     
@@ -313,8 +336,10 @@ class DispatcherCreateRequestController extends BaseController
                 ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
                 })->pluck('driver_id')->toArray();
 
-                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where('vehicle_type', $type_id)->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->limit(10)->get();
-
+                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->limit(10)->get();
+                
                 if ($nearest_drivers->isEmpty()) {
                     return $this->respondFailed('all drivers are busy');
                 }
