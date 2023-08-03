@@ -87,7 +87,10 @@ class EtaController extends ApiController
         if(access()->hasRole(Role::DRIVER)){
 
             $type_id = auth()->user()->driver->vehicle_type;
-            
+            if($type_id==null){
+
+                $type_id = auth()->user()->driver->driverVehicleTypeDetail()->pluck('vehicle_type')->first();
+            }     
             $type = $zone_detail->zoneType()->where('type_id', $type_id)->first();
 
             if(!$type){

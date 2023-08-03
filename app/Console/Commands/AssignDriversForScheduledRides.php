@@ -20,6 +20,7 @@ use Sk\Geohash\Geohash;
 use Kreait\Firebase\Contract\Database;
 use App\Base\Constants\Setting\Settings;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Facades\Log;
 
 
 class AssignDriversForScheduledRides extends Command
@@ -134,7 +135,22 @@ class AssignDriversForScheduledRides extends Command
 
                 $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
 
-                $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
+
+            }elseif(array_key_exists('vehicle_types',$fire_driver) && is_array($fire_driver['vehicle_types']) && in_array($vehicle_type, $fire_driver['vehicle_types']) && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at){
+
+                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
+
+               if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
+
 
             }      
 
@@ -153,9 +169,22 @@ class AssignDriversForScheduledRides extends Command
 
                     $rejected_drivers = DriverRejectedRequest::where('request_id',$request->id)->pluck('driver_id')->toArray();
                     
-                    $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where('vehicle_type', $type_id)->where(function($query)use($request){
-                    $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->whereNotIn('id',$rejected_drivers)->limit(10)->get();
+$nearest_drivers = Driver::where('active', 1)
+->where('approve', 1)
+->where('available', 1)
+->where(function ($query) use ($request) {
+$query->where('transport_type', $request->transport_type)
+->orWhere('transport_type', 'both');
+})
+->whereIn('id', $nearest_driver_ids)
+->whereNotIn('id', $meta_drivers)
+->whereNotIn('id', $rejected_drivers)
+->whereHas('driverVehicleTypeDetail', function ($query) use ($type_id) {
+$query->where('vehicle_type', $type_id);
+})
+->limit(10)
+->get();
+
 
                     if ($nearest_drivers->isEmpty()) {
                         $this->info('no-drivers-available');

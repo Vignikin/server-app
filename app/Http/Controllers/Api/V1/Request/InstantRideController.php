@@ -65,7 +65,11 @@ class InstantRideController extends BaseController
         $currency_symbol = $service_location->currency_symbol;
 
         $type_id = auth()->user()->driver->vehicle_type;
+       
+        if($type_id==null){
 
+            $type_id = auth()->user()->driver->driverVehicleTypeDetail()->pluck('vehicle_type')->first();
+        }     
         $zone_type_id = $zone_detail->zoneType()->where('type_id',$type_id)->pluck('id')->first();
 
         if(!$zone_type_id){
