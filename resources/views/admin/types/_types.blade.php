@@ -23,6 +23,10 @@
                     <span style="float: right;">
                     </span>
                 </th>
+                <th> @lang('view_pages.trip_dispatch_type')
+                    <span style="float: right;">
+                    </span>
+                </th>                
                 <th> @lang('view_pages.icon')
                     <span style="float: right;">
                     </span>
@@ -78,6 +82,8 @@
                                 @else
                                 {{ "Motor Bike" }}
                             @endif</td>
+                        <td> {{$result->trip_dispatch_type}}</td>
+
 
                         <td><img class="img-circle" src="{{asset($result->icon)}}" alt=""></td>
                         @if($result->active)
