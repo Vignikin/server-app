@@ -500,7 +500,7 @@ return array (
   'cancelled_by_user' => 'Cancelled By User',
   'cancelled_by_driver' => 'Cancelled By Driver',
   'maximum_time_for_find_drivers_for_regular_ride' => 'Maximum Time For Find Drivers For Regular Ride',
-  'maximum_time_for_find_drivers_for_bitting_ride' => 'Maximum Time For Find Drivers For Bitting Ride',
+  'maximum_time_for_find_drivers_for_bidding_ride' => 'Maximum Time For Find Drivers For Bidding Ride',
   'basic_information' => 'Basic Information',
   'manage_password' => 'Manage Password',
   'filter_requests' => ' Filter Requests',

@@ -81,7 +81,7 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => null,
         ],
-        SettingSlug::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BITTING_RIDE => [
+        SettingSlug::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE => [
             'category'=>SettingCategory::TRIP_SETTINGS,
             'value' => 5,
             'field' => SettingValueType::TEXT,
