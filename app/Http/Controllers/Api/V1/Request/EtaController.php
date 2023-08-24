@@ -50,7 +50,7 @@ class EtaController extends ApiController
     */
     public function eta(EtaRequest $request)
     {
-        $zone_detail = find_zone($request->input('pick_lat'), $request->input('pick_lng'))->get();
+        $zone_detail = find_zone($request->input('pick_lat'), $request->input('pick_lng'));
 
         if (!$zone_detail) {
             $this->throwCustomException('service not available with this location');
