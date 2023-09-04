@@ -36,6 +36,10 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
         Route::post('cancel', 'UserCancelRequestController@cancelRequest');
         // Accept/Decline Bidd Request
         Route::post('respond-for-bid','CreateRequestController@respondForBid');
+        //payment methodd
+        Route::post('user/payment-method', 'UserCancelRequestController@paymentMethod');
+
+        Route::post('user/payment-confirm', 'UserCancelRequestController@userPaymentConfirm');
     });
 
     // Eta
@@ -60,6 +64,11 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
         Route::post('end', 'DriverEndRequestController@endRequest');
         // Upload Delivery Proof
         Route::post('upload-proof','DriverDeliveryProofController@uploadDocument');
+        // payment Conmfirm Request
+        Route::post('payment-confirm', 'DriverEndRequestController@paymentConfirm');
+
+        Route::post('payment-method', 'DriverEndRequestController@paymentMethod');
+        
     });
 
     // History

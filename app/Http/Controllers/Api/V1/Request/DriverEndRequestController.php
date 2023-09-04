@@ -816,4 +816,44 @@ class DriverEndRequestController extends BaseController
         // }
         
     }
+
+    public function paymentConfirm(Request $request)
+    {
+
+       $driver = auth()->user()->driver;
+
+
+        $request_detail = $driver->requestDetail()->where('id', $request->request_id)->first();
+
+        // Throw an exception if the user is not authorised for this request
+        if (!$request_detail) {
+            $this->throwAuthorizationException();
+        }
+        $request_detail->update([
+            'payment_confirmed_by_driver'=>true,
+        ]);
+
+        return $this->respondSuccess();
+
+    }
+    public function paymentMethod(Request $request)
+    {
+
+       $driver = auth()->user()->driver;
+
+
+        $request_detail = $driver->requestDetail()->where('id', $request->request_id)->first();
+
+        // dd($user);
+        // Throw an exception if the user is not authorised for this request
+        if (!$request_detail) {
+            $this->throwAuthorizationException();
+        }
+        $request_detail->update([
+            'payment_opt'=>$request->payment_opt,
+        ]);
+        return $this->respondSuccess();
+    }
+
+    
 }

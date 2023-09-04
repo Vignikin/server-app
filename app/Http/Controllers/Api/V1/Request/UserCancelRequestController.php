@@ -180,4 +180,47 @@ class UserCancelRequestController extends BaseController
 
         return $this->respondSuccess();
     }
+    public function paymentMethod(Request $request)
+    {
+
+       $user = auth()->user();
+        $request_detail = $user->requestDetail()->where('id', $request->request_id)->first();
+
+        // dd($user);
+        // Throw an exception if the user is not authorised for this request
+        if (!$request_detail) {
+            $this->throwAuthorizationException();
+        }
+        $request_detail->update([
+            'payment_opt'=>$request->payment_opt,
+        ]);
+
+        if($request_detail->payment_opt == 0){
+
+         $request_detail->update([
+            'is_paid'=>false, 
+        ]);
+
+        }
+
+        return $this->respondSuccess();
+
+    }
+    public function userPaymentConfirm(Request $request)
+    {
+
+       $user = auth()->user();
+        $request_detail = $user->requestDetail()->where('id', $request->request_id)->first();
+        // Throw an exception if the user is not authorised for this request
+        if (!$request_detail) {
+            $this->throwAuthorizationException();
+        }
+        $request_detail->update([
+            'user_confirmed'=>true,
+        ]);
+        return $this->respondSuccess();
+
+    }
+
+
 }
