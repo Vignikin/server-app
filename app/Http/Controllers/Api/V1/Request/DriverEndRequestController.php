@@ -139,11 +139,11 @@ class DriverEndRequestController extends BaseController
             $distance = kilometer_to_miles($distance);
         }
 
-        if($request_detail->payment_opt==2)
+        if(($request_detail->payment_opt)==2)
         {
-            $request_detail['is_paid'] = 1;
+            $request_detail['is_paid'] = true;
         }else{
-            $request_detail['is_paid'] = 0;
+            $request_detail['is_paid'] = false;
 
         } 
 
@@ -855,5 +855,5 @@ class DriverEndRequestController extends BaseController
         return $this->respondSuccess();
     }
 
-    
+
 }
