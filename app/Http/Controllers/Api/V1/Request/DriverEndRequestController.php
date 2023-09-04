@@ -290,7 +290,7 @@ class DriverEndRequestController extends BaseController
         } elseif ($request_detail->payment_opt==PaymentType::CARD) {
 
             // Update Is paid as 0 since the customer needs to paid with his invoice at end of the ride
-            $request_detail->is_paid = 0;
+            // $request_detail->is_paid = 0;
 
             $request_detail->save();
 
