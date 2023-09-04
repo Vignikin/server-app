@@ -13,6 +13,7 @@
 
 </style>
 
+
 <ul class="nav nav-tabs" id="zoneTabs" role="tablist">
     @php
     $zoneNames = [];
@@ -36,6 +37,7 @@
     @endphp
     @endforeach
 </ul>
+
 
 <div class="tab-content" id="zoneTabsContent">
     @php
