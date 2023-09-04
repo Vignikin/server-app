@@ -115,6 +115,7 @@ class DriverEndRequestController extends BaseController
         $duration = $this->calculateDurationOfTrip($request_detail->trip_start_time);
 
 
+
         if(env('APP_FOR')!='demo'){
             
         $distance_matrix = get_distance_matrix($request_detail->pick_lat, $request_detail->pick_lng, $request_detail->drop_lat, $request_detail->drop_lng, true);
@@ -138,14 +139,24 @@ class DriverEndRequestController extends BaseController
             $distance = kilometer_to_miles($distance);
         }
 
+        if($request_detail->payment_opt==2)
+        {
+            $request_detail['is_paid'] = 1;
+        }else{
+            $request_detail['is_paid'] = 0;
+
+        } 
+
         // Update Request status as completed
         $request_detail->update([
             'is_completed'=>true,
             'completed_at'=>date('Y-m-d H:i:s'),
-            'is_paid'=>1,
             'total_distance'=>$distance,
             'total_time'=>$duration,
             ]);
+
+
+
 
         $before_trip_start_waiting_time = $request->input('before_trip_start_waiting_time');
         $after_trip_start_waiting_time = $request->input('after_trip_start_waiting_time');
@@ -234,6 +245,11 @@ class DriverEndRequestController extends BaseController
 
         $calculated_bill['requested_currency_code'] = $currency_code;
         $calculated_bill['requested_currency_symbol'] = $requested_currency_symbol;
+
+
+
+
+
         // @TODO need to take admin commision from driver wallet
         if ($request_detail->payment_opt==PaymentType::CASH) {
 
