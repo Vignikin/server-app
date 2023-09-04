@@ -112,6 +112,8 @@ class TripRequestTransformer extends Transformer
             'converted_completed_at'=>$request->converted_completed_at,
             'converted_cancelled_at'=>$request->converted_cancelled_at,
             'converted_created_at'=>$request->converted_created_at,
+            'payment_type'=>$request->zoneType->payment_type,
+            
         ];
 
         $maximum_time_for_find_drivers_for_regular_ride = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_REGULAR_RIDE) * 60);
