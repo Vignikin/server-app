@@ -832,6 +832,7 @@ class DriverEndRequestController extends BaseController
         }
         $request_detail->update([
             'payment_confirmed_by_driver'=>true,
+            'is_paid'=>true,
         ]);
 
         return $this->respondSuccess();
@@ -852,7 +853,6 @@ class DriverEndRequestController extends BaseController
         }
         $request_detail->update([
             'payment_opt'=>$request->payment_opt,
-            'is_paid'=>true,
         ]);
         return $this->respondSuccess();
     }

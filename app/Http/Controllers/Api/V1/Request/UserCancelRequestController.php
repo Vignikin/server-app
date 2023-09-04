@@ -218,6 +218,8 @@ class UserCancelRequestController extends BaseController
         }
         $request_detail->update([
             'user_confirmed'=>true,
+            'is_paid'=>true, 
+
         ]);
         return $this->respondSuccess();
 
