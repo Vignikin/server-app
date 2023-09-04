@@ -1,3 +1,18 @@
+<style>
+/*    .custom-nav-link {
+        margin-right: 2px; /* Adjust the value as needed */
+    }*/
+    
+    .tab-content {
+        margin-top: 35px; /* Add margin to create space between tabs and table */
+    }
+
+    .nav-tabs {
+           margin-top: 35px; /* Add margin to create space above the navigation tabs */
+       }
+
+</style>
+
 <ul class="nav nav-tabs" id="zoneTabs" role="tablist">
     @php
     $zoneNames = [];
@@ -6,6 +21,7 @@
     @foreach ($results as $key => $result)
     @php
     $zoneName = $result->zoneType->zone->name;
+
     if (!in_array($zoneName, $zoneNames)) {
         $zoneNames[] = $zoneName;
     }
@@ -13,7 +29,7 @@
     @endforeach
     @foreach ($zoneNames as $zoneName)
     <li class="nav-item" role="presentation">
-        <a class="nav-link @if ($zoneIndex === 0) active @endif" id="zone-tab-{{ $zoneIndex }}" data-toggle="tab" href="#zone-{{ $zoneIndex }}" role="tab" aria-controls="zone-{{ $zoneIndex }}" aria-selected="true">{{ $zoneName }}</a>
+        <a class="nav-link custom-nav-link @if ($zoneIndex === 0) active @endif" id="zone-tab-{{ $zoneIndex }}" data-toggle="tab" href="#zone-{{ $zoneIndex }}" role="tab" aria-controls="zone-{{ $zoneIndex }}" aria-selected="true">{{ $zoneName }}</a>
     </li>
     @php
     $zoneIndex++;
@@ -25,6 +41,16 @@
     @php
     $zoneIndex = 0;
     @endphp
+@if (($results->count()) == 0)
+        <tr>
+            <td colspan="11">
+                <p id="no_data" class="lead no-data text-center">
+                    <img src="{{asset('assets/img/dark-data.svg')}}" style="width:150px;margin-top:25px;margin-bottom:25px;" alt="">
+                    <h4 class="text-center" style="color:#333;font-size:25px;">@lang('view_pages.no_data_found')</h4>
+                </p>
+            </td>
+        </tr>
+@endif
     @foreach ($zoneNames as $zoneName)
     <div class="tab-pane fade @if ($zoneIndex === 0) show active @endif" id="zone-{{ $zoneIndex }}" role="tabpanel">
         <table class="table table-hover">
@@ -43,9 +69,11 @@
             </thead>
             <!-- Table Body -->
             <tbody>
+
                 @php
                 $i = 1;
                 @endphp
+
                 @foreach ($results as $key => $result)
                 @if ($result->zoneType->zone->name === $zoneName)
                 <!-- Data Rows -->

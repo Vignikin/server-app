@@ -11,9 +11,9 @@
             <div class="col-12">
                 <div class="box">
 
-                    <div class="box-header with-border">
+                    <div class=" with-border mt-5 p-4">
                         <div class="row text-right">
-                         <div class="col-8 col-md-3">
+                         <!-- <div class="col-8 col-md-3">
                                 <div class="form-group">
                                     <div class="controls">
                                         <input type="text" id="search_keyword" name="search" class="form-control"
@@ -27,7 +27,7 @@
                                     @lang('view_pages.search')
                                 </button>
                             </div> 
-
+ -->
 
                                 <div class="col-md-12 text-center text-md-right">
                                     <a href="{{ url('vehicle_fare/create') }}" class="btn btn-primary btn-sm">
