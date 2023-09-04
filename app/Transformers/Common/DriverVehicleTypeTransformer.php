@@ -25,6 +25,8 @@ class DriverVehicleTypeTransformer extends Transformer {
 			'id' => $driverVehicleType->vehicle_type,
 			'driver_id' => $driverVehicleType->driver_id,
 			'vehicletype_name' => $driverVehicleType->vehicleType->name,
+			'name' => $driverVehicleType->vehicleType->name,
+			
 		];
 	}
 
