@@ -17,7 +17,8 @@ use App\Base\Constants\Masters\PaymentType;
 use App\Models\Admin\CancellationReason;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
-
+use Illuminate\Http\Request;
+use Role;
 /**
  * @group User-trips-apis
  *

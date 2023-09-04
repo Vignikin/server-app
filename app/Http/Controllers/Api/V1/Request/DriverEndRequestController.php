@@ -26,7 +26,8 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\Mails\SendMailNotification;
 use App\Jobs\Mails\SendInvoiceMailNotification;
-
+use Illuminate\Http\Request;
+use App\Models\Request\Request as RequestRequest;
 /**
  * @group Driver-trips-apis
  *
