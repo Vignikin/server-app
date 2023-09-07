@@ -178,7 +178,7 @@ $query->where('transport_type', $request->transport_type)
 })
 ->whereIn('id', $nearest_driver_ids)
 ->whereNotIn('id', $meta_drivers)
-->whereNotIn('id', $rejected_drivers)
+->whereNotIn('id', $rejected_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))
 ->whereHas('driverVehicleTypeDetail', function ($query) use ($type_id) {
 $query->where('vehicle_type', $type_id);
 })

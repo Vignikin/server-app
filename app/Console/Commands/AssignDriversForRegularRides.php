@@ -169,7 +169,7 @@ class AssignDriversForRegularRides extends Command
 
                     $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where('vehicle_type', $type_id)->where(function($query)use($request){
                     $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->whereNotIn('id',$rejected_drivers)->limit(10)->get();
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->whereNotIn('id',$rejected_drivers)->limit(10)->get();
 
 
                 $has_enabled_my_route_drivers=$nearest_drivers->where('enable_my_route_booking',1)->first();

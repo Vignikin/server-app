@@ -281,8 +281,6 @@ class DispatcherCreateRequestController extends BaseController
         foreach ($fire_drivers as $key => $fire_driver) {
             $i +=1; 
             $driver_updated_at = Carbon::createFromTimestamp($fire_driver['updated_at'] / 1000)->timestamp;
-
-
             if(array_key_exists('vehicle_type',$fire_driver) && $fire_driver['vehicle_type']==$vehicle_type && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at){
 
 
@@ -298,6 +296,9 @@ class DispatcherCreateRequestController extends BaseController
                 {
 
                 Log::info("its coming in new loop");
+                Log::info($fire_driver);
+
+               
 
                 $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
 
@@ -331,7 +332,9 @@ class DispatcherCreateRequestController extends BaseController
                 ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
                 })->pluck('driver_id')->toArray();
 
-                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where('vehicle_type', $type_id)->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->limit(10)->get();
+                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','delivery')->orWhere('transport_type','both');
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->limit(10)->get();
 
                 if ($nearest_drivers->isEmpty()) {
                     return $this->respondFailed('all drivers are busy');

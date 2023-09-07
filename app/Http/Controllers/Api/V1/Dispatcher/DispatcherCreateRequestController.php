@@ -255,7 +255,7 @@ class DispatcherCreateRequestController extends BaseController
         $drivers = Driver::whereHas('driverDetail', function ($query) use ($driver_haversine,$driver_search_radius,$type_id) {
             $query->select('driver_details.*')->selectRaw("{$driver_haversine} AS distance")
                 ->whereRaw("{$driver_haversine} < ?", [$driver_search_radius]);
-        })->whereNotIn('id', $meta_drivers)->limit(10)->get();
+        })->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
 
         if ($drivers->isEmpty()) {
             $this->throwCustomException('all drivers are busy');

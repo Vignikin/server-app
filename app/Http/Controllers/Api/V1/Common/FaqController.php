@@ -30,16 +30,17 @@ class FaqController extends BaseController
     */
     public function index($lat, $lng)
     {
-        $point = new Point($lat, $lng);
-
         if (access()->hasRole(Role::USER)) {
             $user_type = 'user';
-        } else {
+        }else if (access()->hasRole(Role::DRIVER)) {
             $user_type = 'driver';
+        } else {
+            $user_type = 'owner';
         }
-        $query = $this->faq->whereHas('serviceLocation.zones', function ($query) use ($point) {
-            $query->contains('coordinates', $point)->where('active', 1);
-        })->where('user_type', $user_type)->orWhere('user_type', 'both');
+        
+        $query = $this->faq->where(function($query)use($user_type){
+            $query->where('user_type', $user_type)->orWhere('user_type', 'all');
+        });
 
         $result=filter($query, new FaqTransformer)->paginate();
 

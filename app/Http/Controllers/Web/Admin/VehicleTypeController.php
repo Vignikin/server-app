@@ -179,7 +179,7 @@ class VehicleTypeController extends BaseController
         // dd($request->all());
         $this->validateAdmin();
 
-        $created_params = $request->only(['name', 'capacity','is_accept_share_ride','description','supported_vehicles','short_description','transport_type','icon_types_for']);
+        $created_params = $request->only(['name', 'capacity','is_accept_share_ride','description','supported_vehicles','short_description','transport_type','icon_types_for','trip_dispatch_type']);
 
              $is_taxi = $request->transport_type;
 
