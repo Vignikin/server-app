@@ -226,7 +226,9 @@ class DriverProfileTransformer extends Transformer
          }
             $params['trip_accept_reject_duration_for_driver'] = get_settings(Settings::TRIP_ACCEPT_REJECT_DURATION_FOR_DRIVER);
            
-            $params['maximum_time_for_find_drivers_for_bidding_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
+            // $params['maximum_time_for_find_drivers_for_bidding_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
+            
+            $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BITTING_RIDE) * 60);
 
             $params['low_balance'] = $low_balance;
 

@@ -109,7 +109,9 @@ class Settings
     const TRIP_ACCEPT_REJECT_DURATION_FOR_DRIVER='trip_accept_reject_duration_for_driver';
     const GOOGLE_MAP_KEY_FOR_DISTANCE_MATRIX='google_map_key_for_distance_matrix';
     const MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_REGULAR_RIDE='maximum_time_for_find_drivers_for_regular_ride';
-    const MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE= 'maximum_time_for_find_drivers_for_bidding_ride';
+    // const MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE= 'maximum_time_for_find_drivers_for_bidding_ride';
+        const MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BITTING_RIDE= 'maximum_time_for_find_drivers_for_bitting_ride';
+
     const DEFAULT_LAT='default_latitude';
     const DEFAULT_LONG='default_longitude';
     const GOOGLE_SHEET_ID='google_sheet_id';
