@@ -99,7 +99,7 @@ class UserTransformer extends Transformer
        
          // $params['maximum_time_for_find_drivers_for_bidding_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
 
-            $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BITTING_RIDE) * 60);
+            $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
 
 
        
