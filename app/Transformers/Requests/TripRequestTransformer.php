@@ -142,9 +142,14 @@ class TripRequestTransformer extends Transformer
 
         $zone_type_price = $request->zoneType->zoneTypePrice()->where('price_type', $ride_type)->first();
 
-        $params['free_waiting_time_in_mins_before_trip_start'] = $zone_type_price->free_waiting_time_in_mins_before_trip_start;
+        if ($request->is_bid_ride == false) {
+         $zone_type_price = $request->zoneType->zoneTypePrice()->where('price_type', $ride_type)->first();
 
-        $params['free_waiting_time_in_mins_before_trip_start'] = $zone_type_price->free_waiting_time_in_mins_before_trip_start;
+         if($zone_type_price){
+            $params['free_waiting_time_in_mins_before_trip_start'] = $zone_type_price->free_waiting_time_in_mins_before_trip_start;   
+         }
+         
+        }
 
         if($request->requestRating()->exists()){
 

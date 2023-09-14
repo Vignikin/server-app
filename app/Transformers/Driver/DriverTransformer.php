@@ -77,7 +77,7 @@ class DriverTransformer extends Transformer
         ];
 
 
-        if($user->fleet_id){
+        if($user->fleet_id != null){
             $params['car_make_name'] = $user->fleetDetail->carBrand->name;
             $params['car_model_name'] = $user->fleetDetail->carModel->name;
             $params['car_number'] = $user->fleetDetail->license_number;
