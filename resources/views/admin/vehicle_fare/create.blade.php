@@ -89,10 +89,11 @@ Export</a> --}}
         @endif
     @endforeach
 @endif
-<option value="card" {{ $card }}>@lang('view_pages.card')</option>
-<select name="payment_type[]" id="payment_type" class="form-control select2" multiple="multiple" data-placeholder="@lang('view_pages.select') @lang('view_pages.payment_type')" required>
+<select  name="payment_type[]" id="payment_type" class="form-control select2" multiple="multiple" data-placeholder="@lang('view_pages.select') @lang('view_pages.payment_type')" required>
     <option value="cash" {{ $cash }}>@lang('view_pages.cash')</option>
     <option value="wallet" {{ $wallet }}>@lang('view_pages.wallet')</option>
+    <option value="card" {{ $card }}>@lang('view_pages.card')</option>
+
 </select>
 </div>
 </div>

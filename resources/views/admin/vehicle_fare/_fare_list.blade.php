@@ -82,8 +82,15 @@
                 <tr>
                     <td>{{ $i++ }}</td>
                     <td>{{ ($result->zoneType->transport_type) }}</td>
-                    <td>{{ $result->zoneType->vehicleType->name }}</td>
-                    <td>
+                    <td>{{ $result->zoneType->vehicleType->name }}
+                            @if ($result->zoneType->zone->default_vehicle_type == $result->zoneType->vehicleType->id)
+                            <button class="btn btn-warning btn-sm">Default</button>
+                            @endif
+                            @if ($result->zoneType->zone->default_vehicle_type_for_delivery == $result->zoneType->vehicleType->id)
+                            <button class="btn btn-warning btn-sm">Default</button>
+                            @endif
+                            </td>
+                        <td>
                         @if ($result->price_type == 1)
                         <span class="btn btn-success btn-sm">{{ __('view_pages.ride_now') }}</span>
                         @else
