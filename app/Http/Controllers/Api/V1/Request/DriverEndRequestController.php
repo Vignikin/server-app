@@ -574,11 +574,11 @@ class DriverEndRequestController extends BaseController
 
         if($request_detail->is_bid_ride){
 
-            $admin_commision = $sub_total/(1+($service_fee/100));
-
+            // $admin_commision = $sub_total/(1+($service_fee/100));
+            
             $sub_total -=$admin_commision;
 
-            $tax_amount = $sub_total/(1+($tax_percent/100));
+            // $tax_amount = $sub_total/(1+($tax_percent/100));
 
             $sub_total -=$tax_amount;
 
@@ -593,7 +593,7 @@ class DriverEndRequestController extends BaseController
                 
                 $sub_total -=$admin_commision;
 
-                $tax_amount = $sub_total/(1+($tax_percent/100));
+                // $tax_amount = $sub_total/(1+($tax_percent/100));
 
                 $sub_total -=$tax_amount;
 
