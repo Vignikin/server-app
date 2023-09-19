@@ -97,7 +97,7 @@
                                                     <td> {{ $result->slug }}</td>
                                                     <td>{{ $result->name }}</td>
                                                     <td>{{ $result->description }} </td>
-                                            @if(($result->slug != 'dispatcher') & ($result->slug != 'delivery-dispatcher'))
+                                            @if(($result->slug == 'dispatcher') & ($result->slug == 'delivery-dispatcher'))
                                                 @if(auth()->user()->can('edit-roles'))
                                                     <td>
                                                         <a class="btn btn-primary btn-sm"

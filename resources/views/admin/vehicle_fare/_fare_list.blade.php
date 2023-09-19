@@ -139,3 +139,6 @@
     @endphp
     @endforeach
 </div>
+<div class="pagination">
+    {{ $results->links() }}
+</div>
