@@ -99,6 +99,7 @@ class DriverProfileTransformer extends Transformer
 
         if($user->driverVehicleTypeDetail()->exists()){
             foreach ($user->driverVehicleTypeDetail as $key => $type) {
+                $params['vehicle_type_icon_for'] = $type->vehicleType->icon_types_for;
             
                 $params['vehicle_types'][] = $type->vehicle_type;
 
