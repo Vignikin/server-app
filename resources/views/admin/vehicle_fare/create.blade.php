@@ -374,41 +374,46 @@ Export</a> --}}
 
 /*hide and show*/
 
-$(document).on('change', '#type', function () {
-    let selectedType = $(this).val();
+    $(document).on('change', '#type', function () {
+        let selectedType = $(this).val();
 
-    // Check if a type is selected
-    if (selectedType) {
-        $.ajax({
-            url: "{{ url('vehicle_fare/fetch/trip_type') }}", // Replace with your actual AJAX endpoint
-            type: 'GET',
-            data: {
-                'selectedType': selectedType
-            },
-            success: function(result) {
-console.log(result.data.trip_dispatch_type);
+        // Check if a type is selected
+        if (selectedType) {
+            $.ajax({
+                url: "{{ url('vehicle_fare/fetch/trip_type') }}",
+                type: 'GET',
+                data: {
+                    'selectedType': selectedType
+                },
+                success: function(result) {
+                    console.log(result.data.trip_dispatch_type);
 
-                // Assuming result is a JSON object with a property 'showDiv'
-                var showDiv = result.showDiv;
-
-                // Hide all divs initially
-                $('.your-div-class').hide();
-
-                // Show the specific div based on the result
-                $('#' + showDiv).show();
-            },
-            error: function(xhr, status, error) {
-                // Handle error here
-            }
-        });
-    } else {
-        // Hide all divs when no option is selected
-        $('.your-div-class').hide();
-    }
-});
+                    if (result.data.trip_dispatch_type === 'bidding') {
+                        // Hide the specified div elements
+                        $('#ride_now_waiting_charge').closest('.col-sm-6').hide();
+                        $('#ride_now_free_waiting_time_in_mins_before_trip_start').closest('.col-sm-6').hide();
+                        $('#ride_now_free_waiting_time_in_mins_after_trip_start').closest('.col-sm-6').hide();
+                        // Hide the specified div elements ride later
+                        $('#ride_later_waiting_charge').closest('.col-sm-6').hide();
+                        $('#ride_later_free_waiting_time_in_mins_before_trip_start').closest('.col-sm-6').hide();
+                        $('#ride_later_free_waiting_time_in_mins_after_trip_start').closest('.col-sm-6').hide();
 
 
-
+                    } else {
+                        // Show the div elements if the type is not "bidding"
+                        $('.col-sm-6').show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle error here
+                }
+            });
+        } else {
+            // Hide all divs when no option is selected
+            $('.col-sm-6').hide();
+        }
+    });
+/*hide and show*/
 
 </script>
 
