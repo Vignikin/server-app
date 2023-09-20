@@ -578,6 +578,7 @@ Route::middleware('auth:web')->group(function () {
             Route::get('/rental_package/delete/{package}', 'ZoneController@packageDelete');
             Route::get('/rental_package/toggleStatus/{package}', 'ZoneController@PackagetoggleStatus');
             Route::get('get/type', 'VehicleFareController@getTransportTypes')->name('getTransportTypes');
+            Route::get('fetch/trip_type', 'VehicleFareController@fetchTriptype');
 
 
         });      

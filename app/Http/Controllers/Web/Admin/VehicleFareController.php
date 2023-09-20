@@ -64,6 +64,15 @@ class VehicleFareController extends Controller
         return response()->json(['success' => true, 'data' => $types]);
     }
 
+/*fetchTriptype*/
+    public function fetchTriptype(Request $request)
+    {
+
+        $types = VehicleType::where('id', $request->selectedType)->first();
+    
+        return response()->json(['success' => true, 'data' => $types]);
+    }
+
     public function store(AssignZoneTypeRequest $request)
     {
         $zone  = Zone::whereId($request->zone)->first();

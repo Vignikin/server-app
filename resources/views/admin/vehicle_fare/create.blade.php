@@ -343,7 +343,9 @@ Export</a> --}}
             success: function(result) {
 
                 var vehicles = result.data;
+
                 var option = ''
+                option += '<option value="" disabled selected>Select a vehicle</option>';
                 vehicles.forEach(vehicle => {
                     option += `<option value="${vehicle.id}">${vehicle.name}</option>`;
                 });
@@ -369,6 +371,45 @@ Export</a> --}}
              }
         });
     });
+
+/*hide and show*/
+
+$(document).on('change', '#type', function () {
+    let selectedType = $(this).val();
+
+    // Check if a type is selected
+    if (selectedType) {
+        $.ajax({
+            url: "{{ url('vehicle_fare/fetch/trip_type') }}", // Replace with your actual AJAX endpoint
+            type: 'GET',
+            data: {
+                'selectedType': selectedType
+            },
+            success: function(result) {
+console.log(result.data.trip_dispatch_type);
+
+                // Assuming result is a JSON object with a property 'showDiv'
+                var showDiv = result.showDiv;
+
+                // Hide all divs initially
+                $('.your-div-class').hide();
+
+                // Show the specific div based on the result
+                $('#' + showDiv).show();
+            },
+            error: function(xhr, status, error) {
+                // Handle error here
+            }
+        });
+    } else {
+        // Hide all divs when no option is selected
+        $('.your-div-class').hide();
+    }
+});
+
+
+
+
 </script>
 
 @endsection

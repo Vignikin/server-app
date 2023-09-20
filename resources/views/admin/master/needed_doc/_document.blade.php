@@ -4,6 +4,7 @@
             <th> @lang('view_pages.s_no')</th>
             <th> @lang('view_pages.name')</th>
             <th> @lang('view_pages.doc_type')</th>
+            <th> @lang('view_pages.account_type')</th>
             <th> @lang('view_pages.has_expiry_date')</th>
             <th> @lang('view_pages.status')</th>
             <th> @lang('view_pages.action')</th>
@@ -18,6 +19,14 @@
             <td>{{ $i++ }} </td>
             <td>{{ $result->name }}</td>
             <td>{{ ucfirst($result->doc_type) }}</td>
+            @if($result->account_type == 'fleet_driver')
+            <td>@lang('view_pages.fleet_driver')</td>
+            @elseif($result->account_type == 'individual')
+            <td>@lang('view_pages.individual')</td>
+            @else
+            <td>@lang('view_pages.both')</td>
+            @endif
+
             <td>{{ $result->has_expiry_date ? 'Yes' : 'No' }}</td>
             @if($result->active)
             <td><span class="label label-success">@lang('view_pages.active')</span></td>

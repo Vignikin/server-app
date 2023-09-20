@@ -806,4 +806,5 @@ return array (
   'normal' => 'Normal',
   'enable_country_restrict_on_map' => 'Enable Country Restrict On Map',
   'call_driver' => 'Call Driver',
+  'fleet_driver' => 'Fleet Driver',
   );
