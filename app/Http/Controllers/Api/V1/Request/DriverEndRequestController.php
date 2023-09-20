@@ -101,11 +101,8 @@ class DriverEndRequestController extends BaseController
         $requested_currency_symbol = $service_location->currency_symbol;
 
         
-        if (!$request_detail->is_later) {
-            $ride_type = 1;
-        } else {
-            $ride_type = 2;
-        }
+        $ride_type = 1;
+
         $zone_type = $request_detail->zoneType;
 
         $zone_type_price = $zone_type->zoneTypePrice()->where('price_type', $ride_type)->first();

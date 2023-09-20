@@ -26,12 +26,7 @@ class AssignZoneTypeRequest extends BaseRequest
             'ride_now_cancellation_fee' => 'required|regex:/^\d*(\.\d{1,2})?$/',
             'ride_now_base_distance' => 'required',
             'ride_now_price_per_time'=>'required|regex:/^\d*(\.\d{1,2})?$/',
-            'ride_later_base_price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            'ride_later_price_per_distance' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            // 'ride_later_waiting_charge'=>'required|regex:/^\d*(\.\d{1,2})?$/',
-            'ride_later_cancellation_fee' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            'ride_later_base_distance' => 'required',
-            'ride_later_price_per_time'=>'required|regex:/^\d*(\.\d{1,2})?$/',
+
         ];
     }
 }

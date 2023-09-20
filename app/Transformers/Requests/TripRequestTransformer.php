@@ -134,11 +134,8 @@ class TripRequestTransformer extends Transformer
         $params['maximum_time_for_find_drivers_for_regular_ride'] = $final_interval;
 
 
-        if (!$request->is_later) {
             $ride_type = 1;
-        } else {
-            $ride_type = 2;
-        }
+
 
         $zone_type_price = $request->zoneType->zoneTypePrice()->where('price_type', $ride_type)->first();
 

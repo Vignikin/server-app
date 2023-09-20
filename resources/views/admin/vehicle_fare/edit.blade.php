@@ -37,7 +37,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">@lang('view_pages.transport_type') <span class="text-danger">*</span></label>
-                                <select name="transport_type" id="transport_type" class="form-control" required>
+                                <select name="transport_type" id="transport_type" class="form-control" required >
                                     <option value="taxi" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'taxi' ? 'selected' : '' }}>@lang('view_pages.taxi')</option>
                                     <option value="delivery" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'delivery' ? 'selected' : '' }}>@lang('view_pages.delivery')</option>
                                     <option value="both" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'both' ? 'selected' : '' }}>@lang('view_pages.both')</option>
@@ -115,10 +115,10 @@
             </div>
                     @if ($zone_price->price_type == 1)
                         <div class="row">
-                            <div class="col-12 ">
-                                <h2 class="fw-medium fs-base me-auto">
-                                    Ride Now
-                                </h2>
+                            <div class="box box-solid box-info">
+                                <div class="box-header with-border">
+                                <h4 class="box-title">@lang('view_pages.price')</h4>
+                                </div>
                             </div>
                             </div>
                             <div class="row ml-2 mr-2">

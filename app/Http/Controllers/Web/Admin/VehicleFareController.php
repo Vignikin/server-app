@@ -75,6 +75,7 @@ class VehicleFareController extends Controller
 
     public function store(AssignZoneTypeRequest $request)
     {
+
         $zone  = Zone::whereId($request->zone)->first();
         $payment = implode(',', $request->payment_type);
         // To save default type
@@ -110,18 +111,6 @@ class VehicleFareController extends Controller
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
         ]);
 
-        $zoneType->zoneTypePrice()->create([
-            'price_type' => zoneRideType::RIDELATER,
-            'base_price' => $request->ride_later_base_price,
-            'price_per_distance' => $request->ride_later_price_per_distance,
-            'cancellation_fee' => $request->ride_later_cancellation_fee,
-            'base_distance' => $request->ride_later_base_distance ? $request->ride_later_base_distance : 0,
-            'price_per_time' => $request->ride_later_price_per_time ? $request->ride_later_price_per_time : 0.00,
-                 'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
-                'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
-                'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
-        ]);
-
         $message = trans('succes_messages.type_assigned_succesfully');
 
         return redirect('vehicle_fare')->with('success', $message);
@@ -139,9 +128,10 @@ class VehicleFareController extends Controller
 
     public function update(Request $request,ZoneTypePrice $zone_price)
     {
-
         $zone_price->zoneType()->update([
-            'payment_type' => implode(',', $request->payment_type)
+            'type_id' => $request->type,
+            'payment_type' => implode(',', $request->payment_type),
+            'transport_type' => $request->transport_type,            
         ]);
         if($zone_price->price_type == 1)
         {
@@ -154,17 +144,6 @@ class VehicleFareController extends Controller
              'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
             'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_before_trip_start ? $request->ride_now_free_waiting_time_in_mins_before_trip_start:0,
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
-        ]);
-        }else{
-        $zone_price->update([
-            'base_price' => $request->ride_later_base_price,
-            'price_per_distance' => $request->ride_later_price_per_distance,
-            'cancellation_fee' => $request->ride_later_cancellation_fee,
-            'base_distance' => $request->ride_later_base_distance ? $request->ride_later_base_distance : 0,
-            'price_per_time' => $request->ride_later_price_per_time ? $request->ride_later_price_per_time : 0.00,
-            'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
-            'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
-            'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
         ]);
         }
         $message = trans('succes_messages.type_fare_updated_succesfully');

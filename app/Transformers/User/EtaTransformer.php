@@ -71,11 +71,8 @@ class EtaTransformer extends Transformer
         /**
          * get prices from zone type
          */
-        if (request()->ride_type==zoneRideType::RIDENOW) {
             $ride_type = zoneRideType::RIDENOW;
-        } else {
-            $ride_type = zoneRideType::RIDELATER;
-        }
+
         $coupon_detail = null;
 
         if (request()->has('promo_code') && request()->input('promo_code')) {

@@ -153,9 +153,22 @@ class ProfileController extends ApiController
             $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         }
+
+
+        if(env('APP_FOR')=='demo'){
+
+            $driver_params['approve']=true;
+            $status = true;
+
+            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
+
+        }
+
+
         $user->driver()->update($driver_params);
 
         $driver_details = $user->driver;
+       
 
         if($request->has('vehicle_types')){
 

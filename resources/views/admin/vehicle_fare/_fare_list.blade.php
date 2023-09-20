@@ -64,7 +64,7 @@
                     <th>@lang('view_pages.s_no')</th>
                     <th>@lang('view_pages.transport_type')</th>
                     <th>@lang('view_pages.vehicle_type')</th>
-                    <th>@lang('view_pages.price_type')</th>
+                    <!-- <th>@lang('view_pages.price_type')</th> -->
                     <th>@lang('view_pages.status')</th>
                     <th>@lang('view_pages.action')</th>
                 </tr>
@@ -90,13 +90,13 @@
                             <button class="btn btn-warning btn-sm">Default</button>
                             @endif
                             </td>
-                        <td>
+                  <!--       <td>
                         @if ($result->price_type == 1)
                         <span class="btn btn-success btn-sm">{{ __('view_pages.ride_now') }}</span>
                         @else
                         <span class="btn btn-danger btn-sm">{{ __('view_pages.ride_later') }}</span>
                         @endif
-                    </td>
+                    </td> -->
                     <td>
                         @if ($result->zoneType->active)
                         <button class="btn btn-success btn-sm">@lang('view_pages.active')</button>

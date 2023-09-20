@@ -19,7 +19,7 @@ class EtaRequest extends FormRequest
             'drop_lat'  =>'required',
             'drop_lng'  =>'required',
             'vehicle_type'=>'required|uuid|exists:vehicle_types,id',
-            'ride_type'=>'required|in:1,2',
+            'ride_type'=>'required|in:1',
             'drivers'=>'sometimes|required'
         ];
     }

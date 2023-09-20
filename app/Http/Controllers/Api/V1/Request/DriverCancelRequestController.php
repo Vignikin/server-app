@@ -99,13 +99,9 @@ class DriverCancelRequestController extends BaseController
           /**
          * get prices from zone type
          */
-        if ($request_detail->is_later) {
-            $ride_type = zoneRideType::RIDELATER;
 
-        } else {
             $ride_type = zoneRideType::RIDENOW;
 
-        }
 
         if ($charge_applicable) {
             
