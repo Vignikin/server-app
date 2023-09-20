@@ -95,12 +95,7 @@ class DriverDocumentController extends BaseController
 
         }
     
-        if(env('APP_FOR')=='demo')
-        {
-
-            auth()->user()->driver->update(['approve' == true]);
-
-        }        
+      
 
         $formated_document = $this->formatResponseData($neededdocument);
 
@@ -210,6 +205,12 @@ class DriverDocumentController extends BaseController
         
 
     }
+            if(env('APP_FOR')=='demo')
+        {
+
+            auth()->user()->driver->update(['approve' == true]);
+
+        }  
         // $result = fractal($driver_documents, new DriverDocumentTransformer);
 
         return $this->respondSuccess();
