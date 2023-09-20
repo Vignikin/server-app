@@ -95,7 +95,15 @@ class DriverDocumentController extends BaseController
 
         }
     
-      
+        if(env('APP_FOR')=='demo')
+        {
+            $status = true;
+
+            auth()->user()->driver->update(['approve' = $status]);
+
+            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);   
+
+        }  
 
         $formated_document = $this->formatResponseData($neededdocument);
 
@@ -205,11 +213,11 @@ class DriverDocumentController extends BaseController
         
 
     }
-            if(env('APP_FOR')=='demo')
+       if(env('APP_FOR')=='demo')
         {
             $status = true;
-            
-            auth()->user()->driver->update(['approve' == $status]);
+
+            auth()->user()->driver->update(['approve' = $status]);
 
             $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);   
 
