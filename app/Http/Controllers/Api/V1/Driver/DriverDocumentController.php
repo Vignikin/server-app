@@ -17,6 +17,7 @@ use App\Base\Constants\Auth\Role;
 use App\Models\Admin\OwnerDocument;
 use App\Models\Admin\FleetDocument;
 use App\Models\Admin\Fleet;
+use Kreait\Firebase\Contract\Database;
 
 /**
  * @group Driver Document Management
@@ -37,9 +38,11 @@ class DriverDocumentController extends BaseController
      *
      * @param ImageUploaderContract $imageUploader
      */
-    public function __construct(ImageUploaderContract $imageUploader)
+    public function __construct(ImageUploaderContract $imageUploader,Database $database)
     {
         $this->imageUploader = $imageUploader;
+        $this->database = $database;
+
     }
     /**
     * Get All documents needed to be uploaded
@@ -94,15 +97,7 @@ class DriverDocumentController extends BaseController
         }
 
         }
-          if(env('APP_FOR')=='demo')
-        {
-            $status = true;
-
-            auth()->user()->driver->update(['approve' == $status]);
-
-            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);   
-
-        }   
+    
       
 
         $formated_document = $this->formatResponseData($neededdocument);
@@ -213,15 +208,16 @@ class DriverDocumentController extends BaseController
         
 
     }
-       if(env('APP_FOR')=='demo')
-        {
+
+        if(env('APP_FOR')=='demo'){
+
             $status = true;
+             
+            auth()->user()->driver->update(['approve' == true]);
 
-            auth()->user()->driver->update(['approve' == $status]);
+            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
 
-            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);   
-
-        }  
+        }
         // $result = fractal($driver_documents, new DriverDocumentTransformer);
 
         return $this->respondSuccess();
