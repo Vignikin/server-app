@@ -127,7 +127,7 @@ class FleetDriversController extends BaseController
         }
         DB::commit();
 
-         $this->database->getReference('drivers/'.$driver->id)->set(['id'=>$driver->id,'vehicle_type'=>'fleet-owner-type','active'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+         $this->database->getReference('drivers/driver_'.$driver->id)->set(['id'=>$driver->id,'vehicle_type'=>'fleet-owner-type','active'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         return $this->respondSuccess(null,'driver_added_succesfully');
 
@@ -142,7 +142,7 @@ class FleetDriversController extends BaseController
 
         $driver->fleetDetail()->update(['driver_id'=>null]);
 
-        $this->database->getReference('drivers/'.$driver->id)->remove();
+        $this->database->getReference('drivers/driver_'.$driver->id)->remove();
 
         $driver->user()->delete();
 

@@ -126,7 +126,7 @@ class FleetController extends BaseController
             $title = trans('push_notifications.fleet_removed_from_your_account_title');
             $body = trans('push_notifications.fleet_removed_from_your_account_body');
 
-            $this->database->getReference('drivers/'.$fleet_driver->id)->update(['fleet_changed'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
+            $this->database->getReference('drivers/'.'driver_'.$fleet_driver->id)->update(['fleet_changed'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
             $notifable_driver = $fleet_driver->user;
             dispatch(new SendPushNotification($notifable_driver,$title,$body));
@@ -162,7 +162,7 @@ class FleetController extends BaseController
         $notifable_driver = $driver->user;
         dispatch(new SendPushNotification($notifable_driver,$title,$body));
 
-        $this->database->getReference('drivers/'.$driver->id)->update(['fleet_changed'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
+        $this->database->getReference('drivers/driver_'.$driver->id)->update(['fleet_changed'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         return $this->respondSuccess();
         

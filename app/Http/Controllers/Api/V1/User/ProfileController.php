@@ -150,7 +150,7 @@ class ProfileController extends ApiController
 
             $status=0;
 
-            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         }
 
@@ -160,7 +160,7 @@ class ProfileController extends ApiController
             $driver_params['approve']=true;
             $status = true;
 
-            $this->database->getReference('drivers/'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
+            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
 
         }
 

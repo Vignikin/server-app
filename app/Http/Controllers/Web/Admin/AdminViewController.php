@@ -114,7 +114,7 @@ class AdminViewController extends BaseController
        
         // if ($request_detail) {
             
-        $firebase_request_detail = $this->database->getReference('drivers/'.$driver->id)->getValue();
+        $firebase_request_detail = $this->database->getReference('drivers/driver_'.$driver->id)->getValue();
         $zone = Zone::companyKey()->first();
         // dd($firebase_request_detail);
         // $default_lat = $firebase_request_detail["l"][0];

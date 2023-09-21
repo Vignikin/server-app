@@ -107,7 +107,7 @@ class OfflineUnAvailableDrivers extends Command
                     $mysql_driver->active = 0;
                     $mysql_driver->save();
 
-                    $this->database->getReference('drivers/'.$driver['id'])->update(['is_active'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+                    $this->database->getReference('drivers/'.'driver_'.$driver['id'])->update(['is_active'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
                 }
 
