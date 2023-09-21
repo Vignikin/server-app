@@ -31,15 +31,11 @@
                 <span>{{ $result->driverDetail->name ?? '-' }}</span>
             </td>
              <td>
-                @if ($result->requestDetail->cancel_method == 0)
-                   <span>Automatic</span>
+                @if ($result->driverDetail)
+                   <span>Driver</span>
                 @else
-                   @if ($result->requestDetail->cancel_method == 1)
                         <span>User</span>
-                   @else
-                        <span>Driver</span>
                    @endif
-                @endif
             </td>
 
              <td>

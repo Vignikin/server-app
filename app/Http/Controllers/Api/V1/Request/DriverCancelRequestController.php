@@ -87,7 +87,7 @@ class DriverCancelRequestController extends BaseController
             $charge_applicable = true;
         }
         if ($request->reason) {
-            $reason = CancellationReason::find($request->reason);
+            $reason = CancellationReason::where('reason',$request->reason)->first();
 
             if ($reason->payment_type=='free') {
                 $charge_applicable=false;
