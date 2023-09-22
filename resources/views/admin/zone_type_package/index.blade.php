@@ -109,9 +109,6 @@
                 <td>{{ $i++ }} </td>
                 <td>
                     {{$result->PackageName->name}}
-                    {{-- @if ($result->zone->default_vehicle_type == $result->type_id)
-                        <button class="btn btn-warning btn-sm">Default</button>
-                    @endif --}}
                 </td>
                 <td> {{$result->PackageName->transport_type }}</td>
                 <td> {{$result->base_price }}</td>

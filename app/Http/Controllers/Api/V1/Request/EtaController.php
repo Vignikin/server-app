@@ -173,7 +173,7 @@ class EtaController extends ApiController
         ]);
 
         
-        $type = PackageType::where('transport_type',$request->transport_type)->active()->get();
+        $type = PackageType::where('transport_type',$request->transport_type)->orWhere('transport_type', 'both')->active()->get();
 
         $result = fractal($type, new PackagesTransformer);
 
