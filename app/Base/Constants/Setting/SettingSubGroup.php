@@ -13,7 +13,7 @@ class SettingSubGroup {
 	const RAZOR_PAY_SETTINGS = 'cashfree_settings';
 	const PAYMOB_SETTINGS = 'cashfree_settings';
     const KHALTI_PAY_SETTINGS = 'khalti_settings';
-	
+    const MERCADOPAGO_SETTINGS = 'mercadopago-settings';
 	
 	
 }

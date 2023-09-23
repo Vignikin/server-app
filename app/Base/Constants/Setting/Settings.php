@@ -132,6 +132,15 @@ class Settings
     const HOW_MANY_TIMES_A_DRIVER_TIMES_A_DRIVER_CAN_ENABLE_THE_MY_ROUTE_BOOKING_PER_DAY='how_many_times_a_driver_can_enable_the_my_route_booking_per_day';
     const ENABLE_MODULES_FOR_APPLICATIONS = 'enable_modules_for_applications';
     const TRIP_DISPTACH_TYPE='trip_dispatch_type';
+
+/*mercadopago*/
+    const ENABLE_MERCADOPAGO= 'enable_mercadopago';
+    const MERCADOPAGO_ENVIRONMENT= 'mercadopago_environment';
+    const MERCADOPAGO_TEST_PUBLIC_KEY='mercadopago_test_public_key';
+    const MERCADOPAGO_LIVE_PUBLIC_KEY='mercadopago_live_public_key';
+    const MERCADOPAGO_TEST_ACCESS_TOKEN='mercadopago_test_access_token';
+    const MERCADOPAGO_LIVE_ACCESS_TOKEN='mercadopago_live_access_token';
+    
 /*mail configuration*/
 
     const MAIL_MAILER='mail_mailer';

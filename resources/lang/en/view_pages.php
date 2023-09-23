@@ -807,4 +807,11 @@ return array (
   'enable_country_restrict_on_map' => 'Enable Country Restrict On Map',
   'call_driver' => 'Call Driver',
   'fleet_driver' => 'Fleet Driver',
+  'enable_mercadopago' => 'Enable Mercadopago',
+  'mercadopago_environment' => 'Mercadopago Environment',
+  'mercadopago_test_public_key' => 'Mercadopago Test Public Key',
+  'mercadopago_live_public_key' => 'Mercadopago  Live Public Key',
+  'mercadopago_test_access_token' => 'Mercadopago  Test Access Token',
+  'mercadopago_live_access_token' => 'Mercadopago  Live Public Token',
+  
   );

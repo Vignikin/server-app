@@ -494,7 +494,53 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => SettingSubGroup::RAZOR_PAY_SETTINGS,
         ],
-          // stripe
+/*mercadopago*/
+        SettingSlug::ENABLE_MERCADOPAGO => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => '1',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"yes":1,"no":0}',
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],
+
+         SettingSlug::MERCADOPAGO_ENVIRONMENT => [
+            'category'=>SettingCategory::INSTALLATION,
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"test":"test","production":"production"}',
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],
+
+        SettingSlug::MERCADOPAGO_TEST_PUBLIC_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'TEST-921f2a24-d29d-4af3-9ec8-3a366275cec8',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],
+        SettingSlug::MERCADOPAGO_LIVE_PUBLIC_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'TEST-921f2a24-d29d-4af3-9ec8-3a366275cec8',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],
+
+        SettingSlug::MERCADOPAGO_TEST_ACCESS_TOKEN => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'TEST-8770681523175761-021622-3db3401292f6ae1a11daed3a22b8db62-762016080',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],
+        SettingSlug::MERCADOPAGO_LIVE_ACCESS_TOKEN => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'TEST-8770681523175761-021622-3db3401292f6ae1a11daed3a22b8db62-762016080',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
+        ],        
+/**/
+  // stripe
         SettingSlug::ENABLE_STRIPE => [
             'category'=>SettingCategory::INSTALLATION,
             'value' => '1',

@@ -35,6 +35,15 @@ Route::namespace('Web')->group(function () {
     Route::post('/contactussendmail','FrontPageController@contactussendmailadd')->name('contactussendmail');
 
 
+    Route::get('mercadopago-checkout',function(){
+        return view('mercadopago.checkout');
+    });
+    
+    Route::get('mercadopago-success','MercadopagoController@success');
+
+    Route::view("success",'success');
+    Route::view("failure",'failure');
+
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
