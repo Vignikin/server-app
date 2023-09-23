@@ -813,5 +813,5 @@ return array (
   'mercadopago_live_public_key' => 'Mercadopago  Live Public Key',
   'mercadopago_test_access_token' => 'Mercadopago  Test Access Token',
   'mercadopago_live_access_token' => 'Mercadopago  Live Public Token',
-  
+  'mercadopago-settings' => 'Mercadopago Settings',
   );
