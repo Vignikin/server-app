@@ -15,6 +15,9 @@ use Carbon\Carbon;
 use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\BannerImageTransformer;
 use App\Models\Master\BannerImage;
+use App\Jobs\Notifications\SendPushNotification;
+use App\Models\Admin\UserDocument;
+use App\Models\Admin\UserNeededDocument;
 
 class UserTransformer extends Transformer
 {
@@ -52,6 +55,7 @@ class UserTransformer extends Transformer
             'mobile' => $user->countryDetail->dial_code.$user->mobile,
             'profile_picture' => $user->profile_picture,
             'active' => $user->active,
+            'approve' => (bool)$user->approve,
             'email_confirmed' => $user->email_confirmed,
             'mobile_confirmed' => $user->mobile_confirmed,
             'last_known_ip' => $user->last_known_ip,
@@ -65,6 +69,7 @@ class UserTransformer extends Transformer
             //'map_key'=>get_settings('google_map_key'),
             'show_rental_ride'=>true,
             'show_ride_later_feature'=>true,
+            'uploaded_document'=>false,
             // 'created_at' => $user->converted_created_at->toDateTimeString(),
             // 'updated_at' => $user->converted_updated_at->toDateTimeString(),
         ];
@@ -97,16 +102,23 @@ class UserTransformer extends Transformer
 
         $params['maximum_time_for_find_drivers_for_regular_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_REGULAR_RIDE) * 60);
        
-         // $params['maximum_time_for_find_drivers_for_bidding_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
-
-            $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
-
-
+         $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BITTING_RIDE) * 60);
        
         $params['show_ride_without_destination'] = (get_settings(Settings::SHOW_RIDE_WITHOUT_DESTINATION));
         
         $params['enable_country_restrict_on_map'] = (get_settings(Settings::ENABLE_COUNTRY_RESTRICT_ON_MAP));
         
+        $user_documents = UserNeededDocument::whereActive(true)->get();
+
+        foreach ($user_documents as $key => $needed_document) {
+            if (UserDocument::where('user_id', $user->id)->where('document_id', $needed_document->id)->exists()) {
+                $params['uploaded_document'] = true;
+            } else {
+                $params['uploaded_document'] = false;
+            }
+        }
+
+
         return $params;
     }
 

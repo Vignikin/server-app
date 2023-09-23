@@ -281,6 +281,13 @@ class PaymentController extends BaseController
             $enable_brain_tree = true;
         }
 
+        $enable_mercadopago = false;
+
+        if (get_settings(Settings::ENABLE_MERCADOPAGO) == 1) {
+
+            $enable_mercadopago = true;
+        }
+
         $enable_stripe = false;
 
         if (get_settings(Settings::STRIPE_ENVIRONMENT) == 'test') {
@@ -361,6 +368,7 @@ class PaymentController extends BaseController
             'currency_symbol' => $currency_symbol,
             'wallet_history' => $result,
             'braintree_tree' => $enable_brain_tree,
+            'mercadopago' => $enable_mercadopago,
             'stripe' => $enable_stripe,
             'razor_pay' => $enable_razor_pay,
             'khalti_pay'=>$enable_khalti_pay,
