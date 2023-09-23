@@ -48,7 +48,6 @@ class DriverProfileTransformer extends Transformer
     {
         $params = [
             'id' => $user->id,
-            'user_id'=>$user->user_id,
             'owner_id' => $user->owner_id,
             'transport_type' => $user->transport_type,
             'name' => $user->name,
@@ -93,15 +92,24 @@ class DriverProfileTransformer extends Transformer
         ];
 
         $params['vehicle_types'] = [];
+       
+        $params['enable_my_route_booking_feature'] =  false;
+
+
 
         if($user->driverVehicleTypeDetail()->exists()){
             foreach ($user->driverVehicleTypeDetail as $key => $type) {
+                $params['vehicle_type_icon_for'] = $type->vehicleType->icon_types_for;
             
                 $params['vehicle_types'][] = $type->vehicle_type;
 
                 if($type->vehicleType->trip_dispatch_type=='bidding'){
 
                     $params['enable_bidding'] = true;
+
+                }
+                if($type->vehicleType->trip_dispatch_type!='bidding'){
+                     $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
 
                 }
 
@@ -125,14 +133,13 @@ class DriverProfileTransformer extends Transformer
         
         $params['enable_modules_for_applications'] =  get_settings('enable_modules_for_applications');
         
-        $params['admin_commission'] = get_settings('admin_commission');
         $params['contact_us_mobile1'] =  get_settings('contact_us_mobile1');
         $params['contact_us_mobile2'] =  get_settings('contact_us_mobile2');
         $params['contact_us_link'] =  get_settings('contact_us_link');
          $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
         $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');       
         $params['how_many_times_a_driver_can_enable_the_my_route_booking_per_day'] =  get_settings('how_many_times_a_driver_can_enable_the_my_route_booking_per_day');
-        $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
+
         
         $current_date = Carbon::now();
 
@@ -200,10 +207,29 @@ class DriverProfileTransformer extends Transformer
             }
                 
             }
+    // check if balance is in negative
 
+          if($minimum_balance < 0)
+          {
+                if ($minimum_balance > $wallet_balance) 
+                {
+
+                $user->active = false;
+
+                $user->save();
+                
+                $params['active'] = false;
+
+
+                $low_balance = true;
+              }
+                    
+         }
             $params['trip_accept_reject_duration_for_driver'] = get_settings(Settings::TRIP_ACCEPT_REJECT_DURATION_FOR_DRIVER);
            
-            $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
+            // $params['maximum_time_for_find_drivers_for_bidding_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
+            
+             $params['maximum_time_for_find_drivers_for_bitting_ride'] = (get_settings(Settings::MAXIMUM_TIME_FOR_FIND_DRIVERS_FOR_BIDDING_RIDE) * 60);
 
             $params['low_balance'] = $low_balance;
 
