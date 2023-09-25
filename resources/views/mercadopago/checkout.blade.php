@@ -46,7 +46,7 @@ use Carbon\Carbon;
     $preference->back_urls=array(
     	"success"=>env('APP_URL').'/mercadopago-success',
     	"failure"=>env('APP_URL').'/failure',
-    	"pending"=>env('APP_URL').'/failure'
+    	"pending"=>env('APP_URL').'/pending'
     );
     
     $preference->save();

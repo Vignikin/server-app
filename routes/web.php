@@ -43,6 +43,7 @@ Route::namespace('Web')->group(function () {
 
     Route::view("success",'success');
     Route::view("failure",'failure');
+    Route::view("pending",'pending');
 
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
