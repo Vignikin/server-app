@@ -75,7 +75,11 @@ class VehicleFareController extends Controller
 
     public function store(AssignZoneTypeRequest $request)
     {
+        if (env('APP_FOR')=='demo') {
+            $message = trans('succes_messages.you_are_not_authorised');
 
+            return redirect('vehicle_fare')->with('warning', $message);
+        }
         $zone  = Zone::whereId($request->zone)->first();
         $payment = implode(',', $request->payment_type);
         // To save default type
@@ -128,6 +132,12 @@ class VehicleFareController extends Controller
 
     public function update(Request $request,ZoneTypePrice $zone_price)
     {
+
+        if (env('APP_FOR')=='demo') {
+            $message = trans('succes_messages.you_are_not_authorised');
+
+            return redirect('vehicle_fare')->with('warning', $message);
+        }        
         $zone_price->zoneType()->update([
             'type_id' => $request->type,
             'payment_type' => implode(',', $request->payment_type),
