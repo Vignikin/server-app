@@ -13,7 +13,14 @@
                 <div class="box">
 
                     <div class="box-header with-border">
-                        <div class="row text-right">
+                            <div class="col-12 col-md-12">                            
+                                <div  class="dashed-box" style="border: 2px dashed #333; padding: 10px;">
+                                    <p>If the pickup or drop-off location for the ride is within the designated airport zone, a surcharge will be added to the customer's fare at the end of the ride.</p>
+                                </div>
+                            </div>     
+                        </div>
+                    <div class="box-header with-border">
+                    <div class="row text-right">
                             <div class="col-8 col-md-3">
                                 <div class="form-group">
                                     <input type="text" id="search_keyword" name="search" class="form-control"
