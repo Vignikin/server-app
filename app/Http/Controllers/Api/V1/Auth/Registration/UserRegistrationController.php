@@ -335,10 +335,10 @@ class UserRegistrationController extends LoginController
             $validate_exists_email = $this->user->belongsTorole(Role::USER)->where('email', $email)->exists();
             if ($validate_exists_email) 
             {
-                return $this->respondSuccess(null, 'email_exists');
+                return $this->respondFailed(null, 'email_exists');
             }
 
-         return $this->respondFailed('email_does_not_exists');
+         return $this->respondSuccess('email_does_not_exists');
 
         }
 
