@@ -316,6 +316,8 @@ class UserRegistrationController extends LoginController
     */
     public function validateUserMobile(Request $request)
     {
+  if ($request->has('mobile')) 
+    {
         $mobile = $request->mobile;
 
         $validate_exists_mobile = $this->user->belongsTorole(Role::USER)->where('mobile', $mobile)->exists();
@@ -325,6 +327,22 @@ class UserRegistrationController extends LoginController
         }
 
         return $this->respondSuccess(null, 'mobile_validated');
+      }
+      if ($request->has('email')) 
+         {
+                $email = $request->input('email');
+
+            $validate_exists_email = $this->user->belongsTorole(Role::USER)->where('email', $email)->exists();
+            if ($validate_exists_email) 
+            {
+                return $this->respondSuccess(null, 'email_exists');
+            }
+
+         return $this->respondFailed('email_does_not_exists');
+
+        }
+
+
     }
     /**
     * Validate Mobile-For-User-Login
