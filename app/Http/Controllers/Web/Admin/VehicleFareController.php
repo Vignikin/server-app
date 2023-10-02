@@ -75,10 +75,6 @@ class VehicleFareController extends Controller
         $zone  = Zone::whereId($request->zone)->first();
         $payment = implode(',', $request->payment_type);
         // To save default type
-        $zoneType_OrderBy_exists = $zone->zoneType()->where('order_by', $request->order_by)->exists();
-        if ($zoneType_OrderBy_exists) {
-            throw ValidationException::withMessages(['order_by' => __('Order By Already Exists')]);
-        }
         if ($request->transport_type == 'taxi')
         {
             if ($zone->default_vehicle_type == null) {
@@ -96,8 +92,6 @@ class VehicleFareController extends Controller
             'payment_type' => $payment,
             'transport_type' => $request->transport_type,
             'bill_status' => true,
-            'order_by' => $request->order_by,
-            'vehicle_type_support_for'=> $request->vehicle_type_support_for,
         ]);
 
         $zoneType->zoneTypePrice()->create([
@@ -110,8 +104,6 @@ class VehicleFareController extends Controller
              'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
             'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_before_trip_start ? $request->ride_now_free_waiting_time_in_mins_before_trip_start:0,
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
-            'fuel_surge_price' => $request->ride_now_fuel_surge_price,
-            'time_price_slot' =>  $request->ride_now_time_price_slot,
         ]);
 
         $zoneType->zoneTypePrice()->create([
@@ -124,10 +116,6 @@ class VehicleFareController extends Controller
                  'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
                 'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
                 'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
-               'fuel_surge_price' => $request->ride_later_fuel_surge_price,
-               'time_price_slot' =>  $request->ride_later_time_price_slot,
-
-
         ]);
 
         $message = trans('succes_messages.type_assigned_succesfully');
@@ -154,10 +142,7 @@ class VehicleFareController extends Controller
         $zone_price->zoneType()->update([
             'payment_type' => implode(',', $request->payment_type),
             'transport_type' => $request->transport_type,
-            'order_by' => $request->order_by,
-            'vehicle_type_support_for'=> $request->vehicle_type_support_for,
-
-            
+        
         ]);
         if($zone_price->price_type == 1)
         {
@@ -170,8 +155,6 @@ class VehicleFareController extends Controller
              'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
             'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_before_trip_start ? $request->ride_now_free_waiting_time_in_mins_before_trip_start:0,
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
-            'fuel_surge_price' => $request->ride_now_fuel_surge_price,
-            'time_price_slot' =>  $request->ride_now_time_price_slot,
         ]);
         }else{
         $zone_price->update([
@@ -183,8 +166,6 @@ class VehicleFareController extends Controller
             'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
             'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
-               'fuel_surge_price' => $request->ride_later_fuel_surge_price,
-               'time_price_slot' =>  $request->ride_later_time_price_slot,
         ]);
         }
         $message = trans('succes_messages.type_fare_updated_succesfully');

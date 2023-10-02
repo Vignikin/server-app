@@ -58,33 +58,6 @@
                                 </div>
                                     <span class="text-danger">{{ $errors->first('type') }}</span>
                                  </div>
-
-                   <div class="col-sm-6">
-                       <div class="form-group">
-                           <label for="">@lang('view_pages.order_by') <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" id="order_by" name="order_by" value="{{ old('order_by', $zone_price->zoneType->order_by) }}" required="" placeholder="@lang('view_pages.enter') @lang('view_pages.order_by')">
-                           <span class="text-danger">{{ $errors->first('order_by') }}</span>
-                       </div>
-                   </div>
-                    </div>
-                    <div class="row">   
-
-
-                    <div class="col-6">
-                    <div class="form-group">
-                    <label for="admin_id">@lang('view_pages.vehicle_type_support_for')
-                        <span class="text-danger">*</span>
-                    </label>
-                        <select name="vehicle_type_support_for" id="vehicle_type_support_for" class="form-control" required>
-                            <option value="" selected disabled>@lang('view_pages.select')</option>
-                            <option value="special_deal" {{ old('vehicle_type_support_for', $zone_price->zoneType->vehicle_type_support_for ) == 'special_deal' ? 'selected' : '' }}>Special Deal</option>
-
-                             <option value="regular" {{ old('vehicle_type_support_for', $zone_price->zoneType->vehicle_type_support_for ) == 'regular' ? 'selected' : '' }}>Regular</option>
-
-                             <option value="both" {{ old('vehicle_type_support_for', $zone_price->zoneType->vehicle_type_support_for ) == 'both' ? 'selected' : '' }}>Both</option>
-                        </select>
-                    </div>
-                    </div>
                     <div class="col-6">
                         <div class="form-group">
                         <label for="payment_type">@lang('view_pages.payment_type')
@@ -166,24 +139,6 @@
                                 <span class="text-danger">{{ $errors->first('ride_now_base_distance') }}</span>
                             </div>
                             <div class="col-12 col-lg-6 mt-4">
-                                <label for="fuel_surge_price" class="form-label">@lang('view_pages.fuel_surge_price')</label>
-                                <input id="ride_now_fuel_surge_price" name="ride_now_fuel_surge_price" value="{{ old('ride_now_fuel_surge_price', $zone_price->fuel_surge_price) }}" type="number" min="0" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.fuel_surge_price')" required>
-                                <span class="text-danger">{{ $errors->first('ride_now_fuel_surge_price') }}</span>
-                            </div>
-                            <div class="col-12 col-lg-6 mt-4">
-                              <div class="form-group">
-                                <label for="ride_now_time_price_slot" class="form-label">@lang('view_pages.time_price_slot')</label>
-                                <select name="ride_now_time_price_slot" id="ride_now_time_price_slot" class="form-control"
-                                        required>
-                                      <option
-                                        value="minute" {{ old('time_price_slot', $zone_price->time_price_slot) == 'minute' ? 'selected' : '' }}>@lang('view_pages.minute')</option>
-                                      <option
-                                        value="hour" {{ old('time_price_slot', $zone_price->time_price_slot) == 'hour' ? 'selected' : '' }}>@lang('view_pages.hour')</option>
-                                </select>
-                                <span class="text-danger">{{ $errors->first('ride_now_time_price_slot') }}</span>
-                            </div>
-                        </div>
-                            <div class="col-12 col-lg-6 mt-4">
                                 <label for="price_per_time" class="form-label">@lang('view_pages.time_price')</label>
                                 <input id="ride_now_price_per_time" name="ride_now_price_per_time" value="{{ old('ride_now_price_per_time', $zone_price->price_per_time) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_time')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_price_per_time') }}</span>
@@ -222,20 +177,6 @@
                                 <input id="ride_later_base_distance" name="ride_later_base_distance" value="{{ old('ride_later_base_distance', $zone_price->base_distance) }}" type="number" min="0" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.base_distance')" required>
                                 <span class="text-danger">{{ $errors->first('ride_later_base_distance') }}</span>
                             </div>
-
-                            <div class="col-12 col-lg-6 mt-4">
-                              <div class="form-group">
-                                <label for="ride_later_time_price_slot" class="form-label">@lang('view_pages.time_price_slot')</label>
-                                <select name="ride_later_time_price_slot" id="time_price_slot" class="form-control"
-                                        required>
-                                      <option
-                                        value="minute" {{ old('time_price_slot', $zone_price->time_price_slot) == 'minute' ? 'selected' : '' }}>@lang('view_pages.minute')</option>
-                                      <option
-                                        value="hour" {{ old('time_price_slot', $zone_price->time_price_slot) == 'hour' ? 'selected' : '' }}>@lang('view_pages.hour')</option>
-                                </select>
-                                <span class="text-danger">{{ $errors->first('ride_later_time_price_slot') }}</span>
-                            </div>
-                        </div>
                             <div class="col-12 col-lg-6 mt-4">
                                 <label for="price_per_time" class="form-label">@lang('view_pages.time_price')</label>
                                 <input id="ride_later_price_per_time" name="ride_later_price_per_time" value="{{ old('ride_later_price_per_time', $zone_price->price_per_time) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_time')" required>

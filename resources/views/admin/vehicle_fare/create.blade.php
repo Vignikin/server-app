@@ -60,33 +60,6 @@
             </select>
             </div>
     </div>
-    <div class="col-sm-6">
-           <div class="form-group">
-               <label for="">@lang('view_pages.order_by') <span class="text-danger">*</span></label>
-                <input class="form-control" type="number" id="order_by" name="order_by" value="{{old('order_by')}}" required="" placeholder="@lang('view_pages.enter') @lang('view_pages.order_by')">
-               <span class="text-danger">{{ $errors->first('order_by') }}</span>
-           </div>
-    </div>
-</div>
-<div class="row">   
-
-
-<div class="col-6">
-<div class="form-group">
-<label for="admin_id">@lang('view_pages.vehicle_type_support_for')
-    <span class="text-danger">*</span>
-</label>
-<select name="vehicle_type_support_for" id="vehicle_type_support_for" class="form-control" required>
-    <option value="" selected disabled>@lang('view_pages.select')</option>
-    <option value="special_deal" {{ old('vehicle_type_support_for') ? 'selected' : '' }}>Special Deal</option>
-    <option value="regular" {{ old('vehicle_type_support_for')  ? 'selected' : '' }}>Regular</option>
-    <option value="both" {{ old('vehicle_type_support_for')  ? 'selected' : '' }}>Both</option>
-
-
-</select>
-</div>
-</div>
-
 <div class="col-sm-6">
 <div class="form-group">
 <label for="payment_type">@lang('view_pages.payment_type')
@@ -163,29 +136,7 @@
                    
                     </div>
                 </div>
-                <div class="col-sm-6">
-                   <div class="form-group">
-                    <label for="fuel_surge_price">@lang('view_pages.fuel_surge_price')
-                        <span class="text-danger">*</span>
-                    </label>
-                     <input class="form-control" type="number" id="ride_now_fuel_surge_price" name="ride_now_fuel_surge_price" value="{{old('ride_now_fuel_surge_price')}}" required="" placeholder="@lang('view_pages.fuel_surge_price')">
-                    
-                   
-                    </div>
-                </div>
-            </div>  
-            <div class="row"> 
-                    <div class="col-sm-6">
-                       <div class="form-group">
-                        <label for="ride_now_time_price_slot">@lang('view_pages.time_price_slot')<span class="text-danger">*</span></label>
-                      <select name="ride_now_time_price_slot" id="ride_now_time_price_slot" class="form-control" required>
-                        <option value="" selected disabled>@lang('view_pages.select_time_price_slot')</option>
-                     <option value="minute" {{ 'minute' }}>@lang('view_pages.minute')</option>    
-                     <option value="hour" {{ 'hour' }}>@lang('view_pages.hour')</option>
-                    </select>
-                 </div>
-               </div>            
-                <div class="col-sm-6">
+                 <div class="col-sm-6">
                    <div class="form-group">
                     <label for="price_per_time">@lang('view_pages.time_price')<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="ride_now_price_per_time" name="ride_now_price_per_time" value="{{old('ride_now_price_per_time')}}" required="" placeholder="@lang('view_pages.enter') @lang('view_pages.time_price')">
@@ -270,28 +221,7 @@
                        
                         </div>
                     </div>
-                <div class="col-sm-6">
-                   <div class="form-group">
-                    <label for="fuel_surge_price">@lang('view_pages.fuel_surge_price')
-                        <span class="text-danger">*</span>
-                    </label>
-                     <input class="form-control" type="number" id="ride_later_fuel_surge_price" name="ride_later_fuel_surge_price" value="{{old('ride_later_fuel_surge_price')}}" required="" placeholder="@lang('view_pages.fuel_surge_price')">               
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                    <div class="col-sm-6">
-                       <div class="form-group">
-                        <label for="ride_later_time_price_slot">@lang('view_pages.time_price_slot')<span class="text-danger">*</span></label>
-                      <select name="ride_later_time_price_slot" id="ride_later_time_price_slot" class="form-control" required>
-                        <option value="" selected disabled>@lang('view_pages.select_time_price_slot')</option>
-                     <option value="minute" {{ 'minute' }}>@lang('view_pages.minute')</option>    
-                     <option value="hour" {{ 'hour' }}>@lang('view_pages.hour')</option>
-                    </select>
-                 </div>
-               </div> 
-
-                <div class="col-sm-6">
+                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="price_per_time">@lang('view_pages.time_price')<span class="text-danger">*</span></label>
                         <input class="form-control" type="text" id="ride_later_price_per_time" name="ride_later_price_per_time" value="{{old('ride_later_price_per_time')}}" required="" placeholder="@lang('view_pages.enter') @lang('view_pages.time_price')">
