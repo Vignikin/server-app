@@ -1,85 +1,29 @@
-<style>
-/*    .custom-nav-link {
-        margin-right: 2px; /* Adjust the value as needed */
-    }*/
-    
-    .tab-content {
-        margin-top: 35px; /* Add margin to create space between tabs and table */
-    }
+<div class="row p-0 m-0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-sm-12 p-0">
+                    <table class="table table-hover" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr>
+                           <th>@lang('view_pages.s_no')</th>
+                            <th>@lang('view_pages.transport_type')</th>
+                            <th>@lang('view_pages.vehicle_type')</th>
+                            <th>@lang('view_pages.price_type')</th>
+                            <th>@lang('view_pages.status')</th>
+                            <th>@lang('view_pages.action')</th>
+                            </tr>
+                        </thead>
 
-    .nav-tabs {
-           margin-top: 35px; /* Add margin to create space above the navigation tabs */
-       }
+                        <tbody>
 
-</style>
+                            @if(!$results)
+                                <td class="no-result" colspan="11">{{ trans('view_pages.no_data_found')}}</td>
+                            @else
+                                @php $i= $results->firstItem(); @endphp
 
-
-<ul class="nav nav-tabs" id="zoneTabs" role="tablist">
-    @php
-    $zoneNames = [];
-    $zoneIndex = 0;
-    @endphp
-    @foreach ($results as $key => $result)
-    @php
-    $zoneName = $result->zoneType->zone->name;
-
-    if (!in_array($zoneName, $zoneNames)) {
-        $zoneNames[] = $zoneName;
-    }
-    @endphp
-    @endforeach
-    @foreach ($zoneNames as $zoneName)
-    <li class="nav-item" role="presentation">
-        <a class="nav-link custom-nav-link @if ($zoneIndex === 0) active @endif" id="zone-tab-{{ $zoneIndex }}" data-toggle="tab" href="#zone-{{ $zoneIndex }}" role="tab" aria-controls="zone-{{ $zoneIndex }}" aria-selected="true">{{ $zoneName }}</a>
-    </li>
-    @php
-    $zoneIndex++;
-    @endphp
-    @endforeach
-</ul>
-
-
-<div class="tab-content" id="zoneTabsContent">
-    @php
-    $zoneIndex = 0;
-    @endphp
-@if (($results->count()) == 0)
-        <tr>
-            <td colspan="11">
-                <p id="no_data" class="lead no-data text-center">
-                    <img src="{{asset('assets/img/dark-data.svg')}}" style="width:150px;margin-top:25px;margin-bottom:25px;" alt="">
-                    <h4 class="text-center" style="color:#333;font-size:25px;">@lang('view_pages.no_data_found')</h4>
-                </p>
-            </td>
-        </tr>
-@endif
-    @foreach ($zoneNames as $zoneName)
-    <div class="tab-pane fade @if ($zoneIndex === 0) show active @endif" id="zone-{{ $zoneIndex }}" role="tabpanel">
-        <table class="table table-hover">
-            <!-- Table Header -->
-            <thead>
-                <!-- Header Rows -->
-                <tr>
-                    <!-- Header Columns -->
-                    <th>@lang('view_pages.s_no')</th>
-                    <th>@lang('view_pages.transport_type')</th>
-                    <th>@lang('view_pages.vehicle_type')</th>
-                    <!-- <th>@lang('view_pages.price_type')</th> -->
-                    <th>@lang('view_pages.status')</th>
-                    <th>@lang('view_pages.action')</th>
-                </tr>
-            </thead>
-            <!-- Table Body -->
-            <tbody>
-
-                @php
-                $i = 1;
-                @endphp
-
-                @foreach ($results as $key => $result)
-                @if ($result->zoneType->zone->name === $zoneName)
-                <!-- Data Rows -->
-                <tr>
+                                @foreach ($results as $key => $result)
+                                    <tr>
                     <td>{{ $i++ }}</td>
                     <td>{{ ($result->zoneType->transport_type) }}</td>
                     <td>{{ $result->zoneType->vehicleType->name }}
@@ -90,13 +34,13 @@
                             <button class="btn btn-warning btn-sm">Default</button>
                             @endif
                             </td>
-                  <!--       <td>
+                    <td>
                         @if ($result->price_type == 1)
                         <span class="btn btn-success btn-sm">{{ __('view_pages.ride_now') }}</span>
                         @else
                         <span class="btn btn-danger btn-sm">{{ __('view_pages.ride_later') }}</span>
                         @endif
-                    </td> -->
+                    </td>
                     <td>
                         @if ($result->zoneType->active)
                         <button class="btn btn-success btn-sm">@lang('view_pages.active')</button>
@@ -127,18 +71,29 @@
                             <a class="dropdown-item sweet-delete" href="#" data-url="{{url('vehicle_fare/delete',$result->id)}}">
                                 <i class="fa fa-trash-o"></i>@lang('view_pages.delete')</a>
                         </div>
-                    </td>
-                </tr>
-                @endif
-                @endforeach
-            </tbody>
-        </table>
+                    </td>   
+
+                                    </tr>
+                                @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="">
+                <div class="col-sm-12 col-md-5 float-left">
+
+                </div>
+                <div class="col-sm-12 col-md-7 float-left">
+                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                        <ul class="pagination float-right">
+                            {{ $results->links() }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    @endif                                    
+
     </div>
-    @php
-    $zoneIndex++;
-    @endphp
-    @endforeach
-</div>
-<div class="pagination">
-    {{ $results->links() }}
 </div>

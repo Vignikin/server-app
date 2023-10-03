@@ -12,7 +12,7 @@
     <div class="box">
 
         <div class="box-header with-border">
-            <a href="{{ url('vehicle_fare') }}">
+            <a href="{{ url()->previous() }}">
                 <button class="btn btn-danger btn-sm pull-right" type="submit">
                     <i class="mdi mdi-keyboard-backspace mr-2"></i>
                     @lang('view_pages.back')
@@ -37,7 +37,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">@lang('view_pages.transport_type') <span class="text-danger">*</span></label>
-                                <select name="transport_type" id="transport_type" class="form-control" required >
+                                <select name="transport_type" id="transport_type" class="form-control" required>
                                     <option value="taxi" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'taxi' ? 'selected' : '' }}>@lang('view_pages.taxi')</option>
                                     <option value="delivery" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'delivery' ? 'selected' : '' }}>@lang('view_pages.delivery')</option>
                                     <option value="both" {{ old('transport_type', $zone_price->zoneType->transport_type ) == 'both' ? 'selected' : '' }}>@lang('view_pages.both')</option>
@@ -47,19 +47,17 @@
                         </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                        <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="type">@lang('view_pages.select_type')
                                         <span class="text-danger">*</span>
                                     </label>
                                     <select name="type" id="type" class="form-control" required>
                                         <option value="{{ $zone_price->zoneType->vehicleType->id }}">{{ $zone_price->zoneType->vehicleType->name }}</option>
-                                        <!-- Add more options if needed -->
                                     </select>
                                 </div>
-                                <span class="text-danger">{{ $errors->first('type') }}</span>
-                            </div>
-
+                                    <span class="text-danger">{{ $errors->first('type') }}</span>
+                                 </div>
                     <div class="col-6">
                         <div class="form-group">
                         <label for="payment_type">@lang('view_pages.payment_type')
@@ -113,12 +111,13 @@
                      <span class="text-danger">{{ $errors->first('payment_type') }}</span>
                 </div>
             </div>
+            
                     @if ($zone_price->price_type == 1)
                         <div class="row">
-                            <div class="box box-solid box-info">
-                                <div class="box-header with-border">
-                                <h4 class="box-title">@lang('view_pages.price')</h4>
-                                </div>
+                            <div class="col-12 ">
+                                <h2 class="fw-medium fs-base me-auto">
+                                    Ride Now
+                                </h2>
                             </div>
                             </div>
                             <div class="row ml-2 mr-2">
@@ -139,9 +138,8 @@
                                 <input id="ride_now_base_distance" name="ride_now_base_distance" value="{{ old('ride_now_base_distance', $zone_price->base_distance) }}" type="number" min="0" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.base_distance')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_base_distance') }}</span>
                             </div>
-
                             <div class="col-12 col-lg-6 mt-4">
-                                <label for="price_per_time" class="form-label">@lang('view_pages.price_per_time')</label>
+                                <label for="price_per_time" class="form-label">@lang('view_pages.time_price')</label>
                                 <input id="ride_now_price_per_time" name="ride_now_price_per_time" value="{{ old('ride_now_price_per_time', $zone_price->price_per_time) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_time')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_price_per_time') }}</span>
                             </div>
@@ -151,27 +149,7 @@
                                 <input id="ride_now_cancellation_fee" name="ride_now_cancellation_fee" value="{{ old('ride_now_cancellation_fee', $zone_price->cancellation_fee) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.cancellation_fee')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_cancellation_fee') }}</span>
                             </div>
-
-                            <div class="col-12 col-lg-6 mt-4">
-                                <label for="waiting_charge" class="form-label">@lang('view_pages.waiting_charge')</label>
-                                <input id="ride_now_waiting_charge" name="ride_now_waiting_charge" value="{{ old('ride_now_waiting_charge', $zone_price->waiting_charge) }}" type="number" min="0" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.waiting_charge')" required>
-                                <span class="text-danger">{{ $errors->first('ride_now_waiting_charge') }}</span>
-                            </div>
-
-                            <div class="col-12 col-lg-6 mt-4">
-                                <label for="free_waiting_time_in_mins_before_trip_start" class="form-label">@lang('view_pages.free_waiting_time_in_mins_before_trip_start')</label>
-                                <input id="ride_now_free_waiting_time_in_mins_before_trip_start" name="ride_now_free_waiting_time_in_mins_before_trip_start" value="{{ old('ride_now_free_waiting_time_in_mins_before_trip_start', $zone_price->free_waiting_time_in_mins_before_trip_start) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.free_waiting_time_in_mins_before_trip_start')" required>
-                                <span class="text-danger">{{ $errors->first('ride_now_free_waiting_time_in_mins_before_trip_start') }}</span>
-                            </div>
-
-                            <div class="col-12 col-lg-6 mt-4">
-                                <label for="free_waiting_time_in_mins_after_trip_start" class="form-label">@lang('view_pages.free_waiting_time_in_mins_after_trip_start')</label>
-                                <input id="ride_now_free_waiting_time_in_mins_after_trip_start" name="ride_now_free_waiting_time_in_mins_after_trip_start" value="{{ old('ride_now_free_waiting_time_in_mins_after_trip_start', $zone_price->free_waiting_time_in_mins_after_trip_start) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.free_waiting_time_in_mins_after_trip_start')" required>
-                                <span class="text-danger">{{ $errors->first('ride_now_free_waiting_time_in_mins_after_trip_start') }}</span>
-                            </div>
                         </div>
-                     </div>
-
 
                     @else
                  <!-- <div class="col-sm-12"> -->
@@ -199,9 +177,8 @@
                                 <input id="ride_later_base_distance" name="ride_later_base_distance" value="{{ old('ride_later_base_distance', $zone_price->base_distance) }}" type="number" min="0" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.base_distance')" required>
                                 <span class="text-danger">{{ $errors->first('ride_later_base_distance') }}</span>
                             </div>
-
-                            <div  class="col-12 col-lg-6 mt-4">
-                                <label for="price_per_time" class="form-label">@lang('view_pages.price_per_time')</label>
+                            <div class="col-12 col-lg-6 mt-4">
+                                <label for="price_per_time" class="form-label">@lang('view_pages.time_price')</label>
                                 <input id="ride_later_price_per_time" name="ride_later_price_per_time" value="{{ old('ride_later_price_per_time', $zone_price->price_per_time) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_time')" required>
                                 <span class="text-danger">{{ $errors->first('ride_later_price_per_time') }}</span>
                             </div>
@@ -244,7 +221,6 @@
 
                 var vehicles = result.data;
                 var option = ''
-                option += '<option value="" disabled selected>Select a vehicle</option>';            
                 vehicles.forEach(vehicle => {
                     option += `<option value="${vehicle.id}">${vehicle.name}</option>`;
                 });
@@ -270,86 +246,6 @@
              }
         });
     });
-/*hide and show*/
-$(document).on('change', '#type', function () {
-    let selectedType = $(this).val();
-
-    // Check if a type is selected
-    if (selectedType) {
-        $.ajax({
-            url: "{{ url('vehicle_fare/fetch/trip_type') }}",
-            type: 'GET',
-            data: {
-                'selectedType': selectedType
-            },
-            success: function(result) {
-                console.log(result.data.trip_dispatch_type);
-
-                if (result.data.trip_dispatch_type === 'bidding') {
-                    // Hide the specified div elements for "ride_now"
-                    $('#ride_now_waiting_charge').closest('.col-12').hide();
-                    $('#ride_now_free_waiting_time_in_mins_before_trip_start').closest('.col-12').hide();
-                    $('#ride_now_free_waiting_time_in_mins_after_trip_start').closest('.col-12').hide();
-
-                    // Hide the specified div elements for "ride_later"
-                    $('#ride_later_waiting_charge').closest('.col-12').hide();
-                    $('#ride_later_free_waiting_time_in_mins_before_trip_start').closest('.col-12').hide();
-                    $('#ride_later_free_waiting_time_in_mins_after_trip_start').closest('.col-12').hide();
-                } else {
-                    // Show the div elements if the type is not "bidding"
-                    $('.col-12').show();
-                }
-            },
-            error: function(xhr, status, error) {
-                // Handle error here
-            }
-        });
-    } else {
-        // Hide all divs when no option is selected
-        $('.col-12').hide();
-    }
-});
-
-/*hide and show*/
-
-$(document).ready(function () {
-    let selectedType = $('#type').val(); // Get the initially selected type
-// alert(selectedType);
-    // Check if a type is selected
-    if (selectedType) {
-        $.ajax({
-            url: "{{ url('vehicle_fare/fetch/trip_type') }}",
-            type: 'GET',
-            data: {
-                'selectedType': selectedType
-            },
-            success: function (result) {
-                // console.log(result.data.trip_dispatch_type);
-
-                if (result.data.trip_dispatch_type === 'bidding') {
-                    // Hide the specified div elements for "ride_now"
-                    $('#ride_now_waiting_charge').closest('.col-12').hide();
-                    $('#ride_now_free_waiting_time_in_mins_before_trip_start').closest('.col-12').hide();
-                    $('#ride_now_free_waiting_time_in_mins_after_trip_start').closest('.col-12').hide();
-
-                    // Hide the specified div elements for "ride_later"
-                    $('#ride_later_waiting_charge').closest('.col-12').hide();
-                    $('#ride_later_free_waiting_time_in_mins_before_trip_start').closest('.col-12').hide();
-                    $('#ride_later_free_waiting_time_in_mins_after_trip_start').closest('.col-12').hide();
-                } else {
-                    // Show the div elements if the type is not "bidding"
-                    $('.col-12').show();
-                }
-            },
-            error: function (xhr, status, error) {
-                // Handle error here
-            }
-        });
-    } else {
-        // Hide all divs when no option is selected
-        $('.col-12').hide();
-    }
-});
 </script>
 
 @endsection

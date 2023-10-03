@@ -13,29 +13,34 @@ use App\Models\Admin\ZoneType;
 use App\Models\Admin\ZoneTypePackagePrice;
 use App\Models\Admin\ZoneTypePrice;
 use Illuminate\Http\Request;
+use App\Base\Constants\Auth\Role as RoleSlug;
+use Illuminate\Validation\ValidationException;
 
 class VehicleFareController extends Controller
 {
-    public function index()
+
+    public function zoneIndex(Zone $zone)
     {
-        $page = trans('pages_names.vehicle-fare');
+        $page = trans('pages_names.owners');
         $main_menu = 'vehicle-fare';
-        $sub_menu = '';
+        $sub_menu = $zone->name;
 
-        return view('admin.vehicle_fare.index', compact('page', 'main_menu', 'sub_menu'));
+        return view('admin.vehicle_fare.zoneIndex', compact('page', 'main_menu', 'sub_menu', 'zone'));
     }
-
-    public function fetchFareList(QueryFilterContract $queryFilter)
+    public function getAllPrice(QueryFilterContract $queryFilter,Zone $zone)
     {
-        // dd($queryFilter);
-        $query = ZoneTypePrice::latest();
+        
+            $results = ZoneTypePrice::whereHas('zoneType', function ($query) use ($zone) {
+            $query->where('zone_id', $zone->id);
+            })
+            ->orderBy('created_at', 'desc') // Add this line to order by created_at in descending order
+            ->paginate();
 
-        $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
-
-        return view('admin.vehicle_fare._fare_list', compact('results'));
+        return view('admin.vehicle_fare._set_price', compact('results'))->render();
     }
 
-    public function create() 
+
+      public function create() 
     {
         $zones = Zone::active()->get();
 
@@ -64,22 +69,12 @@ class VehicleFareController extends Controller
         return response()->json(['success' => true, 'data' => $types]);
     }
 
-/*fetchTriptype*/
-    public function fetchTriptype(Request $request)
-    {
-
-        $types = VehicleType::where('id', $request->selectedType)->first();
-    
-        return response()->json(['success' => true, 'data' => $types]);
-    }
-
     public function store(AssignZoneTypeRequest $request)
     {
-
+        // dd($request);
         $zone  = Zone::whereId($request->zone)->first();
         $payment = implode(',', $request->payment_type);
         // To save default type
-
         if ($request->transport_type == 'taxi')
         {
             if ($zone->default_vehicle_type == null) {
@@ -96,7 +91,7 @@ class VehicleFareController extends Controller
             'type_id' => $request->type,
             'payment_type' => $payment,
             'transport_type' => $request->transport_type,
-            'bill_status' => true
+            'bill_status' => true,
         ]);
 
         $zoneType->zoneTypePrice()->create([
@@ -111,9 +106,22 @@ class VehicleFareController extends Controller
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
         ]);
 
+        $zoneType->zoneTypePrice()->create([
+            'price_type' => zoneRideType::RIDELATER,
+            'base_price' => $request->ride_later_base_price,
+            'price_per_distance' => $request->ride_later_price_per_distance,
+            'cancellation_fee' => $request->ride_later_cancellation_fee,
+            'base_distance' => $request->ride_later_base_distance ? $request->ride_later_base_distance : 0,
+            'price_per_time' => $request->ride_later_price_per_time ? $request->ride_later_price_per_time : 0.00,
+                 'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
+                'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
+                'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
+        ]);
+
         $message = trans('succes_messages.type_assigned_succesfully');
 
-        return redirect('vehicle_fare')->with('success', $message);
+
+        return redirect('vehicle_fare/by_zone/'.$zone->id)->with('success', $message);
     }
 
     public function getById(ZoneTypePrice $zone_price)
@@ -128,10 +136,13 @@ class VehicleFareController extends Controller
 
     public function update(Request $request,ZoneTypePrice $zone_price)
     {
+        
+        $zone_id = $zone_price->zoneType()->pluck('zone_id')->toArray();
+
         $zone_price->zoneType()->update([
-            'type_id' => $request->type,
             'payment_type' => implode(',', $request->payment_type),
-            'transport_type' => $request->transport_type,            
+            'transport_type' => $request->transport_type,
+        
         ]);
         if($zone_price->price_type == 1)
         {
@@ -145,10 +156,21 @@ class VehicleFareController extends Controller
             'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_before_trip_start ? $request->ride_now_free_waiting_time_in_mins_before_trip_start:0,
             'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_now_free_waiting_time_in_mins_after_trip_start ? $request->ride_now_free_waiting_time_in_mins_after_trip_start:0,
         ]);
+        }else{
+        $zone_price->update([
+            'base_price' => $request->ride_later_base_price,
+            'price_per_distance' => $request->ride_later_price_per_distance,
+            'cancellation_fee' => $request->ride_later_cancellation_fee,
+            'base_distance' => $request->ride_later_base_distance ? $request->ride_later_base_distance : 0,
+            'price_per_time' => $request->ride_later_price_per_time ? $request->ride_later_price_per_time : 0.00,
+            'waiting_charge' => $request->ride_now_waiting_charge ? $request->ride_now_waiting_charge : 0.00,
+            'free_waiting_time_in_mins_before_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_before_trip_start ? $request->ride_later_free_waiting_time_in_mins_before_trip_start:0,
+            'free_waiting_time_in_mins_after_trip_start' =>  $request->ride_later_free_waiting_time_in_mins_after_trip_start ? $request->ride_later_free_waiting_time_in_mins_after_trip_start:0,
+        ]);
         }
         $message = trans('succes_messages.type_fare_updated_succesfully');
 
-        return redirect('vehicle_fare')->with('success', $message);
+        return redirect('vehicle_fare/by_zone/'.$zone_id[0])->with('success', $message);
     }
 
     public function toggleStatus(ZoneTypePrice $zone_price) {
@@ -157,7 +179,7 @@ class VehicleFareController extends Controller
 
         $message = trans('succes_messages.type_fare_status_updated_succesfully');
 
-        return redirect('vehicle_fare')->with('success', $message);
+        return redirect('vehicle_fare/by_zone/'.$zone_price->zoneType->zone->id)->with('success', $message);
     }
     public function delete(ZoneTypePrice $zone_price)
     {

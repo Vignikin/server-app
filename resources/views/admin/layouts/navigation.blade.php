@@ -331,11 +331,34 @@ if(str_contains((string)request()->path(),'translations')){
         </li>
       @endif
 
-      @if(auth()->user()->can('vehicle-fare'))
+<!--       @if(auth()->user()->can('vehicle-fare'))
          <li class="{{'vehicle-fare' == $main_menu ? 'active' : '' }}">
               <a href="{{url('/vehicle_fare')}}"><i class="fa fa-money"></i>@lang('pages_names.set_price')</a>
             </li>
-        @endif
+        @endif -->
+
+      @php
+        $zones = App\Models\Admin\Zone::companyKey()->active(true)->get();
+      @endphp
+
+        @if(auth()->user()->can('vehicle-fare'))
+     <li class="treeview {{ 'vehicle-fare' == $main_menu ? 'active menu-open' : '' }}">
+        <a href="javascript: void(0);">
+          <i class="fa fa-money"></i>
+          <span> @lang('pages_names.set_price') </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+          </span>
+        </a>
+         <ul class="treeview-menu">
+         @foreach ($zones as $item)
+          <li class="{{ $sub_menu == $item->name ? 'active' : '' }}" data-id="{{ $item->id }}">
+            <a href="{{url('/vehicle_fare/by_zone',$item->id)}}"><i class="fa fa-circle-thin"></i>{{ ucfirst($item->name) }}</a>
+          </li>
+           @endforeach
+         </ul>
+       </li>
+      @endif        
      @if(auth()->user()->can('drivers-menu'))
               @if (auth()->user()->hasRole('owner'))
                   @php
