@@ -147,6 +147,17 @@ class DriverDocumentController extends BaseController
         }
 
         $driver_documents = DriverDocument::where('driver_id', $driver_id)->get();
+
+        if(env('APP_FOR')=='demo'){
+
+            $status = true;
+             
+            auth()->user()->driver->update(['approve' == true]);
+
+            $this->database->getReference('drivers/'.'driver_'.auth()->user()->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
+
+        }
+        
     }else{
 
         if($request->has('fleet_id') && $request->fleet_id){
@@ -209,15 +220,7 @@ class DriverDocumentController extends BaseController
 
     }
 
-        if(env('APP_FOR')=='demo'){
 
-            $status = true;
-             
-            auth()->user()->driver->update(['approve' == true]);
-
-            $this->database->getReference('drivers/'.'driver_'.auth()->user()->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
-
-        }
         // $result = fractal($driver_documents, new DriverDocumentTransformer);
 
         return $this->respondSuccess();
