@@ -55,7 +55,7 @@ class AdminViewController extends BaseController
 
         }
         
-        if($conditional_host[0] =='super-bidding'){
+        if($conditional_host[0] =='tagxi-super-bidding'){
 
             $user = User::belongsToRole('super-admin')->first();
 
