@@ -48,6 +48,7 @@ class DriverProfileTransformer extends Transformer
     {
         $params = [
             'id' => $user->id,
+            'user_id'=>$user->user_id,
             'owner_id' => $user->owner_id,
             'transport_type' => $user->transport_type,
             'name' => $user->name,
