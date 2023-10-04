@@ -62,25 +62,35 @@ use Carbon\Carbon;
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Mercadopago-Checkout</title>
-	<style type="text/css">
+	<!-- <style type="text/css">
 		.container{
 			display: flex;
 			align-items: start;
 			justify-content: start;
 			margin-top: 150px;
 		}
-	</style>
+	</style> -->
 </head>
+<style>
+	  body {
+        text-align: center;
+        padding: 40px 0;
+        /* background: #EBF0F5; */
+      }
+	  .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+</style>
 <body>
-	<div class="container" style="width:900px;height:400px">
-		<div class="row ">
-			<div class="col col-md-12 ">
+<div class="card">
 <div class="amount-display text-center"> $ <?php echo request()->amount; ?></div>
-</div>
-<div class="col col-md-12">
+
 	<div class="contenedor-btn "></div>
-	</div>
-	</div>
 	</div>
 	<script src="https://sdk.mercadopago.com/js/v2"></script>
 
