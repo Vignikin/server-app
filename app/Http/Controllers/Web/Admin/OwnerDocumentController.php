@@ -12,6 +12,8 @@ use App\Models\Admin\OwnerDocument;
 use App\Models\Admin\OwnerNeededDocument;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Jobs\Notifications\SendPushNotification;
+
 
 class OwnerDocumentController extends BaseController
 {
@@ -101,6 +103,24 @@ class OwnerDocumentController extends BaseController
             'approve' => $status
         ]);
 
+
+
+          $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+        $message = trans('succes_messages.owner_approve_status_changed_succesfully');
+
+        $user = User::find($owner->user_id);
+
+         if ($status) {
+            $title = trans('push_notifications.driver_approved');
+            $body = trans('push_notifications.driver_approved_body');
+        } else {
+            $title = trans('push_notifications.driver_declined_title');
+            $body = trans('push_notifications.driver_declined_body');
+        }
+        
+        dispatch(new SendPushNotification($user,$title,$body));
+        
         return 'success';
     }
 
