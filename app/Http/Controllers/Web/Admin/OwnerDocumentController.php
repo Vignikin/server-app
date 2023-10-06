@@ -13,6 +13,7 @@ use App\Models\Admin\OwnerNeededDocument;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Jobs\Notifications\SendPushNotification;
+use Kreait\Firebase\Contract\Database;
 
 
 class OwnerDocumentController extends BaseController
@@ -30,9 +31,11 @@ class OwnerDocumentController extends BaseController
      *
      * @param \App\Models\Admin\Driver $driver
      */
-    public function __construct(ImageUploaderContract $imageUploader)
+    public function __construct(ImageUploaderContract $imageUploader,Database $database)
     {
         $this->imageUploader = $imageUploader;
+        $this->database = $database;
+
     }
 
     public function index(Owner $owner)
