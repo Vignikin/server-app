@@ -116,6 +116,8 @@ class OwnerProfileTransformer extends Transformer
                 
             }
 
+            $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
+
             $params['low_balance'] = $low_balance;
 
 
