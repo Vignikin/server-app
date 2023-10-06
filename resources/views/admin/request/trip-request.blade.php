@@ -170,7 +170,7 @@
                                                     </p>                                   
                                                 @endif
                                                     <p class="mb-1 f-12">
-                                                        @lang('view_pages.ratings') : <b>{{ $item->driverDetail->driverDetail->rating }} <i
+                                                        @lang('view_pages.ratings') : <b>{{ $item->driverDetail->user->rating }} <i
                                                                 class="fas fa-star" style="color: yellow;"></i></b>
                                                     </p>
                                                 </div>
