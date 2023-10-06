@@ -17,7 +17,6 @@ use App\Base\Constants\Auth\Role;
 use App\Models\Admin\OwnerDocument;
 use App\Models\Admin\FleetDocument;
 use App\Models\Admin\Fleet;
-use Kreait\Firebase\Contract\Database;
 
 /**
  * @group Driver Document Management
@@ -38,11 +37,9 @@ class DriverDocumentController extends BaseController
      *
      * @param ImageUploaderContract $imageUploader
      */
-    public function __construct(ImageUploaderContract $imageUploader,Database $database)
+    public function __construct(ImageUploaderContract $imageUploader)
     {
         $this->imageUploader = $imageUploader;
-        $this->database = $database;
-
     }
     /**
     * Get All documents needed to be uploaded
@@ -97,8 +94,7 @@ class DriverDocumentController extends BaseController
         }
 
         }
-    
-      
+        
 
         $formated_document = $this->formatResponseData($neededdocument);
 
@@ -147,17 +143,6 @@ class DriverDocumentController extends BaseController
         }
 
         $driver_documents = DriverDocument::where('driver_id', $driver_id)->get();
-
-        if(env('APP_FOR')=='demo'){
-
-            $status = true;
-             
-            auth()->user()->driver->update(['approve' == true]);
-
-            $this->database->getReference('drivers/'.'driver_'.auth()->user()->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
-
-        }
-        
     }else{
 
         if($request->has('fleet_id') && $request->fleet_id){
@@ -219,8 +204,6 @@ class DriverDocumentController extends BaseController
         
 
     }
-
-
         // $result = fractal($driver_documents, new DriverDocumentTransformer);
 
         return $this->respondSuccess();
