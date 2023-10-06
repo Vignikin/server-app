@@ -455,20 +455,20 @@ tripRef.on('value', function(snapshot) {
 
         var tripRef = firebase.database().ref('requests/' + requestId);
 
-        // tripRef.on('value', async function(snapshot) {
+        tripRef.on('value', async function(snapshot) {
 
-        //     var data = snapshot.val();
+            var data = snapshot.val();
 
-        //     console.log(data);
+            console.log(data);
 
-        //     driverLat = data.lat;
-        //     driverLng = data.lng;
-        //     bearing = data.bearing;
+            driverLat = data.lat;
+            driverLng = data.lng;
+            bearing = data.bearing;
 
-        //     await loadCarInMap(driverLat, driverLng, bearing, carimage);
+            await loadCarInMap(driverLat, driverLng, bearing, carimage);
 
-        //     // await rotateMarker(bearing);
-        // });
+            // await rotateMarker(bearing);
+        });
 
 
         var area1, area2, icon1, icon2;
