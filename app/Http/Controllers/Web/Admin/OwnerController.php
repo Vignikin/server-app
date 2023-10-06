@@ -30,6 +30,7 @@ use App\Models\Payment\UserWalletHistory;
 use App\Base\Constants\Setting\Settings;
 use Illuminate\Support\Str;
 use App\Base\Constants\Masters\WalletRemarks;
+use App\Jobs\Notifications\SendPushNotification;
 
 class OwnerController extends BaseController
 {
@@ -244,6 +245,19 @@ class OwnerController extends BaseController
         $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         $message = trans('succes_messages.owner_approve_status_changed_succesfully');
+
+        $user = User::find($owner->user_id);
+
+         if ($status) {
+            $title = trans('push_notifications.driver_approved');
+            $body = trans('push_notifications.driver_approved_body');
+        } else {
+            $title = trans('push_notifications.driver_declined_title');
+            $body = trans('push_notifications.driver_declined_body');
+        }
+        
+        dispatch(new SendPushNotification($user,$title,$body));
+        
 
         return redirect("owners/by_area/$owner->service_location_id")->with('success', $message);
     }
