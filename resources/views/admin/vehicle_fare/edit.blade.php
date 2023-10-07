@@ -26,6 +26,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
+                                <input type="hidden" id="zone_value" name="zone_value" value="{{ $zone_price->zoneType->zone }}">
                                 <label for="admin_id">@lang('view_pages.select_zone')
                                 <span class="text-danger">*</span>
                                 </label>
@@ -122,13 +123,13 @@
                             </div>
                             <div class="row ml-2 mr-2">
                             <div class="col-12 col-lg-6 mt-4">
-                                <label for="ride_now_base_price" class="form-label">@lang('view_pages.base_price')  (@lang('view_pages.kilometer'))</label>
+                                <label for="base_price">@lang('view_pages.base_price')&nbsp (@lang('view_pages.kilometer')) <span class="text-danger">*</span></label>
                                 <input id="ride_now_base_price" name="ride_now_base_price" value="{{ old('ride_now_base_price', $zone_price->base_price) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.base_price')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_base_price') }}</span>
                             </div>
 
                             <div class="col-12 col-lg-6 mt-4">
-                                <label for="price_per_distance" class="form-label">@lang('view_pages.price_per_distance')  (@lang('view_pages.kilometer'))</label>
+                               <label for="price_per_distance">@lang('view_pages.price_per_distance')&nbsp (@lang('view_pages.kilometer')) <span class="text-danger">*</span></label>
                                 <input id="ride_now_price_per_distance" name="ride_now_price_per_distance" value="{{ old('ride_now_price_per_distance', $zone_price->price_per_distance) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_distance')" required>
                                 <span class="text-danger">{{ $errors->first('ride_now_price_per_distance') }}</span>
                             </div>
@@ -161,13 +162,13 @@
                             </div>
                             <div class="row ml-2 mr-2">
                             <div class="col-12 col-lg-6 mt-4">
-                                <label for="ride_later_base_price" class="form-label">@lang('view_pages.base_price')  (@lang('view_pages.kilometer'))</label>
+                              <label for="base_price">@lang('view_pages.base_price')&nbsp (@lang('view_pages.kilometer')) <span class="text-danger">*</span></label>
                                 <input id="ride_later_base_price" name="ride_later_base_price" value="{{ old('ride_later_base_price', $zone_price->base_price) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.base_price')" required>
                                 <span class="text-danger">{{ $errors->first('ride_later_base_price') }}</span>
                             </div>
 
                             <div  class="col-12 col-lg-6 mt-4">
-                                <label for="price_per_distance" class="form-label">@lang('view_pages.price_per_distance')  (@lang('view_pages.kilometer'))</label>
+                              <label for="price_per_distance">@lang('view_pages.price_per_distance')&nbsp (@lang('view_pages.kilometer')) <span class="text-danger">*</span></label>
                                 <input id="ride_later_price_per_distance" name="ride_later_price_per_distance" value="{{ old('ride_later_price_per_distance', $zone_price->price_per_distance) }}" type="text" class="form-control w-full" placeholder="@lang('view_pages.enter') @lang('view_pages.price_per_distance')" required>
                                 <span class="text-danger">{{ $errors->first('ride_later_price_per_distance') }}</span>
                             </div>
@@ -246,6 +247,86 @@
              }
         });
     });
+
+/*zone on change change label name */
+
+$(document).on('change', '#zone', function () {
+    var selected = $(this).val();
+    let zone = document.getElementById("zone").value;
+
+    $.ajax({
+        url: "{{ route('getUnit') }}",
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            'zone': zone,
+        },
+        success: function (response) {
+            // Assuming response.unit contains the new unit text
+            if(response.unit == 1)
+            {
+                        var newUnitText = "Kilometer";
+
+            }else{
+                        var newUnitText = "Miles";
+
+            }
+
+            // Update the label text
+            var label = $("label[for='base_price']");
+            label.html(`@lang('view_pages.base_price')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+            // You may also want to update the input placeholder
+            $("#ride_now_base_price").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.base_price')`);
+            // Update the label text
+            var label1 = $("label[for='price_per_distance']");
+            label1.html(`@lang('view_pages.price_per_distance')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+            // You may also want to update the input placeholder
+            $("#ride_now_price_per_distance").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.price_per_distance')`);
+        }
+    });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var zone = document.getElementById("zone_value");
+
+    var zone_unit = zone.value;
+
+    // Parse the JSON string into a JavaScript object
+    var zone_unit_obj = JSON.parse(zone_unit);
+
+    // Access the 'unit' property
+
+            if(zone_unit_obj.unit == 1)
+            {
+                        var newUnitText = "Kilometer";
+
+            }else{
+                        var newUnitText = "Miles";
+
+            }
+
+
+
+
+    var label = $("label[for='base_price']");
+        label.html(`@lang('view_pages.base_price')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+        // You may also want to update the input placeholder
+        $("#ride_now_base_price").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.base_price')`);
+        // Update the label text
+        var label1 = $("label[for='price_per_distance']");
+        label1.html(`@lang('view_pages.price_per_distance')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+        // You may also want to update the input placeholder
+        $("#ride_now_price_per_distance").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.price_per_distance')`);
+
+});
+
+    
 </script>
 
 @endsection

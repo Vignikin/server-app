@@ -216,6 +216,12 @@ class VehicleFareController extends Controller
 
         return $type;
     }
+    public function getUnit(Request $request)
+    {
 
+        $zone = Zone::whereId($request->zone)->first();
+
+        return $zone;
+    }
 
 }

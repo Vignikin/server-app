@@ -340,6 +340,47 @@
              }
         });
     });
+
+/*zone on change change label name */
+
+$(document).on('change', '#zone', function () {
+    var selected = $(this).val();
+    let zone = document.getElementById("zone").value;
+
+    $.ajax({
+        url: "{{ route('getUnit') }}",
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            'zone': zone,
+        },
+        success: function (response) {
+            // Assuming response.unit contains the new unit text
+            if(response.unit == 1)
+            {
+                        var newUnitText = "Kilometer";
+
+            }else{
+                        var newUnitText = "Miles";
+
+            }
+
+            // Update the label text
+            var label = $("label[for='base_price']");
+            label.html(`@lang('view_pages.base_price')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+            // You may also want to update the input placeholder
+            $("#ride_now_base_price").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.base_price')`);
+            // Update the label text
+            var label1 = $("label[for='price_per_distance']");
+            label1.html(`@lang('view_pages.price_per_distance')&nbsp (${newUnitText}) <span class="text-danger">*</span>`);
+
+            // You may also want to update the input placeholder
+            $("#ride_now_price_per_distance").attr("placeholder", `@lang('view_pages.enter') @lang('view_pages.price_per_distance')`);
+        }
+    });
+});
+    
 </script>
 
 @endsection
