@@ -151,7 +151,11 @@ class FleetController extends BaseController
 
         $driver->update([
             'fleet_id' => $fleet->id,
-            'vehicle_type' => $fleet->vehicle_type
+            'vehicle_type' => $fleet->vehicle_type,
+            'car_make' => $fleet->brand,
+            'car_model' => $fleet->model,
+            'car_color' => $fleet->car_color,
+
         ]);
 
         $driver->fresh();
