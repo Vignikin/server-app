@@ -97,8 +97,8 @@ class DriverProfileTransformer extends Transformer
         $params['enable_my_route_booking_feature'] =  false;
 
         if ($user->owner_id!=null) {
-            
-                     $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
+
+          $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
         }
 
         if($user->driverVehicleTypeDetail()->exists()){
