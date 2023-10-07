@@ -94,12 +94,13 @@ class DriverProfileTransformer extends Transformer
 
         $params['vehicle_types'] = [];
        
-        // $params['enable_my_route_booking_feature'] =  false;
+        $params['enable_my_route_booking_feature'] =  false;
 
 
 
         if($user->driverVehicleTypeDetail()->exists()){
             foreach ($user->driverVehicleTypeDetail as $key => $type) {
+
                 $params['vehicle_type_icon_for'] = $type->vehicleType->icon_types_for;
             
                 $params['vehicle_types'][] = $type->vehicle_type;
