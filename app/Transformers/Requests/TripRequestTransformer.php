@@ -183,13 +183,25 @@ class TripRequestTransformer extends Transformer
         }
 
         $timezone = $request->serviceLocationDetail->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
-
-        $params['cv_trip_start_time'] = Carbon::parse($request->trip_start_time)->setTimezone($timezone)->format('h:i A');
+        if ($request->trip_start_time==null) {
+            $params['cv_trip_start_time'] = null;
+        }else{
+            $params['cv_trip_start_time'] = Carbon::parse($request->trip_start_time)->setTimezone($timezone)->format('h:i A');
+        }
 
         if ($request->completed_at==null) {
             $params['cv_completed_at'] = null;
-        }
+        }else{
         $params['cv_completed_at'] = Carbon::parse($request->completed_at)->setTimezone($timezone)->format('h:i A');
+
+        }
+
+        if ($request->created_at==null) {
+            $params['cv_created_at'] = null;
+        }else{
+        $params['cv_created_at'] = Carbon::parse($request->created_at)->setTimezone($timezone)->format('h:i A');
+
+        }
 
 
         if($request->is_cancelled){
