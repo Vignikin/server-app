@@ -29,7 +29,7 @@
             <div class="col-9 text-right">
             <a href="{{url('vehicle_fare/rental_package/create',$zone_type->id)}}" class="btn btn-primary btn-sm">
             <i class="mdi mdi-plus-circle mr-2"></i>@lang('view_pages.add_package_type')</a>
-            <a href="{{url('vehicle_fare')}}" class="btn btn-danger btn-sm">
+            <a href="{{ url()->previous() }}" class="btn btn-danger btn-sm">
             <i class="mdi mdi-keyboard-backspace mr-2"></i>@lang('view_pages.back')</a>
             </div>
         </div>
