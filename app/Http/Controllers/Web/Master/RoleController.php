@@ -55,10 +55,13 @@ class RoleController extends BaseController
     public function index(QueryFilterContract $queryFilter)
     {
         if (access()->hasRole(RoleSlug::SUPER_ADMIN)) {
-            $result = Role::whereNotIn('slug', RoleSlug::mobileAppRoles());
+            // $result = Role::whereNotIn('slug', RoleSlug::mobileAppRoles());
+            $result = Role::where('slug', 'admin');
+            
         } else {
             $result = Role::where('slug', '!=', 'super-admin');
         }
+            $result = Role::where('slug', 'admin');
 
         $results = $queryFilter->builder($result)->customFilter(new CommonMasterFilter)->paginate();
 
