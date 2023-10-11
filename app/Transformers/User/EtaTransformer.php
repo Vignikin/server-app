@@ -259,7 +259,7 @@ class EtaTransformer extends Transformer
 
 // userWallet
 
-        $user = $request->userDetail;
+        $user = auth()->user();
 
         // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
         
