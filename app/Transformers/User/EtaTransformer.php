@@ -266,7 +266,7 @@ class EtaTransformer extends Transformer
         $user_balance =  $user->userWallet->amount_balance;
 
 
-        $params['user_wallet_balance'] = $user_balance;
+        $response['user_wallet_balance'] = $user_balance;
 
 
         // $driver_to_pickup = $this->db_query_previous_pickup_dropoff($driver_lat, $driver_lng, $pick_lat, $pick_lng);
