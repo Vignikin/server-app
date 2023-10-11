@@ -257,6 +257,18 @@ class EtaTransformer extends Transformer
 
 
 
+// userWallet
+
+        $user = $request->userDetail;
+
+        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+        
+        $user_balance =  $user->userWallet->amount_balance;
+
+
+        $params['user_wallet_balance'] = $user_balance;
+
+
         // $driver_to_pickup = $this->db_query_previous_pickup_dropoff($driver_lat, $driver_lng, $pick_lat, $pick_lng);
 
         // $driver_to_pickup_response = json_decode($driver_to_pickup->json_result);
