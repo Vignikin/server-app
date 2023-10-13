@@ -55,6 +55,7 @@
                             <a class="dropdown-item" href="{{url('vehicle_fare/edit', $result->id)}}">
                                 <i class="fa fa-pencil"></i>@lang('view_pages.edit')
                             </a>
+
                             <a class="dropdown-item" href="{{url('vehicle_fare/rental_package/index', $result->zoneType->id)}}">
                                 <i class="fa fa-plus"></i>@lang('view_pages.assign_rental_package')
                             </a>
