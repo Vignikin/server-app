@@ -259,7 +259,7 @@ class EtaTransformer extends Transformer
 
 
 // userWallet
-        if(auth()->user()->hasRole(Role::DRIVER))
+        if(!auth()->user()->hasRole(Role::DRIVER))
         {
 
           $user = auth()->user();
