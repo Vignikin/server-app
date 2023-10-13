@@ -16,6 +16,7 @@ use App\Helpers\Exception\ExceptionHelpers;
 use App\Base\Constants\Masters\EtaConstants;
 use App\Base\Constants\Masters\zoneRideType;
 use App\Transformers\Access\RoleTransformer;
+use App\Base\Constants\Auth\Role;
 
 class EtaTransformer extends Transformer
 {
@@ -258,7 +259,7 @@ class EtaTransformer extends Transformer
 
 
 // userWallet
-        if($request->instant_ride==false)
+        if(auth()->user()->hasRole(Role::DRIVER))
         {
 
           $user = auth()->user();
