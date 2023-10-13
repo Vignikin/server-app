@@ -254,6 +254,7 @@ class EtaTransformer extends Transformer
                 $near_driver_status=1;
             }
         }
+        $user_balance = 0;
 
 
 // userWallet
