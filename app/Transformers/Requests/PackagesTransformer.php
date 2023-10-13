@@ -50,6 +50,23 @@ class PackagesTransformer extends Transformer
         ];
 
 
+        $user_balance = 0;
+
+
+        // userWallet
+        if(!auth()->user()->hasRole(Role::DRIVER))
+        {
+
+        $user = auth()->user();
+
+        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+
+        $user_balance =  $user->userWallet->amount_balance;
+        }
+
+
+        $params['user_wallet_balance'] = $user_balance;
+
         return $params;
     }
 
@@ -74,28 +91,17 @@ class PackagesTransformer extends Transformer
         })->get();
 
         $zone_types = [];
-
-
-        $user_balance = 0;
-
-
-        // userWallet
-        if(!auth()->user()->hasRole(Role::DRIVER))
-        {
-
         $user = auth()->user();
-
-        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
-
-        $user_balance =  $user->userWallet->amount_balance;
-        }
-
-
 
 
         foreach ($types as $key => $type) {
 
             $prices = $type->zoneTypePackage()->where('package_type_id',$package->id)->first();
+
+
+        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+
+        $user_balance =  $user->userWallet->amount_balance ?? 0;
 
             $zone_types[] = array(
                 'zone_type_id'=>$type->id,
@@ -119,10 +125,8 @@ class PackagesTransformer extends Transformer
                 'discounted_totel'=>0,
                 'has_discount'=>false,
                 'promocode_id'=>null,
+                'user_wallet_balance'=>$user_balance ,
             );
-
-            $zone_types[$key]['user_wallet_balance'] = $user_balance ;
-            
 
             if (request()->has('promo_code') && request()->input('promo_code')) {
             $coupon_detail = $this->validate_promo_code($zone_detail->service_location_id);
