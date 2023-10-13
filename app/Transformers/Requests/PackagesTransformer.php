@@ -75,6 +75,23 @@ class PackagesTransformer extends Transformer
 
         $zone_types = [];
 
+
+        $user_balance = 0;
+
+
+        // userWallet
+        if(!auth()->user()->hasRole(Role::DRIVER))
+        {
+
+        $user = auth()->user();
+
+        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+
+        $user_balance =  $user->userWallet->amount_balance;
+        }
+
+
+
         foreach ($types as $key => $type) {
 
             $prices = $type->zoneTypePackage()->where('package_type_id',$package->id)->first();
