@@ -48,7 +48,24 @@ class PackagesTransformer extends Transformer
             'short_description'=>$package->short_description,
         ];
 
-       
+
+        $user_balance = 0;
+
+
+        // userWallet
+        if(!auth()->user()->hasRole(Role::DRIVER))
+        {
+
+        $user = auth()->user();
+
+        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+
+        $user_balance =  $user->userWallet->amount_balance;
+        }
+
+
+        $params['user_wallet_balance'] = $user_balance;
+        
         return $params;
     }
 
