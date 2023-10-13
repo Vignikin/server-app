@@ -90,6 +90,8 @@ class PackagesTransformer extends Transformer
         $user_balance =  $user->userWallet->amount_balance;
         }
 
+            $zone_types[$key]['user_wallet_balance'] = $user_balance ;
+
 
 
         foreach ($types as $key => $type) {
@@ -118,7 +120,6 @@ class PackagesTransformer extends Transformer
                 'discounted_totel'=>0,
                 'has_discount'=>false,
                 'promocode_id'=>null,
-                'user_wallet_balance'=>$user_balance,
             );
 
             if (request()->has('promo_code') && request()->input('promo_code')) {
