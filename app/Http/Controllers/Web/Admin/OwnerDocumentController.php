@@ -31,11 +31,9 @@ class OwnerDocumentController extends BaseController
      *
      * @param \App\Models\Admin\Driver $driver
      */
-    public function __construct(ImageUploaderContract $imageUploader,Database $database)
+    public function __construct(ImageUploaderContract $imageUploader)
     {
         $this->imageUploader = $imageUploader;
-        $this->database = $database;
-
     }
 
     public function index(Owner $owner)
@@ -108,7 +106,7 @@ class OwnerDocumentController extends BaseController
 
 
 
-          $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+          // $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         $message = trans('succes_messages.owner_approve_status_changed_succesfully');
 
