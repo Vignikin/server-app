@@ -256,14 +256,16 @@ class EtaTransformer extends Transformer
         }
 
 
-
 // userWallet
+        if($request->instant_ride==false)
+        {
 
-        $user = auth()->user();
+          $user = auth()->user();
 
         // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
         
         $user_balance =  $user->userWallet->amount_balance;
+        }
 
 
         $response['user_wallet_balance'] = $user_balance;
