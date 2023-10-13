@@ -90,7 +90,6 @@ class PackagesTransformer extends Transformer
         $user_balance =  $user->userWallet->amount_balance;
         }
 
-            $zone_types[$key]['user_wallet_balance'] = $user_balance ;
 
 
 
@@ -121,6 +120,9 @@ class PackagesTransformer extends Transformer
                 'has_discount'=>false,
                 'promocode_id'=>null,
             );
+
+            $zone_types[$key]['user_wallet_balance'] = $user_balance ;
+            
 
             if (request()->has('promo_code') && request()->input('promo_code')) {
             $coupon_detail = $this->validate_promo_code($zone_detail->service_location_id);
