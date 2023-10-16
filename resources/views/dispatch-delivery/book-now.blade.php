@@ -167,8 +167,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="row">
-                                                    <div class="col-lg-12 mb-4 mb-lg-0">
-                                                        <div class="swiper-container theme-slider">
+                                                    <div class="col-lg-12 mb-4 mb-lg-0" data-bs-spy="scroll" style="overflow-x:scroll;">
+                                                        <div class="">
                                                             <div class="swiper-wrapper" id="vehicles">
 
                                                             </div>
