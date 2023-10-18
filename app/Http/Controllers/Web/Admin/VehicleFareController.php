@@ -190,7 +190,14 @@ class VehicleFareController extends Controller
         return $message;
 
         }
-        if($zone_type->zone->default_vehicle_type == $zone_type->vehicleType->id)
+       $zone_type_detail = ZoneType::where('id', $zone_price->zone_type_id)->first();
+
+        // $package = ZoneTypePackagePrice::where('zone_type_id', $zone_price->zone_type_id)->get();
+
+        $zone = Zone::where('id', $zone_type_detail->zone_id)->first();
+
+        
+        if($zone->default_vehicle_type == $zone_type_detail->vehicleType->id)
         {
                 $message = 'you cannot delete the Vehicle Type. This is Default Vehicle Type';
 
@@ -198,12 +205,13 @@ class VehicleFareController extends Controller
         }
 
 
-        if($zone_type->zone->default_vehicle_type_for_delivery == $zone_type->vehicleType->id)
+        if($zone->default_vehicle_type_for_delivery == $zone_type_detail->vehicleType->id)
         {
                 $message = 'you cannot delete the Vehicle Type. This is Default Vehicle Type';
 
                 return $message;
         }
+
         $zone_type = ZoneType::where('id', $zone_price->zone_type_id)->get();
         // $package = ZoneTypePackagePrice::where('zone_type_id', $zone_price->zone_type_id)->get();
         
