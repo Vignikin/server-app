@@ -123,6 +123,7 @@
     <!-- Start Page content -->
     <section class="content">
 
+
         <div class="row g-3">
             <div class="col-sm-6 col-md-3">
                 <div class="card overflow-hidden" style="min-width: 12rem">
@@ -135,10 +136,7 @@
                         </h6>
                         <div class="display-4 fs-4 mb-2 font-weight-normal font-sans-serif text-warning"
                             data-countup="{&quot;endValue&quot;:58.386,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;k&quot;}">
-                            {{ $total_drivers[0]['total'] }}</div>
-                            @if(!auth()->user()->hasRole('owner'))
-                            <a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('drivers/waiting-for-approval')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
-                            @endif
+                            {{ $total_drivers[0]['total'] }}</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('drivers/waiting-for-approval')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
                     </div>
                 </div>
             </div>
@@ -153,10 +151,7 @@
                         </h6>
                         <div class="display-4 fs-4 mb-2 font-weight-normal font-sans-serif text-success"
                             data-countup="{&quot;endValue&quot;:58.386,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;k&quot;}">
-                            {{ $total_drivers[0]['approved'] }}</div>
-                        @if(!auth()->user()->hasRole('owner'))
-                            <a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('drivers')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
-                        @endif
+                            {{ $total_drivers[0]['approved'] }}</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('drivers')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
                     </div>
                 </div>
             </div>
@@ -172,15 +167,11 @@
                         </h6>
                         <div class="display-4 fs-4 mb-2 font-weight-normal font-sans-serif text-warning"
                             data-countup="{&quot;endValue&quot;:58.386,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;k&quot;}">
-                            {{ $total_drivers[0]['declined'] }}</div>
-                        @if(!auth()->user()->hasRole('owner'))
-                            <a class="font-weight-semi-bold fs--1 text-nowrap"
+                            {{ $total_drivers[0]['declined'] }}</div><a class="font-weight-semi-bold fs--1 text-nowrap"
                             href="{{url('drivers/waiting-for-approval')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
-                        @endif
                     </div>
                 </div>
             </div>
-       @if(!auth()->user()->hasRole('owner'))
 
             <div class="col-sm-6 col-md-3">
                 <div class="card overflow-hidden" style="min-width: 12rem">
@@ -193,13 +184,11 @@
                         </h6>
                         <div class="display-4 fs-4 mb-2 font-weight-normal font-sans-serif text-danger"
                             data-countup="{&quot;endValue&quot;:58.386,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;k&quot;}">
-                            {{ $total_users }}</div>
-                            <a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('users')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+                            {{ $total_users }}</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="{{url('users')}}">@lang('view_pages.see_all')<span class="fa fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
                     </div>
                 </div>
             </div>
         </div>
-        @endif
 
         @if(!auth()->user()->hasRole('owner'))
         <div class="row g-3">
@@ -224,13 +213,42 @@
                                             <h4 class="text-center" style="color:#333;font-size:25px;">@lang('view_pages.no_data_found')</h4>
                                         </p>
                                     </include-fragment>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+           <!--  <div class="row g-3">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="font-weight-600">@lang('view_pages.trip_request')</h3>
+                                    <ul class="box-controls pull-right">
+                                        <li><a class="box-btn-close" href="#"></a></li>
+                                        <li><a class="box-btn-slide" href="#"></a></li>
+                                        <li><a class="box-btn-fullscreen" href="#"></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="box-body row">
+                                    <div id="js-request-partial-target-trip-request" class="table-responsive">
+                                        <include-fragment>
+                                            <p id="no_data" class="lead no-data text-center">
+                                                <img src="{{asset('assets/img/dark-data.svg')}}" style="width:150px;margin-top:25px;margin-bottom:25px;" alt="">
+                                            <h4 class="text-center" style="color:#333;font-size:25px;">@lang('view_pages.no_data_found')</h4>
+                                            </p>
+                                        </include-fragment>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         @endif
 
         <div class="row g-3">
@@ -280,7 +298,7 @@
 
                                                         <br>
                                                         @lang('view_pages.by_cash')
-                                                        
+
                                                     </h4>
                                                 </div>
                                             </div>
@@ -509,7 +527,7 @@
                                         <div class="box box-body bg-primary">
                                             <div class="flexbox">
                                                 <span class="ion ion-ios-person-outline font-size-50"></span>
-                                                <span class="font-size-40 font-weight-200">{{$trips[0]['total_cancelled']}}</span>
+                                                <span class="font-size-40 font-weight-200">{{$cancelled_trips[0]['total_cancelled']}}</span>
                                             </div>
                                             <div class="text-right">@lang('view_pages.total_request_cancelled')</div>
                                         </div>
@@ -518,7 +536,7 @@
                                         <div class="box box-body bg-primary" style="background-color: #1e88e5 !important">
                                             <div class="flexbox">
                                                 <span class="ion ion-ios-person-outline font-size-50"></span>
-                                                <span class="font-size-40 font-weight-200">{{$trips[0]['auto_cancelled']}}</span>
+                                                <span class="font-size-40 font-weight-200">{{$cancelled_trips[0]['auto_cancelled']}}</span>
                                             </div>
                                             <div class="text-right">@lang('view_pages.cancelled_due_to_no_drivers')</div>
                                         </div>
@@ -527,7 +545,7 @@
                                         <div class="box box-body bg-primary" style="background-color: #26c6da !important">
                                             <div class="flexbox">
                                                 <span class="ion ion-ios-person-outline font-size-50"></span>
-                                                <span class="font-size-40 font-weight-200">{{$trips[0]['user_cancelled']}}</span>
+                                                <span class="font-size-40 font-weight-200">{{$cancelled_trips[0]['user_cancelled']}}</span>
                                             </div>
                                             <div class="text-right">@lang('view_pages.cancelled_by_user')</div>
                                         </div>
@@ -536,7 +554,7 @@
                                         <div class="box box-body bg-primary" style="background-color: #fc4b6c !important">
                                             <div class="flexbox">
                                                 <span class="ion ion-ios-person-outline font-size-50"></span>
-                                                <span class="font-size-40 font-weight-200">{{$trips[0]['driver_cancelled']}}</span>
+                                                <span class="font-size-40 font-weight-200">{{$cancelled_trips[0]['driver_cancelled']}}</span>
                                             </div>
                                             <div class="text-right">@lang('view_pages.cancelled_by_driver')</div>
                                         </div>
@@ -611,7 +629,7 @@
                             pointHighlightStroke: "#26c6da",
                             data: overallEarning['values']
                         },
-                       
+
 
                     ]
                 };
