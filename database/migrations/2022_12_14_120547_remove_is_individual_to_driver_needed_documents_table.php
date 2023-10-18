@@ -13,9 +13,16 @@ class RemoveIsIndividualToDriverNeededDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('driver_needed_documents', function (Blueprint $table) {
-            $table->dropColumn('is_individual');
-        });
+        if (Schema::hasTable('driver_needed_documents')) {
+            
+            if (Schema::hasColumn('driver_needed_documents', 'is_individual')) {
+                Schema::table('driver_needed_documents', function (Blueprint $table) {
+                  $table->dropColumn('is_individual');
+
+                });
+            }
+
+        }
     }
 
     /**

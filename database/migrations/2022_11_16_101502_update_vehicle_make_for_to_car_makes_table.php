@@ -13,9 +13,14 @@ class UpdateVehicleMakeForToCarMakesTable extends Migration
      */
     public function up()
     {
-        Schema::table('car_makes', function (Blueprint $table) {
-           $table->enum('vehicle_make_for',['taxi','motor_bike','truck'])->after('name')->nullable();
-         });
+
+        if (Schema::hasTable('car_makes')) {
+            if (!Schema::hasColumn('car_makes', 'vehicle_make_for')) {
+                Schema::table('car_makes', function (Blueprint $table) {
+                $table->enum('vehicle_make_for',['taxi','motor_bike','truck'])->after('name')->nullable();
+                });
+            }
+        }
     }
 
     /**

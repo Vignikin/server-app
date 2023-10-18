@@ -13,9 +13,14 @@ class UpdateIconTypesForVehicleTypesTable extends Migration
      */
     public function up()
     {
-         Schema::table('vehicle_types', function (Blueprint $table) {
-           $table->enum('icon_types_for',['taxi','truck' , 'motor_bike'])->after('icon')->nullable();
-        });
+        if (Schema::hasTable('vehicle_types')) {
+            if (!Schema::hasColumn('vehicle_types', 'icon_types_for')) {
+                Schema::table('vehicle_types', function (Blueprint $table) {
+                       $table->enum('icon_types_for',['taxi','truck' , 'motor_bike'])->after('icon')->nullable();
+                });
+            }
+        }
+
     }
 
     /**
