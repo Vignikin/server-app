@@ -612,15 +612,23 @@ class ZoneController extends BaseController
             
             $zone_price->zoneType->zone->save();
 
-        }else{
+        }elseif($zone_price->zoneType->transport_type=='delivery'){
 
             $zone_price->zoneType->zone->default_vehicle_type_for_delivery = $zone_price->zoneType->type_id;
             $zone_price->zoneType->zone->save();
+        }else{
+
+            $zone_price->zoneType->zone->default_vehicle_type_for_delivery = $zone_price->zoneType->type_id;
+            $zone_price->zoneType->zone->default_vehicle_type = $zone_price->zoneType->type_id;
+            $zone_price->zoneType->zone->save();            
+
         }
         
-
         $message = trans('succes_messages.default_type_set_successfully');
-        return redirect('vehicle_fare')->with('success', $message);
+        // return redirect('vehicle_fare')->with('success', $message);
+
+        return redirect('vehicle_fare/by_zone/'. $zone_price->zoneType->zone->id)->with('success', $message);
+
     }
 
 
