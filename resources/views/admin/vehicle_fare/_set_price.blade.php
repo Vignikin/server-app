@@ -29,11 +29,10 @@
                     <td>{{ $result->zoneType->vehicleType->name }}
                             @if ($result->zoneType->zone->default_vehicle_type == $result->zoneType->vehicleType->id)
                             <button class="btn btn-warning btn-sm">Default</button>
-                            @endif
-                            @if ($result->zoneType->zone->default_vehicle_type_for_delivery == $result->zoneType->vehicleType->id)
+                            @elseif ($result->zoneType->zone->default_vehicle_type_for_delivery == $result->zoneType->vehicleType->id)
                             <button class="btn btn-warning btn-sm">Default</button>
                             @endif
-                            </td>
+                     </td>
                     <td>
                         @if ($result->price_type == 1)
                         <span class="btn btn-success btn-sm">{{ __('view_pages.ride_now') }}</span>

@@ -126,7 +126,13 @@ class Settings
     const CONTACT_US_MOBILE2='contact_us_mobile2';
     const CONTACT_US_LINK='contact_us_link';
     const SHOW_RIDE_WITHOUT_DESTINATION='show_ride_without_destination';
+
     const SHOW_WALLET_FEATURE_ON_MOBILE_APP='show_wallet_feature_on_mobile_app';
+    const SHOW_WALLET_FEATURE_ON_MOBILE_APP_DRIVER='show_wallet_feature_on_mobile_app_driver';
+    const SHOW_INSTATNT_RIDE_FEATURE_ON_MOBILE_APP='show_instant_ride_feature_on_mobile_app';
+    const SHOW_OWNER_MODULE_ON_MOBILE_APP='shoW_owner_module_feature_on_mobile_app';
+    const SHOW_WALLET_MONEY_TRANSFER_FEAUTRE_ON_MOBILE_APP='shoW_wallet_money_transfer_feature_on_mobile_app';
+
     const SHOW_BANK_INFO_FEATURE_ON_MOBILE_APP='show_bank_info_feature_on_mobile_app';   
     const ENABLE_MY_ROUTE_BOOKING_FEATURE='enable_my_route_booking_feature';
     const HOW_MANY_TIMES_A_DRIVER_TIMES_A_DRIVER_CAN_ENABLE_THE_MY_ROUTE_BOOKING_PER_DAY='how_many_times_a_driver_can_enable_the_my_route_booking_per_day';

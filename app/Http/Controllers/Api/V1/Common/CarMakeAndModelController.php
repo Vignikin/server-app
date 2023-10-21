@@ -57,7 +57,14 @@ class CarMakeAndModelController extends BaseController
         return $this->respondSuccess($this->car_model->where('make_id', $make_id)->active()->orderBy('name')->get());
     }
 
+    public function getAppModule()
+    {
 
+        $enable_owner_login =  get_settings('shoW_owner_module_feature_on_mobile_app');
+
+        return response()->json(['success'=>true,"message"=>'success','enable_owner_login'=>$enable_owner_login]);
+
+    }
     /**
      * Test Api
      * 

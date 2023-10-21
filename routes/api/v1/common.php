@@ -30,7 +30,8 @@ Route::namespace('Common')->group(function () {
         // Get Car models
         Route::get('car/models/{make_id}', 'CarMakeAndModelController@getCarModels');
         Route::get('goods-types', 'GoodsTypesController@index');
-        
+        // Get owner driverModule
+        Route::get('modules', 'CarMakeAndModelController@getAppModule');        
 
         Route::middleware('auth')->group(function () {
             // List Cancallation Reasons
