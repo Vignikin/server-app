@@ -153,7 +153,7 @@ class DriverProfileTransformer extends Transformer
 
         $params['show_instant_ride_feature_on_mobile_app'] =  get_settings('show_instant_ride_feature_on_mobile_app');
 
-        $params['shoW_wallet_money_transfer_feature_on_mobile_app'] =  get_settings('shoW_wallet_money_transfer_feature_on_mobile_app');
+        $params['shoW_wallet_money_transfer_feature_on_mobile_app'] =  get_settings('shoW_wallet_money_transfer_feature_on_mobile_app_for_driver');
 
         $current_date = Carbon::now();
 

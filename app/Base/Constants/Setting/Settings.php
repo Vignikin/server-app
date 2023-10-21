@@ -132,7 +132,8 @@ class Settings
     const SHOW_INSTATNT_RIDE_FEATURE_ON_MOBILE_APP='show_instant_ride_feature_on_mobile_app';
     const SHOW_OWNER_MODULE_ON_MOBILE_APP='shoW_owner_module_feature_on_mobile_app';
     const SHOW_WALLET_MONEY_TRANSFER_FEAUTRE_ON_MOBILE_APP='shoW_wallet_money_transfer_feature_on_mobile_app';
-
+    const SHOW_WALLET_MONEY_TRANSFER_FEAUTRE_ON_MOBILE_APP_FOR_DRIVER='shoW_wallet_money_transfer_feature_on_mobile_app_for_driver';
+    
     const SHOW_BANK_INFO_FEATURE_ON_MOBILE_APP='show_bank_info_feature_on_mobile_app';   
     const ENABLE_MY_ROUTE_BOOKING_FEATURE='enable_my_route_booking_feature';
     const HOW_MANY_TIMES_A_DRIVER_TIMES_A_DRIVER_CAN_ENABLE_THE_MY_ROUTE_BOOKING_PER_DAY='how_many_times_a_driver_can_enable_the_my_route_booking_per_day';
