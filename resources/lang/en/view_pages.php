@@ -771,6 +771,8 @@ return array (
   'show_wallet_feature_on_mobile_app_driver' => 'Show Wallet Feature On Mobile App Driver',
   'shoW_wallet_money_transfer_feature_on_mobile_app' => 'Show Wallet Money Transfer Feature On Mobile App For User',
   'shoW_wallet_money_transfer_feature_on_mobile_app_for_driver' => 'ShoW Wallet Money Transfer Feature On Mobile App For Driver',
+  'shoW_email_otp_feature_on_mobile_app'=>'ShoW Email Otp Feature On Mobile App',
+  
   'show_instant_ride_feature_on_mobile_app' => 'Show Instant Ride Feature On Mbile App',  
   'show_bank_info_feature_on_mobile_app' => 'Show Bank Info Feature On Mobile App',
   'shoW_owner_module_feature_on_mobile_app' => 'Show Owner Module Feature On Mobile App',

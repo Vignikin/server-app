@@ -62,7 +62,10 @@ class CarMakeAndModelController extends BaseController
 
         $enable_owner_login =  get_settings('shoW_owner_module_feature_on_mobile_app');
 
-        return response()->json(['success'=>true,"message"=>'success','enable_owner_login'=>$enable_owner_login]);
+        $enable_email_otp =  get_settings('shoW_email_otp_feature_on_mobile_app');
+
+
+        return response()->json(['success'=>true,"message"=>'success','enable_owner_login'=>$enable_owner_login,'enable_email_otp'=>$enable_email_otp]);
 
     }
     /**

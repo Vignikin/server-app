@@ -314,7 +314,13 @@ class SettingsSeeder extends Seeder
              'option_value' => '{"yes":1,"no":0}',
              'group_name' => null,
         ], 
-             
+      SettingSlug::SHOW_EMAIL_OTP_FEAUTRE_ON_MOBILE_APP => [
+            'category'=>SettingCategory::GENERAL,
+             'value' => 1,
+             'field' => SettingValueType::SELECT,
+             'option_value' => '{"yes":1,"no":0}',
+             'group_name' => null,
+        ],  
         // SettingSlug::DEFAULT__LANGUAGE_CODE_FOR_MOBILE_APP => [
         //     'category'=>SettingCategory::GENERAL,
         //     'value' =>  'en-GB',

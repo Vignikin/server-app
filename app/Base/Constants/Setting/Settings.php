@@ -133,6 +133,7 @@ class Settings
     const SHOW_OWNER_MODULE_ON_MOBILE_APP='shoW_owner_module_feature_on_mobile_app';
     const SHOW_WALLET_MONEY_TRANSFER_FEAUTRE_ON_MOBILE_APP='shoW_wallet_money_transfer_feature_on_mobile_app';
     const SHOW_WALLET_MONEY_TRANSFER_FEAUTRE_ON_MOBILE_APP_FOR_DRIVER='shoW_wallet_money_transfer_feature_on_mobile_app_for_driver';
+    const SHOW_EMAIL_OTP_FEAUTRE_ON_MOBILE_APP='shoW_email_otp_feature_on_mobile_app';
     
     const SHOW_BANK_INFO_FEATURE_ON_MOBILE_APP='show_bank_info_feature_on_mobile_app';   
     const ENABLE_MY_ROUTE_BOOKING_FEATURE='enable_my_route_booking_feature';
