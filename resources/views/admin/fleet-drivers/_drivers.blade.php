@@ -169,10 +169,6 @@
         <a class="dropdown-item" href="{{url('fleet-drivers/request-list',$result->id)}}">
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.request_list')</a> 
         @endif
-        @if(auth()->user()->can('fleet-driver-payment-history'))         
-        <a class="dropdown-item" href="{{url('fleet-drivers/payment-history',$result->id)}}">
-        <i class="fa fa-dot-circle-o"></i>@lang('view_pages.driver_payment_history')</a>
-        @endif
        @if(auth()->user()->can('view-fleet-driver-profile'))         
         <a class="dropdown-item" href="{{url('driver_profile_dashboard_view',$result->id)}}">
         <i class="fa fa-dot-circle-o"></i>@lang('view_pages.view_profile')</a>
