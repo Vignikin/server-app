@@ -206,6 +206,15 @@ class DriverDocumentController extends BaseController
     }
         // $result = fractal($driver_documents, new DriverDocumentTransformer);
 
+        if(env('APP_FOR')=='demo'){
+
+            $status = true;
+             
+            auth()->user()->driver->update(['approve' == true]);
+
+            $this->database->getReference('drivers/'.'driver_'.auth()->user()->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
+
+        }
         return $this->respondSuccess();
     }
 
