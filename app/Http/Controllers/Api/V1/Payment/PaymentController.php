@@ -580,14 +580,14 @@ class PaymentController extends BaseController
 
     }
 
-    /**
+   /**
      * Transfer money from wallet
      * @bodyParam mobile mobile required mobile of the user
      * @bodyParam role role required role of the user
      * @bodyParam amount amount required role of the user
      *
      * */
-    public function transferMoneyFromWallet(Request $request)
+   public function transferMoneyFromWallet(Request $request)
     {
         $request->validate([
             'mobile' => 'required|min:10',
@@ -595,7 +595,30 @@ class PaymentController extends BaseController
             'amount' => 'required'
         ]);
         $user = auth()->user();
+        
+        $invalid_mobile = false;
 
+        if($user->hasRole('user') && $request->role=='user'){
+            
+            $invalid_mobile = true;
+
+        }
+        if($user->hasRole('driver') && $request->role=='driver'){
+            
+            $invalid_mobile = true;
+
+        }
+         if($user->hasRole('owner') && $request->role=='owner'){
+            
+            $invalid_mobile = true;
+
+        }
+        if ($request->mobile == $user->mobile && $invalid_mobile) {
+
+            //Throw exception
+            $this->throwCustomException('Invalid Mobile Number');
+
+        }
         if (access()->hasRole('user')) {
             $wallet_model = new UserWallet();
             $wallet_history_model = new UserWalletHistory();
@@ -720,3 +743,4 @@ class PaymentController extends BaseController
         return response()->json(['success' => true, 'transfer_remarks' => $transfer_remarks, 'receiver_remarks' => $receiver_remarks]);
     }
 }
+
