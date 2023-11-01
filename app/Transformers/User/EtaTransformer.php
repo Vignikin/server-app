@@ -587,7 +587,7 @@ $user = auth()->user();
 
         $expired = Promo::where('code', $promo_code)->where(function($query)use($transport_type){
                     $query->where('transport_type',$transport_type)->orWhere('transport_type','both');
-                })->where('to', '>', $current_date)->where('service_location_id', $service_location)->first();
+                })->where('to', '>', $current_date)->where('service_location_id', $service_location)->where('active',true)->first();
 
 
         if (!$expired) {
