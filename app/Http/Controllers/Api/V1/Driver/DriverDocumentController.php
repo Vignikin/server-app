@@ -17,7 +17,10 @@ use App\Base\Constants\Auth\Role;
 use App\Models\Admin\OwnerDocument;
 use App\Models\Admin\FleetDocument;
 use App\Models\Admin\Fleet;
-
+use Kreait\Firebase\Contract\Database;
+use App\Jobs\Notifications\SendPushNotification;
+use App\Models\User;
+use App\Base\Constants\Masters\PushEnums;
 /**
  * @group Driver Document Management
  *
@@ -37,9 +40,11 @@ class DriverDocumentController extends BaseController
      *
      * @param ImageUploaderContract $imageUploader
      */
-    public function __construct(ImageUploaderContract $imageUploader)
+    public function __construct(ImageUploaderContract $imageUploader,Database $database)
     {
         $this->imageUploader = $imageUploader;
+        $this->database = $database;
+
     }
     /**
     * Get All documents needed to be uploaded
