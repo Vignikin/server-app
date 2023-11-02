@@ -520,6 +520,7 @@ return array (
   'accepted_at' => 'Accepted at',
   'arrived_at' => 'Arrived at',
   'trip_started_at' => 'Trip Started at',
+  'trip_started' => 'Trip Started',
   'reached_to_drop_location_at' => 'Reached to Drop location at',
   'pickup_details' => 'Pickup Details',
   'location' => 'Location',
@@ -823,4 +824,5 @@ return array (
   'mercadopago-settings' => 'Mercadopago Settings',
   'estimated_price' => 'Estimated Price',
   'ride_otp' => 'Ride Otp',
+  'driver_arrived' => 'Driver Arrived',
   );
