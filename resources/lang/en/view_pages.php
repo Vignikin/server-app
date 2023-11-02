@@ -822,4 +822,5 @@ return array (
   'mercadopago_live_access_token' => 'Mercadopago  Live Public Token',
   'mercadopago-settings' => 'Mercadopago Settings',
   'estimated_price' => 'Estimated Price',
+  'ride_otp' => 'Ride Otp',
   );
