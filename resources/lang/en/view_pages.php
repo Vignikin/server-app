@@ -821,4 +821,5 @@ return array (
   'mercadopago_test_access_token' => 'Mercadopago  Test Access Token',
   'mercadopago_live_access_token' => 'Mercadopago  Live Public Token',
   'mercadopago-settings' => 'Mercadopago Settings',
+  'estimated_price' => 'Estimated Price',
   );
