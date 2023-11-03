@@ -626,6 +626,8 @@ class DriverEndRequestController extends BaseController
         // Total Amount
         $total_amount = $sub_total + $admin_commision_with_tax;
 
+        $admin_commision_with_tax += $admin_commision_from_driver;
+
         return $result = [
         'base_price'=>$base_price,
         'base_distance'=>$zone_type_price->base_distance,
