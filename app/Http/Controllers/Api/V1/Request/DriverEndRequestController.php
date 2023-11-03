@@ -561,8 +561,10 @@ class DriverEndRequestController extends BaseController
         $tax_amount = ($sub_total * ($tax_percent / 100));
         // Get Admin Commision
         $admin_commision_type = get_settings('admin_commission_type');
+        $admin_commission_type_for_driver = get_settings('admin_commission_type_for_driver');
 
         $service_fee = get_settings('admin_commission');
+        $service_fee_for_driver = get_settings('admin_commission_for_driver');
         // Admin commision
         // Admin commision
         if($admin_commision_type==1){
@@ -602,10 +604,25 @@ class DriverEndRequestController extends BaseController
         // Admin commision with tax amount
         $admin_commision_with_tax = $tax_amount + $admin_commision;
         $driver_commision = $sub_total+$discount_amount;  
+
+
         // Driver Commission
         if($coupon_detail && $coupon_detail->deduct_from==2){
             $driver_commision = $sub_total;  
         }
+
+        if($admin_commission_type_for_driver==1){
+
+        $admin_commision_from_driver = ($driver_commision * ($service_fee_for_driver / 100));
+
+        }else{
+
+            $admin_commision_from_driver = $service_fee_for_driver;
+
+        }
+
+        $driver_commision -= $admin_commision_from_driver;
+        
         // Total Amount
         $total_amount = $sub_total + $admin_commision_with_tax;
 
@@ -623,6 +640,7 @@ class DriverEndRequestController extends BaseController
         'admin_commision'=>$admin_commision,
         'admin_commision_with_tax'=>$admin_commision_with_tax,
         'driver_commision'=>$driver_commision,
+        'admin_commision_from_driver'=>$admin_commision_from_driver,
         'total_amount'=>$total_amount,
         'total_distance'=>$distance,
         'total_time'=>$duration,

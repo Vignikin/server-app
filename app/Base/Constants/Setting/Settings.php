@@ -16,7 +16,9 @@ class Settings
     const APP_NAME ='app_name';
     const SERVICE_TAX ='service_tax';
     const ADMIN_COMMISSION_TYPE ='admin_commission_type';
+    const ADMIN_COMMISSION_TYPE_FOR_DRIVER='admin_commission_type_for_driver';
     const ADMIN_COMMISSION ='admin_commission';
+    const ADMIN_COMMISSION_FOR_DRIVER ='admin_commission_for_driver';
     const WALLET_MIN_AMOUNT_FOR_TRIP ='wallet_min_amount_for_trip';
     const WALLET_MIN_AMOUNT_TO_ADD ='wallet_min_amount_to_add';
     const WALLET_MAX_AMOUNT_TO_ADD ='wallet_max_amount_to_add';

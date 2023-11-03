@@ -32,6 +32,13 @@ class SettingsSeeder extends Seeder
             'option_value' => '{"percentage":1,"fixed":2}',
             'group_name' => null,
         ],
+        SettingSlug::ADMIN_COMMISSION_TYPE_FOR_DRIVER => [
+            'category'=>SettingCategory::TRIP_SETTINGS,
+            'value' => 1,
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"percentage":1,"fixed":2}',
+            'group_name' => null,
+        ],
         SettingSlug::TRIP_DISPTACH_TYPE => [
             'category'=>SettingCategory::TRIP_SETTINGS,
             'value' => 1,
@@ -40,6 +47,13 @@ class SettingsSeeder extends Seeder
             'group_name' => null,
         ],
             SettingSlug::ADMIN_COMMISSION => [
+            'category'=>SettingCategory::TRIP_SETTINGS,
+            'value' => 30,
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => null,
+        ],
+           SettingSlug::ADMIN_COMMISSION_FOR_DRIVER => [
             'category'=>SettingCategory::TRIP_SETTINGS,
             'value' => 30,
             'field' => SettingValueType::TEXT,
