@@ -31,9 +31,10 @@ class NotifyDriverDocumentExpiry extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Database $database)
     {
         parent::__construct();
+        $this->database = $database;
     }
 
     /**
