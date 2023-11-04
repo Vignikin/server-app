@@ -19,6 +19,8 @@ use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Http\Request;
 use Role;
+use Illuminate\Support\Facades\Artisan;
+
 /**
  * @group User-trips-apis
  *
@@ -175,6 +177,8 @@ class UserCancelRequestController extends BaseController
         
         $request_detail->requestMeta()->delete();
 
+         Artisan::call('assign_drivers:for_regular_rides');
+         
         return $this->respondSuccess();
     }
     public function paymentMethod(Request $request)
