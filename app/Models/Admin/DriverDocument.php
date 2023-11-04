@@ -129,7 +129,11 @@ class DriverDocument extends Model
         if ($this->created_at==null||!auth()->user()->exists()) {
             return null;
         }
-        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        if(auth()->user()->exists()){
+            $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        }else{
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
         return Carbon::parse($this->created_at)->setTimezone($timezone)->format('jS M h:i A');
     }
     /**
@@ -143,7 +147,11 @@ class DriverDocument extends Model
         if ($this->updated_at==null||!auth()->user()->exists()) {
             return null;
         }
-        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+       if(auth()->user()->exists()){
+            $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        }else{
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
         return Carbon::parse($this->updated_at)->setTimezone($timezone)->format('jS M h:i A');
     }
 
@@ -152,7 +160,12 @@ class DriverDocument extends Model
         if ($value==null) {
             return null;
         }
-        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        if(auth()->user()->exists()){
+            $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        }else{
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
+
         return Carbon::parse($value)->setTimezone($timezone)->format('Y-m-d');
     }
 }
