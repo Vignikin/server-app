@@ -18,7 +18,6 @@ use App\Models\Request\DriverRejectedRequest;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 use Sk\Geohash\Geohash;
-use Kreait\Firebase\Contract\Database;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
