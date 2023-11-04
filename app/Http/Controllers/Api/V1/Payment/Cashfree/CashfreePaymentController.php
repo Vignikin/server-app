@@ -57,7 +57,7 @@ class CashfreePaymentController extends ApiController
         $headers = [
             'x-client-id:'.get_settings(Settings::CASH_FREE_TEST_APP_ID),
             'x-client-secret:'.get_settings(Settings::CASH_FREE_SECRET_KEY),
-            'x-api-version:"2022-09-01"',
+            'x-api-version:"2023-08-01"',
             'Content-Type:application/json'
             ];
 
