@@ -425,9 +425,9 @@ class RequestAcceptRejectController extends BaseController
                     // return ['no-drivers-found','no-firebase-drivers'];
 
                 }
-                $returned_drivers = [$nearest_drivers,$firebase_drivers];
+                // $returned_drivers = [$nearest_drivers,$firebase_drivers];
                 
-                return $returned_drivers;
+                return $nearest_drivers;
             
         } else {
 

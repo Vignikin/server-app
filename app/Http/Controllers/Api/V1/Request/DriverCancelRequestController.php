@@ -185,7 +185,7 @@ class DriverCancelRequestController extends BaseController
 
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
 
-         if (!$nearest_drivers) {
+         if ($nearest_drivers==null) {
                 goto no_drivers_available;
         }
 
@@ -432,9 +432,9 @@ class DriverCancelRequestController extends BaseController
                     // return ['no-drivers-found','no-firebase-drivers'];
 
                 }
-                $returned_drivers = [$nearest_drivers,$firebase_drivers];
+                // $returned_drivers = [$nearest_drivers,$firebase_drivers];
                 
-                return $returned_drivers;
+                return $nearest_drivers;
             
         } else {
 

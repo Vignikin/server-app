@@ -44,6 +44,12 @@ class OnlineOfflineController extends BaseController
             }
             // store record for online
             $driver->driverAvailabilities()->create($created_params);
+
+            // Find Ride for the driver
+            
+
+
+
         } else {
             // get last online availability record
             $availability = $driver->driverAvailabilities()->where('is_online', true)->orderBy('online_at', 'desc')->first();
