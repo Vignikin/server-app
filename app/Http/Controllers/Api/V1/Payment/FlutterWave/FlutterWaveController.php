@@ -23,6 +23,7 @@ use App\Models\Payment\OwnerWallet;
 use App\Models\Payment\OwnerWalletHistory;
 use App\Transformers\Payment\OwnerWalletTransformer;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @group FlutterWave Payment Gateway
@@ -158,8 +159,7 @@ class FlutterWaveController extends ApiController
     public function success(Request $request)
     {
 
-        dd($request->all());
-        
+        Log::info($request->all());
         return view('success',['success']);
 
 
