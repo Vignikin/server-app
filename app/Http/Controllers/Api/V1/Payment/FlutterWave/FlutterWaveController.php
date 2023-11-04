@@ -155,6 +155,14 @@ class FlutterWaveController extends ApiController
 
         return $this->respondSuccess($result, 'money_added_successfully');
     }
+    public function success(Request $request)
+    {
 
+        dd($request->all());
+        
+        return view('success',['success']);
+
+
+    }
     
 }
