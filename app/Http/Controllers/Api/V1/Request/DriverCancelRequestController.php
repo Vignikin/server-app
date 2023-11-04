@@ -348,7 +348,7 @@ class DriverCancelRequestController extends BaseController
                     $nearest_driver_ids[]=$key;
 
 
-                $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query){
+                $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request_detail){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
                 })->where('enable_my_route_booking',1)->first();
 
@@ -420,7 +420,7 @@ class DriverCancelRequestController extends BaseController
                 ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
                 })->pluck('driver_id')->toArray();
 
-                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query){
+                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request_detail){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
                 })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
 
