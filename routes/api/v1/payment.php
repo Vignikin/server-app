@@ -100,6 +100,8 @@ Route::prefix('payment')->namespace('Payment')->middleware('auth')->group(functi
     Route::prefix('flutter-wave')->namespace('FlutterWave')->group(function(){
         // Route::post('initialize','FlutterWaveController@initialize');
         Route::post('add-money', 'FlutterWaveController@addMoneyToWallet');
+        Route::post('success', 'FlutterWaveController@success');
+
 
     });
 
