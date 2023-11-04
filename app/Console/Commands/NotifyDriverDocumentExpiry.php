@@ -42,7 +42,7 @@ class NotifyDriverDocumentExpiry extends Command
      */
     public function handle()
     {
-        $driverDocuments = DriverDocument::where('expiry_date', '>', Carbon::today()->toDateString())
+        $driverDocuments = DriverDocument::where('expiry_date', '<', Carbon::today()->toDateString())
                                             // ->where('document_status',DriverDocumentStatus::UPLOADED_AND_APPROVED)
                                             ->get();
 
