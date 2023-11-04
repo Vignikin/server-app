@@ -42,46 +42,36 @@ class NotifyDriverDocumentExpiry extends Command
      */
     public function handle()
     {
-        $driverDocuments = DriverDocument::where('expiry_date', '<', Carbon::today()->toDateString())
-                                            // ->where('document_status',DriverDocumentStatus::UPLOADED_AND_APPROVED)
-                                            ->get();
+        $driverDocuments = DriverDocument::whereDate('expiry_date', '<=', Carbon::today()->toDateString())->get();
 
         foreach ($driverDocuments as $doc) {
             $docExpiryDate = $doc->getOriginal('expiry_date');
-            // $docExpiryDate = Carbon::parse($doc->getOriginal('expiry_date'))->toDateString();
 
-            $today = Carbon::today()->toDateString();
-            $ExpiryDate = Carbon::parse($docExpiryDate)->subDays(5)->toDateString();
-
-            $driverArray = array();
-            $driverArray['driverEmail'] = $doc->email;
-            $driverArray['documentName'] = $doc->document_name;
-            $driverArray['driverName'] = $doc->driver->name;
-            $driverArray['documentExpiry'] = Carbon::parse($docExpiryDate)->toDateString();
-            $driverArray['docExpiryInDays'] = Carbon::parse($docExpiryDate)->diffInDays();
-            $driverArray['driverPhone'] = $doc->driver->mobile;
-
-
-            if (Carbon::parse($docExpiryDate)->subDays(1)->toDateString() == $today) {
-                $isApproved = $doc->driver->approve;
-
-                if ($isApproved == 1) {
-                    $doc->driver->update([
+                    
+                    if($doc->driver->approve){
+                        $doc->driver->update([
                         'approve' => false
                     ]);
-                }
 
-                $doc->update([
-                    'document_status' => DriverDocumentStatus::EXPIRED
-                ]);
-            }
+                    $doc->update([
+                    'document_status' => DriverDocumentStatus::EXPIRED_AND_DECLINED
+                    ]);
 
-            if ($ExpiryDate <= $today) {
-                $driverEmail = $doc->driver->email;
-                Mail::to($driverEmail)->send(new DriverDocumentExpiryMail($driverArray));
-            }
+                    $notifable_driver = $doc->driver->user;
+
+                    $title = trans('push_notifications.document_expired_title',[],$notifable_driver->lang);
+                    $body = trans('push_notifications.document_expired_body',[],$notifable_driver->lang);
+
+                    dispatch(new SendPushNotification($notifable_driver,$title,$body));
+
+                    $this->database->getReference('drivers/driver_'.$doc->driver->id)->update(['approve'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+                    $this->info('Declined successfully');
+                
+                    }
+                    
         }
 
-        $this->info('Email send');
+        $this->info('Command run successfully');
     }
 }
