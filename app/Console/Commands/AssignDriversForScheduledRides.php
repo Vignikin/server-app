@@ -121,6 +121,8 @@ class AssignDriversForScheduledRides extends Command
 
         $vehicle_type = $type_id;
 
+        $rejected_drivers = DriverRejectedRequest::where('request_id',$request->id)->pluck('driver_id')->toArray();
+
         $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
         
         $firebase_drivers = [];
@@ -162,12 +164,77 @@ class AssignDriversForScheduledRides extends Command
                     
                     $nearest_driver_ids = [];
 
+                    $removable_driver_ids=[];
+
+
                 foreach ($firebase_drivers as $key => $firebase_driver) {
                     
                     $nearest_driver_ids[]=$key;
+
+                    // Validate my route drivers
+                    $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
+                })->where('enable_my_route_booking',1)->first();
+
+
+                $route_coordinates=null;
+
+                if($has_enabled_my_route_drivers){
+
+                    //get line string from helper
+                    $route_coordinates = get_line_string($pick_lat, $pick_lng, $drop_lat, $drop_lng);
+
+                }       
+                        if($has_enabled_my_route_drivers!=null &$route_coordinates!=null){
+
+                            $enabled_route_matched = $nearest_driver->intersects('route_coordinates',$route_coordinates)->first();
+                            
+                            if(!$enabled_route_matched){
+
+                                $removable_driver_ids[]=$key
+                            }
+
+                            $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
+
+                            if($current_location_of_driver){
+
+                            $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $drop_lat, $drop_lng,'K');
+
+                            $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $nearest_driver->my_route_lat, $nearest_driver->my_route_lng,'K');
+
+                            // Difference between both of above values
+
+                            $difference = $distance_between_current_location_to_drop - $distance_between_current_location_to_my_route;
+
+                            $difference=$difference < 0 ? (-1) * $difference : $difference;
+
+                            if($difference>5){
+
+                                $removable_driver_ids[]=$key
+
+                            }
+    
+                            }
+                            
+                        }
+
+
                 }
 
-                    $rejected_drivers = DriverRejectedRequest::where('request_id',$request->id)->pluck('driver_id')->toArray();
+                $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
+
+                $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_drivers);
+
+                if(count($nearest_driver_ids)>0){
+                    $nearest_driver_ids[0]=$nearest_driver_ids[0];
+
+                }else{
+
+                   $nearest_driver_ids=[];
+
+                }
+
+
                     
 $nearest_drivers = Driver::where('active', 1)
 ->where('approve', 1)
@@ -178,7 +245,7 @@ $query->where('transport_type', $request->transport_type)
 })
 ->whereIn('id', $nearest_driver_ids)
 ->whereNotIn('id', $meta_drivers)
-->whereNotIn('id', $rejected_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))
+->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))
 ->whereHas('driverVehicleTypeDetail', function ($query) use ($type_id) {
 $query->where('vehicle_type', $type_id);
 })

@@ -17,6 +17,12 @@ use App\Transformers\Requests\TripRequestTransformer;
 use App\Models\Request\DriverRejectedRequest;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
+use Sk\Geohash\Geohash;
+use Kreait\Firebase\Contract\Database;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+
+
 
 /**
  * @group Driver-trips-apis
@@ -98,16 +104,7 @@ class RequestAcceptRejectController extends BaseController
             $push_data = ['notification_enum'=>PushEnums::TRIP_ACCEPTED_BY_DRIVER,'result'=>(string)$push_request_detail];
             dispatch(new SendPushNotification($user,$title,$body));
 
-            // Form a socket sturcture using users'id and message with event name
-            $socket_data = new \stdClass();
-            $socket_data->success = true;
-            $socket_data->success_message  = PushEnums::TRIP_ACCEPTED_BY_DRIVER;
-            $socket_data->result = $request_result;
-            // Form a socket sturcture using users'id and message with event name
-            // $socket_message = structure_for_socket($user->id, 'user', $socket_data, 'trip_status');
-            // dispatch(new NotifyViaSocket('transfer_msg', $socket_message));
-            // dispatch(new NotifyViaMqtt('trip_status_'.$user->id, json_encode($socket_data), $user->id));
-            accet_dispatch_notify:
+             accet_dispatch_notify:
         // @TODO send sms,email & push notification with request detail
         } else {
 
@@ -136,17 +133,67 @@ class RequestAcceptRejectController extends BaseController
                 $notifiable_driver = $driver->user;
                 dispatch(new SendPushNotification($notifiable_driver,$title,$body));;
 
-                // Form a socket sturcture using users'id and message with event name
-                $socket_data = new \stdClass();
-                $socket_data->success = true;
-                $socket_data->success_message  = PushEnums::REQUEST_CREATED;
-                $socket_data->result = $request_result;
-                // Form a socket sturcture using users'id and message with event name
-                // $socket_message = structure_for_socket($driver->id, 'driver', $socket_data, 'create_request');
-                // dispatch(new NotifyViaSocket('transfer_msg', $socket_message));
-                // dispatch(new NotifyViaMqtt('create_request_'.$driver->id, json_encode($socket_data), $driver->id));
+                
             } else {
+
+                 $nearest_drivers =  $this->getFirebaseDrivers($request_detail);
+
+        $request_detail->fresh();
+        
+        if($request_detail->is_cancelled){
+
+            goto end;
+        }
+
+        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+
+         if (!$nearest_drivers) {
                 goto no_drivers_available;
+        }
+
+         $selected_drivers = [];
+        $i = 0;
+        foreach ($nearest_drivers as $driver) {
+            // Log::info("in-loop");
+            // $selected_drivers[$i]["request_id"] = $request_detail->id;
+            $selected_drivers[$i]["user_id"] = $request_detail->userDetail->id;
+            $selected_drivers[$i]["driver_id"] = $driver->id;
+            $selected_drivers[$i]["active"] = $i == 0 ? 1 : 0;
+            $selected_drivers[$i]["assign_method"] = 1;
+            $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
+            $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
+            $i++;
+        }
+
+
+        // Send notification to the very first driver
+        $first_meta_driver = $selected_drivers[0]['driver_id'];
+
+        // Add first Driver into Firebase Request Meta
+        $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$first_meta_driver,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+
+        $pus_request_detail = $request_result->toJson();
+        $push_data = ['notification_enum'=>PushEnums::REQUEST_CREATED,'result'=>$pus_request_detail];
+
+
+        $socket_data = new \stdClass();
+        $socket_data->success = true;
+        $socket_data->success_message  = PushEnums::REQUEST_CREATED;
+        $socket_data->result = $request_result;
+
+        $driver = Driver::find($first_meta_driver);
+
+        $notifable_driver = $driver->user;
+
+        $title = trans('push_notifications.new_request_title',[],$notifable_driver->lang);
+        $body = trans('push_notifications.new_request_body',[],$notifable_driver->lang);
+
+        dispatch(new SendPushNotification($notifable_driver,$title,$body));
+
+            $request_detail->requestMeta()->create($selected_drivers[0]);
+
+                goto end;
 
                 // Cancell the request as automatic cancell state
                 $request_detail->update(['is_cancelled'=>true,'cancel_method'=>0,'cancelled_at'=>date('Y-m-d H:i:s')]);
@@ -161,19 +208,11 @@ class RequestAcceptRejectController extends BaseController
                 $body = trans('push_notifications.no_driver_found_body');
                 dispatch(new SendPushNotification($user,$title,$body));
                 $push_data = ['notification_enum'=>PushEnums::NO_DRIVER_FOUND,'result'=>(string)$push_request_detail];
-                // Form a socket sturcture using users'id and message with event name
-                $socket_data = new \stdClass();
-                $socket_data->success = true;
-                $socket_data->success_message  = PushEnums::NO_DRIVER_FOUND;
-                $socket_data->result = $request_result;
-                // Form a socket sturcture using users'id and message with event name
-                // $socket_message = structure_for_socket($user->id, 'user', $socket_data, 'trip_status');
-                // dispatch(new NotifyViaSocket('transfer_msg', $socket_message));
-                // dispatch(new NotifyViaMqtt('trip_status_'.$user->id, json_encode($socket_data), $user->id));
                 dispatch_notify:
                 no_drivers_available:
             }
         }
+        end:
 
         return $this->respondSuccess();
     }
@@ -200,6 +239,198 @@ class RequestAcceptRejectController extends BaseController
         }
         if ($request_detail->is_cancelled) {
             $this->throwCustomException('request cancelled');
+        }
+    }
+
+
+    /**
+     * Find Drivers from Firebase
+     * 
+     * */
+
+    /**
+    * Get Drivers from firebase
+    */
+    public function getFirebaseDrivers($request_detail)
+    {
+        $pick_lat = $request_detail->pick_lat;
+        $pick_lng = $request_detail->pick_lng;
+
+        $type_id = $request_detail->zoneType->type_id;
+
+        // NEW flow        
+        $driver_search_radius = get_settings('driver_search_radius')?:30;
+
+        $radius = kilometer_to_miles($driver_search_radius);
+
+        $calculatable_radius = ($radius/2);
+
+        $calulatable_lat = 0.0144927536231884 * $calculatable_radius;
+        $calulatable_long = 0.0181818181818182 * $calculatable_radius;
+
+        $lower_lat = ($pick_lat - $calulatable_lat);
+        $lower_long = ($pick_lng - $calulatable_long);
+
+        $higher_lat = ($pick_lat + $calulatable_lat);
+        $higher_long = ($pick_lng + $calulatable_long);
+
+        $g = new Geohash();
+
+        $lower_hash = $g->encode($lower_lat,$lower_long, 12);
+        $higher_hash = $g->encode($higher_lat,$higher_long, 12);
+
+        $conditional_timestamp = Carbon::now()->subMinutes(7)->timestamp;
+
+        $vehicle_type = $type_id;
+
+        $rejected_driver_ids = DriverRejectedRequest::where('request_id',$request_detail->id)->pluck('driver_id')->toArray();
+
+        $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
+        
+        $firebase_drivers = [];
+
+        $i=-1;
+    
+
+        foreach ($fire_drivers as $key => $fire_driver) {
+            $i +=1; 
+            $driver_updated_at = Carbon::createFromTimestamp($fire_driver['updated_at'] / 1000)->timestamp;
+
+
+            if(array_key_exists('vehicle_type',$fire_driver) && $fire_driver['vehicle_type']==$vehicle_type && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at){
+
+
+                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
+
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
+
+            }elseif(array_key_exists('vehicle_types',$fire_driver)  && in_array($vehicle_type, $fire_driver['vehicle_types']) && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at)
+                {
+
+                Log::info("its coming in new loop");
+
+                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
+
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }
+
+            }      
+
+        }
+        $current_date = Carbon::now();
+
+        asort($firebase_drivers);
+
+
+        if (!empty($firebase_drivers)) {
+
+            $nearest_driver_ids = [];
+
+            $removable_driver_ids=[];
+
+                foreach ($firebase_drivers as $key => $firebase_driver) {
+                    
+                    $nearest_driver_ids[]=$key;
+
+
+                $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
+                })->where('enable_my_route_booking',1)->first();
+
+
+                $route_coordinates=null;
+
+                if($has_enabled_my_route_drivers){
+
+                    //get line string from helper
+                    $route_coordinates = get_line_string($pick_lat, $pick_lng, $drop_lat, $drop_lng);
+
+                }       
+                        if($has_enabled_my_route_drivers!=null &$route_coordinates!=null){
+
+                            $enabled_route_matched = $nearest_driver->intersects('route_coordinates',$route_coordinates)->first();
+                            
+                            if(!$enabled_route_matched){
+
+                                $removable_driver_ids[]=$key
+                            }
+
+                            $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
+
+                            if($current_location_of_driver){
+
+                            $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $drop_lat, $drop_lng,'K');
+
+                            $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $nearest_driver->my_route_lat, $nearest_driver->my_route_lng,'K');
+
+                            // Difference between both of above values
+
+                            $difference = $distance_between_current_location_to_drop - $distance_between_current_location_to_my_route;
+
+                            $difference=$difference < 0 ? (-1) * $difference : $difference;
+
+                            if($difference>5){
+
+                                $removable_driver_ids[]=$key
+
+                            }
+    
+                            }
+                            
+                        }
+
+
+                }
+
+            $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
+            $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_driver_ids);
+
+                if(count($nearest_driver_ids)>0){
+                    $nearest_driver_ids[0]=$nearest_driver_ids[0];
+
+                }else{
+
+                   $nearest_driver_ids=[];
+
+                }
+
+                $driver_search_radius = get_settings('driver_search_radius')?:30;
+
+                $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
+                // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
+                $meta_drivers = RequestMeta::whereHas('request.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
+                    $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
+                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
+                })->pluck('driver_id')->toArray();
+
+                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
+
+
+                if ($nearest_drivers->isEmpty()) {
+                    // $this->throwCustomException('all drivers are busy');
+
+                    // return null;
+                    return ['no-drivers-found','no-firebase-drivers'];
+
+                }
+                $returned_drivers = [$nearest_drivers,$firebase_drivers];
+                
+                return $returned_drivers;
+            
+        } else {
+
+            return ['no-drivers-found','no-firebase-drivers'];
+
+            // return null;
         }
     }
 }

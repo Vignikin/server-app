@@ -378,33 +378,22 @@ class CreateRequestController extends BaseController
 
         asort($firebase_drivers);
 
-        Log::info($firebase_drivers);
-
 
         if (!empty($firebase_drivers)) {
 
             $nearest_driver_ids = [];
 
+            $removable_driver_ids=[];
+
                 foreach ($firebase_drivers as $key => $firebase_driver) {
                     
                     $nearest_driver_ids[]=$key;
-                }
 
-                $driver_search_radius = get_settings('driver_search_radius')?:30;
 
-                $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
-                // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
-                $meta_drivers = RequestMeta::whereHas('request.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
-                    $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
-                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
-                })->pluck('driver_id')->toArray();
-
-                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
+                })->where('enable_my_route_booking',1)->first();
 
-
-                $has_enabled_my_route_drivers=$nearest_drivers->where('enable_my_route_booking',1)->first();
 
                 $route_coordinates=null;
 
@@ -413,25 +402,14 @@ class CreateRequestController extends BaseController
                     //get line string from helper
                     $route_coordinates = get_line_string($request->pick_lat, $request->pick_lng, $request->drop_lat, $request->drop_lng);
 
-                }
-
-                if ($nearest_drivers->isEmpty()) {
-                    // $this->throwCustomException('all drivers are busy');
-
-                    // return null;
-                    return ['no-drivers-found','no-firebase-drivers'];
-
-                }else{
-
-                    foreach ($nearest_drivers as $key => $nearest_driver) {
-                        
-                        if($nearest_driver->enable_my_route_booking && $has_enabled_my_route_drivers!=null &$route_coordinates!=null){
+                }       
+                        if($has_enabled_my_route_drivers!=null &$route_coordinates!=null){
 
                             $enabled_route_matched = $nearest_driver->intersects('route_coordinates',$route_coordinates)->first();
                             
                             if(!$enabled_route_matched){
 
-                                $nearest_drivers->forget($key);
+                                $removable_driver_ids[]=$key
                             }
 
                             $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
@@ -450,7 +428,7 @@ class CreateRequestController extends BaseController
 
                             if($difference>5){
 
-                                $nearest_drivers->forget($key);
+                                $removable_driver_ids[]=$key
 
                             }
     
@@ -458,8 +436,34 @@ class CreateRequestController extends BaseController
                             
                         }
 
-                    }
+
                 }
+
+            $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
+
+                if(count($nearest_driver_ids)>0){
+                    $nearest_driver_ids[0]=$nearest_driver_ids[0];
+
+                }else{
+
+                   $nearest_driver_ids=[];
+
+                }
+
+                $driver_search_radius = get_settings('driver_search_radius')?:30;
+
+                $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
+                // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
+                $meta_drivers = RequestMeta::whereHas('request.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
+                    $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
+                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
+                })->pluck('driver_id')->toArray();
+
+                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
+
+
                 if ($nearest_drivers->isEmpty()) {
                     // $this->throwCustomException('all drivers are busy');
 
