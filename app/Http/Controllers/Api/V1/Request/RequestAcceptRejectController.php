@@ -417,8 +417,8 @@ class RequestAcceptRejectController extends BaseController
                 if ($nearest_drivers->isEmpty()) {
                     // $this->throwCustomException('all drivers are busy');
 
-                    // return null;
-                    return ['no-drivers-found','no-firebase-drivers'];
+                    return null;
+                    // return ['no-drivers-found','no-firebase-drivers'];
 
                 }
                 $returned_drivers = [$nearest_drivers,$firebase_drivers];
@@ -427,9 +427,9 @@ class RequestAcceptRejectController extends BaseController
             
         } else {
 
-            return ['no-drivers-found','no-firebase-drivers'];
+            // return ['no-drivers-found','no-firebase-drivers'];
 
-            // return null;
+            return null;
         }
     }
 }

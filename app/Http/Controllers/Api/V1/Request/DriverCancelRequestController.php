@@ -319,7 +319,6 @@ class DriverCancelRequestController extends BaseController
             }elseif(array_key_exists('vehicle_types',$fire_driver)  && in_array($vehicle_type, $fire_driver['vehicle_types']) && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at)
                 {
 
-                Log::info("its coming in new loop");
 
                 $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
 
@@ -428,8 +427,8 @@ class DriverCancelRequestController extends BaseController
                 if ($nearest_drivers->isEmpty()) {
                     // $this->throwCustomException('all drivers are busy');
 
-                    // return null;
-                    return ['no-drivers-found','no-firebase-drivers'];
+                    return null;
+                    // return ['no-drivers-found','no-firebase-drivers'];
 
                 }
                 $returned_drivers = [$nearest_drivers,$firebase_drivers];
@@ -438,9 +437,9 @@ class DriverCancelRequestController extends BaseController
             
         } else {
 
-            return ['no-drivers-found','no-firebase-drivers'];
+            // return ['no-drivers-found','no-firebase-drivers'];
 
-            // return null;
+            return null;
         }
     }
 }
