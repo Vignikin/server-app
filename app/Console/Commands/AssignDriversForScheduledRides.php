@@ -164,13 +164,11 @@ class AssignDriversForScheduledRides extends Command
                     
                     $nearest_driver_ids = [];
 
-                    $removable_driver_ids=[];
-
-
                 foreach ($firebase_drivers as $key => $firebase_driver) {
                     
                     $nearest_driver_ids[]=$key;
 
+                    
                     // Validate my route drivers
                     $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
@@ -217,13 +215,8 @@ class AssignDriversForScheduledRides extends Command
                             }
                             
                         }
-
-
                 }
-
-                $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
-
-                $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_drivers);
+                 $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_drivers);
 
                 if(count($nearest_driver_ids)>0){
                     $nearest_driver_ids[0]=$nearest_driver_ids[0];
