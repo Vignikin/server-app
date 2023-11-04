@@ -168,7 +168,7 @@ class AssignDriversForScheduledRides extends Command
                     
                     $nearest_driver_ids[]=$key;
 
-                    
+
                     // Validate my route drivers
                     $has_enabled_my_route_drivers=Driver::where('id',$key)->where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
@@ -189,7 +189,7 @@ class AssignDriversForScheduledRides extends Command
                             
                             if(!$enabled_route_matched){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
                             }
 
                             $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
@@ -208,7 +208,7 @@ class AssignDriversForScheduledRides extends Command
 
                             if($difference>5){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
 
                             }
     

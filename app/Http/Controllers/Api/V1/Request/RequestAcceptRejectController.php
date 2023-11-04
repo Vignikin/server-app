@@ -359,7 +359,7 @@ class RequestAcceptRejectController extends BaseController
                             
                             if(!$enabled_route_matched){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
                             }
 
                             $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
@@ -378,7 +378,7 @@ class RequestAcceptRejectController extends BaseController
 
                             if($difference>5){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
 
                             }
     

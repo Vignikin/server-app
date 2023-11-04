@@ -292,7 +292,7 @@ class DriverCancelRequestController extends BaseController
         $vehicle_type = $type_id;
 
         $rejected_driver_ids = DriverRejectedRequest::where('request_id',$request_detail->id)->pluck('driver_id')->toArray();
-        
+
         $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
         
         $firebase_drivers = [];
@@ -367,7 +367,7 @@ class DriverCancelRequestController extends BaseController
                             
                             if(!$enabled_route_matched){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
                             }
 
                             $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
@@ -386,7 +386,7 @@ class DriverCancelRequestController extends BaseController
 
                             if($difference>5){
 
-                                $removable_driver_ids[]=$key
+                                $removable_driver_ids[]=$key;
 
                             }
     
