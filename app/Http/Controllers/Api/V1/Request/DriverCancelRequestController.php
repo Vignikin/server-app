@@ -21,6 +21,7 @@ use Kreait\Firebase\Contract\Database;
 use Sk\Geohash\Geohash;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Facades\DB;
 
 
 

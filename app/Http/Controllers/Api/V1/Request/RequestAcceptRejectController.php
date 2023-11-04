@@ -20,6 +20,7 @@ use App\Jobs\Notifications\SendPushNotification;
 use Sk\Geohash\Geohash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 
