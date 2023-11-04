@@ -40,6 +40,8 @@ Route::namespace('Web')->group(function () {
     });
     
     Route::get('mercadopago-success','MercadopagoController@success');
+    Route::post('flutter-wave','MercadopagoController@flutterWaveSuceess');
+
 
     Route::view("success",'success');
     Route::view("failure",'failure');

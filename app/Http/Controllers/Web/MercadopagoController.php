@@ -78,5 +78,11 @@ class MercadopagoController extends BaseController
 
 
     }
+    public function flutterWaveSuceess(Request $request)
+    {
+        dd($request);
+        
+        return view('success',['success']);
 
+    }
 }
