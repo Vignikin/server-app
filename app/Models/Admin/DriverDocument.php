@@ -160,13 +160,12 @@ class DriverDocument extends Model
         if ($value==null) {
             return null;
         }
-        // if(auth()->user()->exists()){
-        //     $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
-        // }else{
-        //     $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
-        // }
+        if(auth()->user()->timezone){
+            $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+        }else{
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
 
-        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
         return Carbon::parse($value)->setTimezone($timezone)->format('Y-m-d');
     }
 }
