@@ -98,8 +98,12 @@ class ProfileController extends ApiController
 
         $user = auth()->user();
 
+        $owner = $user->owner()->exists();
 
         $mobile = $request->mobile;
+
+        $email = $request->email;
+
 
         if($mobile){
              $validate_exists_mobile = $this->user->belongsTorole(Role::DRIVER)->where('mobile', $mobile)->where('id','!=',$user->id)->exists();
@@ -109,14 +113,25 @@ class ProfileController extends ApiController
         }
 
         }
+        if($email){
+             $validate_exists_email = $this->user->belongsTorole(Role::DRIVER)->where('email', $email)->where('id','!=',$user->id)->exists();
+
+        if ($validate_exists_email) {
+            $this->throwCustomException('Provided email has already been taken');
+        }
+
+        }
+
 
         $driver_params = $request->only(['vehicle_type','car_make','car_model','car_color','car_number','name','email','vehicle_year']);
 
 
-         $driver_params['approve'] = false;
+         $driver_params['approve'] = true;
 
+         if(!$owner){
          $driver_params['reason'] = 'profile-info-updated';
-       
+         }
+
 
         if ($uploadedFile = $this->getValidatedUpload('profile_picture', $request)) {
             $user_params['profile_picture'] = $this->imageUploader->file($uploadedFile)
@@ -129,64 +144,84 @@ class ProfileController extends ApiController
 
             $driver_params['approve'] = false;
 
-            $driver_params['reason'] = 'profile-info-updated';
+            if(!$owner){
+                $driver_params['reason'] = 'profile-info-updated';
+            }
 
         }
 
         $user->update($user_params);
 
-        
-
-        if($request->has('vehicle_type') && $request->vehicle_type){
-
-            $driver_params['approve'] = false;
-
-            $driver_params['reason'] = 'vehicle-info-updated';
-
-
-        }
 
         if($driver_params['approve']==false){
 
             $status=0;
 
-            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+            if(!$owner){
+                $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+            }else{
+
+                $driver_params['approve']=true;
+            }
 
         }
-
 
         if(env('APP_FOR')=='demo'){
 
-            $driver_params['approve']=true;
-            $status = true;
-
-            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);                
+                $driver_params['approve']=true;
 
         }
+        
 
-
-        $user->driver()->update($driver_params);
 
         $driver_details = $user->driver;
-       
 
-        if($request->has('vehicle_types')){
 
+      if($request->has('vehicle_types'))
+      {
+
+
+            $newVehicleTypes = collect(json_decode($request->vehicle_types));
+
+            $existingVehicleTypes = $driver_details->driverVehicleTypeDetail->pluck('vehicle_type');
+
+            // Check if there are new types that are different from the existing ones
+            $typesToAdd = $newVehicleTypes->diff($existingVehicleTypes);
+
+            if ($typesToAdd->isNotEmpty()) {
+
+           
             $driver_details->driverVehicleTypeDetail()->delete();
 
             foreach (json_decode($request->vehicle_types) as $key => $type) {
             
                 $driver_details->driverVehicleTypeDetail()->create(['vehicle_type'=>$type]);
-            
+                
+
             }
+            $driver_params['approve'] = false;
             
+            $status=0;
+            
+            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+          }
+      }
+       
+        if(!$owner){
+            $user->driver()->update($driver_params);
+
+        }else{
+            $user->owner()->update($driver_params);
+
         }
+
 
         $result = fractal($driver_details, new DriverTransformer)->parseIncludes(['onTripRequest.userDetail','onTripRequest.requestBill','metaRequest.userDetail']);
 
         return $this->respondOk($result);
     }
-
     /**
      * Update user password.
      * @bodyParam old_password password required old_password provided user
