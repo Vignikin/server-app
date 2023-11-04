@@ -410,10 +410,13 @@ class RequestAcceptRejectController extends BaseController
                 ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
                 })->pluck('driver_id')->toArray();
 
+
+
                 $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request_detail){
                     $query->where('transport_type','taxi')->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
+                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->get();
 
+          
 
                 if ($nearest_drivers->isEmpty()) {
                     // $this->throwCustomException('all drivers are busy');
