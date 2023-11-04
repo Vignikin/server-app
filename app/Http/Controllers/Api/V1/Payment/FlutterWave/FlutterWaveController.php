@@ -158,7 +158,7 @@ class FlutterWaveController extends ApiController
     public function success(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
         
         return view('success',['success']);
 
