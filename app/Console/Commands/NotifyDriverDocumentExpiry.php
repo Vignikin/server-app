@@ -52,7 +52,8 @@ class NotifyDriverDocumentExpiry extends Command
                     
                     if($doc->driver->approve){
                         $doc->driver->update([
-                        'approve' => false
+                        'approve' => false,
+                        'reason' => "document_expired",
                     ]);
 
                     $doc->update([
