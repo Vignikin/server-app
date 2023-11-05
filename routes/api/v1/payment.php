@@ -97,13 +97,7 @@ Route::prefix('payment')->namespace('Payment')->middleware('auth')->group(functi
      * Flutterwave Payment Gateway
      * 
      * */
-    Route::prefix('flutter-wave')->namespace('FlutterWave')->group(function(){
-        // Route::post('initialize','FlutterWaveController@initialize');
-        Route::post('add-money', 'FlutterWaveController@addMoneyToWallet');
-        Route::post('success', 'FlutterWaveController@success');
 
-
-    });
 
     /**
      * Cashfree Payment Gateway
@@ -123,6 +117,14 @@ Route::prefix('payment')->namespace('Payment')->middleware('auth')->group(functi
 Route::prefix('payment')->namespace('Payment')->group(function () {
     Route::prefix('paystack')->namespace('Paystack')->group(function () {
         Route::any('web-hook', 'PaystackController@webHook');
+
+    });
+
+        Route::prefix('flutter-wave')->namespace('FlutterWave')->group(function(){
+        // Route::post('initialize','FlutterWaveController@initialize');
+        Route::post('add-money', 'FlutterWaveController@addMoneyToWallet');
+        Route::any('success', 'FlutterWaveController@success');
+
 
     });
 

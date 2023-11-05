@@ -162,7 +162,6 @@ class FlutterWaveController extends ApiController
         Log::info($request->all());
         return view('success',['success']);
 
-
     }
     
 }
