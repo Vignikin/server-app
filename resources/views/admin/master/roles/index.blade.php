@@ -68,12 +68,12 @@
                                                 <span style="float: right;">
                                                 </span>
                                             </th>
-                                        @if(auth()->user()->can('edit-roles'))
+                                        <!-- @if(auth()->user()->can('edit-roles')) -->
                                             <th> @lang('view_pages.action')
                                                 <span style="float: right;">
                                                 </span>
                                             </th>
-                                        @endif
+                                        <!-- @endif -->
                                         </tr>
                                     </thead>
                                     <tbody>
