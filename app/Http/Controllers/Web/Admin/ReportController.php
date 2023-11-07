@@ -119,11 +119,6 @@ class ReportController extends Controller
         $format = $request->format;
 
         $query = Driver::query();
-        if (env('APP_FOR')=='demo') {
-            $query = Driver::whereHas('user', function ($query) {
-                $query->where('company_key', auth()->user()->company_key);
-            });
-        }
 
         $data = $queryFilter->builder($query)->customFilter(new DriverFilter)->defaultSort('-date')->get();
 
@@ -179,20 +174,73 @@ class ReportController extends Controller
         // dd($record);
     }
 
-    public function downloadTravelReport(Request $request, QueryFilterContract $queryFilter)
+public function downloadTravelReport(Request $request, QueryFilterContract $queryFilter)
+{
+    // Get the format, date_option, and other filter values from the request
+    $format = $request->format;
+    $date_option = $request->date_option;
+    $vehicle_type = $request->vehicle_type;
+    $trip_status = $request->trip_status;
+    $payment_opt = $request->payment_opt;
+        $current_date = Carbon::now(auth()->user()->timezone);
+
+    // Initialize an empty date array
+    $date_array = [];
+
+        if ($date_option == "today") {
+            $date_array = [$current_date->format("Y-m-d"),$current_date->format("Y-m-d")];
+        } elseif ($date_option == DateOptions::YESTERDAY) {
+            $yesterday_date = Carbon::yesterday()->format('Y-m-d');
+            $date_array = [$yesterday_date,$yesterday_date];
+        } elseif ($date_option == DateOptions::WEEK) {
+            $date_array = [$current_date->startOfWeek()->toDateString(),$current_date->endOfWeek()->toDateString()];
+        } elseif ($date_option == DateOptions::LAST_WEEK) {
+            $date_array = [$current_date->subWeek()->toDateString(), $current_date->startOfWeek()->toDateString()];
+        } elseif ($date_option == DateOptions::MONTH) {
+            $date_array = [$current_date->startOfMonth()->toDateString(), $current_date->endOfMonth()->toDateString()];
+        } elseif ($date_option == DateOptions::YEAR) {
+            $date_array = [$current_date->startOfYear()->toDateString(), $current_date->endOfYear()->toDateString()];
+        } else {
+            $date_array = [];
+        }
+
+    $data = RequestRequest::whereBetween('created_at', $date_array);
+
+    if ($date_option == 'date') {
+
+        $from = Carbon::parse($request->from)->format('Y-m-d');
+        $to = Carbon::parse($request->to)->format('Y-m-d');
+
+        $data = RequestRequest::whereDate('created_at','<=', $from)->where('created_at','>=',$to);
+
+    }
+
+
+    if ($date_option == "today")
     {
-        $format = $request->format;
+    $data = RequestRequest::whereDate('created_at', $current_date->format("Y-m-d"));
 
-        $query = RequestRequest::companyKey();
+    // Query your RequestRequest model
+    }
 
-        $data = $queryFilter->builder($query)->customFilter(new RequestFilter)->defaultSort('created_at')->get();
+
+    // Now, apply custom filters using RequestFilter
+    $filteredData = $queryFilter->builder($data)->customFilter(new RequestFilter)->defaultSort('created_at')->get();
 
         $filename = "$request->model Report-".date('ymdis').'.'.$format;
 
-        Excel::store(new TravelExport($data), $filename, 'local');
+        Excel::store(new TravelExport($filteredData), $filename, 'local');
 
         return $filename;
-    }
+
+
+    // $filename = "$request->model Report-".date('ymdis').'.'.$format;
+
+    // // Export the filtered data
+    // Excel::store(new TravelExport($filteredData), $filename, 'local');
+
+    // return response()->download(storage_path("app/$filename"));
+}
     public function downloadOwnerReport(Request $request, QueryFilterContract $queryFilter)
     {
      

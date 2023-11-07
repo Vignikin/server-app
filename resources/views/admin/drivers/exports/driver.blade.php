@@ -8,7 +8,7 @@
             <th> @lang('view_pages.mobile')</th>
             <th> @lang('view_pages.transport_type')</th>
             <th> @lang('view_pages.vehicle_type')</th>
-            <th> @lang('view_pages.status')</th>
+            <!-- <th> @lang('view_pages.status')</th> -->
             <th> @lang('view_pages.approve_status')</th>
         </tr>
     </thead>
@@ -27,15 +27,20 @@
                 @else
                 <td>{{ $result->mobile }}</td>
                 @endif
-                <td>{{ $result->vehicleType->transport_type }}</td>
-                <td>{{ $result->vehicleType->name }}</td>
+                <td>{{ $result->transport_type }}</td>
+              
+                <td>
+                    @foreach($result->driverVehicleTypeDetail as $vehicleType)
+                    {{ $vehicleType->vehicleType->name.',' }}
+                    @endforeach
+                </td>
 
-                @if ($result->active)
+<!--                 @if ($result->active)
                     <td><span class="label label-success">@lang('view_pages.active')</span></td>
                 @else
                     <td><span class="label label-danger">@lang('view_pages.inactive')</span></td>
                 @endif
-
+ -->
                 @if ($result->approve)
                     <td><span class="label label-success">@lang('view_pages.approved')</span></td>
                 @else
