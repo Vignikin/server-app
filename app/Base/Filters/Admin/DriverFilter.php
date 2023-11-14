@@ -17,15 +17,15 @@ class DriverFilter implements FilterContract {
 	 */
 	public function filters() {
 		return [
-			'approve','available','date_option','vehicle_type','area'
+			'active','approve','available','date_option','vehicle_type','area'
 		];
 	}
 
-	// public function active($builder, $value = 0) {
-	// 	$builder->whereHas('user', function($q)use($value){
-	// 		$q->where('active',$value);
-	// 	});
-    // }
+	public function active($builder, $value = 0) {
+		$builder->whereHas('user', function($q)use($value){
+			$q->where('active',$value);
+		});
+    }
     
 	public function approve($builder, $value = 0) {
 		$builder->where('approve', $value);
@@ -56,7 +56,6 @@ class DriverFilter implements FilterContract {
 		$builder->whereBetween('created_at', [$from,$to]);
 	}
 	
-
 	public function vehicle_type($builder, $value = 0) {
 	    $builder->whereHas('driverVehicleTypeDetail', function ($q) use ($value) {
 	        $q->where('vehicle_type', $value);
