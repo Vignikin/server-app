@@ -828,4 +828,5 @@ return array (
   'estimated_price' => 'Estimated Price',
   'ride_otp' => 'Ride Otp',
   'driver_arrived' => 'Driver Arrived',
+  'khalti_settings' => 'Khalti Settings',
   );
