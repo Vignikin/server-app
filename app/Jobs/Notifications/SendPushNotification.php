@@ -68,7 +68,8 @@ class SendPushNotification implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
+    { 
+         
         $this->user->notify(new AndroidPushNotification($this->title, $this->body, $this->data,$this->image));
 
     }

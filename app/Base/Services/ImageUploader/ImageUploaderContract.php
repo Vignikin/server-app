@@ -42,6 +42,16 @@ interface ImageUploaderContract
 
     public function saveSystemAdminLogo();
 
+        /**
+     * Save the FireBase Json File.
+     *
+     * @return string Returns the saved filename
+     */
+
+    public function saveSystemFirebaseJson();
+
+    
+
 
     public function file(UploadedFile $file);
 

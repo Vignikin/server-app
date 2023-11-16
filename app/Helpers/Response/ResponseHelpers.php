@@ -96,6 +96,7 @@ trait ResponseHelpers
      */
     protected function respondBadRequest($message = null)
     {
+
         return $this->respondError($message, Response::HTTP_BAD_REQUEST);
     }
 
@@ -171,6 +172,7 @@ trait ResponseHelpers
      */
     protected function respondError($message, $status, $errors = null, array $headers = [], $options = 0)
     {
+
         return $this->jsonResponse(
             $this->formatErrorResponseData($message, $status, $errors),
             $status,
@@ -251,6 +253,7 @@ trait ResponseHelpers
      */
     private function formatErrorResponseData($message, $status_code, $errors = null)
     {
+
         $success = $this->success;
 
         if (!$message && $status_code) {
@@ -260,7 +263,6 @@ trait ResponseHelpers
         if ($errors instanceof MessageBag) {
             $errors = $errors->getMessages();
         }
-
         return array_filter(compact('success', 'message', 'status_code', 'errors'), function ($value) {
             return !is_null($value);
         });

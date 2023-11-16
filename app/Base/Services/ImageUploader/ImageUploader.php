@@ -4,10 +4,15 @@ namespace App\Base\Services\ImageUploader;
 
 use App\Base\Services\Hash\HashGeneratorContract;
 use App\Base\Services\ImageEncoder\ImageEncoderContract;
+use App\Base\Constants\Setting\Settings;
 use Exception;
 use Illuminate\Config\Repository as ConfigRepository;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;  
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
+
 
 class ImageUploader implements ImageUploaderContract
 {
@@ -256,6 +261,37 @@ class ImageUploader implements ImageUploaderContract
         return $str;
     }
 
+     /**
+     * Save the Firebase Setting Json File
+     *
+     * @return string Returns the array data
+     */
+    public function saveSystemFirebaseJson()
+    { 
+        $this->validateFile();
+        $image = $this->file;  
+        $this->validateFileTYpe($image);  
+        $path = $image->path();
+        $jsonContent = file_get_contents($path);
+        $jsonData = json_decode($jsonContent, true);
+        $result = $this->CheckJsonData($jsonData);   
+        $fileName = Settings::FIREBASE_FILENAME;
+        if($result['status'])
+        {  
+            $filePath = public_path('push-configurations/'.$fileName.'');  
+
+            if (File::exists($filePath)) {
+                 File::delete($filePath);
+            }    
+            $image->move(public_path('push-configurations'), $fileName);
+            $result['file_name'] = $fileName; 
+        } 
+
+        return $result; 
+        
+    }
+
+
     /**
      * Save the VehicleType Image.
      *
@@ -402,6 +438,55 @@ class ImageUploader implements ImageUploaderContract
         if (is_null($this->file)) {
             throw new Exception('Image uploader: No file provided.');
         }
+    }
+
+       /**
+     * Check if the file is Json.
+     *
+     * @throws Exception
+     */
+    protected function validateFileType($file)
+    {
+        $extension = $file->getClientOriginalExtension();
+        if ($extension != "json") {
+            throw new Exception('Please upload the Firebase Settings File as Json Format');
+        }
+    }
+
+          /**
+     * get the json data and check if the data exists
+     *
+     * @throws Exception
+     */
+    public function CheckJsonData($json_data)
+    { 
+
+         if(is_array($json_data))
+         {
+            If(array_key_exists('type',$json_data) && array_key_exists('project_id',$json_data))
+            {
+
+                if($json_data['type'] == Settings::FIREBASE_TYPE)
+                {
+                     $response_array = array("status"=>true,"json_data"=>$json_data);
+                }
+                else
+                {
+                     $response_array = array("status"=>false,"message"=>"Type Should be Service account in the given Firebase JSON File");
+                }
+            }
+            else{
+                 $response_array = array("status"=>false,"message"=>"Type or Project id is missed in the given Json File");
+            }
+         }
+         else{
+             $response_array = array("status"=>false,"message"=>"Json File format is wrong in Firebase Setting");
+             
+         }
+          
+       
+         return $response_array;
+
     }
 
     /**

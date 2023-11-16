@@ -61,14 +61,15 @@ class AndroidPushNotification extends Notification implements ShouldQueue
     }
 
     public function toFcm($notifiable)
-    {
-        if ($this->data) {
+    { 
+        if ($this->data) { 
+           
+            
             return FcmMessage::create()
             ->setData($this->data)
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
                 ->setTitle($this->title)
-                ->setBody($this->body)
-                ->setImage($this->image));
+                ->setBody($this->body));
         } else {
             return FcmMessage::create()
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()

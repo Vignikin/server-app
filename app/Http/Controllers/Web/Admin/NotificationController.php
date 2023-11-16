@@ -52,14 +52,15 @@ class NotificationController extends BaseController
     }
 
     public function pushView()
-    {
+    { 
         $page = trans('pages_names.push_notification');
 
         $main_menu = 'notifications';
         $sub_menu = 'push_notification';
 
-        $users = User::companyKey()->belongsToRole(Role::USER)->active()->get();
-        $drivers = Driver::get();
+        // $users = User::companyKey()->belongsToRole(Role::USER)->active()->get();
+        $users = User::get();
+        $drivers = Driver::get(); 
 
         if (env('APP_FOR')=='demo') {
             $drivers = Driver::whereHas('user', function ($query) {
@@ -72,22 +73,29 @@ class NotificationController extends BaseController
 
     public function sendPush(Request $request)
     {
+      
+
         // if (env('APP_FOR')=='demo') {
         //     $message = trans('succes_messages.you_are_not_authorised');
 
         //     return redirect('notifications/push')->with('warning', $message);
         // }
+
         
         $created_params = $request->only(['title']);
         $created_params['push_enum'] = PushEnums::GENERAL_NOTIFICATION;
+
         $created_params['body'] = $request->message;
+
 
         if ($uploadedFile = $this->getValidatedUpload('image', $request)) {
             $created_params['image'] = $this->imageUploader->file($uploadedFile)
                 ->savePushImage();
         }
 
+
         $notification = $this->notification->create($created_params);
+
 
         if ($request->has('user')) {
             $notification->update(['for_user' => true]);
@@ -95,13 +103,21 @@ class NotificationController extends BaseController
             User::whereIn('id', $request->user)->chunk(20, function ($userData) use ($notification,$request) {
                 $title = $notification->title;
                 $body = $notification->body;
-                $push_data = ['title' => $notification->title,'message' => $notification->body,'image' => $notification->push_image,'push_type'=>'general'];
                 $image = $notification->push_image;
-
-                foreach ($userData as $key => $value) {
-
-                dispatch(new SendPushNotification($value,$title,$body,$push_data,$image));
+                if($image == ""){
+                       $push_data = ['title' => $notification->title,'message' => $notification->body,'push_type'=>'general'];
+                } 
+                else{
+                       $push_data = ['title' => $notification->title,'message' => $notification->body,'image' => $notification->push_image,'push_type'=>'general'];
                 }
+
+            
+
+                foreach ($userData as $key => $value) {  
+                        dispatch(new SendPushNotification($value,$title,$body,$push_data));
+ 
+                }
+
             });
         }
 
@@ -120,6 +136,7 @@ class NotificationController extends BaseController
                 }
             });
         }
+
 
         dispatch(new UserDriverNotificationSaveJob($request->user, $request->driver, $notification));
 

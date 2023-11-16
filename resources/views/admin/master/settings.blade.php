@@ -51,14 +51,17 @@
 
                     <div class="tab-content p-10">
 
-                        <?php $tab = 1; foreach ($settings as $setting_key => $setting_value) {?>
+                        <?php $tab = 1; 
+                       
+                        foreach ($settings as $setting_key => $setting_value) {?>
 
                         <div class="tab-pane show <?php if ($tab==1) {
     echo "active";
 }?>" id="{{$setting_key}}">
                             <div class="row">
 
-                                <?php $setting_value = $setting_value->groupBy('group_name');//echo "<pre>";print_r($setting_value);die();
+                                <?php $setting_value = $setting_value->groupBy('group_name');
+                                // echo "<pre>";print_r($setting_value);die();
                                     foreach ($setting_value as $group_name => $group_value) { ?>
 
                                 <?php if ($group_name != "" && $group_name != null) { ?>
@@ -105,10 +108,22 @@
 
 
                                                         <div class="form-group">
-                                                            <div class="col-6">
-                                                                <img id="blah" src="{{  $setting_name['name'] == 'logo' ? app_logo() : fav_icon() }}" alt="" style="max-width: 250px; max-height: 250px"><br>
-                                                                <input type="file" id="{{ $setting_name['name'] }}" onchange="readURL(this)" name="{{ $setting_name['name'] }}" style="display:none"><br>
-                                                                <button class="btn btn-primary btn-sm" type="button" onclick="$({{ $setting_name['name'] }}).click()" id="upload">@lang('view_pages.browse')</button>
+                                                            <div class="col-6 img_remove">
+                                                                 <img id="blah" src="{{  $setting_name['name'] == 'logo' ? app_logo() : fav_icon() }}" alt="" style="max-width: 250px; max-height: 250px"  ><br> 
+                                                                <?php if($setting_name['name'] == "firebasejson"){ ?>
+                                                              <input type="file" id="{{ $setting_name['name'] }}" onchange="readURL(this)" name="{{ $setting_name['name'] }}" style="display:none" accept=".json" ><br> 
+                                                              <button class="btn btn-primary btn-sm" type="button" onclick="$({{ $setting_name['name'] }}).click()" id="upload">@lang('view_pages.browse')</button> <span><a href="https://tagxi-docs.ondemandappz.com/user-manual/1.0/backend-setup#section-5" target="_blank" style="  text-decoration: underline;">How do i get the Firebase Json File?</a></span>
+                                                                  <?php
+                                                              }else{ ?>
+                                                             
+                                                                      <input type="file" id="{{ $setting_name['name'] }}" onchange="readURL(this)" name="{{ $setting_name['name'] }}" style="display:none"><br>
+                                                                      <button class="btn btn-primary btn-sm" type="button" onclick="$({{ $setting_name['name'] }}).click()" id="upload">@lang('view_pages.browse')</button>
+                                                                      <?php
+                                                              } 
+                                                                    ?>
+                                                            
+                                                               
+                                                                
                                                                 <button class="btn btn-danger btn-sm" type="button" id="remove_img" style="display: none;">@lang('view_pages.remove')</button><br>
                                                                 <span class="text-danger">{{ $errors->first($setting_name['name']) }}</span>
                                                             </div>

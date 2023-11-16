@@ -38,6 +38,7 @@ class LoginController extends BaseLoginController
      */
     public function loginUser(GenericAppLoginRequest $request)
     {
+
         return $this->loginUserAccountApp($request, Role::USER);
     }
 

@@ -42,7 +42,8 @@ class ServiceLocationController extends BaseController
 
     public function getAllLocation(QueryFilterContract $queryFilter)
     {
-        $query = ServiceLocation::companyKey();
+
+        $query = ServiceLocation::query(); 
 
         $results = $queryFilter->builder($query)->customFilter(new CommonMasterFilter)->paginate();
         return view('admin.servicelocation._servicelocation', compact('results'));

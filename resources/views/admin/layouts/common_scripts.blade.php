@@ -193,6 +193,7 @@ if (session()->has('warning')) {
 <?php
 }?>
 
+ 
 <script>
      function readURL(input) {
          var parentDiv = input.closest('div');
@@ -229,9 +230,12 @@ if (session()->has('warning')) {
 
     $(document).on('click','#remove_img',function(){
         // $('#remove_img').click(function(){
-            $('#blah').removeAttr('src');
-            $('#remove_img').hide();
-            $('#upload').text('Browse');
+            // $('#blah').removeAttr('src');
+            // $('#remove_img').hide();
+            // $('#upload').text('Browse');
+            $(this).hide();
+            $(this).closest(".img_remove").find('#blah').removeAttr('src');
+            $(this).closest(".img_remove").find('#upload').text('Browse'); 
         });
 
         // setTimeout(function(){

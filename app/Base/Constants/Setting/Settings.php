@@ -44,6 +44,9 @@ class Settings
     const ENABLE_BRAIN_TREE='enable_brain_tree';
     const DRIVER_WALLET_MINIMUM_AMOUNT_TO_GET_ORDER='driver-wallet-minimum-amount-to-get-order';
     const OWNER_WALLET_MINIMUM_AMOUNT_TO_GET_ORDER='owner-wallet-minimum-amount-to-get-order';
+
+    /*Fire Base configuration*/
+
     const FIREBASE_DB_URL='firebase-db-url';
     const FIREBASE_API_KEY='firebase-api-key';
     const FIREBASE_AUTH_DOMAIN='firebase-auth-domain';
@@ -52,6 +55,9 @@ class Settings
     const FIREBASE_MESSAGIN_SENDER_ID='firebase-messaging-sender-id';
     const FIREBASE_APP_ID='firebase-app-id';
     const FIREBASE_MEASUREMENT_ID='firebase-measurement-id';
+    const FIREBASE_TYPE='service_account';
+    const FIREBASE_FILENAME='firebase.json';
+
 
     const ENABLE_PAYSTACK='enable-paystack';
     const PAYSTACK_ENVIRONMENT='paystack-environment';

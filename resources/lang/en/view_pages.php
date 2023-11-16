@@ -434,6 +434,7 @@ return array (
   'firebase-app-id' => 'Firebase App Id',
   'firebase-measurement-id' => 'Firebase Measurement Id',
   'firebase_settings' => 'Firebase Settings',
+  'firebasejson' => 'Upload Firebase json File',
   'view_in_detail' => 'View In Detail',
   'requested_amount' => 'Requested Amount',
   'balance_amount' => 'Balance Amount',

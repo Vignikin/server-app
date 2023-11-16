@@ -125,9 +125,12 @@
                 $("#"+user_type).find('option').prop("selected",true);
                 // alert($("#"+user_type).find('option:selected').length);
                 $("#"+user_type).trigger('change');
+                $("li.select2-selection__choice").css('display', 'none');
+                
             } else {
                 $("#"+user_type).find('option').prop("selected",false);
                 $("#"+user_type).trigger('change');
+                  $("li.select2-selection__choice").css('display', 'block');
             }
         });
     });

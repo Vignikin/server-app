@@ -46,7 +46,7 @@ class SettingController extends BaseController
     public function index()
     {
         $settings = Setting::select('*')->get()->groupBy('category');
-        // dd($settings);
+
         $page = trans('pages_names.system_settings');
 
         $main_menu = 'settings';
@@ -68,27 +68,48 @@ class SettingController extends BaseController
             return redirect('system/settings')->with('warning', $message);
         }
         DB::beginTransaction();
-
+ 
         $settings_to_redis = $request->except(['logo','_token']);
 
         try {
-            $settingTable = Setting::get();
-
+            $settingTable = Setting::get(); 
+            $firebase_json_status = 0; 
             foreach ($settingTable as $key => $value) {
-                $key_name = $value->name;
-
+                $key_name = $value->name; 
                 if (isset($request->$key_name)) {
+
                     $settingTable[$key]->value = $request->$key_name;
                     if ($request->hasFile($value->name)) {
                         //print_r($value->name);die();
+
                         if ($uploadedFile = $this->getValidatedUpload($value->name, $request)) {
-                            $settingTable[$key]->value = $this->imageUploader->file($uploadedFile)
-                                ->saveSystemAdminLogo();
+                              if($value->name == "firebasejson") {
+                                    $result = $this->imageUploader->file($uploadedFile)
+                                              ->saveSystemFirebaseJson(); 
+
+
+                           if($result['status'])
+                           {  
+                           
+                            $settingTable[$key]->value = $result['file_name']; 
+                           }
+                           else{
+                            $firebase_json_status = 1; 
+                           } 
+                            
                         }
+                    else{
+                         $settingTable[$key]->value = $this->imageUploader->file($uploadedFile)
+                                ->saveSystemAdminLogo(); 
                     }
+                           
+                        }
+                    } 
+
                     $settingTable[$key]->save();
                 }
-            }
+            } 
+
 
             Cache::forget('setting_cache_set');
             // Redis::set('settings', json_encode($settings_to_redis));
@@ -100,7 +121,15 @@ class SettingController extends BaseController
         DB::commit();
 
         $message = trans('succes_messages.system_settings_updated');
+        
 
-        return redirect('system/settings')->with('success', $message);
+        if($firebase_json_status == 1)
+        {
+            return redirect('system/settings')->with('warning', $result['message']);
+        }
+     
+        return redirect('system/settings')->with('success', $message); 
+
+        
     }
 }

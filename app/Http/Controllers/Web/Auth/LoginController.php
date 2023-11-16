@@ -155,6 +155,8 @@ class LoginController extends ApiController
      */
     protected function loginUserAccountApp($request, $role, array $conditions = [])
     {
+        echo gettype($role);
+        exit;
         return $this->loginUserAccount($request, $role, true, $conditions);
     }
 
@@ -177,6 +179,7 @@ class LoginController extends ApiController
         }
 
         if ($request->has(['mobile'])) {
+
             return $this->setLoginIdentifier('mobile')
                 ->loginUserWithMobile($request, $role, $needsToken, $conditions);
         }
@@ -207,6 +210,7 @@ class LoginController extends ApiController
         if ($needsToken && $request->has(['email', 'otp']) && $this->roleAllowedOTPLogin($role)) {
             return $this->loginUserWithEmailOtp($request, $role, $needsToken, $conditions);
         }
+
         return $this->respondBadRequest('Missing login credentials');
     }
 
@@ -233,6 +237,7 @@ class LoginController extends ApiController
         $identifier = $this->getLoginIdentifier();
 
 
+
         $verify_otp = MailOtp::where('email' ,$email)->where('otp', $otp)->exists();
             // dd($verify_otp);
 
@@ -243,7 +248,9 @@ class LoginController extends ApiController
         }
        
        if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
+
             $user = $this->{$method}($email, $role);
+           
         }
 
         if (!$user) {
@@ -271,20 +278,26 @@ class LoginController extends ApiController
 
         $identifier = $this->getLoginIdentifier();
 
+
         $emailOrUsername = $request->input($identifier);
 
+
         if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
+        
             $user = $this->{$method}($emailOrUsername, $role);
+            
         }
 
         if (!$user) {
+             
             $this->throwInvalidCredentialsException($identifier);
         }
 
         if (!$user->isActive() || !$this->validateChecks($user, $conditions, $identifier)) {
+
             $this->throwAccountDisabledException($identifier);
         }
-
+       
         return $this->authenticateAndRespond($user, $request, $needsToken);
     }
 
@@ -397,6 +410,7 @@ class LoginController extends ApiController
      */
     protected function resolveUserFromEmail($email, $role)
     {
+         
         return $this->user->belongsToRole($role)
             ->where('email', $email)
             ->first();
@@ -425,6 +439,7 @@ class LoginController extends ApiController
      */
     protected function resolveUserFromSocialId($social_unique_id, $role)
     {
+
         return $this->user->belongsToRole($role)
             ->where('social_id', $social_unique_id)
             ->first();
@@ -440,6 +455,7 @@ class LoginController extends ApiController
      */
     protected function resolveUserFromUsername($username, $role)
     {
+        
         return $this->user->belongsToRole($role)
             ->where('username', $username)
             ->first();
@@ -454,6 +470,7 @@ class LoginController extends ApiController
      */
     protected function resolveUserFromMobile($mobile, $role)
     {
+
         return $this->user->belongsToRole($role)
             ->where('mobile', $mobile)
             ->first();
@@ -499,11 +516,12 @@ class LoginController extends ApiController
      */
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
+
         event(new UserLogin($user));
 
         DB::table('oauth_access_tokens')->where('user_id',$user->id)->delete();
         
-        if ($needsToken) {
+        if ($needsToken) { 
             $client_tokens = DB::table('oauth_clients')->where('password_client', 1)->first();
             // dd($client_tokens);
             // @TODO Store login by,fcm,apn tokens

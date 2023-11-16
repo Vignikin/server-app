@@ -571,6 +571,7 @@ function initialize() {
         var autocomplete = new google.maps.places.Autocomplete(input);
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
+            console.log(place);
             document.getElementById('address_lat').value = place.geometry.location.lat();
             document.getElementById('address_lng').value = place.geometry.location.lng();
 
