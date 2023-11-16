@@ -56,10 +56,10 @@ class DriverFilter implements FilterContract {
 		$builder->whereBetween('created_at', [$from,$to]);
 	}
 	
-	public function vehicle_type($builder, $value = 0){
-		$builder->whereHas('vehicleType' , function($q) use ($value){
-			$q->where('id',$value);
-		});
+	public function vehicle_type($builder, $value = 0) {
+	    $builder->whereHas('driverVehicleTypeDetail', function ($q) use ($value) {
+	        $q->where('vehicle_type', $value);
+	    });
 	}
 
 	public function area($builder, $value = 'all'){

@@ -21,6 +21,7 @@ use Sk\Geohash\Geohash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 
 
 
@@ -214,6 +215,8 @@ class RequestAcceptRejectController extends BaseController
         }
         end:
 
+         Artisan::call('assign_drivers:for_regular_rides');
+        
         return $this->respondSuccess();
     }
 

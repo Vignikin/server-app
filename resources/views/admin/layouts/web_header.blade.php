@@ -107,7 +107,7 @@
           <li class="nav-item">
             <a class="nav-link areas"  style="color:{{ $data->menutextcolor }} !important;" href="{{ url('serviceareas') }}">Service&nbsp;Areas</a>
           </li>
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
 
             <a class="nav-link" style="color:{{ $data->menutextcolor }} !important;" data-toggle="dropdown" href="#">Sign&nbsp;up</a>
 
@@ -130,7 +130,7 @@
                 </div>
               </div>
             </div>
-          </li>
+          </li> -->
         </ul>
       </div>
 

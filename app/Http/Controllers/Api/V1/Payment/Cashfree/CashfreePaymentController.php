@@ -53,10 +53,11 @@ class CashfreePaymentController extends ApiController
     */
     public function generateCftoken(GenerateCfTokenRequest $request)
     {
-        $cash_free_url = 'https://test.cashfree.com/api/v2/cftoken/order';
+        $cash_free_url = 'https://sandbox.cashfree.com/pg/orders';
         $headers = [
             'x-client-id:'.get_settings(Settings::CASH_FREE_TEST_APP_ID),
             'x-client-secret:'.get_settings(Settings::CASH_FREE_SECRET_KEY),
+            'x-api-version:"2023-08-01"',
             'Content-Type:application/json'
             ];
 
@@ -67,7 +68,7 @@ class CashfreePaymentController extends ApiController
             'Content-Type:application/json'
             ];
 
-            $cash_free_url = 'https://api.cashfree.com/api/v2/cftoken/order';
+            $cash_free_url = 'https://api.cashfree.com/pg/orders';
 
         }
       
@@ -75,9 +76,9 @@ class CashfreePaymentController extends ApiController
 
         $orderId = env('APP_NAME').'-'.$current_timestamp.'---'.auth()->user()->id;
         $query = [
-            'orderId'=> $orderId,
-            'orderAmount'=>$request->order_amount,
-            'orderCurrency'=>$request->order_currency
+            'order_id'=> $orderId,
+            'order_amount'=>$request->order_amount,
+            'order_currency'=>$request->order_currency
         ];
 
         // dd($cash_free_url);

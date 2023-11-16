@@ -68,7 +68,7 @@ class TripRequestTransformer extends Transformer
             'is_paid' => $request->is_paid,
             'user_rated' => $request->user_rated,
             'driver_rated' => $request->driver_rated,
-            'unit' => $request->unit==0?'MILES':'KM',
+            'unit' => $request->unit==2?'MILES':'KM',
             'zone_type_id'=>$request->zone_type_id,
             'vehicle_type_id'=>$request->vehicle_type_id,
             'vehicle_type_name'=>$request->vehicle_type_name,
