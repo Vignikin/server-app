@@ -43,7 +43,7 @@ class ClearDemoDatabase extends Command
      */
     public function handle()
     {
-        if(env('APP_FOR')=='demo'){
+        // if(env('APP_FOR')=='demo'){
 
         $non_deleted_ids = [];
 
@@ -63,7 +63,7 @@ class ClearDemoDatabase extends Command
 
         $this->info("success");
     
-        }
+        // }
         
 
     }
