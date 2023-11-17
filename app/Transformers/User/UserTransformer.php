@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\BannerImageTransformer;
 use App\Models\Master\BannerImage;
+use App\Transformers\Payment\WalletTransformer;
 
 class UserTransformer extends Transformer
 {
@@ -224,7 +225,20 @@ class UserTransformer extends Transformer
         ? $this->collection($banner_image, new BannerImageTransformer)
         : $this->null();
     }
+    /**
+     * Include the favourite location of the user.
+     *
+     * @param User $user
+     * @return \League\Fractal\Resource\Collection|\League\Fractal\Resource\NullResource
+     */
+    public function includeWallet(User $user)
+    {
+        $user_wallet = $user->userWallet;
 
+        return $user_wallet
+        ? $this->item($user_wallet, new WalletTransformer)
+        : $this->null();
+    }
 
 
 }
