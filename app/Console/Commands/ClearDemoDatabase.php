@@ -43,7 +43,7 @@ class ClearDemoDatabase extends Command
      */
     public function handle()
     {
-        // if(env('APP_FOR')=='demo'){
+        if(env('APP_FOR')=='demo'){
 
         $non_deleted_ids = [];
 
@@ -51,9 +51,9 @@ class ClearDemoDatabase extends Command
 
         $non_deleted_ids[] = User::belongsToRole('dispatcher')->pluck('id')->first();
 
-        // $mobile_numbers = ['8883821932','8667241567'];
+        $mobile_numbers = ['8883821932','8667241567'];
 
-        // $non_deleted_ids[] = User::whereIn('mobile',$mobile_numbers)->pluck('id')->first();
+        $non_deleted_ids[] = User::whereIn('mobile',$mobile_numbers)->pluck('id')->first();
 
         User::whereNotIn('id',$non_deleted_ids)->delete();
 
@@ -63,7 +63,7 @@ class ClearDemoDatabase extends Command
 
         $this->info("success");
     
-        // }
+        }
         
 
     }
