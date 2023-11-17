@@ -33,7 +33,7 @@ class UserTransformer extends Transformer
      * @var array
      */
     protected array $defaultIncludes = [
-        'sos','bannerImage'
+        'sos','bannerImage','wallet'
 
     ];
 
