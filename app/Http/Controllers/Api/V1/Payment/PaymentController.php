@@ -579,7 +579,6 @@ class PaymentController extends BaseController
 
 
     }
-
    /**
      * Transfer money from wallet
      * @bodyParam mobile mobile required mobile of the user
@@ -590,7 +589,7 @@ class PaymentController extends BaseController
    public function transferMoneyFromWallet(Request $request)
     {
         $request->validate([
-            'mobile' => 'required|min:10',
+            'mobile' => 'required',
             'role' => 'required',
             'amount' => 'required'
         ]);
@@ -743,4 +742,3 @@ class PaymentController extends BaseController
         return response()->json(['success' => true, 'transfer_remarks' => $transfer_remarks, 'receiver_remarks' => $receiver_remarks]);
     }
 }
-
