@@ -172,14 +172,24 @@ class DriverCancelRequestController extends BaseController
             goto no_drivers_available;
         }
 
+        if ($if_dispatch==true) {
         $request_detail->update([
+            'is_cancelled'=>true,
+            'cancel_method'=>2,
+            'cancelled_at'=>Carbon::now()->setTimezone('UTC')->toDateTimeString()
+        ]);
+        }else{
+           $request_detail->update([
             'driver_id'=>null,
             'arrived_at'=>null,
             'accepted_at'=>null,
             'is_driver_started'=>0,
             'is_driver_arrived'=>0,
             'updated_at'=>Carbon::now()->setTimezone('UTC')->toDateTimeString()
-        ]);
+        ]);   
+        }
+
+
         
         $nearest_drivers =  $this->getFirebaseDrivers($request_detail);
 
