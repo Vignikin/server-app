@@ -179,6 +179,21 @@ class CreateRequestController extends BaseController
         // DB::beginTransaction();
         // try {
         $request_detail = $this->request->create($request_params);
+
+          // To Store Request stops along with poc details
+        if ($request->has('stops')) {
+
+            // Log::info($request->stops);
+
+            foreach (json_decode($request->stops) as $key => $stop) {
+                $request_detail->requestStops()->create([
+                'address'=>$stop->address,
+                'latitude'=>$stop->latitude,
+                'longitude'=>$stop->longitude,
+                'order'=>$stop->order]);
+
+            }
+        }
         // request place detail params
         $request_place_params = [
             'pick_lat'=>$request->pick_lat,
@@ -554,6 +569,21 @@ class CreateRequestController extends BaseController
         DB::beginTransaction();
         try {
             $request_detail = $this->request->create($request_params);
+
+              // To Store Request stops along with poc details
+        if ($request->has('stops')) {
+
+            // Log::info($request->stops);
+
+            foreach (json_decode($request->stops) as $key => $stop) {
+                $request_detail->requestStops()->create([
+                'address'=>$stop->address,
+                'latitude'=>$stop->latitude,
+                'longitude'=>$stop->longitude,
+                'order'=>$stop->order]);
+
+            }
+        }
             // request place detail params
             $request_place_params = [
             'pick_lat'=>$request->pick_lat,
