@@ -842,6 +842,38 @@ class SettingsSeeder extends Seeder
             'field' => SettingValueType::TEXT,
             'group_name' => null,
         ],  
+         SettingSlug::ENABLE_KHALTI_PAY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => '1',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"yes":1,"no":0}',
+            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
+        ],
+
+        SettingSlug::KHALTI_PAY_ENVIRONMENT => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'test',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"test":"test","production":"production"}',
+            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
+        ],
+
+        SettingSlug::KHALTI_PAY_TEST_API_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'test_public_key_5066528dae744acb967edfae71959934',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
+        ],
+        SettingSlug::KHALTI_PAY_LIVE_API_KEY => [
+            'category'=>SettingCategory::INSTALLATION,
+            'value' => 'live_public_key_29ae51e22ee44ad088147563405c3b35',
+            'field' => SettingValueType::TEXT,
+            'option_value' => null,
+            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
+        ],
+
+        
     ];
 
 

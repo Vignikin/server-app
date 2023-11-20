@@ -155,8 +155,6 @@ class LoginController extends ApiController
      */
     protected function loginUserAccountApp($request, $role, array $conditions = [])
     {
-        echo gettype($role);
-        exit;
         return $this->loginUserAccount($request, $role, true, $conditions);
     }
 

@@ -18,6 +18,8 @@ use App\Models\Admin\Sos;
 use App\Transformers\Common\SosTransformer;
 use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\DriverVehicleTypeTransformer;
+use App\Transformers\Driver\DriverWalletTransformer;
+
 
 class DriverProfileTransformer extends Transformer
 {
@@ -324,6 +326,19 @@ class DriverProfileTransformer extends Transformer
         : $this->null();
     }
 
+    /**
+     * Include the favourite location of the user.
+     *
+     * @param User $user
+     * @return \League\Fractal\Resource\Collection|\League\Fractal\Resource\NullResource
+     */
+    public function includeWallet(Driver $driver)
+    {
+        $driver_wallet = $driver->driverWallet;
 
+        return $driver_wallet
+        ? $this->item($driver_wallet, new DriverWalletTransformer)
+        : $this->null();
+    }
 
 }

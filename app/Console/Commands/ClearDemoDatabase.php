@@ -51,7 +51,7 @@ class ClearDemoDatabase extends Command
 
         $non_deleted_ids[] = User::belongsToRole('dispatcher')->pluck('id')->first();
 
-        $mobile_numbers = ['8883821932','8667241567','8080808080'];
+        $mobile_numbers = ['8883821932','8667241567'];
 
         $non_deleted_ids[] = User::whereIn('mobile',$mobile_numbers)->pluck('id')->first();
 
