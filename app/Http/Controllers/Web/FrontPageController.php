@@ -41,9 +41,22 @@ class FrontPageController extends Controller
             return redirect('dashboard');
 
         }
-        if($conditional_host[0] =='tagxi-super-dispatcher'){
+        if($conditional_host[0] =='tagxi-super-bidding-dispatcher'){
 
-        return redirect('dispatch-login');
+        $user = User::belongsToRole('dispatcher')->first();
+        
+        auth('web')->login($user, true);
+
+        return redirect('dispatch/dashboard');
+
+        }
+        if($conditional_host[0] =='tagxi-super-bidding-delivery-dispatcher'){
+
+        $user = User::belongsToRole('delivery-dispatcher')->first();
+        
+        auth('web')->login($user, true);
+
+        return redirect('delivery-dispatch/dashboard');
 
         }
 
