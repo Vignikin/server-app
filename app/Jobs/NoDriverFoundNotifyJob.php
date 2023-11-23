@@ -49,20 +49,17 @@ class NoDriverFoundNotifyJob implements ShouldQueue
             $body = trans('push_notifications.no_driver_found_body');
             $push_data = ['notification_enum'=>PushEnums::NO_DRIVER_FOUND];
 
-            if ($request_detail->userDetail()->exists() && $request_result->userDetail->fcm_token) {
+            if ($request_detail->userDetail()->exists()) {
+
+                if($request_result->userDetail->fcm_token){
                 $user = $request_detail->userDetail;
                 $socket_data = new \stdClass();
                 $socket_data->success = true;
                 $socket_data->success_message  = PushEnums::NO_DRIVER_FOUND;
                 $socket_data->result = $request_result;
-                // Form a socket sturcture using users'id and message with event name
-                // $socket_message = structure_for_socket($user->id, 'user', $socket_data, 'trip_status');
-
-                // dispatch(new NotifyViaSocket('transfer_msg', $socket_message));
-
-                // dispatch(new NotifyViaMqtt('trip_status_'.$user->id, json_encode($socket_data), $user->id));
-
                 dispatch(new SendPushNotification($user,$title,$body));
+                }
+
             }
         }
     }
