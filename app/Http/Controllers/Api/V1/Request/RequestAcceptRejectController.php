@@ -109,6 +109,9 @@ class RequestAcceptRejectController extends BaseController
         // @TODO send sms,email & push notification with request detail
         } else {
 
+            Log::info('request-number');
+            Log::info($request_detail->request_number);
+            Log::info('----------')
             $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
             // Save Driver Reject Requests
             DriverRejectedRequest::create(['request_id'=>$request_detail->id,
