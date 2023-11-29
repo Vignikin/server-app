@@ -65,7 +65,7 @@ class AdminViewController extends BaseController
 
         }
 
-        if($conditional_host[0] =='tagxi-super-dispatcher'){
+        if($conditional_host[0] =='tagxi-super-bidding-dispatcher'){
 
         $user = User::belongsToRole('dispatcher')->first();
         
@@ -74,7 +74,7 @@ class AdminViewController extends BaseController
         return redirect('dispatch/dashboard');
 
         }
-        if($conditional_host[0] =='tagxi-super-delivery-dispatcher'){
+        if($conditional_host[0] =='tagxi-super-bidding-delivery-dispatcher'){
 
         $user = User::belongsToRole('delivery-dispatcher')->first();
         

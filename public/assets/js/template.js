@@ -85,12 +85,12 @@ throw new Error('template requires jQuery')
 
     $(Selector.sidebarMenu).on('expanded.tree', function () {
       this.fix()
-      this.fixSidebar()
+      // this.fixSidebar()
     }.bind(this))
 
     $(Selector.sidebarMenu).on('collapsed.tree', function () {
       this.fix()
-      this.fixSidebar()
+      // this.fixSidebar()
     }.bind(this))
   }
 

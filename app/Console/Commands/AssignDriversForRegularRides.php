@@ -20,6 +20,8 @@ use Sk\Geohash\Geohash;
 use Kreait\Firebase\Contract\Database;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Collection;
+
 
 
 class AssignDriversForRegularRides extends Command
@@ -235,11 +237,24 @@ class AssignDriversForRegularRides extends Command
 
                 }
 
+                    if(count($nearest_driver_ids)>0){
 
-                    $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
+                        $find_drivers= true;
+                    }else{
+
+                        $find_drivers = false;
+                    }
+
+                    if($find_drivers){
+
+                        $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
                     $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
+                    })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();    
+                    }else{
 
+                        $nearest_drivers = collect();
+                    }
+                    
 
                 $has_enabled_my_route_drivers=$nearest_drivers->where('enable_my_route_booking',1)->first();
 
