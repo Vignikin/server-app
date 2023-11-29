@@ -80,7 +80,7 @@ class CarMakeAndModelController extends BaseController
         $drop_lat=10.9147655;
         $drop_lng=76.9308607;
 
-        $type_id="d44802f3-5123-4c4b-b3f4-aea6d42a898a";
+        $type_id="50f694e7-b644-4136-9b2c-3dc191291bdb";
 
 
         return $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
