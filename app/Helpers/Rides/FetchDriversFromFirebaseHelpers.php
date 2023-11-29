@@ -169,6 +169,12 @@ trait FetchDriversFromFirebaseHelpers
             $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
             $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_driver_ids);
 
+            if(count($nearest_driver_ids)==0){
+
+                   $nearest_driver_ids=[];
+
+                }
+
             $driver_search_radius = get_settings('driver_search_radius')?:30;
 
                 $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
