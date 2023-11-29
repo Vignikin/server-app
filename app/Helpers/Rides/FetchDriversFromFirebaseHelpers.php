@@ -197,7 +197,7 @@ trait FetchDriversFromFirebaseHelpers
             
             $selected_drivers[$i]["user_id"] = $user_detail->id;
             $selected_drivers[$i]["driver_id"] = $driver->id;
-            $selected_drivers[$i]["active"] = 0;
+            $selected_drivers[$i]["active"] = 1;
             $selected_drivers[$i]["assign_method"] = 1;
             $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
             $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
@@ -220,7 +220,7 @@ trait FetchDriversFromFirebaseHelpers
         if(get_settings('trip_dispatch_type')==0){
             $selected_drivers[$i]["active"] = 1;
         }else{
-            if($driver_key=0){
+            if($driver_key==0){
                 break;                
             }
         }
