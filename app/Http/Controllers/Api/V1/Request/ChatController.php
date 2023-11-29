@@ -154,10 +154,10 @@ class ChatController extends BaseController
         if($check_data_exists)
         { 
             $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
-            $response_array = array("status"=>true,'chat_messages'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
+            $response_array = array("success"=>true,'chat_messages'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
         else{ 
-            $response_array = array("status"=>true,"new_chat"=>1);
+            $response_array = array("success"=>true,"new_chat"=>1);
         }
         return response()->json(json_encode($response_array));  
     }
@@ -174,7 +174,7 @@ class ChatController extends BaseController
         $validator = Validator::make($request->all(),$validate_array );
         if ($validator->fails()) {
             $errors = $validator->errors();
-            $response_array = array("status"=>false,"message"=>$errors->all());
+            $response_array = array("success"=>false,"message"=>$errors->all());
             return response()->json($response_array); 
         }   
         if($request->new_chat == 1)
@@ -193,7 +193,7 @@ class ChatController extends BaseController
         $chat_messages->to_id = 1;
         $chat_messages->message = $request->message;
         $chat_messages->save();
-        $response_array = array("status"=>true,"chat_messages"=>$chat_messages);
+        $response_array = array("success"=>true,"chat_messages"=>$chat_messages);
         return response()->json($response_array);
     } 
 }
