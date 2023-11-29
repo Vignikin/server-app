@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Request;
 
 use App\Models\Request\Chat;
-use App\Models\User;
+use App\Models\User; 
+use App\Models\ChatMessage; 
+use App\Models\Chat as AdminChat;
 use App\Base\Constants\Auth\Role;
 use App\Http\Controllers\Api\V1\BaseController;
 use App\Models\Request\Request as RequestModel;
@@ -12,6 +14,7 @@ use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\NotifyViaMqtt;
 use Illuminate\Http\Request;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Facades\Validator; 
 
 /**
  * @group Request-Chat
@@ -177,7 +180,7 @@ class ChatController extends BaseController
         }   
         if($request->new_chat == 1)
         {
-            $chat = new chat(); 
+            $chat = new AdminChat(); 
             $chat->user_id = auth()->user()->id;
             $chat->save();  
             $chat_id = $chat->id;
