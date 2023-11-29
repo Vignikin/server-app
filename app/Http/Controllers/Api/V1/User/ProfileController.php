@@ -123,7 +123,7 @@ class ProfileController extends ApiController
         }
 
 
-        $driver_params = $request->only(['vehicle_type','car_make','car_model','car_color','car_number','name','email','vehicle_year']);
+        $driver_params = $request->only(['vehicle_type','car_make','car_model','car_color','car_number','name','email','vehicle_year','custom_make','custom_model']);
 
 
          $driver_params['approve'] = true;

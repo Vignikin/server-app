@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Sk\Geohash\Geohash;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
+use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 
 /**
  * @group Vehicle Management
@@ -17,6 +18,8 @@ use Kreait\Firebase\Contract\Database;
  */
 class CarMakeAndModelController extends BaseController
 {
+    use FetchDriversFromFirebaseHelpers;
+
     protected $car_make;
     protected $car_model;
 
@@ -74,26 +77,17 @@ class CarMakeAndModelController extends BaseController
      * */
     public function testApi(Request $request){
 
+        $pick_lat =11.0589937;
+        $pick_lng =76.9939081;
 
-        dd($request->types);
-        
-        foreach (json_decode($request->types) as $key => $value) {
-            
-            dd($value);
-        }
+        $drop_lat=10.9147655;
+        $drop_lng=76.9308607;
 
-       $fire_drivers = $this->database->getReference('drivers/699')->getValue();
-        
-        // dd(is_array($fire_drivers['vehicle_type']));
-
-        if($fire_drivers['vehicle_type']=='kfnfnkrgkrgrgr'){
-
-            dd("hfhfhfhf");
-        }
-        $if_type_exists = in_array("7e4994ef-0e21-4e7c-bc47-e18c4d2250ff", $fire_drivers['vehicle_type']);
-
-        dd($if_type_exists);
+        $type_id="50f694e7-b644-4136-9b2c-3dc191291bdb";
 
 
+        $drivers =  $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
+    
+        dd($drivers);        
     }
 }

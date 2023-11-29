@@ -19,8 +19,8 @@ class UpdateDriverProfileRequest extends BaseRequest
             // 'mobile' => 'sometimes|required|mobile_number|unique:users,mobile,' . $this->user()->id,
             'profile_picture' => $this->userProfilePictureRule(),
             'vehicle_type'=>'sometimes|required|exists:vehicle_types,id',
-            'car_make'=>'sometimes|required|exists:car_makes,id',
-            'car_model'=>'sometimes|required|exists:car_models,id',
+            // 'car_make'=>'sometimes|required|exists:car_makes,id',
+            // 'car_model'=>'sometimes|required|exists:car_models,id',
             'car_color'=>'sometimes|required',
             'car_number'=>'sometimes|required',
         ];

@@ -137,8 +137,8 @@ class DriverProfileTransformer extends Transformer
 
 
         if($user->fleet_id){
-            $params['car_make_name'] = $user->fleetDetail->carBrand->name;
-            $params['car_model_name'] = $user->fleetDetail->carModel->name;
+            $params['car_make_name'] = $user->fleetDetail->car_make_name;
+            $params['car_model_name'] = $user->fleetDetail->car_model_name;
             $params['car_number'] = $user->fleetDetail->license_number;
             $params['car_color'] = $user->fleetDetail->car_color;
 

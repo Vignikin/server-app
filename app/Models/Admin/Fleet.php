@@ -15,7 +15,16 @@ class Fleet extends Model
     use UuidModel,SoftDeletes,HasActive;
 
     protected $fillable = [
-        'owner_id','brand','model','license_number','permission_number','vehicle_type','active','fleet_id','qr_image','approve','car_color','driver_id'
+        'owner_id','brand','model','license_number','permission_number','vehicle_type','active','fleet_id','qr_image','approve','car_color','driver_id','custom_make','custom_model'
+    ];
+
+    /**
+    * The accessors to append to the model's array form.
+    *
+    * @var array
+    */
+    protected $appends = [
+       'car_make_name','car_model_name'
     ];
 
     public function vehicleType(){
@@ -40,6 +49,25 @@ class Fleet extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'owner_id','id');
+    }
+
+
+    public function getCarMakeNameAttribute()
+    {
+        if($this->carBrand()->exists()){
+            return $this->carBrand?$this->carBrand->name:null;            
+        }else{
+
+            return $this->custom_make;
+        }
+    }
+    public function getCarModelNameAttribute()
+    {
+        if($this->carModel()->exists()){
+            return $this->carModel?$this->carModel->name:null;
+        }else{
+            return $this->custom_model;
+        }
     }
 
     public function getFleetNameAttribute(){

@@ -68,6 +68,8 @@ class DriverSignupController extends LoginController
     * @bodyParam vehicle_type uuid required vehicle types. listed by types api
     * @bodyParam car_make string required car make of the driver
     * @bodyParam car_model string required car model of the driver
+    * @bodyParam custom_make string required car make of the driver
+    * @bodyParam custom_model string required car model of the driver
     * @bodyParam car_number string required car number of the driver
     * @bodyParam car_color string required car color of the driver
     *
@@ -81,7 +83,7 @@ class DriverSignupController extends LoginController
         $mobileUuid = $request->input('uuid');
 
 
-            $created_params = $request->only(['service_location_id', 'name','mobile','email','address','state','city','country','gender','vehicle_type','car_make','car_model','car_color','car_number','vehicle_year']);
+            $created_params = $request->only(['service_location_id', 'name','mobile','email','address','state','city','country','gender','vehicle_type','car_make','car_model','car_color','car_number','vehicle_year','custom_make','custom_model']);
 
         $created_params['postal_code'] = $request->postal_code;
 

@@ -65,6 +65,8 @@ class FleetController extends BaseController
 
         $created_params['brand'] = $request->car_make;
         $created_params['model'] = $request->car_model;
+        $created_params['custom_make']=$request->custom_make;
+        $created_params['custom_model']=$request->custom_model;
         $created_params['license_number'] = $request->car_number;
         $created_params['owner_id'] = auth()->user()->id;
 
