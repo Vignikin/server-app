@@ -163,7 +163,10 @@ trait FetchDriversFromFirebaseHelpers
 
                 }
 
+            $rejected_driver_ids = DriverRejectedRequest::where('request_id',$request_detail->id)->pluck('driver_id')->toArray();
+            
             $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
+            $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_driver_ids);
 
             $driver_search_radius = get_settings('driver_search_radius')?:30;
 

@@ -122,25 +122,6 @@ class RequestAcceptRejectController extends BaseController
             $push_request_detail = $request_result->toJson();
             // Delete Driver record from meta table
             RequestMeta::where('request_id', $request->input('request_id'))->where('driver_id', $driver->id)->delete();
-            
-            // Send request to next driver
-            $request_meta = RequestMeta::where('request_id', $request->input('request_id'))->first();
-            if ($request_meta) {
-                $request_meta->update(['active'=>true]);
-                // @TODO Send push notification like create request to the driver
-                $title = trans('push_notifications.new_request_title');
-                $body = trans('push_notifications.new_request_body');
-                $push_data = ['notification_enum'=>PushEnums::REQUEST_CREATED,'result'=>(string)$push_request_detail];
-                $driver = Driver::find($request_meta->driver_id);
-
-                // Add Next Driver into Firebase Request Meta
-                $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$request_meta->driver_id,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
-
-                $notifiable_driver = $driver->user;
-                dispatch(new SendPushNotification($notifiable_driver,$title,$body));;
-
-                
-            } else {
 
                  // Send Ride to the Nearest Next Driver
                 $this->fetchDriversFromFirebase($request_detail,$request_detail->pick_lat,$request_detail->pick_lng,$request_detail->drop_lat,$request_detail->drop_lng,$request_detail->userDetail,$request_detail->zoneType->type_id);
@@ -162,7 +143,7 @@ class RequestAcceptRejectController extends BaseController
                 $push_data = ['notification_enum'=>PushEnums::NO_DRIVER_FOUND,'result'=>(string)$push_request_detail];
                 dispatch_notify:
                 no_drivers_available:
-            }
+            
         }
         end:
 
