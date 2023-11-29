@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Sk\Geohash\Geohash;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
+use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 
 /**
  * @group Vehicle Management
@@ -17,6 +18,8 @@ use Kreait\Firebase\Contract\Database;
  */
 class CarMakeAndModelController extends BaseController
 {
+    use FetchDriversFromFirebaseHelpers;
+
     protected $car_make;
     protected $car_model;
 

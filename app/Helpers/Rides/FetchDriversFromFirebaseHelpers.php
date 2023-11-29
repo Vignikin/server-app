@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers\Rides;
+
 use Kreait\Firebase\Contract\Database;
 use Sk\Geohash\Geohash;
 use Carbon\Carbon;
