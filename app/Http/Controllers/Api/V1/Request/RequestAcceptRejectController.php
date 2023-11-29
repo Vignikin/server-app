@@ -22,7 +22,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
-
+use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 
 
 /**
@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Artisan;
  */
 class RequestAcceptRejectController extends BaseController
 {
+    use FetchDriversFromFirebaseHelpers;
+
     protected $request;
 
     public function __construct(RequestModel $request,Database $database)
@@ -140,64 +142,8 @@ class RequestAcceptRejectController extends BaseController
                 
             } else {
 
-                 $nearest_drivers =  $this->getFirebaseDrivers($request_detail);
-
-        $request_detail->fresh();
-        
-        if($request_detail->is_cancelled){
-
-            goto end;
-        }
-
-        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
-
-         if (!$nearest_drivers) {
-                goto no_drivers_available;
-        }
-
-         $selected_drivers = [];
-        $i = 0;
-        foreach ($nearest_drivers as $driver) {
-            // Log::info("in-loop");
-            // $selected_drivers[$i]["request_id"] = $request_detail->id;
-            if(!$request_detail->if_dispatch){
-            $selected_drivers[$i]["user_id"] = $request_detail->userDetail->id;                
-            }
-            $selected_drivers[$i]["driver_id"] = $driver->id;
-            $selected_drivers[$i]["active"] = $i == 0 ? 1 : 0;
-            $selected_drivers[$i]["assign_method"] = 1;
-            $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
-            $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
-            $i++;
-        }
-
-
-        // Send notification to the very first driver
-        $first_meta_driver = $selected_drivers[0]['driver_id'];
-
-        // Add first Driver into Firebase Request Meta
-        $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$first_meta_driver,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
-
-
-        $pus_request_detail = $request_result->toJson();
-        $push_data = ['notification_enum'=>PushEnums::REQUEST_CREATED,'result'=>$pus_request_detail];
-
-
-        $socket_data = new \stdClass();
-        $socket_data->success = true;
-        $socket_data->success_message  = PushEnums::REQUEST_CREATED;
-        $socket_data->result = $request_result;
-
-        $driver = Driver::find($first_meta_driver);
-
-        $notifable_driver = $driver->user;
-
-        $title = trans('push_notifications.new_request_title',[],$notifable_driver->lang);
-        $body = trans('push_notifications.new_request_body',[],$notifable_driver->lang);
-
-        dispatch(new SendPushNotification($notifable_driver,$title,$body));
-
-            $request_detail->requestMeta()->create($selected_drivers[0]);
+                 // Send Ride to the Nearest Next Driver
+                $this->fetchDriversFromFirebase($request_detail,$request_detail->pick_lat,$request_detail->pick_lng,$request_detail->drop_lat,$request_detail->drop_lng,$request_detail->userDetail,$request_detail->zoneType->type_id);
 
                 goto end;
 
