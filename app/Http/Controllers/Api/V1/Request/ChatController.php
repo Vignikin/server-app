@@ -193,7 +193,7 @@ class ChatController extends BaseController
         $chat_messages->to_id = 1;
         $chat_messages->message = $request->message;
         $chat_messages->save();
-        $response_array = array("success"=>true,"data"=>$chat_messages);
+        $response_array = array("success"=>true,"data"=>$chat_messages->id);
         return response()->json($response_array);
     } 
 }
