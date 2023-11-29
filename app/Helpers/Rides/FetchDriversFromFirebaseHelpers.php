@@ -34,8 +34,14 @@ trait FetchDriversFromFirebaseHelpers
      * @return \Illuminate\Http\JsonResponse
      */
     //
-    protected function fetchDriversFromFirebase($request_detail,$pick_lat,$pick_lng,$drop_lat,$drop_lng,$user_detail,$type_id)
+    protected function fetchDriversFromFirebase($request_detail)
     {
+        $pick_lat = $request_detail->pick_lat;
+        $pick_lng = $request_detail->pick_lng;
+        $drop_lat = $request_detail->drop_lat;
+        $drop_lng = $request_detail->drop_lng;
+        $user_detail = $request_detail->userDetail;
+        $type_id = $request_detail->zoneType->type_id;
 
         $driver_search_radius = get_settings('driver_search_radius')?:30;
         
@@ -141,7 +147,7 @@ trait FetchDriversFromFirebaseHelpers
 
                             if($current_location_of_driver){
 
-                            $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $request->drop_lat, $request->drop_lng,'K');
+                            $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $drop_lat, $drop_lng,'K');
 
                             $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $nearest_driver->my_route_lat, $nearest_driver->my_route_lng,'K');
 

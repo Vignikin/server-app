@@ -124,7 +124,7 @@ class RequestAcceptRejectController extends BaseController
             RequestMeta::where('request_id', $request->input('request_id'))->where('driver_id', $driver->id)->delete();
 
                  // Send Ride to the Nearest Next Driver
-                $this->fetchDriversFromFirebase($request_detail,$request_detail->pick_lat,$request_detail->pick_lng,$request_detail->drop_lat,$request_detail->drop_lng,$request_detail->userDetail,$request_detail->zoneType->type_id);
+                $this->fetchDriversFromFirebase($request_detail);
 
                 goto end;
 
