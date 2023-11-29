@@ -170,7 +170,7 @@ class ChatController extends Controller
                  $html_data.='</p> </div> </div></div>';   
             } 
         }
-         return response()->json(array("status"=>"success","chat_id"=>$request->chat_id,'html_data'=>$html_data));
+         return response()->json(array("status"=>"success",'html_data'=>$html_data));
 
       }
 
