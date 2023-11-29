@@ -154,12 +154,12 @@ class ChatController extends BaseController
         if($check_data_exists)
         { 
             $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
-            $response_array = array("success"=>true,'chat_messages'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
+            $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
         else{ 
             $response_array = array("success"=>true,"new_chat"=>1);
         }
-        return response()->json(json_encode($response_array));  
+        return response()->json($response_array);  
     }
         /**
      * send message to admin
