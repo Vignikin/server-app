@@ -157,7 +157,9 @@ class RequestAcceptRejectController extends BaseController
         foreach ($nearest_drivers as $driver) {
             // Log::info("in-loop");
             // $selected_drivers[$i]["request_id"] = $request_detail->id;
-            $selected_drivers[$i]["user_id"] = $request_detail->userDetail->id;
+            if(!$request_detail->if_dispatch){
+            $selected_drivers[$i]["user_id"] = $request_detail->userDetail->id;                
+            }
             $selected_drivers[$i]["driver_id"] = $driver->id;
             $selected_drivers[$i]["active"] = $i == 0 ? 1 : 0;
             $selected_drivers[$i]["assign_method"] = 1;
