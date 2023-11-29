@@ -166,7 +166,7 @@ class RequestAcceptRejectController extends BaseController
         }
         end:
 
-         // Artisan::call('assign_drivers:for_regular_rides');
+         Artisan::call('assign_drivers:for_regular_rides');
         
         return $this->respondSuccess();
     }
