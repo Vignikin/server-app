@@ -11,6 +11,7 @@ use App\Models\Request\Request;
 use Illuminate\Support\Facades\Log;
 use App\Base\Constants\Setting\Settings;
 use App\Models\Admin\Driver;
+use App\Jobs\Notifications\SendPushNotification;
 
 trait FetchDriversFromFirebaseHelpers
 {
@@ -32,7 +33,7 @@ trait FetchDriversFromFirebaseHelpers
      * @return \Illuminate\Http\JsonResponse
      */
     //
-    protected function fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id)
+    protected function fetchDriversFromFirebase($request_detail,$pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id)
     {
 
         $driver_search_radius = get_settings('driver_search_radius')?:30;
@@ -177,14 +178,68 @@ trait FetchDriversFromFirebaseHelpers
 
                 $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
 
-                if ($nearest_drivers->count() > 0) {
-                // Retrieve the first record
-                    return $nearest_drivers->first();
-
-                } else {
-
-                return null; 
+                if ($nearest_drivers->count()==0) {
+                
+                    return null; 
                 }
+        //Create Meta & Send Ride Request to the Nearest Drivers
+        $selected_drivers = [];
+        $i = 0;
+        foreach ($nearest_drivers as $driver_key => $driver) {
+
+            // $selected_drivers[$i]["request_id"] = $request_detail->id;
+            foreach ($firebase_drivers as $key => $firebase_driver) {
+
+                    if($driver->id==$key){
+                        $selected_drivers[$i]["distance_to_pickup"] = $firebase_driver['distance'];
+                    }
+            }
+            
+            $selected_drivers[$i]["user_id"] = $user_detail->id;
+            $selected_drivers[$i]["driver_id"] = $driver->id;
+            $selected_drivers[$i]["active"] = 0;
+            $selected_drivers[$i]["assign_method"] = 1;
+            $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
+            $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
+
+
+        // Add Driver into Firebase Request Meta
+        $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$driver->id,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
+
+        
+        $driver = Driver::find($driver->id);
+
+        $notifable_driver = $driver->user;
+
+        $title = trans('push_notifications.new_request_title',[],$notifable_driver->lang);
+        $body = trans('push_notifications.new_request_body',[],$notifable_driver->lang);
+
+        dispatch(new SendPushNotification($notifable_driver,$title,$body));
+
+
+        if(get_settings('trip_dispatch_type')==0){
+            $selected_drivers[$i]["active"] = 1;
+        }else{
+            if($driver_key=0){
+                break;                
+            }
+        }
+
+            $i++;
+        }
+
+        if(get_settings('trip_dispatch_type')==0){
+
+            goto create_meta_request;
+        }
+
+       
+        foreach ($selected_drivers as $key => $selected_driver) {
+            $request_detail->requestMeta()->create($selected_driver);
+        }
+
+        return "success";
+
             
         } else {
 

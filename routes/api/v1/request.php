@@ -28,7 +28,7 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
 
         Route::get('promocode-list', 'PromoCodeController@index');
         // Create Request
-        Route::post('create', 'CreateRequestController@createRequest');
+        Route::post('create', 'CreateNewRequestController@createRequest');
         Route::post('delivery/create', 'DeliveryCreateRequestController@createRequest');
         // Change Drop Location
         Route::post('change-drop-location', 'EtaController@changeDropLocation');
