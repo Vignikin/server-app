@@ -171,7 +171,7 @@ trait FetchDriversFromFirebaseHelpers
 
             if(count($nearest_driver_ids)==0){
 
-                   $nearest_driver_ids=[];
+                return null; 
 
                 }
 
