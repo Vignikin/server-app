@@ -33,7 +33,7 @@ trait FetchDriversFromFirebaseHelpers
      * @return \Illuminate\Http\JsonResponse
      */
     //
-    protected function fetchDriversFromFirebase($request_detail,$pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id)
+    protected function fetchDriversFromFirebase($request_detail,$pick_lat,$pick_lng,$drop_lat,$drop_lng,$user_detail,$type_id)
     {
 
         $driver_search_radius = get_settings('driver_search_radius')?:30;

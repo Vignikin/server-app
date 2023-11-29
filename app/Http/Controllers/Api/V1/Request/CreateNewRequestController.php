@@ -212,7 +212,7 @@ class CreateNewRequestController extends BaseController
 
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
         
-        $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail,$request->pick_lat,$request->pick_lng,$request->drop_lat,$request->drop_lng,$type_id);
+        $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail,$request->pick_lat,$request->pick_lng,$request->drop_lat,$request->drop_lng,$user_detail,$type_id);
 
         // Send Request to the nearest Drivers
          if ($nearest_drivers==null) {
