@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Base\Constants\Setting\Settings;
 use App\Models\Admin\Driver;
 use App\Jobs\Notifications\SendPushNotification;
+use App\Models\Request\DriverRejectedRequest;
 
 trait FetchDriversFromFirebaseHelpers
 {
@@ -164,7 +165,7 @@ trait FetchDriversFromFirebaseHelpers
                 }
 
             $rejected_driver_ids = DriverRejectedRequest::where('request_id',$request_detail->id)->pluck('driver_id')->toArray();
-            
+
             $nearest_driver_ids = array_diff($nearest_driver_ids,$removable_driver_ids);
             $nearest_driver_ids = array_diff($nearest_driver_ids,$rejected_driver_ids);
 
