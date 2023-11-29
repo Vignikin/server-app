@@ -148,10 +148,9 @@ class ChatController extends BaseController
      *
      */
     public function chat_initiate(Request $request)
-    {
-       
+    { 
         $user_id = auth()->user()->id;   
-        $check_data_exists = Chat::where('user_id',$user_id)->first();
+        $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
         if($check_data_exists)
         { 
             $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
