@@ -74,26 +74,16 @@ class CarMakeAndModelController extends BaseController
      * */
     public function testApi(Request $request){
 
+        $pick_lat =11.0589937;
+        $pick_lng =76.9939081;
 
-        dd($request->types);
+        $drop_lat=10.9147655;
+        $drop_lng=76.9308607;
+
+        $type_id="d44802f3-5123-4c4b-b3f4-aea6d42a898a";
+
+
+        return $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
         
-        foreach (json_decode($request->types) as $key => $value) {
-            
-            dd($value);
-        }
-
-       $fire_drivers = $this->database->getReference('drivers/699')->getValue();
-        
-        // dd(is_array($fire_drivers['vehicle_type']));
-
-        if($fire_drivers['vehicle_type']=='kfnfnkrgkrgrgr'){
-
-            dd("hfhfhfhf");
-        }
-        $if_type_exists = in_array("7e4994ef-0e21-4e7c-bc47-e18c4d2250ff", $fire_drivers['vehicle_type']);
-
-        dd($if_type_exists);
-
-
     }
 }
