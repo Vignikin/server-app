@@ -159,7 +159,7 @@ class ChatController extends BaseController
         else{ 
             $response_array = array("success"=>true,"new_chat"=>1);
         }
-        return response()->json(json_encode($response_array));  
+        return response()->json($response_array);  
     }
         /**
      * send message to admin
