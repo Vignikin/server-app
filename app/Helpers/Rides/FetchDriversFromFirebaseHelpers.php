@@ -228,11 +228,6 @@ trait FetchDriversFromFirebaseHelpers
             $i++;
         }
 
-        if(get_settings('trip_dispatch_type')==0){
-
-            goto create_meta_request;
-        }
-
        
         foreach ($selected_drivers as $key => $selected_driver) {
             $request_detail->requestMeta()->create($selected_driver);
