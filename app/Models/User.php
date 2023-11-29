@@ -126,7 +126,7 @@ class User extends Authenticatable implements CanSendOTPContract
     {
         if (!$value) {
             $default_image_path = config('base.default.user.profile_picture');
-            return env('APP_URL').$default_image_path;
+            return url('/').$default_image_path;
         }
         return Storage::disk(env('FILESYSTEM_DRIVER'))->url(file_path($this->uploadPath(), $value));
     }
