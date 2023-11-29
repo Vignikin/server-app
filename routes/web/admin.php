@@ -718,6 +718,16 @@ Route::middleware('auth:web')->group(function () {
 
     });
 });
+Route::middleware('auth:web')->namespace('Admin')->group(function () {
+        /** Chat Module*/
+        Route::group(['prefix' => 'chat'], function () {
+            Route::get('/', 'ChatController@index'); 
+            Route::POST('/send_message', 'ChatController@send_message'); 
+            Route::get('/get-chat-messages', 'ChatController@get_chat_messages'); 
+            Route::get('/get-notication-count', 'ChatController@get_notication_count'); 
+            Route::get('/update-notication-count', 'ChatController@update_notication_count');  
+        });  
+});
 
     Route::middleware('auth:web')->namespace('Dispatcher')->group(function () {
         Route::prefix('dispatch')->group(function () {

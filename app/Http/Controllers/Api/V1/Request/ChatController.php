@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Request;
 
 use App\Models\Request\Chat;
+use App\Models\User; 
+use App\Models\ChatMessage; 
+use App\Models\Chat as AdminChat;
 use App\Base\Constants\Auth\Role;
 use App\Http\Controllers\Api\V1\BaseController;
 use App\Models\Request\Request as RequestModel;
@@ -11,6 +14,7 @@ use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\NotifyViaMqtt;
 use Illuminate\Http\Request;
 use App\Jobs\Notifications\SendPushNotification;
+use Illuminate\Support\Facades\Validator; 
 
 /**
  * @group Request-Chat
@@ -138,4 +142,58 @@ class ChatController extends BaseController
 
         return $this->respondSuccess(null, 'message_sent_successfully');
     }
+
+     /**
+     * Chat initiate and get chat messages
+     *
+     */
+    public function chat_initiate(Request $request)
+    { 
+        $user_id = auth()->user()->id;   
+        $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
+        if($check_data_exists)
+        { 
+            $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
+            $response_array = array("success"=>true,'chat_messages'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
+        }
+        else{ 
+            $response_array = array("success"=>true,"new_chat"=>1);
+        }
+        return response()->json(json_encode($response_array));  
+    }
+        /**
+     * send message to admin
+     *
+     */
+    public function send_message(Request $request)
+    {
+        $validate_array = [
+            'new_chat' => 'required', 
+            'message' => 'required',
+           ];
+        $validator = Validator::make($request->all(),$validate_array );
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $response_array = array("success"=>false,"message"=>$errors->all());
+            return response()->json($response_array); 
+        }   
+        if($request->new_chat == 1)
+        {
+            $chat = new AdminChat(); 
+            $chat->user_id = auth()->user()->id;
+            $chat->save();  
+            $chat_id = $chat->id;
+        } 
+        else{
+            $chat_id = $request->chat_id;
+        }
+        $chat_messages = new ChatMessage();
+        $chat_messages->chat_id = $chat_id;
+        $chat_messages->from_id = auth()->user()->id;
+        $chat_messages->to_id = 1;
+        $chat_messages->message = $request->message;
+        $chat_messages->save();
+        $response_array = array("success"=>true,"chat_messages"=>$chat_messages);
+        return response()->json($response_array);
+    } 
 }
