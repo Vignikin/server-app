@@ -83,7 +83,8 @@ class CarMakeAndModelController extends BaseController
         $type_id="50f694e7-b644-4136-9b2c-3dc191291bdb";
 
 
-        return $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
-        
+        $drivers =  $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
+    
+        dd($drivers);        
     }
 }

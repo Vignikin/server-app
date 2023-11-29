@@ -176,9 +176,14 @@ trait FetchDriversFromFirebaseHelpers
 
                 $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
 
-                dd($nearest_drivers);
+                if ($nearest_drivers->count() > 0) {
+                // Retrieve the first record
+                    return $nearest_drivers->first();
 
-                return $nearest_drivers;
+                } else {
+
+                return null; 
+                }
             
         } else {
 
