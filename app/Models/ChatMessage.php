@@ -13,7 +13,7 @@ class ChatMessage extends Model
 
     protected $table = 'chat_messages';
 
-    protected $fillable = ['id','chat_id','image_url','message','seen','image_status'];  
+    protected $fillable = ['id','chat_id','image_url','message','unseen_count','image_status'];  
 
     protected $append = ['from_details','to_details'];
 

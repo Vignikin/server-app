@@ -79,7 +79,8 @@ class ChatController extends Controller
         $chat_messages->image_status = $image_status;
         $chat_messages->image_url = json_encode($image_data); 
         $chat_messages->save();    
-        $response_array = array("status"=>"success","data"=>$chat_messages);
+        $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count();
+        $response_array = array("status"=>"success","data"=>$chat_messages,'count'=>$get_unseen_count);
        
        return response()->json($response_array);
     } 

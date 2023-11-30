@@ -627,7 +627,6 @@ messagesRef.on('value', (snapshot) => {
               return;
           } 
           const data = snapshot.val();    
-          var user_id = '1';     
           const key = Object.keys(data)[$i]; 
           const newData = data[key];  
           displayMessages(newData);
@@ -679,6 +678,7 @@ $(document).on("click",".con-reply-btn",function(e){
                                   chat_id: response.data.chat_id, 
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
+                                  unseen_count: response.count,
                                   created_at: response.data.created_at
                                 }); 
                            

@@ -155,6 +155,7 @@ class ChatController extends BaseController
         $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
         if($check_data_exists)
         { 
+            ChatMessage::where('chat_id',$check_data_exists->id)->update(['unseen_count'=>1]);
             $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
             $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
