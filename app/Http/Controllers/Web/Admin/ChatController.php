@@ -93,10 +93,10 @@ class ChatController extends Controller
     }
     public function get_notication_count(Request $request)
     {
-      if($request->message_id)
+      if($request->chat_id)
       {  
-         $chat_messages = ChatMessage::find($request->message_id);
-         $chat_data = Chat::find($chat_messages->chat_id); 
+         $chat_data = Chat::find($request->chat_id); 
+         $chat_messages = ChatMessage::where('chat_id',$request->chat_id)->latest('created_at')->first(); 
          $user = Auth::user(); 
          if($chat_messages->chat_id == $request->active_chat)
          {    
