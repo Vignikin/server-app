@@ -36,6 +36,12 @@ trait FetchDriversFromFirebaseHelpers
     //
     protected function fetchDriversFromFirebase($request_detail)
     {
+
+        if ($request_detail->requestMeta()->exists()) {
+             
+             return null;   
+        }
+
         $pick_lat = $request_detail->pick_lat;
         $pick_lng = $request_detail->pick_lng;
         $drop_lat = $request_detail->drop_lat;
