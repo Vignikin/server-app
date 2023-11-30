@@ -292,6 +292,7 @@ $(document).on('click','.chooseLanguage',function(){
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
+        const database = firebase.database();
 
         var sosRef = firebase.database().ref('SOS');
         

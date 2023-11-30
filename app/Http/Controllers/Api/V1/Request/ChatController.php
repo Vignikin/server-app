@@ -197,7 +197,7 @@ class ChatController extends BaseController
         $chat_messages->save(); 
         $data = [
             'message' => $request->message, 
-            'message_id' => $chat_messages->id, 
+            'chat_id' => $chat_id, 
             'from_id' => auth()->user()->id, 
             'to_id' => 1, 
             'created_at'=> Database::SERVER_TIMESTAMP

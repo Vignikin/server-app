@@ -412,13 +412,13 @@ textarea:focus{
     </style>
     <script>
 
-      function get_notification_count(message_id = null,active_chat)
+      function get_notification_count(chat_id = null,active_chat)
       {  
-        if(message_id != null)
+        if(chat_id != null)
           {
-            var data = {chat_id:message_id};
+            var data = {chat_id:chat_id};
             $.ajax({
-                    url: 'chat/get-notication-count?message_id='+message_id+'&active_chat='+active_chat+'', // Replace with your API endpoint
+                    url: 'chat/get-notication-count?chat_id='+chat_id+'&active_chat='+active_chat+'', // Replace with your API endpoint
                     method: 'GET',
                     dataType: 'json', 
                     data:data, 
@@ -593,42 +593,18 @@ textarea:focus{
                                         <h4 class="text-center" style="color:#333;font-size:25px;">@lang('view_pages.no_data_found')</h4>
                                         </p>
           </div>
-    @endif
-        
-
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script> 
+    @endif 
+ 
 <script>
    
 var existingFiles = [];
-let initialLoad = true; 
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-                apiKey: "{{get_settings('firebase-api-key')}}",
-    authDomain: "{{get_settings('firebase-auth-domain')}}",
-    databaseURL: "{{get_settings('firebase-db-url')}}",
-    projectId: "{{get_settings('firebase-project-id')}}",
-    storageBucket: "{{get_settings('firebase-storage-bucket')}}",
-    messagingSenderId: "{{get_settings('firebase-messaging-sender-id')}}",
-    appId: "{{get_settings('firebase-app-id')}}",
-    measurementId: "{{get_settings('firebase-measurement-id')}}"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
-        // Assuming you have a Firebase reference
-const database = firebase.database();
-const messagesRef = database.ref('chats'); 
-
+let initialLoad = true;   
+const messagesRef = database.ref('chats/');  
     // Function to display messages in the chat
 function displayMessages(messageData) 
 {    
     var active_chat = $(".chat_list.active_chat").attr("data-val");
-    get_notification_count(messageData.message_id,active_chat);
+    get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && messageData.from_id != user_id)
     {   
@@ -642,20 +618,20 @@ function displayMessages(messageData)
           });
       }   
     } 
-}
-  const lastTimestamp = localStorage.getItem('lastTimestamp') || 0; 
-  // Listen for 'value' event
-  messagesRef.endAt().limitToLast(1).on('child_added', (snapshot) => {
+} 
+messagesRef.on('value', (snapshot) => {
+          let $i = 0;
           if (initialLoad) {
               // Ignore initial load
               initialLoad = false;
               return;
           } 
-          const newData = snapshot.val();   
-          var user_id = '{{Auth::user()->id}}';  
+          const data = snapshot.val();    
+          var user_id = '1';     
+          const key = Object.keys(data)[$i]; 
+          const newData = data[key];  
           displayMessages(newData);
-  });  
-
+        });
 $(document).on("click",".chat_list",function(e){
     var data_val = $(this).attr("data-val"); 
     $(".chat_list").removeClass("active_chat");
@@ -700,8 +676,8 @@ $(document).on("click",".con-reply-btn",function(e){
                         {   
                           messagesRef.child(response.data.chat_id).set({
                                   message: response.data.message,  
-                                  message_id: response.data.id, 
-                                  from_id: response.data.from_id, 
+                                  chat_id: response.data.chat_id, 
+                                  from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
                                   created_at: response.data.created_at
                                 }); 
