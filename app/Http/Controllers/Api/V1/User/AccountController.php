@@ -47,7 +47,7 @@ class AccountController extends ApiController
    
         }
         $user->chat_id = "";
-        $get_chat_data = Chat::where('user_id',$user_id)->first();
+        $get_chat_data = Chat::where('user_id',$user->id)->first();
         if($get_chat_data)
         {
             $user->chat_id = $get_chat_data->id;
