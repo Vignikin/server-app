@@ -15,6 +15,7 @@ use App\Jobs\NotifyViaMqtt;
 use Illuminate\Http\Request;
 use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Support\Facades\Validator; 
+use Kreait\Firebase\Contract\Database;
 
 /**
  * @group Request-Chat
@@ -26,9 +27,10 @@ class ChatController extends BaseController
 
     protected $chat;
 
-    function __construct(Chat $chat)
+    function __construct(Chat $chat,Database $database)
     {
         $this->chat = $chat;
+        $this->database = $database;
     }
 
 
@@ -148,7 +150,7 @@ class ChatController extends BaseController
      *
      */
     public function chat_initiate(Request $request)
-    { 
+    {   
         $user_id = auth()->user()->id;   
         $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
         if($check_data_exists)
@@ -192,8 +194,17 @@ class ChatController extends BaseController
         $chat_messages->from_id = auth()->user()->id;
         $chat_messages->to_id = 1;
         $chat_messages->message = $request->message;
-        $chat_messages->save();
-        $response_array = array("success"=>true,"data"=>$chat_messages->id);
-        return response()->json($response_array);
+        $chat_messages->save(); 
+        $data = [
+            'message' => $request->message, 
+            'message_id' => $chat_messages->id, 
+            'from_id' => auth()->user()->id, 
+            'to_id' => 1, 
+            'created_at'=> Database::SERVER_TIMESTAMP
+        ]; 
+        $chatRef = $this->database->getReference('chats/'.$chat_id);
+        $NewchatRef = $chatRef->set($data);
+        $chat_id = $NewchatRef->getKey();
+        return response()->json(["success"=>true,'message' => 'Data inserted successfully', 'chat_id' => $chat_id]); 
     } 
 }

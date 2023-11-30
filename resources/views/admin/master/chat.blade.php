@@ -629,7 +629,7 @@ function displayMessages(messageData)
 {    
     var active_chat = $(".chat_list.active_chat").attr("data-val");
     get_notification_count(messageData.message_id,active_chat);
-    var user_id = '{{Auth::user(}->id}}';
+    var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && messageData.from_id != user_id)
     {   
       if(messageData.message !== null && messageData.message !== "" && messageData.message !== undefined)
@@ -698,13 +698,12 @@ $(document).on("click",".con-reply-btn",function(e){
                         // Handle the successful response    
                         if(response.status == "success")
                         {   
-                          messagesRef.push({
+                          messagesRef.child(response.data.chat_id).set({
                                   message: response.data.message,  
-                                  chat_id: response.data.chat_id, 
                                   message_id: response.data.id, 
                                   from_id: response.data.from_id, 
                                   to_id: response.data.to_id,  
-                                  timestamp: response.data.created_at
+                                  created_at: response.data.created_at
                                 }); 
                            
                             if(response.data.message !== null && response.data.message !== "")
