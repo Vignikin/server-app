@@ -80,7 +80,7 @@ class AssignDriversForRegularRides extends Command
         // dd(DB::getQueryLog());
         foreach ($requests as $key => $request) {
 
-            $this->fetchDriversFromFirebase($request_detail);
+            $this->fetchDriversFromFirebase($request);
 
         }
 
