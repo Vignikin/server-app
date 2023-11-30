@@ -486,14 +486,14 @@ if(str_contains((string)request()->path(),'translations')){
         </a>
       </li>
       @endif
-      @if(auth()->user()->can('chat'))
+      <!-- @if(auth()->user()->can('chat'))
       <li class="{{'chat_module' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/chat')}}">
           <i class="fa fa-heartbeat"></i> <span>Chat</span>
         </a>
       </li>
        
-        @endif 
+        @endif  -->
 
       @if(auth()->user()->can('manage-promo'))
       <li class="{{'manage-promo' == $main_menu ? 'active' : '' }}">
