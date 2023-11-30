@@ -16,6 +16,7 @@ use App\Transformers\Requests\TripRequestTransformer;
 use App\Base\Constants\Setting\Settings;
 use App\Models\Admin\Sos;
 use App\Transformers\Common\SosTransformer;
+use App\Models\Chat;
 
 class OwnerProfileTransformer extends Transformer
 {
@@ -119,6 +120,12 @@ class OwnerProfileTransformer extends Transformer
             $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
 
             $params['low_balance'] = $low_balance;
+            $params['chat_id'] = "";
+            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            if($get_chat_data)
+            {
+                $params['chat_id'] = $get_chat_data->id;
+            } 
 
 
         return $params;

@@ -16,6 +16,7 @@ use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\BannerImageTransformer;
 use App\Models\Master\BannerImage;
 use App\Transformers\Payment\WalletTransformer;
+use App\Models\Chat;
 
 class UserTransformer extends Transformer
 {
@@ -44,6 +45,7 @@ class UserTransformer extends Transformer
      */
     public function transform(User $user)
     {
+        
         $params = [
             'id' => $user->id,
             'name' => $user->name,
@@ -105,6 +107,13 @@ class UserTransformer extends Transformer
         $params['show_ride_without_destination'] = (get_settings(Settings::SHOW_RIDE_WITHOUT_DESTINATION));
         
         $params['enable_country_restrict_on_map'] = (get_settings(Settings::ENABLE_COUNTRY_RESTRICT_ON_MAP));
+
+        $params['chat_id'] = "";
+        $get_chat_data = Chat::where('user_id',$user->id)->first();
+        if($get_chat_data)
+        {
+            $params['chat_id'] = $get_chat_data->id;
+        } 
         
         return $params;
     }

@@ -19,6 +19,7 @@ use App\Transformers\Common\SosTransformer;
 use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\DriverVehicleTypeTransformer;
 use App\Transformers\Driver\DriverWalletTransformer;
+use App\Models\Chat;
 
 
 class DriverProfileTransformer extends Transformer
@@ -252,6 +253,13 @@ class DriverProfileTransformer extends Transformer
             $params['enable_shipment_load_feature'] = get_settings(Settings::ENABLE_SHIPMENT_LOAD_FEATURE);
             $params['enable_shipment_unload_feature'] = get_settings(Settings::ENABLE_SHIPMENT_UNLOAD_FEATURE);
             $params['enable_digital_signature'] = get_settings(Settings::ENABLE_DIGITAL_SIGNATURE);
+            $params['chat_id'] = "";
+            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            if($get_chat_data)
+            {
+                $params['chat_id'] = $get_chat_data->id;
+            } 
+
 
 
         return $params;
