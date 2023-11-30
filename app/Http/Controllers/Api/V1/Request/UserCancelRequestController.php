@@ -18,7 +18,6 @@ use App\Models\Admin\CancellationReason;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Http\Request;
-use Role;
 use Illuminate\Support\Facades\Artisan;
 
 /**

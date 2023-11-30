@@ -212,6 +212,11 @@ class CreateNewRequestController extends BaseController
 
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
         
+
+        if ($request->has('is_bid_ride') && $request->input('is_bid_ride')==1) {
+                goto no_drivers_available;
+        }
+
         $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail);
 
         // Send Request to the nearest Drivers
@@ -219,9 +224,7 @@ class CreateNewRequestController extends BaseController
                 goto no_drivers_available;
             }
 
-            if ($request->has('is_bid_ride') && $request->input('is_bid_ride')==1) {
-                goto no_drivers_available;
-            }
+            
             
         
 

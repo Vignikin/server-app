@@ -384,6 +384,8 @@ class DriverEndRequestController extends BaseController
         // @TODO need to add driver commision if the payment type is wallet
         // Store Request bill
 
+        Log::info("bill");
+        Log::info($calculated_bill);
         $bill = $request_detail->requestBill()->create($calculated_bill);
     
         // Log::info($bill);
