@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiController;
 use App\Transformers\User\UserTransformer;
 use App\Transformers\Driver\DriverProfileTransformer;
 use App\Transformers\Owner\OwnerProfileTransformer;
+use App\Models\Chat;
 
 class AccountController extends ApiController
 {
@@ -45,7 +46,12 @@ class AccountController extends ApiController
             $user = User::where('id',auth()->user()->id)->first();
    
         }
-
+        $user->chat_id = "";
+        $get_chat_data = Chat::where('user_id',$user_id)->first();
+        if($get_chat_data)
+        {
+            $user->chat_id = $get_chat_data->id;
+        } 
         return $this->respondOk($user);
     }
 }
