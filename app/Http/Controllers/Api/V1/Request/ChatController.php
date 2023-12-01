@@ -165,7 +165,10 @@ class ChatController extends BaseController
             {
                 $v->user_timezone = Carbon::parse($v->created_at)->setTimezone($timezone)->format('jS M h:i A'); 
             }
-            $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
+            $data['chats'] = $chat_messages;
+            $data['new_chat'] = 0;
+            $data['chat_id'] = $check_data_exists->id;
+            $response_array = array("success"=>true,'data'=>$data);
         }
         else{ 
             $response_array = array("success"=>true,'data'=>[],"new_chat"=>1);
