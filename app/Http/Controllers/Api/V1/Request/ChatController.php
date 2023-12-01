@@ -163,7 +163,7 @@ class ChatController extends BaseController
             $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
             foreach($chat_messages as $k=>$v)
             {
-                $v->user_timezone = Carbon::parse($v->created_at)->setTimezone($timezone)->format('jS M h:i A');
+                $v->user_timezone = Carbon::parse($v->created_at)->setTimezone($timezone)->format('jS M h:i A'); 
             }
             $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }

@@ -119,7 +119,7 @@ class ChatController extends Controller
       if($request->chat_id)
       {  
          $chat_data = Chat::find($request->chat_id); 
-         $chat_messages = ChatMessage::where('chat_id',$request->chat_id)->latest('created_at')->first(); 
+         $chat_messages = ChatMessage::where('chat_id',$request->chat_id)->orderBy('created_at','desc')->first(); 
          $user = Auth::user(); 
          if($chat_messages->chat_id == $request->active_chat)
          {    
