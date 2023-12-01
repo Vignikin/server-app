@@ -120,12 +120,9 @@ class ChatController extends Controller
     public function get_notication_count(Request $request)
     {
       if($request->chat_id)
-      {  
-         Log::info($request->chat_id);
-         $chat_data = Chat::find($request->chat_id); 
-         Log::info($chat_data);
-         $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first(); 
-         Log::info($chat_messages);
+      {   
+         $chat_data = Chat::find($request->chat_id);  
+         $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
          if($chat_messages->chat_id == $request->active_chat)
          {    
@@ -155,7 +152,7 @@ class ChatController extends Controller
             if($days >= 1)
             {
                 $time = intval($days)." days ago";
-                if(intval(days) <= 1)
+                if(intval($days) <= 1)
                 {
                     $time = intval($days)." day ago";
                 } 
