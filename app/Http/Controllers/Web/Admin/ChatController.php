@@ -93,16 +93,13 @@ class ChatController extends Controller
         $chat_messages->save();   
         $user = User::find($request->to_id); 
         $country = $user->country; 
-        $chat_messages->timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:env('SYSTEM_DEFAULT_TIMEZONE'); 
+        $time_zone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:env('SYSTEM_DEFAULT_TIMEZONE'); 
+
+        $chat_messages->user_timezone = Carbon::parse($chat_messages->created_at)->setTimezone($time_zone)->format('jS M h:i A');
         $title = 'New Message From Admin';
         $body = $request->data_text;
         dispatch(new SendPushNotification($user,$title,$body));
-        $notification = new UserDriverNotification();
-        $notification->user_id = $request->to_id;  
-        $notification->title = $title;
-        $notification->body = $request->data_text;
-        $notification->chat_id = $request->chat_id; 
-        $notification->save();     
+            
         $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count();
         $response_array = array("status"=>"success","data"=>$chat_messages,'count'=>$get_unseen_count);
        
@@ -133,7 +130,7 @@ class ChatController extends Controller
                                                                   $join->on('chat.id', '=', 'chat_messages.chat_id')
                                                                      ->whereIn('chat_messages.created_at', $latestMessages);
                                                             }) 
-                        ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))  
+                      ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0 and chat_messages.from_id = '.$chat_data->user_id.' ) as count'))  
                         ->orderBy('chat_messages.created_at', 'desc') 
                         ->get(); 
         if(count($user_details) > 0)
