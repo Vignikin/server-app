@@ -416,12 +416,12 @@ textarea:focus{
       {  
         if(chat_id != null)
           {
-            var data = {chat_id:chat_id};
+            // var data = {chat_id:chat_id};
             $.ajax({
                     url: 'chat/get-notication-count?chat_id='+chat_id+'&active_chat='+active_chat+'', // Replace with your API endpoint
                     method: 'GET',
                     dataType: 'json', 
-                    data:data, 
+                    // data:data, 
                     success: function(response) {   
                     console.log(response.html_data); 
                     $(".inbox_chat").html(response.html_data)
@@ -629,6 +629,7 @@ messagesRef.on('value', (snapshot) => {
           const data = snapshot.val();    
           const key = Object.keys(data)[$i]; 
           const newData = data[key];  
+          console.log(newData.chat_id)
           displayMessages(newData);
         });
 $(document).on("click",".chat_list",function(e){

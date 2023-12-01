@@ -17,6 +17,8 @@ use App\Models\Admin\UserDriverNotification;
 use App\Jobs\Notifications\SendPushNotification;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Models\Admin\ServiceLocation;
+use Illuminate\Support\Facades\Log;
+
 
 class ChatController extends Controller
 {
@@ -119,8 +121,11 @@ class ChatController extends Controller
     {
       if($request->chat_id)
       {  
+         Log::info($request->chat_id);
          $chat_data = Chat::find($request->chat_id); 
+         Log::info($chat_data);
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first(); 
+         Log::info($chat_messages);
          $user = Auth::user(); 
          if($chat_messages->chat_id == $request->active_chat)
          {    
