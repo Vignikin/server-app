@@ -180,7 +180,7 @@ class ChatController extends Controller
                   $html_data .= '<div class="chat_list" data-val="'.$v->id.'"> '; 
                }  
                  $html_data.= '<div class="chat_people"><div class="chat_img"> <img src="'.$user_data->profile_picture.'" alt="sunil"> </div><div class="chat_ib"><h5>'.$user_data->name.'<span class="chat_date"> '.$time.'</span></h5>  <p>'.$v->message.'';
-                 $count = ChatMessage::where('chat_id',$value->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
+                 $count = ChatMessage::where('chat_id',$v->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
                  if($count > 0)
                  {   
                   $html_data.='<span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
