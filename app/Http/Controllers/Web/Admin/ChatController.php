@@ -97,6 +97,7 @@ class ChatController extends Controller
         dispatch(new SendPushNotification($user,$title,$body));
         $notification = new UserDriverNotification();
         $notification->user_id = $request->to_id; 
+        $notification->notify_id = "f56f76bc-6fe6-4cd4-b183-cf5d95a1fc97"; 
         $notification->title = $title;
         $notification->body = $request->data_text;
         $notification->chat_id = $request->chat_id; 
@@ -119,7 +120,7 @@ class ChatController extends Controller
       if($request->chat_id)
       {  
          $chat_data = Chat::find($request->chat_id); 
-         $chat_messages = ChatMessage::where('chat_id',$request->chat_id)->orderBy('created_at','desc')->limit(1)->first(); 
+         $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first(); 
          $user = Auth::user(); 
          if($chat_messages->chat_id == $request->active_chat)
          {    
@@ -193,6 +194,7 @@ class ChatController extends Controller
                  $html_data.='</p> </div> </div></div>';   
             } 
         }
+        
          return response()->json(array("status"=>"success",'html_data'=>$html_data));
 
       }
