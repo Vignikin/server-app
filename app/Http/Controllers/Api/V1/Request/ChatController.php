@@ -171,7 +171,9 @@ class ChatController extends BaseController
             $response_array = array("success"=>true,'data'=>$data);
         }
         else{ 
-            $response_array = array("success"=>true,'data'=>[],"new_chat"=>1);
+            $data['chats'] = [];
+            $data['new_chat'] = 1;
+            $response_array = array("success"=>true,'data'=>$data);
         }
         return response()->json($response_array);  
     }
