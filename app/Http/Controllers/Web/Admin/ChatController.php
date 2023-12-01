@@ -13,13 +13,22 @@ use App\Models\Chat;
 use App\Models\ChatMessage; 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Admin\UserDriverNotification;
+use App\Jobs\Notifications\SendPushNotification;
+use App\Jobs\Notifications\AndroidPushNotification;
+use App\Models\Admin\ServiceLocation;
 
 class ChatController extends Controller
 {
       //
       public function index()
       {    
+      //   $country = auth()->user()->country;  
+      // $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC';  
+      // $chat_messages = ChatMessage::select('chat_messages.*',DB::raw("CONVERT_TZ(DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s'), 'UTC', 'America/New_York') AS current_time_in_ny"))->first();
+     
+      // print_r($chat_messages);
+      // exit;
             $page = trans('pages_names.chat'); 
             $main_menu = 'chat_module';
             $sub_menu = 'chat';    
@@ -37,6 +46,7 @@ class ChatController extends Controller
       }  
     public function send_message(Request $request)
     {  
+      
         $validate_array = [
          'chat_id' => 'required',
          'from_id' => 'required',
@@ -78,7 +88,19 @@ class ChatController extends Controller
         $chat_messages->unseen_count = 0;
         $chat_messages->image_status = $image_status;
         $chat_messages->image_url = json_encode($image_data); 
-        $chat_messages->save();    
+        $chat_messages->save();   
+        $user = User::find($request->to_id); 
+        $country = $user->country; 
+        $chat_messages->timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:env('SYSTEM_DEFAULT_TIMEZONE'); 
+        $title = 'New Message From Admin';
+        $body = $request->data_text;
+        dispatch(new SendPushNotification($user,$title,$body));
+        $notification = new UserDriverNotification();
+        $notification->user_id = $request->to_id; 
+        $notification->title = $title;
+        $notification->body = $request->data_text;
+        $notification->chat_id = $request->chat_id; 
+        $notification->save();     
         $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count();
         $response_array = array("status"=>"success","data"=>$chat_messages,'count'=>$get_unseen_count);
        

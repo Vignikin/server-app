@@ -679,7 +679,7 @@ $(document).on("click",".con-reply-btn",function(e){
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
                                   unseen_count: response.count,
-                                  created_at: response.data.created_at
+                                  timezone: response.data.timezone
                                 }); 
                            
                             if(response.data.message !== null && response.data.message !== "")

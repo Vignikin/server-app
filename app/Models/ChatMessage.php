@@ -13,9 +13,9 @@ class ChatMessage extends Model
 
     protected $table = 'chat_messages';
 
-    protected $fillable = ['id','chat_id','image_url','message','unseen_count','image_status'];  
+    protected $fillable = ['id','chat_id','image_url','message','unseen_count','image_status','from_id','to_id'];  
 
-    protected $append = ['from_details','to_details'];
+    protected $append = ['from_details','to_details','timezone'];
 
 
     public function chat_messages(){
@@ -26,7 +26,7 @@ class ChatMessage extends Model
      {
          return $this->belongsTo(User::class, 'from_id');
      }
- 
+      
      // Define the relationship with the User model for the 'to' user
      public function toUser()
      {
