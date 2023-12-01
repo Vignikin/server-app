@@ -614,7 +614,7 @@ function displayMessages(messageData)
           $(".incoming_msg_data").append('<div class="incoming_msg" id="last_message"> <div class="incoming_msg_img"> <img src="{{Auth::user()->profile_picture}}"> </div><div class="received_msg">  <div class="received_withd_msg"><p>'+messageData.message+'</p><span class="time_date"> Just Now</span></div> </div> </div>').promise().done(function(){
           var lastMessage = document.getElementById('last_message');  
           // Scroll the last message into view
-          lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' }); 
+          lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });  
           });
       }   
     } 

@@ -26,12 +26,6 @@ class ChatController extends Controller
       //
       public function index()
       {    
-      //   $country = auth()->user()->country;  
-      // $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC';  
-      // $chat_messages = ChatMessage::select('chat_messages.*',DB::raw("CONVERT_TZ(DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s'), 'UTC', 'America/New_York') AS current_time_in_ny"))->first();
-     
-      // print_r($chat_messages);
-      // exit;
             $page = trans('pages_names.chat'); 
             $main_menu = 'chat_module';
             $sub_menu = 'chat';    
@@ -131,7 +125,7 @@ class ChatController extends Controller
                                                                   $join->on('chat.id', '=', 'chat_messages.chat_id')
                                                                      ->whereIn('chat_messages.created_at', $latestMessages);
                                                             }) 
-                      ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0 and chat_messages.from_id = '.$chat_data->user_id.' ) as count'))  
+                      ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))  
                         ->orderBy('chat_messages.created_at', 'desc') 
                         ->get(); 
         if(count($user_details) > 0)
@@ -186,10 +180,11 @@ class ChatController extends Controller
                   $html_data .= '<div class="chat_list" data-val="'.$v->id.'"> '; 
                }  
                  $html_data.= '<div class="chat_people"><div class="chat_img"> <img src="'.$user_data->profile_picture.'" alt="sunil"> </div><div class="chat_ib"><h5>'.$user_data->name.'<span class="chat_date"> '.$time.'</span></h5>  <p>'.$v->message.'';
-                 if($v->count > 0)
+                 $count = ChatMessage::where('chat_id',$value->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
+                 if($count > 0)
                  {   
                   $html_data.='<span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
-                  border-radius: 100%;  position: relative; top: -2px;">'.$v->count.'</span>';
+                  border-radius: 100%;  position: relative; top: -2px;">'.$count.'</span>';
                  }
                  $html_data.='</p> </div> </div></div>';   
             } 
