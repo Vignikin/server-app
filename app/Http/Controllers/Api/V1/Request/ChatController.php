@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Support\Facades\Validator; 
 use Kreait\Firebase\Contract\Database;
+use App\Models\Admin\ServiceLocation;
 
 /**
  * @group Request-Chat
@@ -152,7 +153,9 @@ class ChatController extends BaseController
      */
     public function chat_initiate(Request $request)
     {   
-        $user_id = auth()->user()->id;    
+        $user_id = auth()->user()->id;   
+        $country = auth()->user()->country;
+        $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC'; 
         $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
         if($check_data_exists)
         { 
@@ -165,7 +168,7 @@ class ChatController extends BaseController
             $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
         else{ 
-            $response_array = array("success"=>true,"new_chat"=>1); 
+            $response_array = array("success"=>true,"new_chat"=>1);
         }
         return response()->json($response_array);  
     }
