@@ -152,14 +152,12 @@ class ChatController extends BaseController
      */
     public function chat_initiate(Request $request)
     {   
-        $user_id = auth()->user()->id;   
-        $country = auth()->user()->country;
-        $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC'; 
+        $user_id = auth()->user()->id;    
         $check_data_exists = AdminChat::where('user_id',$user_id)->first(); 
         if($check_data_exists)
         { 
             ChatMessage::where('chat_id',$check_data_exists->id)->where('to_id',$user_id)->update(['unseen_count'=>1]);
-            $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->select('chat.*',DB::raw("CONVERT_TZ(created_at, 'UTC', '".$timezone."') AS current_time_in_ny"))->get();
+            $chat_messages = ChatMessage::where('chat_id',$check_data_exists->id)->get();
             foreach($chat_messages as $k=>$v)
             {
                 $v->user_timezone = Carbon::parse($v->created_at)->setTimezone($timezone)->format('jS M h:i A');
@@ -167,7 +165,7 @@ class ChatController extends BaseController
             $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
         else{ 
-            $response_array = array("success"=>true,"new_chat"=>1);
+            $response_array = array("success"=>true,"new_chat"=>1); 
         }
         return response()->json($response_array);  
     }

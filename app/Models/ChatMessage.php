@@ -15,7 +15,7 @@ class ChatMessage extends Model
 
     protected $fillable = ['id','chat_id','image_url','message','unseen_count','image_status','from_id','to_id'];  
 
-    protected $append = ['from_details','to_details','timezone'];
+    protected $append = ['from_details','to_details'];
 
 
     public function chat_messages(){
