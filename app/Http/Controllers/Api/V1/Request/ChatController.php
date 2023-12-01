@@ -209,6 +209,7 @@ class ChatController extends BaseController
             'chat_id' => $chat_id, 
             'from_id' => auth()->user()->id, 
             'to_id' => 1, 
+            'unseen_count' => 0, 
             'created_at'=> Database::SERVER_TIMESTAMP
         ]; 
         $chatRef = $this->database->getReference('chats/'.$chat_id);

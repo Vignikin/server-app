@@ -98,8 +98,7 @@ class ChatController extends Controller
         $body = $request->data_text;
         dispatch(new SendPushNotification($user,$title,$body));
         $notification = new UserDriverNotification();
-        $notification->user_id = $request->to_id; 
-        $notification->notify_id = "f56f76bc-6fe6-4cd4-b183-cf5d95a1fc97"; 
+        $notification->user_id = $request->to_id;  
         $notification->title = $title;
         $notification->body = $request->data_text;
         $notification->chat_id = $request->chat_id; 
@@ -139,10 +138,11 @@ class ChatController extends Controller
                         ->get(); 
         if(count($user_details) > 0)
         {
-         $user_data = User::where('id','=',$chat_data->user_id)->first();
+         
          $html_data = "";
             foreach($user_details as $k=>$v)
             {
+            $user_data = User::where('id','=',$v->user_id)->first();
             $startDate = strtotime($v->created_date); 
             $current_date = time(); 
             $secs = $current_date - $startDate; 
