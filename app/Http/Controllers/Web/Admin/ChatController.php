@@ -26,6 +26,7 @@ class ChatController extends Controller
       //
       public function index()
       {    
+
             $page = trans('pages_names.chat'); 
             $main_menu = 'chat_module';
             $sub_menu = 'chat';    
@@ -38,8 +39,17 @@ class ChatController extends Controller
            }) 
            ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))
            ->orderBy('chat_messages.created_at', 'desc')
-           ->get();    
-         return view('admin.master.chat',compact('main_menu','sub_menu','page','user_details'));
+           ->get(); 
+           $chat_ids = [];
+           if(count($user_details) > 0)
+           {
+              foreach($user_details as $k=>$v)
+             {
+                $chat_ids[] = $v->id;
+             }
+           }   
+         return view('admin.master.chat',compact('main_menu','sub_menu','page','user_details','chat_ids'));
+
       }  
     public function send_message(Request $request)
     {  
@@ -115,8 +125,10 @@ class ChatController extends Controller
          $chat_data = Chat::find($request->chat_id);  
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
+         Log::info($request->active_chat);
          if($chat_messages->chat_id == $request->active_chat)
-         {    
+         {   
+         Log::info("test"); 
             ChatMessage::where('chat_id',$chat_messages->chat_id)->where('to_id',$chat_messages->to_id)->update(['unseen_count'=>1]);
          }    
          $latestMessages = DB::table('chat_messages')->select(DB::raw('MAX(created_at) as latest_message_date'))->groupBy('chat_id');

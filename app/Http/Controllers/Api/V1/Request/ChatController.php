@@ -168,7 +168,7 @@ class ChatController extends BaseController
             $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
         }
         else{ 
-            $response_array = array("success"=>true,"new_chat"=>1);
+            $response_array = array("success"=>true,'data'=>[],"new_chat"=>1);
         }
         return response()->json($response_array);  
     }

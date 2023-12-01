@@ -598,15 +598,16 @@ textarea:focus{
 <script>
    
 var existingFiles = [];
-let initialLoad = true;   
+let initialLoad;
+ 
 const messagesRef = database.ref('chats/');  
     // Function to display messages in the chat
 function displayMessages(messageData) 
-{    
+{     
     var active_chat = $(".chat_list.active_chat").attr("data-val");
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
-    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && messageData.from_id != user_id)
+    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val"))
     {   
       if(messageData.message !== null && messageData.message !== "" && messageData.message !== undefined)
       {
@@ -618,20 +619,41 @@ function displayMessages(messageData)
           });
       }   
     } 
-} 
-messagesRef.on('value', (snapshot) => {
-          let $i = 0;
-          if (initialLoad) {
-              // Ignore initial load
-              initialLoad = false;
+}  
+let $i;
+let $count;
+initialLoad_dt = true;
+<?php
+if(count($chat_ids))
+{
+    
+ foreach($chat_ids as $k=>$v)
+ {  
+?> 
+ 
+
+database.ref('chats/{{$v}}').on('value', (snapshot) => {
+            $i = '{{$k}}';
+            $count = '{{count($chat_ids)-1}}'; 
+          if(!initialLoad_dt)
+          {  
+            const data = snapshot.val();   
+           displayMessages(data); 
+           }
+              if ($i == $count) {  
+              initialLoad_dt = false;
               return;
           } 
-          const data = snapshot.val();    
-          const key = Object.keys(data)[$i]; 
-          const newData = data[key];  
-          console.log(newData.chat_id)
-          displayMessages(newData);
-        });
+           
+        }); 
+
+<?php 
+
+ }   
+}
+?>
+
+
 $(document).on("click",".chat_list",function(e){
     var data_val = $(this).attr("data-val"); 
     $(".chat_list").removeClass("active_chat");
