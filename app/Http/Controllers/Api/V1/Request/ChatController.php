@@ -168,8 +168,7 @@ class ChatController extends BaseController
             $data['chats'] = $chat_messages;
             $data['new_chat'] = 0;
             $data['chat_id'] = $check_data_exists->id; 
-            $data['count'] = 0; 
-            Log::info()
+            $data['count'] = 0;  
             $response_array = array("success"=>true,'data'=>$data);
         }
         else{ 
@@ -231,7 +230,7 @@ class ChatController extends BaseController
     public function update_notication_count(Request $request)
     {  
       ChatMessage::where('chat_id',$request->chat_id)->update(['unseen_count'=>1]);
-      return response()->json(array("status"=>"success","message"=>"Updated successfully"));
+      return response()->json(array("success"=>true,"message"=>"Updated successfully"));
     }
 }
   
