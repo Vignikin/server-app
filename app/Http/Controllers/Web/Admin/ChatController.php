@@ -130,11 +130,11 @@ class ChatController extends Controller
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
          Log::info($request->active_chat);
-         if($chat_messages->chat_id == $request->active_chat)
-         {   
-         Log::info("test"); 
-            ChatMessage::where('chat_id',$chat_messages->chat_id)->where('to_id',$chat_messages->to_id)->update(['unseen_count'=>1]);
-         }    
+         // if($chat_messages->chat_id == $request->active_chat)
+         // {   
+         // Log::info("test"); 
+         //    ChatMessage::where('chat_id',$chat_messages->chat_id)->where('to_id',$chat_messages->to_id)->update(['unseen_count'=>1]);
+         // }    
          $latestMessages = DB::table('chat_messages')->select(DB::raw('MAX(created_at) as latest_message_date'))->groupBy('chat_id');
          $user_details = Chat::with('user_detail') 
                         ->join('chat_messages', function ($join) use ($latestMessages) {
