@@ -221,6 +221,9 @@ class ChatController extends BaseController
         $NewchatRef = $chatRef->set($data);
         $chat_id = $NewchatRef->getKey(); 
         $data['message_success'] = "Data inserted successfully"; 
+        $country = auth()->user()->country;
+        $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC'; 
+        $data['user_timezone'] = Carbon::parse($chat_messages->created_at)->setTimezone($timezone)->format('jS M h:i A'); 
         return response()->json(["success"=>true,'data' => $data]); 
     }  
 }
