@@ -227,3 +227,4 @@ class ChatController extends BaseController
         return response()->json(["success"=>true,'data' => $data]); 
     }  
 }
+  
