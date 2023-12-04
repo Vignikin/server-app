@@ -129,7 +129,6 @@ class ChatController extends Controller
          $chat_data = Chat::find($request->chat_id);  
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
-         Log::info($request->active_chat);
          // if($chat_messages->chat_id == $request->active_chat)
          // {   
          // Log::info("test"); 
@@ -211,9 +210,5 @@ class ChatController extends Controller
       }
 
     }
-    public function update_notication_count(Request $request)
-    {  
-      ChatMessage::where('chat_id',$request->chat_id)->update(['unseen_count'=>1]);
-      return response()->json(array("status"=>"success","message"=>"Updated successfully"));
-    }
+    
 }
