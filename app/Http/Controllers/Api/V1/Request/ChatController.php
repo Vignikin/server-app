@@ -220,6 +220,7 @@ class ChatController extends BaseController
         $chatRef = $this->database->getReference('chats/'.$chat_id);
         $NewchatRef = $chatRef->set($data);
         $chat_id = $NewchatRef->getKey(); 
-        return response()->json(["success"=>true,'message' => 'Data inserted successfully', 'chat_id' => $chat_id]); 
+        $data['message_success'] = "Data inserted successfully"; 
+        return response()->json(["success"=>true,'data' => $data]); 
     }  
 }

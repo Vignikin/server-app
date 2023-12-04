@@ -40,14 +40,17 @@ class ChatController extends Controller
            ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))
            ->orderBy('chat_messages.created_at', 'desc')
            ->get(); 
-           $chat_ids = [];
+           
            if(count($user_details) > 0)
            {
               foreach($user_details as $k=>$v)
              {
                 $chat_ids[] = $v->id;
              }
-           }   
+           }  
+           else{
+            $chat_ids = [];
+           } 
          return view('admin.master.chat',compact('main_menu','sub_menu','page','user_details','chat_ids'));
 
       }  
