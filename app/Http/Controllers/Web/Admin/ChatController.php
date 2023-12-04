@@ -109,6 +109,7 @@ class ChatController extends Controller
         dispatch(new SendPushNotification($user,$title,$body));
             
         $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count();
+        Log::info($get_unseen_count);
         $response_array = array("status"=>"success","data"=>$chat_messages,'count'=>$get_unseen_count);
        
        return response()->json($response_array);
