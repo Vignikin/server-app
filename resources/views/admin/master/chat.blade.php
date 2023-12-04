@@ -701,7 +701,7 @@ $(document).on("click",".con-reply-btn",function(e){
                                   chat_id: response.data.chat_id, 
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
-                                  unseen_count: response.count,
+                                  count: response.count,
                                   user_timezone: response.data.user_timezone
                                 }); 
                            
