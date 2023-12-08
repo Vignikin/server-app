@@ -121,7 +121,7 @@ class OwnerProfileTransformer extends Transformer
 
             $params['low_balance'] = $low_balance;
             $params['chat_id'] = null;
-            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            $get_chat_data = Chat::where('user_id',$user->user_id)->first();
             if($get_chat_data)
             {
                 $params['chat_id'] = $get_chat_data->id;
