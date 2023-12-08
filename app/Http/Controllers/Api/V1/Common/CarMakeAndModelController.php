@@ -45,7 +45,7 @@ class CarMakeAndModelController extends BaseController
         return $this->respondSuccess($this->car_make->active()->where('transport_type',$transport_type)->where('vehicle_make_for',request()->vehicle_type)->orderBy('name')->get());
 
         }else{
-            return $this->respondSuccess($this->car_make->active()->orderBy('name')->get());
+            return $this->respondSuccess($this->car_make->active()->where('vehicle_make_for',request()->vehicle_type)->orderBy('name')->get());
         }
     }
 
