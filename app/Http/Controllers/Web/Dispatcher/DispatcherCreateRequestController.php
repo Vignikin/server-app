@@ -133,6 +133,8 @@ class DispatcherCreateRequestController extends BaseController
         // Store ad hoc user detail of this request
         $request_detail->adHocuserDetail()->create($ad_hoc_user_params);
 
+         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+         
         $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail);
 
 
@@ -148,43 +150,7 @@ class DispatcherCreateRequestController extends BaseController
     }
 
 
-    /**
-    * Get nearest Drivers using requested co-ordinates
-    *  @param request
-    */
-    public function getDrivers($request, $type_id)
-    {
-        $driver_detail = [];
-        $driver_ids = [];
-
-
-        $pick_lat = $request->pick_lat;
-        $pick_lng = $request->pick_lng;
-        $driver_search_radius = get_settings('driver_search_radius')?:30;
-
-        $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
-
-        // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
-
-        $driver_ids = Driver::whereHas('requestDetail.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
-            $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
-                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
-        })->pluck('id')->toArray();
-
-        $meta_drivers = RequestMeta::whereIn('driver_id', $driver_ids)->pluck('driver_id')->toArray();
-
-        $driver_haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(latitude))))";
-        // get nearest driver exclude who are all struck with request meta
-        $drivers = Driver::whereHas('driverDetail', function ($query) use ($driver_haversine,$driver_search_radius,$type_id) {
-            $query->select('driver_details.*')->selectRaw("{$driver_haversine} AS distance")
-                ->whereRaw("{$driver_haversine} < ?", [$driver_search_radius]);
-        })->whereNotIn('id', $meta_drivers)->limit(10)->get();
-
-        if ($drivers->isEmpty()) {
-            return $this->respondFailed('all drivers are busy');
-        }
-        return $drivers;
-    }
+   
 
    
     /**

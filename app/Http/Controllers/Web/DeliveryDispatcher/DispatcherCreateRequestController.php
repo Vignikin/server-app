@@ -141,6 +141,8 @@ class DispatcherCreateRequestController extends BaseController
         // Store ad hoc user detail of this request
         $request_detail->adHocuserDetail()->create($ad_hoc_user_params);
 
+        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+        
         $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail);
        
         // } catch (\Exception $e) {
