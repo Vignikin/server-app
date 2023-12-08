@@ -659,7 +659,7 @@ $(document).on("click",".chat_list",function(e){
     $(".chat_list").removeClass("active_chat");
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
-    update_notification_count(data_val); 
+    // update_notification_count(data_val); 
     $("span.notication-count").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){

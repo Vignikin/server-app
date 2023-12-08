@@ -109,8 +109,7 @@ class ChatController extends Controller
         $body = $request->data_text;
         dispatch(new SendPushNotification($user,$title,$body));
             
-        $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count();
-        Log::info($get_unseen_count);
+        $get_unseen_count = ChatMessage::where('chat_id',$request->chat_id)->where('to_id',$request->to_id)->where(['unseen_count'=>0])->count(); 
         $response_array = array("status"=>"success","data"=>$chat_messages,'count'=>$get_unseen_count);
        
        return response()->json($response_array);
@@ -120,6 +119,7 @@ class ChatController extends Controller
       $user = Auth::user(); 
       $get_chat_details =Chat::select('chat.*')->where('id',$request->chat_id)->first();  
       $user_data = User::where('id','=',$get_chat_details->user_id)->first(); 
+      ChatMessage::where('chat_id',$request->chat_id)->where('from_id',$get_chat_details->user_id)->update(['unseen_count'=>1]);   
       return view('admin.master.chat_messages',compact('get_messages','user_data','get_chat_details'));
 
     }
@@ -131,8 +131,7 @@ class ChatController extends Controller
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
          if($request->chat_id == $request->active_chat)
-         {    
-            Log::info($request->chat_id."----".$request->active_chat);
+         {     
             ChatMessage::where('chat_id',$request->chat_id)->where('from_id',$chat_data->user_id)->update(['unseen_count'=>1]); 
          }    
          $latestMessages = DB::table('chat_messages')->select(DB::raw('MAX(created_at) as latest_message_date'))->groupBy('chat_id');
