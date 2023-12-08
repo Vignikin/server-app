@@ -22,6 +22,7 @@ use Sk\Geohash\Geohash;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\Notifications\SendPushNotification;
+use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 
 
 /**
@@ -31,6 +32,8 @@ use App\Jobs\Notifications\SendPushNotification;
  */
 class DispatcherCreateRequestController extends BaseController
 {
+    use FetchDriversFromFirebaseHelpers;
+    
     protected $request;
 
     public function __construct(Request $request,Database $database)
@@ -85,7 +88,6 @@ class DispatcherCreateRequestController extends BaseController
         // $currency_code = get_settings(Settings::CURRENCY);
         //Find the zone using the pickup coordinates & get the nearest drivers
         // $nearest_drivers =  $this->getDrivers($request, $type_id);
-        $nearest_drivers =  $this->getFirebaseDrivers($request, $type_id);
 
         if ($nearest_drivers->getData()->success == false) {
             return $nearest_drivers;
@@ -140,52 +142,9 @@ class DispatcherCreateRequestController extends BaseController
         // Store ad hoc user detail of this request
         $request_detail->adHocuserDetail()->create($ad_hoc_user_params);
 
-        $selected_drivers = [];
-        $notification_android = [];
-        $notification_ios = [];
-        $i = 0;
-        foreach ($nearest_drivers as $driver) {
-            // $selected_drivers[$i]["request_id"] = $request_detail->id;
-            $selected_drivers[$i]["driver_id"] = $driver->id;
-            $selected_drivers[$i]["active"] = $i == 0 ? 1 : 0;
-            $selected_drivers[$i]["assign_method"] = 1;
-            $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
-            $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
-            if ($i == 0) {
-                
-            }
-            $i++;
-        }
-
-        // Send notification to the very first driver
-        $first_meta_driver = $selected_drivers[0]['driver_id'];
-        // Add first Driver into Firebase Request Meta
-        $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$first_meta_driver,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
-        
-        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+        $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail);
 
 
-        $title = trans('push_notifications.new_request_title');
-        $body = trans('push_notifications.new_request_body');
-
-
-        $mqtt_object = new \stdClass();
-        $mqtt_object->success = true;
-        $mqtt_object->success_message  = PushEnums::REQUEST_CREATED;
-        $mqtt_object->result = $request_result;
-
-        $driver = Driver::find($first_meta_driver);
-        
-        $notifable_driver = $driver->user;
-        dispatch(new SendPushNotification($notifable_driver,$title,$body));
-
-        // Send notify via Mqtt
-        // dispatch(new NotifyViaMqtt('create_request_'.$driver->id, json_encode($mqtt_object), $driver->id));
-
-        foreach ($selected_drivers as $key => $selected_driver) {
-            $request_detail->requestMeta()->create($selected_driver);
-        }
-        // @TODO send sms & email to the user
         // } catch (\Exception $e) {
         //     DB::rollBack();
         //     Log::error($e);
