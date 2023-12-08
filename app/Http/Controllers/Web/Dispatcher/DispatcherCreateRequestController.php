@@ -22,6 +22,7 @@ use Sk\Geohash\Geohash;
 use Kreait\Firebase\Contract\Database;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Jobs\Notifications\SendPushNotification;
+use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 
 
 /**
@@ -31,6 +32,8 @@ use App\Jobs\Notifications\SendPushNotification;
  */
 class DispatcherCreateRequestController extends BaseController
 {
+    use FetchDriversFromFirebaseHelpers;
+
     protected $request;
 
     public function __construct(Request $request,Database $database)
@@ -82,16 +85,6 @@ class DispatcherCreateRequestController extends BaseController
         $currency_symbol = $service_location->currency_symbol;
 
 
-        // $currency_code = get_settings(Settings::CURRENCY);
-        //Find the zone using the pickup coordinates & get the nearest drivers
-        // $nearest_drivers =  $this->getDrivers($request, $type_id);
-        $nearest_drivers =  $this->getFirebaseDrivers($request, $type_id);
-
-        if ($nearest_drivers->getData()->success == false) {
-            return $nearest_drivers;
-        }
-
-        $nearest_drivers = $nearest_drivers->getData()->data;
         // fetch unit from zone
         $unit = $zone_type_detail->zone->unit;
         // Fetch user detail
@@ -140,52 +133,11 @@ class DispatcherCreateRequestController extends BaseController
         // Store ad hoc user detail of this request
         $request_detail->adHocuserDetail()->create($ad_hoc_user_params);
 
-        $selected_drivers = [];
-        $notification_android = [];
-        $notification_ios = [];
-        $i = 0;
-        foreach ($nearest_drivers as $driver) {
-            // $selected_drivers[$i]["request_id"] = $request_detail->id;
-            $selected_drivers[$i]["driver_id"] = $driver->id;
-            $selected_drivers[$i]["active"] = $i == 0 ? 1 : 0;
-            $selected_drivers[$i]["assign_method"] = 1;
-            $selected_drivers[$i]["created_at"] = date('Y-m-d H:i:s');
-            $selected_drivers[$i]["updated_at"] = date('Y-m-d H:i:s');
-            if ($i == 0) {
-                
-            }
-            $i++;
-        }
-
-        // Send notification to the very first driver
-        $first_meta_driver = $selected_drivers[0]['driver_id'];
-        // Add first Driver into Firebase Request Meta
-        $this->database->getReference('request-meta/'.$request_detail->id)->set(['driver_id'=>$first_meta_driver,'request_id'=>$request_detail->id,'user_id'=>$request_detail->user_id,'active'=>1,'updated_at'=> Database::SERVER_TIMESTAMP]);
-        
-        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+         
+        $nearest_drivers =  $this->fetchDriversFromFirebase($request_detail);
 
 
-        $title = trans('push_notifications.new_request_title');
-        $body = trans('push_notifications.new_request_body');
-
-
-        $mqtt_object = new \stdClass();
-        $mqtt_object->success = true;
-        $mqtt_object->success_message  = PushEnums::REQUEST_CREATED;
-        $mqtt_object->result = $request_result;
-
-        $driver = Driver::find($first_meta_driver);
-        
-        $notifable_driver = $driver->user;
-        dispatch(new SendPushNotification($notifable_driver,$title,$body));
-
-        // Send notify via Mqtt
-        // dispatch(new NotifyViaMqtt('create_request_'.$driver->id, json_encode($mqtt_object), $driver->id));
-
-        foreach ($selected_drivers as $key => $selected_driver) {
-            $request_detail->requestMeta()->create($selected_driver);
-        }
-        // @TODO send sms & email to the user
         // } catch (\Exception $e) {
         //     DB::rollBack();
         //     Log::error($e);
@@ -198,158 +150,9 @@ class DispatcherCreateRequestController extends BaseController
     }
 
 
-    /**
-    * Get nearest Drivers using requested co-ordinates
-    *  @param request
-    */
-    public function getDrivers($request, $type_id)
-    {
-        $driver_detail = [];
-        $driver_ids = [];
+   
 
-
-        $pick_lat = $request->pick_lat;
-        $pick_lng = $request->pick_lng;
-        $driver_search_radius = get_settings('driver_search_radius')?:30;
-
-        $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
-
-        // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
-
-        $driver_ids = Driver::whereHas('requestDetail.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
-            $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
-                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
-        })->pluck('id')->toArray();
-
-        $meta_drivers = RequestMeta::whereIn('driver_id', $driver_ids)->pluck('driver_id')->toArray();
-
-        $driver_haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(latitude))))";
-        // get nearest driver exclude who are all struck with request meta
-        $drivers = Driver::whereHas('driverDetail', function ($query) use ($driver_haversine,$driver_search_radius,$type_id) {
-            $query->select('driver_details.*')->selectRaw("{$driver_haversine} AS distance")
-                ->whereRaw("{$driver_haversine} < ?", [$driver_search_radius]);
-        })->whereNotIn('id', $meta_drivers)->limit(10)->get();
-
-        if ($drivers->isEmpty()) {
-            return $this->respondFailed('all drivers are busy');
-        }
-        return $drivers;
-    }
-
-    /**
-    * Get Drivers from firebase
-    */
-    public function getFirebaseDrivers($request, $type_id)
-    {
-        $pick_lat = $request->pick_lat;
-        $pick_lng = $request->pick_lng;
-
-        // NEW flow
-        $pick_lat = $request->pick_lat;
-        $pick_lng = $request->pick_lng;
-
-        // NEW flow        
-        $driver_search_radius = get_settings('driver_search_radius')?:30;
-
-        $radius = kilometer_to_miles($driver_search_radius);
-
-        $calculatable_radius = ($radius/2);
-
-        $calulatable_lat = 0.0144927536231884 * $calculatable_radius;
-        $calulatable_long = 0.0181818181818182 * $calculatable_radius;
-
-        $lower_lat = ($pick_lat - $calulatable_lat);
-        $lower_long = ($pick_lng - $calulatable_long);
-
-        $higher_lat = ($pick_lat + $calulatable_lat);
-        $higher_long = ($pick_lng + $calulatable_long);
-
-        $g = new Geohash();
-
-        $lower_hash = $g->encode($lower_lat,$lower_long, 12);
-        $higher_hash = $g->encode($higher_lat,$higher_long, 12);
-
-        $conditional_timestamp = Carbon::now()->subMinutes(7)->timestamp;
-
-        $vehicle_type = $type_id;
-
-        $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
-        
-        $firebase_drivers = [];
-
-        $i=-1;
-
-        foreach ($fire_drivers as $key => $fire_driver) {
-            $i +=1; 
-            $driver_updated_at = Carbon::createFromTimestamp($fire_driver['updated_at'] / 1000)->timestamp;
-
-
-            if(array_key_exists('vehicle_type',$fire_driver) && $fire_driver['vehicle_type']==$vehicle_type && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at){
-
-
-                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
-
-                if($distance <= $driver_search_radius){
-
-                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
-
-                }
-
-            }elseif(array_key_exists('vehicle_types',$fire_driver)  && in_array($vehicle_type, $fire_driver['vehicle_types']) && $fire_driver['is_active']==1 && $fire_driver['is_available']==1 && $conditional_timestamp < $driver_updated_at)
-                {
-
-                Log::info("its coming in new loop");
-                Log::info($fire_driver);
-
-               
-
-                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
-
-                if($distance <= $driver_search_radius){
-
-                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
-
-                }
-
-            }      
-
-        }
-Log::info($firebase_drivers);
-
-        asort($firebase_drivers);
-
-        if (!empty($firebase_drivers)) {
-           
-                 $nearest_driver_ids = [];
-
-                foreach ($firebase_drivers as $key => $firebase_driver) {
-                    
-                    $nearest_driver_ids[]=$key;
-                }
-
-                $driver_search_radius = get_settings('driver_search_radius')?:30;
-
-                $haversine = "(6371 * acos(cos(radians($pick_lat)) * cos(radians(pick_lat)) * cos(radians(pick_lng) - radians($pick_lng)) + sin(radians($pick_lat)) * sin(radians(pick_lat))))";
-                // Get Drivers who are all going to accept or reject the some request that nears the user's current location.
-                $meta_drivers = RequestMeta::whereHas('request.requestPlace', function ($query) use ($haversine,$driver_search_radius) {
-                    $query->select('request_places.*')->selectRaw("{$haversine} AS distance")
-                ->whereRaw("{$haversine} < ?", [$driver_search_radius]);
-                })->pluck('driver_id')->toArray();
-
-                $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->where(function($query)use($request){
-                    $query->where('transport_type','taxi')->orWhere('transport_type','both');
-                })->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->limit(10)->get();
-                
-                if ($nearest_drivers->isEmpty()) {
-                    return $this->respondFailed('all drivers are busy');
-                }
-
-                return $this->respondSuccess($nearest_drivers, 'drivers_list');
-            
-        } else {
-            return $this->respondFailed('no drivers available');
-        }
-    }
+   
     /**
     * Create Ride later trip
     */
