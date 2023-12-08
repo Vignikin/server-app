@@ -210,8 +210,7 @@ class ChatController extends Controller
                  }
                  $html_data.='</p> </div> </div></div>';    
             } 
-        }
-        
+        } 
          return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>0));
 
       }

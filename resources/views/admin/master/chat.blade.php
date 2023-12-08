@@ -422,7 +422,8 @@ textarea:focus{
                     method: 'GET',
                     dataType: 'json', 
                     // data:data, 
-                    success: function(response) {   
+                    success: function(response) { 
+                    console.log(response);  
                     if(response.first_chat == 1)
                     {
                         window.location.reload();
@@ -611,6 +612,7 @@ const messagesRef = database.ref('chats/');
 function displayMessages(messageData) 
 {     
     var active_chat = $(".chat_list.active_chat").attr("data-val");
+    console.log(messageData);
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
