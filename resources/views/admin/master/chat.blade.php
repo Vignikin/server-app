@@ -488,7 +488,7 @@ textarea:focus{
 <div class="messaging">
       <div class="inbox_msg">
         <div class="card inbox_people">
-          <div class="headind_srch">
+     <!--      <div class="headind_srch">
             <div class="recent_heading"> 
             </div>
             <div class="card-header border-0">
@@ -499,7 +499,7 @@ textarea:focus{
               <input type="text" class="form-control border-inline-start-0 pl-1" id="serach" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               </div>
               </div>
-          </div>
+          </div> -->
           <div class="inbox_chat">
             
             @foreach($user_details as $key=>$value)
