@@ -488,7 +488,7 @@ textarea:focus{
 <div class="messaging">
       <div class="inbox_msg">
         <div class="card inbox_people">
-          <div class="headind_srch">
+     <!--      <div class="headind_srch">
             <div class="recent_heading"> 
             </div>
             <div class="card-header border-0">
@@ -499,7 +499,7 @@ textarea:focus{
               <input type="text" class="form-control border-inline-start-0 pl-1" id="serach" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               </div>
               </div>
-          </div>
+          </div> -->
           <div class="inbox_chat">
             
             @foreach($user_details as $key=>$value)
@@ -545,7 +545,7 @@ textarea:focus{
             @endphp
             @if($key == 0)
             <?php $chat_id = $value->id;
-            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->update(['unseen_count'=>1]);
+            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',$value->user_id)->update(['unseen_count'=>1]);
             ?>
             <div class="chat_list active_chat" data-val="{{$value->id}}">
             @else
@@ -559,7 +559,7 @@ textarea:focus{
                   <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
                   <p>{{$value->message}}
                   <?php
-                  $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
+            $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
                   ?> 
                   @if($unseen_count > 0 && $key != 0)
                 
@@ -607,7 +607,7 @@ function displayMessages(messageData)
     var active_chat = $(".chat_list.active_chat").attr("data-val");
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
-    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val"))
+    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
     {   
       if(messageData.message !== null && messageData.message !== "" && messageData.message !== undefined)
       {
@@ -659,7 +659,7 @@ $(document).on("click",".chat_list",function(e){
     $(".chat_list").removeClass("active_chat");
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
-    update_notification_count(data_val); 
+    // update_notification_count(data_val); 
     $("span.notication-count").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){

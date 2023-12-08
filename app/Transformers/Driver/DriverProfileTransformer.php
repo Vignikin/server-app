@@ -253,8 +253,8 @@ class DriverProfileTransformer extends Transformer
             $params['enable_shipment_load_feature'] = get_settings(Settings::ENABLE_SHIPMENT_LOAD_FEATURE);
             $params['enable_shipment_unload_feature'] = get_settings(Settings::ENABLE_SHIPMENT_UNLOAD_FEATURE);
             $params['enable_digital_signature'] = get_settings(Settings::ENABLE_DIGITAL_SIGNATURE);
-            $params['chat_id'] = "";
-            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            $params['chat_id'] = null;
+            $get_chat_data = Chat::where('user_id',$user->user_id)->first();
             if($get_chat_data)
             {
                 $params['chat_id'] = $get_chat_data->id;
