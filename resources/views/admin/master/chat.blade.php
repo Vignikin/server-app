@@ -545,7 +545,7 @@ textarea:focus{
             @endphp
             @if($key == 0)
             <?php $chat_id = $value->id;
-            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->update(['unseen_count'=>1]);
+            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',$value->user_id)->update(['unseen_count'=>1]);
             ?>
             <div class="chat_list active_chat" data-val="{{$value->id}}">
             @else
@@ -559,7 +559,7 @@ textarea:focus{
                   <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
                   <p>{{$value->message}}
                   <?php
-                  $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
+            $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
                   ?> 
                   @if($unseen_count > 0 && $key != 0)
                 

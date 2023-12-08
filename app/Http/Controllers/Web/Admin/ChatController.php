@@ -51,6 +51,7 @@ class ChatController extends Controller
            else{
             $chat_ids = [];
            } 
+
          return view('admin.master.chat',compact('main_menu','sub_menu','page','user_details','chat_ids'));
 
       }  
@@ -129,10 +130,10 @@ class ChatController extends Controller
          $chat_data = Chat::find($request->chat_id);  
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
-         if($chat_messages->chat_id == $request->active_chat)
-         {   
-         Log::info("test"); 
-            ChatMessage::where('chat_id',$chat_messages->chat_id)->where('from_id',$chat_messages->from_id)->update(['unseen_count'=>1]);
+         if($request->chat_id == $request->active_chat)
+         {    
+            Log::info($request->chat_id."----".$request->active_chat);
+            ChatMessage::where('chat_id',$request->chat_id)->where('from_id',$chat_data->user_id)->update(['unseen_count'=>1]); 
          }    
          $latestMessages = DB::table('chat_messages')->select(DB::raw('MAX(created_at) as latest_message_date'))->groupBy('chat_id');
          $user_details = Chat::with('user_detail') 
@@ -196,7 +197,7 @@ class ChatController extends Controller
                }  
                  $html_data.= '<div class="chat_people"><div class="chat_img"> <img src="'.$user_data->profile_picture.'" alt="sunil"> </div><div class="chat_ib"><h5>'.$user_data->name.'<span class="chat_date"> '.$time.'</span></h5>  <p>'.$v->message.'';
                  $count = ChatMessage::where('chat_id',$v->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
-                 if($count > 0)
+                 if($count > 0) 
                  {   
                   $html_data.='<span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
                   border-radius: 100%;  position: relative; top: -2px;">'.$count.'</span>';
