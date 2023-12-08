@@ -173,8 +173,7 @@ class ChatController extends BaseController
         }
         else{ 
             $data['chats'] = [];
-            $data['new_chat'] = 1;
-            $data['chat_id'] = ""; 
+            $data['new_chat'] = 1;  
             $response_array = array("success"=>true,'data'=>$data);
         }
         return response()->json($response_array);  
@@ -210,7 +209,7 @@ class ChatController extends BaseController
         $chat_messages->from_id = auth()->user()->id;
         $chat_messages->to_id = 1;
         $chat_messages->message = $request->message;
-        $chat_messages->save(); 
+        $chat_messages->save();  
         $data = [
             'message' => $request->message, 
             'chat_id' => $chat_id, 

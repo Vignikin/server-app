@@ -125,8 +125,15 @@ class ChatController extends Controller
     }
     public function get_notication_count(Request $request)
     {
+       
+
       if($request->chat_id)
       {   
+         $first_chat = Chat::all();
+         if(count($first_chat) == 0)
+         {
+             return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>1));
+         }
          $chat_data = Chat::find($request->chat_id);  
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
@@ -146,7 +153,7 @@ class ChatController extends Controller
         if(count($user_details) > 0)
         {
          
-         $html_data = "";
+            $html_data = "";
             foreach($user_details as $k=>$v)
             {
             $user_data = User::where('id','=',$v->user_id)->first();
@@ -205,7 +212,7 @@ class ChatController extends Controller
             } 
         }
         
-         return response()->json(array("status"=>"success",'html_data'=>$html_data));
+         return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>0));
 
       }
 

@@ -423,8 +423,14 @@ textarea:focus{
                     dataType: 'json', 
                     // data:data, 
                     success: function(response) {   
-                    console.log(response.html_data); 
+                    if(response.first_chat == 1)
+                    {
+                        window.location.reload();
+                    }
+                    else{ 
                     $(".inbox_chat").html(response.html_data)
+                    }
+                   
                     },
                     error: function(error) {
                     // Handle errors
@@ -629,8 +635,7 @@ if(count($chat_ids))
     
  foreach($chat_ids as $k=>$v)
  {  
-?> 
- 
+?>  
 
 database.ref('chats/{{$v}}').on('value', (snapshot) => {
             $i = '{{$k}}';
@@ -643,10 +648,8 @@ database.ref('chats/{{$v}}').on('value', (snapshot) => {
               if ($i == $count) {  
               initialLoad_dt = false;
               return;
-          } 
-           
-        }); 
-
+          }  
+        });  
 <?php 
 
  }   
