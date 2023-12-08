@@ -85,13 +85,6 @@ class DispatcherCreateRequestController extends BaseController
 
         //Find the zone using the pickup coordinates & get the nearest drivers
         // $nearest_drivers =  $this->getDrivers($request, $type_id);
-        $nearest_drivers =  $this->getFirebaseDrivers($request, $type_id);
-
-        if ($nearest_drivers->getData()->success == false) {
-            return $nearest_drivers;
-        }
-
-        $nearest_drivers = $nearest_drivers->getData()->data;
         // fetch unit from zone
         $unit = $zone_type_detail->zone->unit;
         // Fetch user detail
