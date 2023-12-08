@@ -217,7 +217,9 @@ trait FetchDriversFromFirebaseHelpers
                     }
             }
             
-            $selected_drivers[$i]["user_id"] = $user_detail->id;
+            if(!$request_detail->if_dispatch){
+                $selected_drivers[$i]["user_id"] = $user_detail->id;                
+            }
             $selected_drivers[$i]["driver_id"] = $driver->id;
             $selected_drivers[$i]["active"] = 1;
             $selected_drivers[$i]["assign_method"] = 1;
