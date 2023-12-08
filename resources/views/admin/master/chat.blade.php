@@ -607,7 +607,7 @@ function displayMessages(messageData)
     var active_chat = $(".chat_list.active_chat").attr("data-val");
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
-    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val"))
+    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
     {   
       if(messageData.message !== null && messageData.message !== "" && messageData.message !== undefined)
       {
