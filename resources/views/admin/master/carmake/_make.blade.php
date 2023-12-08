@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th> @lang('view_pages.s_no')</th>
-            <th> @lang('view_pages.transport_type')</th>
+            <!-- <th> @lang('view_pages.transport_type')</th> -->
             <th> @lang('view_pages.vehicle_make_name')</th>
             <th> @lang('view_pages.vehicle_make_for')</th>
             <th> @lang('view_pages.status')</th>
@@ -17,7 +17,7 @@
     @forelse($results as $key => $result)
         <tr>
             <td>{{ $i++ }} </td>
-            <td>{{$result->transport_type }}</td>
+            <!-- <td>{{$result->transport_type }}</td> -->
             <td>{{$result->name }}</td>
 
             @if($result->vehicle_make_for == 'taxi')
