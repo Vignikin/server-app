@@ -59,7 +59,7 @@
         <div class="incoming_msg" >
         @endif
         
-              <div class="incoming_msg_img"> <img src="{{$user_data->profile_picture}}" alt="sunil"> </div>
+              <div class="incoming_msg_img"> <img src="{{$user_data->profile_picture}}" alt="sunil" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
               <div class="received_msg">
                 <div class="received_withd_msg">
                   <p>{{$value->message}}</p>

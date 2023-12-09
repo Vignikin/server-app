@@ -559,8 +559,8 @@ textarea:focus{
             <div class="chat_list" data-val="{{$value->id}}">
             @endif
             
-              <div class="chat_people">
-                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}"> </div>
+              <div class="chat_people chat-user-info-img">
+                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
                 <div class="chat_ib">
                  
                   <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
@@ -608,6 +608,8 @@ var existingFiles = [];
 let initialLoad;
  
 const messagesRef = database.ref('chats/');  
+
+
     // Function to display messages in the chat
 function displayMessages(messageData) 
 {     
@@ -627,7 +629,14 @@ function displayMessages(messageData)
           });
       }   
     } 
-}  
+}
+function handleFirstData(snapshot) {
+      var firstData = snapshot.val();
+      console.log(firstData); 
+      displayMessages(messageData);
+    }
+
+messagesRef.once('value').then(handleFirstData);  
 let $i;
 let $count;
 initialLoad_dt = true;
