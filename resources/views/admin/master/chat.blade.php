@@ -100,7 +100,7 @@ img{ max-width:100%;}
 }
 .chat_ib {
   float: left;
-  padding: 0 0 0 15px;
+  padding: 3px 0 0 15px;
   width: 88%;
 }
 
