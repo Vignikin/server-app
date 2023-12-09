@@ -829,4 +829,5 @@ return array (
   'ride_otp' => 'Ride Otp',
   'driver_arrived' => 'Driver Arrived',
   'khalti_settings' => 'Khalti Settings',
+  'image'=>'Image',
   );
