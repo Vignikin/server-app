@@ -131,7 +131,7 @@ class ChatController extends Controller
       {   
          $first_chat = Chat::all();
          if(count($first_chat) == 0)
-         {
+         { 
              return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>1));
          }
          $chat_data = Chat::find($request->chat_id);  
@@ -149,7 +149,7 @@ class ChatController extends Controller
                                                             }) 
                       ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))  
                         ->orderBy('chat_messages.created_at', 'desc') 
-                        ->get(); 
+                        ->get();    
         if(count($user_details) > 0)
         {
          

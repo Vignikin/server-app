@@ -267,7 +267,7 @@ body {
     padding: 0;
     overflow: hidden;
     overflow-y: scroll;
-    height: 670px;
+    height: 755px;
     padding-left: 20px;
   /* Hide scrollbar while still allowing scrolling */
   scrollbar-width: thin; /* For Firefox */
