@@ -47,6 +47,7 @@ class OwnerProfileTransformer extends Transformer
     {
         $params = [
             'id' => $user->id,
+            'user_id' => $user->user_id,
             'company_name' => $user->company_name,
             'address' => $user->address,
             'postal_code' => $user->postal_code,
