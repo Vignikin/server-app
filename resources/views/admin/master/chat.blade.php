@@ -468,8 +468,7 @@ textarea:focus{
             $.ajax({
                     url: 'chat/get-chat-messages?chat_id='+chat_id+'', 
                     method: 'GET',
-                    dataType: 'html', 
-                    data:data, 
+                    dataType: 'html',  
                     success: function(response) {  
                     $(".mesgs.card").html(response).promise().done(function(){
                     // Get the last message element
@@ -511,7 +510,9 @@ textarea:focus{
             
             @foreach($user_details as $key=>$value)
            
-            @php 
+          <?php
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$value->user_detail->id)->select('roles.slug')->first(); 
+            
             $startDate = strtotime($value->created_date); 
             $current_date = time(); 
             $secs = $current_date - $startDate; 
@@ -549,7 +550,7 @@ textarea:focus{
               }
               }
             } 
-            @endphp
+            ?>
             @if($key == 0)
             <?php $chat_id = $value->id;
             DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',$value->user_id)->update(['unseen_count'=>1]);
@@ -563,14 +564,24 @@ textarea:focus{
                 <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
                 <div class="chat_ib">
                  
-                  <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
+                  <h5>{{$value->user_detail->name}}
+                    @if($user_datas->slug =="user")
+                    <span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>
+                    @endif
+                    @if($user_datas->slug =="owner")
+                   <span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>
+                    @endif
+                    @if($user_datas->slug =="driver")
+                    <span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>
+                    @endif 
+                    <span class="chat_date"> {{$time}} </span></h5>
                   <p>{{$value->message}}
                   <?php
             $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
                   ?> 
                   @if($unseen_count > 0 && $key != 0)
                 
-                  <span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
+                  <span class="notication-count {{$value->id}}" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
                   border-radius: 100%;  position: relative; top: -2px;">{{Auth::user()->id}}</span>
                   @endif 
                   </p> 
@@ -615,6 +626,7 @@ function displayMessages(messageData)
 {     
     if(messageData != null)
     {
+
               var active_chat = $(".chat_list.active_chat").attr("data-val");
     // console.log(messageData);
     get_notification_count(messageData.chat_id,active_chat);
@@ -634,36 +646,50 @@ function displayMessages(messageData)
     }
   
 }
-function handleFirstData(snapshot) {
-      var firstData = snapshot.val();
-      console.log(firstData); 
-      console.log("firstData"); 
-      displayMessages(firstData);
-      // messagesRef.off('value', handleFirstData);
-
-    }
+ 
     let initialLoad_dt1 = true;
 
    messagesRef.on('value', (snapshot) => { 
-    const snapshot_data = snapshot.val();   
-     console.log(snapshot_data);
-      console.log("snapshot_data"); 
-    <?php
-    if(count($chat_ids) == 0)
-    {
+    var datas = snapshot.val(); 
+     <?php
+if(count($chat_ids) == 0)
+{
     ?>
-
-    console.log(snapshot_data);
-    if(snapshot_data != null)
+    if(datas != null && datas != undefined)
     {
-            window.location.reload();
-    }
+        window.location.reload();
+    } 
+    
+<?php
+}
+else{ 
+     ?>
+     var objectSize = Object.keys(datas).length;
+     var chat_count = '{{count($chat_ids)}}'; 
+     if(chat_count < objectSize) 
+     {
+           snapshot.forEach(function(childSnapshot) {
+      var child_data = childSnapshot.val();  
+      if(child_data.hasOwnProperty('new_chat'))
+      { 
+          if(child_data.new_chat == 1)
+          {
+            displayMessages(child_data); 
+          } 
+          } 
+        });
+     } 
 
-    <?php
-    }
-    ?> 
-     });  
-let $i;
+     <?php
+}
+?>   
+
+
+});
+           
+
+  
+  let $i;
 let $count;
 initialLoad_dt = true;
 <?php
@@ -702,7 +728,7 @@ $(document).on("click",".chat_list",function(e){
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
     // update_notification_count(data_val); 
-    $("span.notication-count").remove(); 
+    $("span.notication-count."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){
       e.preventDefault();    
@@ -744,6 +770,7 @@ $(document).on("click",".con-reply-btn",function(e){
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
                                   count: response.count,
+                                  new_chat: 0, 
                                   user_timezone: response.data.user_timezone
                                 }); 
                            
