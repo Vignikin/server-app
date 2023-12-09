@@ -725,7 +725,8 @@ Route::middleware('auth:web')->namespace('Admin')->group(function () {
             Route::POST('/send_message', 'ChatController@send_message'); 
             Route::get('/get-chat-messages', 'ChatController@get_chat_messages'); 
             Route::get('/get-notication-count', 'ChatController@get_notication_count'); 
-            Route::get('/update-notication-count', 'ChatController@update_notication_count');  
+            Route::get('/check_new_data_exist', 'ChatController@check_new_data_exist'); 
+             
         });  
 });
 

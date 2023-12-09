@@ -27,6 +27,7 @@ class ChatController extends Controller
       public function index()
       {    
 
+
             $page = trans('pages_names.chat'); 
             $main_menu = 'chat_module';
             $sub_menu = 'chat';    
@@ -40,6 +41,7 @@ class ChatController extends Controller
            ->select('chat.*', 'chat_messages.message','chat_messages.created_at as created_date',DB::raw('(SELECT COUNT(*) FROM chat_messages WHERE chat.id = chat_messages.chat_id and chat_messages.unseen_count = 0) as count'))
            ->orderBy('chat_messages.created_at', 'desc')
            ->get(); 
+
            
            if(count($user_details) > 0)
            {
@@ -124,16 +126,10 @@ class ChatController extends Controller
 
     }
     public function get_notication_count(Request $request)
-    {
-       
-
+    { 
       if($request->chat_id)
-      {   
-         $first_chat = Chat::all();
-         if(count($first_chat) == 0)
-         { 
-             return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>1));
-         }
+      {    
+
          $chat_data = Chat::find($request->chat_id);  
          $chat_messages = ChatMessage::where('chat_id',$chat_data->id)->orderBy('created_at','desc')->limit(1)->first();  
          $user = Auth::user(); 
@@ -194,6 +190,18 @@ class ChatController extends Controller
               }
               }
             }   
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$v->user_detail->id)->select('roles.name')->first(); 
+            $span_data = "";
+            if($user_datas->name =="user"){
+                $span_data = '<span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>';
+            }
+            if($user_datas->name =="driver"){
+                $span_data = '<span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>';
+            }
+            if($user_datas->name =="owner"){
+                $span_data = '<span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>';
+            }
+             
                if($request->active_chat == $v->id)
                {
                   $html_data .= '<div class="chat_list active_chat" data-val="'.$v->id.'"> ';
@@ -201,7 +209,7 @@ class ChatController extends Controller
                else{
                   $html_data .= '<div class="chat_list" data-val="'.$v->id.'"> '; 
                }  
-                 $html_data.= '<div class="chat_people"><div class="chat_img"> <img src="'.$user_data->profile_picture.'" alt="sunil"> </div><div class="chat_ib"><h5>'.$user_data->name.'<span class="chat_date"> '.$time.'</span></h5>  <p>'.$v->message.'';
+                 $html_data.= '<div class="chat_people"><div class="chat_img"> <img src="'.$user_data->profile_picture.'" alt="sunil"> </div><div class="chat_ib"><h5>'.$user_data->name.''.$span_data.'<span class="chat_date"> '.$time.'</span></h5>  <p>'.$v->message.'';
                  $count = ChatMessage::where('chat_id',$v->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
                  if($count > 0) 
                  {   
@@ -211,10 +219,10 @@ class ChatController extends Controller
                  $html_data.='</p> </div> </div></div>';    
             } 
         } 
-         return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>0));
-
-      }
-
+         return response()->json(array("status"=>"success",'html_data'=>$html_data,'first_chat'=>0)); 
+      } 
     }
+
+
     
 }

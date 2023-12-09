@@ -511,7 +511,9 @@ textarea:focus{
             
             @foreach($user_details as $key=>$value)
            
-            @php 
+          <?php
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$value->user_detail->id)->select('roles.name')->first(); 
+            
             $startDate = strtotime($value->created_date); 
             $current_date = time(); 
             $secs = $current_date - $startDate; 
@@ -549,7 +551,7 @@ textarea:focus{
               }
               }
             } 
-            @endphp
+            ?>
             @if($key == 0)
             <?php $chat_id = $value->id;
             DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',$value->user_id)->update(['unseen_count'=>1]);
@@ -563,7 +565,17 @@ textarea:focus{
                 <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
                 <div class="chat_ib">
                  
-                  <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
+                  <h5>{{$value->user_detail->name}}
+                    @if($user_datas->name =="user")
+                    <span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>
+                    @endif
+                    @if($user_datas->name =="owner")
+                   <span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>
+                    @endif
+                    @if($user_datas->name =="driver")
+                    <span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>
+                    @endif 
+                    <span class="chat_date"> {{$time}} </span></h5>
                   <p>{{$value->message}}
                   <?php
             $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
@@ -634,36 +646,50 @@ function displayMessages(messageData)
     }
   
 }
-function handleFirstData(snapshot) {
-      var firstData = snapshot.val();
-      console.log(firstData); 
-      console.log("firstData"); 
-      displayMessages(firstData);
-      // messagesRef.off('value', handleFirstData);
-
-    }
+ 
     let initialLoad_dt1 = true;
 
    messagesRef.on('value', (snapshot) => { 
-    const snapshot_data = snapshot.val();   
-     console.log(snapshot_data);
-      console.log("snapshot_data"); 
-    <?php
-    if(count($chat_ids) == 0)
-    {
+    var datas = snapshot.val(); 
+     <?php
+if(count($chat_ids) == 0)
+{
     ?>
-
-    console.log(snapshot_data);
-    if(snapshot_data != null)
+    if(datas != null && datas != undefined)
     {
-            window.location.reload();
-    }
+        window.location.reload();
+    } 
+    
+<?php
+}
+else{ 
+     ?>
+     var objectSize = Object.keys(datas).length;
+     var chat_count = '{{count($chat_ids)}}'; 
+     if(chat_count < objectSize) 
+     {
+           snapshot.forEach(function(childSnapshot) {
+      var child_data = childSnapshot.val();  
+      if(child_data.hasOwnProperty('new_chat'))
+      { 
+          if(child_data.new_chat == 1)
+          {
+            displayMessages(child_data); 
+          } 
+          } 
+        });
+     } 
 
-    <?php
-    }
-    ?> 
-     });  
-let $i;
+     <?php
+}
+?>   
+
+
+});
+           
+
+  
+  let $i;
 let $count;
 initialLoad_dt = true;
 <?php
@@ -744,6 +770,7 @@ $(document).on("click",".con-reply-btn",function(e){
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
                                   count: response.count,
+                                  new_chat: 0, 
                                   user_timezone: response.data.user_timezone
                                 }); 
                            
