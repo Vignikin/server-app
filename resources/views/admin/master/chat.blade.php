@@ -633,7 +633,7 @@ function displayMessages(messageData)
 function handleFirstData(snapshot) {
       var firstData = snapshot.val();
       console.log(firstData); 
-      displayMessages(messageData);
+      displayMessages(firstData);
     }
 
 messagesRef.once('value').then(handleFirstData);  
