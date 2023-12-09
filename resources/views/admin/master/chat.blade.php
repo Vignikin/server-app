@@ -100,7 +100,7 @@ img{ max-width:100%;}
 }
 .chat_ib {
   float: left;
-  padding: 0 0 0 15px;
+  padding: 3px 0 0 15px;
   width: 88%;
 }
 
@@ -422,8 +422,7 @@ textarea:focus{
                     method: 'GET',
                     dataType: 'json', 
                     // data:data, 
-                    success: function(response) { 
-                    console.log(response);  
+                    success: function(response) {  
                     if(response.first_chat == 1)
                     {
                         window.location.reload();
@@ -627,8 +626,7 @@ function displayMessages(messageData)
     if(messageData != null)
     {
 
-              var active_chat = $(".chat_list.active_chat").attr("data-val");
-    // console.log(messageData);
+              var active_chat = $(".chat_list.active_chat").attr("data-val"); 
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
@@ -727,7 +725,7 @@ $(document).on("click",".chat_list",function(e){
     $(".chat_list").removeClass("active_chat");
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
-    // update_notification_count(data_val); 
+    // update_notification_count(data_val);  
     $("span.notication-count."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){

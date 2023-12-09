@@ -214,7 +214,7 @@ class ChatController extends Controller
                  $count = ChatMessage::where('chat_id',$v->id)->where('from_id',$v->user_id)->where('unseen_count',0)->count();
                  if($count > 0) 
                  {   
-                  $html_data.='<span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
+                  $html_data.='<span class="notication-count '.$v->id.'" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
                   border-radius: 100%;  position: relative; top: -2px;">'.$count.'</span>';
                  }
                  $html_data.='</p> </div> </div></div>';    
