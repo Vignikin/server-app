@@ -728,7 +728,8 @@ $(document).on("click",".chat_list",function(e){
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
     // update_notification_count(data_val); 
-    $("span.notication-count."+data_val+"").remove(); 
+    console.log("span.notication-count."+data_val+"");
+    $("span."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){
       e.preventDefault();    
