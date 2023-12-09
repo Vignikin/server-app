@@ -729,7 +729,7 @@ $(document).on("click",".chat_list",function(e){
     chatmessage_get(data_val); 
     // update_notification_count(data_val); 
     console.log("span.notication-count."+data_val+"");
-    $("span."+data_val+"").remove(); 
+    $("span.notication-count."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){
       e.preventDefault();    
