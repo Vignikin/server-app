@@ -267,7 +267,7 @@ body {
     padding: 0;
     overflow: hidden;
     overflow-y: scroll;
-    height: 670px;
+    height: 755px;
     padding-left: 20px;
   /* Hide scrollbar while still allowing scrolling */
   scrollbar-width: thin; /* For Firefox */
@@ -422,9 +422,16 @@ textarea:focus{
                     method: 'GET',
                     dataType: 'json', 
                     // data:data, 
-                    success: function(response) {   
-                    console.log(response.html_data); 
+                    success: function(response) { 
+                    console.log(response);  
+                    if(response.first_chat == 1)
+                    {
+                        window.location.reload();
+                    }
+                    else{ 
                     $(".inbox_chat").html(response.html_data)
+                    }
+                   
                     },
                     error: function(error) {
                     // Handle errors
@@ -552,8 +559,8 @@ textarea:focus{
             <div class="chat_list" data-val="{{$value->id}}">
             @endif
             
-              <div class="chat_people">
-                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}"> </div>
+              <div class="chat_people chat-user-info-img">
+                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
                 <div class="chat_ib">
                  
                   <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
@@ -601,10 +608,15 @@ var existingFiles = [];
 let initialLoad;
  
 const messagesRef = database.ref('chats/');  
+
+
     // Function to display messages in the chat
 function displayMessages(messageData) 
 {     
-    var active_chat = $(".chat_list.active_chat").attr("data-val");
+    if(messageData != null)
+    {
+              var active_chat = $(".chat_list.active_chat").attr("data-val");
+    // console.log(messageData);
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
@@ -619,20 +631,51 @@ function displayMessages(messageData)
           });
       }   
     } 
-}  
+    }
+  
+}
+function handleFirstData(snapshot) {
+      var firstData = snapshot.val();
+      console.log(firstData); 
+      console.log("firstData"); 
+      displayMessages(firstData);
+      // messagesRef.off('value', handleFirstData);
+
+    }
+    let initialLoad_dt1 = true;
+
+   messagesRef.on('value', (snapshot) => { 
+    const snapshot_data = snapshot.val();   
+     console.log(snapshot_data);
+      console.log("snapshot_data"); 
+    <?php
+    if(count($chat_ids) == 0)
+    {
+    ?>
+
+    console.log(snapshot_data);
+    if(snapshot_data != null)
+    {
+            window.location.reload();
+    }
+
+    <?php
+    }
+    ?> 
+     });  
 let $i;
 let $count;
 initialLoad_dt = true;
 <?php
-if(count($chat_ids))
+if(count($chat_ids) > 0)
 {
     
  foreach($chat_ids as $k=>$v)
  {  
-?> 
- 
+?>  
 
 database.ref('chats/{{$v}}').on('value', (snapshot) => {
+    
             $i = '{{$k}}';
             $count = '{{count($chat_ids)-1}}'; 
           if(!initialLoad_dt)
@@ -643,14 +686,13 @@ database.ref('chats/{{$v}}').on('value', (snapshot) => {
               if ($i == $count) {  
               initialLoad_dt = false;
               return;
-          } 
-           
-        }); 
-
+          }  
+        });  
 <?php 
 
  }   
 }
+
 ?>
 
 
