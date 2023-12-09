@@ -613,8 +613,10 @@ const messagesRef = database.ref('chats/');
     // Function to display messages in the chat
 function displayMessages(messageData) 
 {     
-    var active_chat = $(".chat_list.active_chat").attr("data-val");
-    console.log(messageData);
+    if(messageData != null)
+    {
+              var active_chat = $(".chat_list.active_chat").attr("data-val");
+    // console.log(messageData);
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
     if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
@@ -629,19 +631,43 @@ function displayMessages(messageData)
           });
       }   
     } 
+    }
+  
 }
 function handleFirstData(snapshot) {
       var firstData = snapshot.val();
       console.log(firstData); 
+      console.log("firstData"); 
       displayMessages(firstData);
+      // messagesRef.off('value', handleFirstData);
+
+    }
+    let initialLoad_dt1 = true;
+
+   messagesRef.on('value', (snapshot) => { 
+    const snapshot_data = snapshot.val();   
+     console.log(snapshot_data);
+      console.log("snapshot_data"); 
+    <?php
+    if(count($chat_ids) == 0)
+    {
+    ?>
+
+    console.log(snapshot_data);
+    if(snapshot_data != null)
+    {
+            window.location.reload();
     }
 
-messagesRef.once('value').then(handleFirstData);  
+    <?php
+    }
+    ?> 
+     });  
 let $i;
 let $count;
 initialLoad_dt = true;
 <?php
-if(count($chat_ids))
+if(count($chat_ids) > 0)
 {
     
  foreach($chat_ids as $k=>$v)
@@ -649,6 +675,7 @@ if(count($chat_ids))
 ?>  
 
 database.ref('chats/{{$v}}').on('value', (snapshot) => {
+    
             $i = '{{$k}}';
             $count = '{{count($chat_ids)-1}}'; 
           if(!initialLoad_dt)
@@ -665,6 +692,7 @@ database.ref('chats/{{$v}}').on('value', (snapshot) => {
 
  }   
 }
+
 ?>
 
 
