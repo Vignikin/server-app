@@ -468,8 +468,7 @@ textarea:focus{
             $.ajax({
                     url: 'chat/get-chat-messages?chat_id='+chat_id+'', 
                     method: 'GET',
-                    dataType: 'html', 
-                    data:data, 
+                    dataType: 'html',  
                     success: function(response) {  
                     $(".mesgs.card").html(response).promise().done(function(){
                     // Get the last message element
@@ -512,7 +511,7 @@ textarea:focus{
             @foreach($user_details as $key=>$value)
            
           <?php
-            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$value->user_detail->id)->select('roles.name')->first(); 
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$value->user_detail->id)->select('roles.slug')->first(); 
             
             $startDate = strtotime($value->created_date); 
             $current_date = time(); 
@@ -566,13 +565,13 @@ textarea:focus{
                 <div class="chat_ib">
                  
                   <h5>{{$value->user_detail->name}}
-                    @if($user_datas->name =="user")
+                    @if($user_datas->slug =="user")
                     <span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>
                     @endif
-                    @if($user_datas->name =="owner")
+                    @if($user_datas->slug =="owner")
                    <span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>
                     @endif
-                    @if($user_datas->name =="driver")
+                    @if($user_datas->slug =="driver")
                     <span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>
                     @endif 
                     <span class="chat_date"> {{$time}} </span></h5>
@@ -582,7 +581,7 @@ textarea:focus{
                   ?> 
                   @if($unseen_count > 0 && $key != 0)
                 
-                  <span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
+                  <span class="notication-count {{$value->id}}" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
                   border-radius: 100%;  position: relative; top: -2px;">{{Auth::user()->id}}</span>
                   @endif 
                   </p> 
@@ -627,6 +626,7 @@ function displayMessages(messageData)
 {     
     if(messageData != null)
     {
+
               var active_chat = $(".chat_list.active_chat").attr("data-val");
     // console.log(messageData);
     get_notification_count(messageData.chat_id,active_chat);
@@ -728,7 +728,7 @@ $(document).on("click",".chat_list",function(e){
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
     // update_notification_count(data_val); 
-    $("span.notication-count").remove(); 
+    $("span.notication-count."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){
       e.preventDefault();    

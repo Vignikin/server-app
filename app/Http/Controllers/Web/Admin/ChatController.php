@@ -117,11 +117,11 @@ class ChatController extends Controller
        return response()->json($response_array);
     } 
     public function get_chat_messages(Request $request){
-      $get_messages = ChatMessage::where('chat_id',$request->chat_id)->get();
+      $get_messages = ChatMessage::where('chat_id',$request->chat_id)->get(); 
       $user = Auth::user(); 
       $get_chat_details =Chat::select('chat.*')->where('id',$request->chat_id)->first();  
       $user_data = User::where('id','=',$get_chat_details->user_id)->first(); 
-      ChatMessage::where('chat_id',$request->chat_id)->where('from_id',$get_chat_details->user_id)->update(['unseen_count'=>1]);   
+      ChatMessage::where('chat_id',$request->chat_id)->update(['unseen_count'=>1]);   
       return view('admin.master.chat_messages',compact('get_messages','user_data','get_chat_details'));
 
     }
@@ -190,18 +190,19 @@ class ChatController extends Controller
               }
               }
             }   
-            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$v->user_detail->id)->select('roles.name')->first(); 
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$v->user_detail->id)->select('roles.slug')->first();  
+           
             $span_data = "";
-            if($user_datas->name =="user"){
+            if($user_datas->slug =="user"){
                 $span_data = '<span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>';
             }
-            if($user_datas->name =="driver"){
+            if($user_datas->slug =="driver"){
                 $span_data = '<span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>';
             }
-            if($user_datas->name =="owner"){
+            if($user_datas->slug =="owner"){
                 $span_data = '<span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>';
             }
-             
+
                if($request->active_chat == $v->id)
                {
                   $html_data .= '<div class="chat_list active_chat" data-val="'.$v->id.'"> ';
