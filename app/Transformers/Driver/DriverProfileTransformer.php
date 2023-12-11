@@ -178,7 +178,7 @@ class DriverProfileTransformer extends Transformer
 
 
         $today = Carbon::today();
-        
+
          // Driver duties
         $total_minutes_online = DriverAvailability::where('driver_id',$user->id)->where('created_at', '>=', $today)
     ->where('created_at', '<', $today->copy()->addDay())
@@ -203,7 +203,7 @@ class DriverProfileTransformer extends Transformer
 
         $params['total_trip_kms'] = $total_trip_kms;
 
-        $total_trips = $this->request->where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date)->get()->count();
+        $total_trips = Request::where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date)->get()->count();
 
         $params['total_trips'] = $total_trips;
 
