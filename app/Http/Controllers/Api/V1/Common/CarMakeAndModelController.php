@@ -10,6 +10,8 @@ use Sk\Geohash\Geohash;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
 use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
+use App\Models\Admin\DriverAvailability;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @group Vehicle Management
@@ -75,19 +77,16 @@ class CarMakeAndModelController extends BaseController
      * Test Api
      * 
      * */
-    public function testApi(Request $request){
+    public function testApi(){
+        
+    //     $today = Carbon::today();
 
-        $pick_lat =11.0589937;
-        $pick_lng =76.9939081;
-
-        $drop_lat=10.9147655;
-        $drop_lng=76.9308607;
-
-        $type_id="50f694e7-b644-4136-9b2c-3dc191291bdb";
+    //     $sumDuration = DriverAvailability::where('driver_id',1)->where('created_at', '>=', $today)
+    // ->where('created_at', '<', $today->copy()->addDay())
+    // ->sum('duration');
 
 
-        $drivers =  $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
-    
-        dd($drivers);        
+    // dd($sumDuration);
+
     }
 }

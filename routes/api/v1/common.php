@@ -24,7 +24,7 @@ Route::namespace('Common')->group(function () {
     // Masters Crud
     Route::prefix('common')->group(function () {
         // Test Api
-        Route::post('test-api','CarMakeAndModelController@testApi');
+        Route::get('test-api','CarMakeAndModelController@testApi');
         // Get car makes
         Route::get('car/makes', 'CarMakeAndModelController@getCarMakes');
         // Get Car models

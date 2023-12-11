@@ -59,9 +59,9 @@ class EarningsController extends BaseController
         })->sum('driver_commision');
 
         // Driver duties
-        $driver_duties = DriverAvailability::whereDate('online_at', $current_date)->select(DB::raw(" driver_id, date(online_at) AS working_date, SUM(duration) AS total_hours_worked"))->groupBy(DB::raw("driver_id, date(online_at)"))->first();
-
-        $total_hours_worked = $driver_duties?$driver_duties->total_hours_worked:0;
+        $total_hours_worked = DriverAvailability::where('driver_id',$driver->id)->where('created_at', '>=', $today)
+    ->where('created_at', '<', $today->copy()->addDay())
+    ->sum('duration');
 
         $total_hours_worked = $total_hours_worked>60?round($total_hours_worked/60, 3).' Hrs':$total_hours_worked.' Mins';
 
