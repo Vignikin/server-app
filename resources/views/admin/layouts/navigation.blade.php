@@ -489,7 +489,7 @@ if(str_contains((string)request()->path(),'translations')){
       @if(auth()->user()->can('chat'))
       <li class="{{'chat_module' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/chat')}}">
-          <i class="fa-solid fa-headset"></i> <span>@lang('pages_names.live_chat')</span>
+          <i class="fa fa-question-circle"></i> <span>@lang('pages_names.live_chat')</span>
         </a>
       </li>
         @endif 
