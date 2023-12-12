@@ -114,11 +114,11 @@ if(str_contains((string)request()->path(),'translations')){
             <a href="{{url('/package_type')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.package_type')</a>
           </li>
           @endif
-<!--           @if(auth()->user()->can('banner_image'))
+          @if(auth()->user()->can('banner_image'))
           <li class="{{ 'banner_image' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/banner_image')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.banner_image')</a>
           </li>
-          @endif  -->
+          @endif 
           
         </ul>
       </li>
