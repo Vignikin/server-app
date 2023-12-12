@@ -79,14 +79,23 @@ class CarMakeAndModelController extends BaseController
      * */
     public function testApi(){
         
-    //     $today = Carbon::today();
-
-    //     $sumDuration = DriverAvailability::where('driver_id',1)->where('created_at', '>=', $today)
-    // ->where('created_at', '<', $today->copy()->addDay())
-    // ->sum('duration');
+    $driverId = 1; // Replace with the desired driver ID
 
 
-    // dd($sumDuration);
+    $sumDuration = DriverAvailability::where('driver_id', $driverId)
+    ->whereBetween('created_at', [
+        Carbon::now()->startOfDay()->subDay(), // UTC midnight of the previous day
+        Carbon::now() // Current UTC time
+    ])
+    ->sum('duration');
+
+    // Convert the sum to IST
+    $sumDurationIST = Carbon::createFromFormat('H:i:s', gmdate('H:i:s', $sumDuration))
+    ->setTimezone('Asia/Kolkata')
+    ->format('H:i:s');
+
+
+    dd($sumDuration);
 
     }
 }
