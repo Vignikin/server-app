@@ -162,6 +162,11 @@ trait FetchDriversFromFirebaseHelpers
                             // Difference between both of above values
 
                             $difference = $distance_between_current_location_to_drop - $distance_between_current_location_to_my_route;
+                            
+                            Log::info($distance_between_current_location_to_drop);
+
+                            Log::info($distance_between_current_location_to_my_route);
+                            
 
                             $difference=$difference < 0 ? (-1) * $difference : $difference;
 
