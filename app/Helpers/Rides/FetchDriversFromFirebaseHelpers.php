@@ -159,12 +159,12 @@ trait FetchDriversFromFirebaseHelpers
 
                             // $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
 
-                         $distance_between_drop_to_my_route = distance_between_two_coordinates($drop_lat, $drop_lng $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
+                         $distance_between_drop_to_my_route = distance_between_two_coordinates($drop_lat, $drop_lng, $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
 
                         if($distance_between_drop_to_my_route > 5){
 
                                 $removable_driver_ids[]=$key;
-                            
+
                         }
                             // Difference between both of above values
 
