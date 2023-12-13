@@ -38,6 +38,10 @@ Route::namespace('Web')->group(function () {
     Route::get('mercadopago-checkout',function(){
         return view('mercadopago.checkout');
     });
+
+    Route::get('sadad-checkout',function(){
+        return view('sadad.checkout');
+    });
     
     Route::get('mercadopago-success','MercadopagoController@success');
     Route::post('flutter-wave','MercadopagoController@flutterWaveSuceess');

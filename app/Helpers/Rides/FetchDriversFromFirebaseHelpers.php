@@ -136,26 +136,28 @@ trait FetchDriversFromFirebaseHelpers
 
                 if($has_enabled_my_route_drivers){
 
+                    Log::info("my-route-driver");
+                    
                     //get line string from helper
                     $route_coordinates = get_line_string($pick_lat, $pick_lng, $drop_lat, $drop_lng);
 
                 }       
                         if($has_enabled_my_route_drivers!=null &$route_coordinates!=null){
 
-                            $enabled_route_matched = $nearest_driver->intersects('route_coordinates',$route_coordinates)->first();
+                            $enabled_route_matched = $has_enabled_my_route_drivers->intersects('route_coordinates',$route_coordinates)->first();
                             
                             if(!$enabled_route_matched){
 
                                 $removable_driver_ids[]=$key;
                             }
 
-                            $current_location_of_driver = $nearest_driver->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
+                            $current_location_of_driver = $has_enabled_my_route_drivers->enabledRoutes()->whereDate('created_at',$current_date)->orderBy('created_at','desc')->first();
 
                             if($current_location_of_driver){
 
                             $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $drop_lat, $drop_lng,'K');
 
-                            $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $nearest_driver->my_route_lat, $nearest_driver->my_route_lng,'K');
+                            $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
 
                             // Difference between both of above values
 
