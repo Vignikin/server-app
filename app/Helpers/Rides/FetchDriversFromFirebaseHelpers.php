@@ -137,7 +137,7 @@ trait FetchDriversFromFirebaseHelpers
                 if($has_enabled_my_route_drivers){
 
                     Log::info("my-route-driver");
-                    
+
                     //get line string from helper
                     $route_coordinates = get_line_string($pick_lat, $pick_lng, $drop_lat, $drop_lng);
 
@@ -165,7 +165,7 @@ trait FetchDriversFromFirebaseHelpers
 
                             $difference=$difference < 0 ? (-1) * $difference : $difference;
 
-                            if($difference>5){
+                            if($difference>2){
 
                                 $removable_driver_ids[]=$key;
 
