@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Cms\FrontPage;
 use App\Models\User;
+use App\Models\Country;
 use App\Jobs\Notifications\Auth\Registration\ContactusNotification;
 use DB;
 use Auth;
@@ -64,6 +65,20 @@ class FrontPageController extends Controller
         $p=Storage::disk(env('FILESYSTEM_DRIVER'))->url(file_path($this->uploadPath(),''));
         //return view('admin.layouts.web_header',compact('data','p'));
         return view ('webfront.index',compact('data','p'));   
+    }
+    public function country_code(Request $request)
+    {
+        $check_data_exist = Country::where('code',$request->countryCode)->first();
+        if($check_data_exist)
+        {
+            $flag = $check_data_exist->flag;
+             return response()->json(['status'=>'success','flag'=>$check_data_exist,'image'=>$flag]);
+        }
+        else{
+            $flag = "IN.png";
+            return response()->json(['status'=>'error','flag'=>$flag]);
+        }
+        
     }
     public function driverp()
     {

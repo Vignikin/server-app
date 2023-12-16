@@ -42,7 +42,10 @@ Route::namespace('Web')->group(function () {
     Route::get('sadad-checkout',function(){
         return view('sadad.checkout');
     });
-    
+       Route::get('/web-booking',function(){
+        return view('web_booking');
+    });
+    Route::get('get-country-data','FrontPageController@country_code');
     Route::get('mercadopago-success','MercadopagoController@success');
     Route::post('flutter-wave','MercadopagoController@flutterWaveSuceess');
 
