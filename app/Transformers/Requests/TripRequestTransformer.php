@@ -75,6 +75,8 @@ class TripRequestTransformer extends Transformer
             'vehicle_type_image'=>$request->vehicle_type_image,
             'car_make_name'=>$request->driverDetail?$request->driverDetail->car_make_name:'-',
             'car_model_name'=>$request->driverDetail?$request->driverDetail->car_model_name:'-',
+            'car_color'=>$request->driverDetail?$request->driverDetail->car_color:'-',
+            'car_number'=>$request->driverDetail?$request->driverDetail->car_number:'-',
             'pick_lat'=>$request->pick_lat,
             'pick_lng'=>$request->pick_lng,
             'drop_lat'=>$request->drop_lat,
