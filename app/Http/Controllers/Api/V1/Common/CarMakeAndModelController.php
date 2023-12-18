@@ -10,6 +10,8 @@ use Sk\Geohash\Geohash;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
 use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
+use App\Models\Admin\DriverAvailability;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @group Vehicle Management
@@ -45,7 +47,7 @@ class CarMakeAndModelController extends BaseController
         return $this->respondSuccess($this->car_make->active()->where('transport_type',$transport_type)->where('vehicle_make_for',request()->vehicle_type)->orderBy('name')->get());
 
         }else{
-            return $this->respondSuccess($this->car_make->active()->orderBy('name')->get());
+            return $this->respondSuccess($this->car_make->active()->where('vehicle_make_for',request()->vehicle_type)->orderBy('name')->get());
         }
     }
 
@@ -75,19 +77,25 @@ class CarMakeAndModelController extends BaseController
      * Test Api
      * 
      * */
-    public function testApi(Request $request){
-
-        $pick_lat =11.0589937;
-        $pick_lng =76.9939081;
-
-        $drop_lat=10.9147655;
-        $drop_lng=76.9308607;
-
-        $type_id="50f694e7-b644-4136-9b2c-3dc191291bdb";
+    public function testApi(){
+        
+    $driverId = 1; // Replace with the desired driver ID
 
 
-        $drivers =  $this->fetchDriversFromFirebase($pick_lat,$pick_lng,$drop_lat,$drop_lng,$type_id);
-    
-        dd($drivers);        
+    $sumDuration = DriverAvailability::where('driver_id', $driverId)
+    ->whereBetween('created_at', [
+        Carbon::now()->startOfDay()->subDay(), // UTC midnight of the previous day
+        Carbon::now() // Current UTC time
+    ])
+    ->sum('duration');
+
+    // Convert the sum to IST
+    $sumDurationIST = Carbon::createFromFormat('H:i:s', gmdate('H:i:s', $sumDuration))
+    ->setTimezone('Asia/Kolkata')
+    ->format('H:i:s');
+
+
+    dd($sumDuration);
+
     }
 }

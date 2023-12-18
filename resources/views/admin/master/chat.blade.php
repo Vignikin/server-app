@@ -100,7 +100,7 @@ img{ max-width:100%;}
 }
 .chat_ib {
   float: left;
-  padding: 0 0 0 15px;
+  padding: 3px 0 0 15px;
   width: 88%;
 }
 
@@ -267,7 +267,7 @@ body {
     padding: 0;
     overflow: hidden;
     overflow-y: scroll;
-    height: 670px;
+    height: 755px;
     padding-left: 20px;
   /* Hide scrollbar while still allowing scrolling */
   scrollbar-width: thin; /* For Firefox */
@@ -422,9 +422,15 @@ textarea:focus{
                     method: 'GET',
                     dataType: 'json', 
                     // data:data, 
-                    success: function(response) {   
-                    console.log(response.html_data); 
+                    success: function(response) {  
+                    if(response.first_chat == 1)
+                    {
+                        window.location.reload();
+                    }
+                    else{ 
                     $(".inbox_chat").html(response.html_data)
+                    }
+                   
                     },
                     error: function(error) {
                     // Handle errors
@@ -461,8 +467,7 @@ textarea:focus{
             $.ajax({
                     url: 'chat/get-chat-messages?chat_id='+chat_id+'', 
                     method: 'GET',
-                    dataType: 'html', 
-                    data:data, 
+                    dataType: 'html',  
                     success: function(response) {  
                     $(".mesgs.card").html(response).promise().done(function(){
                     // Get the last message element
@@ -488,7 +493,7 @@ textarea:focus{
 <div class="messaging">
       <div class="inbox_msg">
         <div class="card inbox_people">
-          <div class="headind_srch">
+     <!--      <div class="headind_srch">
             <div class="recent_heading"> 
             </div>
             <div class="card-header border-0">
@@ -499,12 +504,14 @@ textarea:focus{
               <input type="text" class="form-control border-inline-start-0 pl-1" id="serach" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               </div>
               </div>
-          </div>
+          </div> -->
           <div class="inbox_chat">
             
             @foreach($user_details as $key=>$value)
            
-            @php 
+          <?php
+            $user_datas = DB::table('users')->join('role_user','role_user.user_id','users.id')->join('roles','roles.id','role_user.role_id')->where('users.id',$value->user_detail->id)->select('roles.slug')->first(); 
+            
             $startDate = strtotime($value->created_date); 
             $current_date = time(); 
             $secs = $current_date - $startDate; 
@@ -542,28 +549,38 @@ textarea:focus{
               }
               }
             } 
-            @endphp
+            ?>
             @if($key == 0)
             <?php $chat_id = $value->id;
-            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->update(['unseen_count'=>1]);
+            DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',$value->user_id)->update(['unseen_count'=>1]);
             ?>
             <div class="chat_list active_chat" data-val="{{$value->id}}">
             @else
             <div class="chat_list" data-val="{{$value->id}}">
             @endif
             
-              <div class="chat_people">
-                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}"> </div>
+              <div class="chat_people chat-user-info-img">
+                <div class="chat_img"> <img src="{{$value->user_detail->profile_picture}}" style="width: 50px; aspect-ratio: 1; border-radius: 50%;"> </div>
                 <div class="chat_ib">
                  
-                  <h5>{{$value->user_detail->name}}<span class="chat_date"> {{$time}} </span></h5>
+                  <h5>{{$value->user_detail->name}}
+                    @if($user_datas->slug =="user")
+                    <span class="label label-success" style="float: none; margin-left: 8px; /* margin-top: -15px; */">User</span>
+                    @endif
+                    @if($user_datas->slug =="owner")
+                   <span class="label label-green" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: green;">owner</span>
+                    @endif
+                    @if($user_datas->slug =="driver")
+                    <span class="label label-yellow" style="float: none;margin-left: 8px;/* margin-top: -15px; */background-color: yellow;color: black;">driver</span>
+                    @endif 
+                    <span class="chat_date"> {{$time}} </span></h5>
                   <p>{{$value->message}}
                   <?php
-                  $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
+            $unseen_count = DB::table('chat_messages')->where('chat_id',$value->id)->where('to_id',Auth::user()->id)->where('unseen_count',0)->count();
                   ?> 
                   @if($unseen_count > 0 && $key != 0)
                 
-                  <span class="notication-count" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
+                  <span class="notication-count {{$value->id}}" style=" float: right; background-color: red; padding: 4px;  font-size: 9px; color: white; font-weight: bold;
                   border-radius: 100%;  position: relative; top: -2px;">{{Auth::user()->id}}</span>
                   @endif 
                   </p> 
@@ -598,15 +615,21 @@ textarea:focus{
 <script>
    
 var existingFiles = [];
-let initialLoad = true;   
+let initialLoad;
+ 
 const messagesRef = database.ref('chats/');  
+
+
     // Function to display messages in the chat
 function displayMessages(messageData) 
-{    
-    var active_chat = $(".chat_list.active_chat").attr("data-val");
+{     
+    if(messageData != null)
+    {
+
+              var active_chat = $(".chat_list.active_chat").attr("data-val"); 
     get_notification_count(messageData.chat_id,active_chat);
     var user_id = '{{Auth::user()->id}}';
-    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && messageData.from_id != user_id)
+    if(messageData.chat_id == $(".chat_list.active_chat").attr("data-val") && user_id != messageData.from_id)
     {   
       if(messageData.message !== null && messageData.message !== "" && messageData.message !== undefined)
       {
@@ -618,27 +641,92 @@ function displayMessages(messageData)
           });
       }   
     } 
-} 
-messagesRef.on('value', (snapshot) => {
-          let $i = 0;
-          if (initialLoad) {
-              // Ignore initial load
-              initialLoad = false;
-              return;
+    }
+  
+}
+ 
+    let initialLoad_dt1 = true;
+
+   messagesRef.on('value', (snapshot) => { 
+    var datas = snapshot.val(); 
+     <?php
+if(count($chat_ids) == 0)
+{
+    ?>
+    if(datas != null && datas != undefined)
+    {
+        window.location.reload();
+    } 
+    
+<?php
+}
+else{ 
+     ?>
+     var objectSize = Object.keys(datas).length;
+     var chat_count = '{{count($chat_ids)}}'; 
+     if(chat_count < objectSize) 
+     {
+           snapshot.forEach(function(childSnapshot) {
+      var child_data = childSnapshot.val();  
+      if(child_data.hasOwnProperty('new_chat'))
+      { 
+          if(child_data.new_chat == 1)
+          {
+            displayMessages(child_data); 
           } 
-          const data = snapshot.val();    
-          const key = Object.keys(data)[$i]; 
-          const newData = data[key];  
-          console.log(newData.chat_id)
-          displayMessages(newData);
+          } 
         });
+     } 
+
+     <?php
+}
+?>   
+
+
+});
+           
+
+  
+  let $i;
+let $count;
+initialLoad_dt = true;
+<?php
+if(count($chat_ids) > 0)
+{
+    
+ foreach($chat_ids as $k=>$v)
+ {  
+?>  
+
+database.ref('chats/{{$v}}').on('value', (snapshot) => {
+    
+            $i = '{{$k}}';
+            $count = '{{count($chat_ids)-1}}'; 
+          if(!initialLoad_dt)
+          {  
+            const data = snapshot.val();   
+           displayMessages(data); 
+           }
+              if ($i == $count) {  
+              initialLoad_dt = false;
+              return;
+          }  
+        });  
+<?php 
+
+ }   
+}
+
+?>
+
+
 $(document).on("click",".chat_list",function(e){
     var data_val = $(this).attr("data-val"); 
     $(".chat_list").removeClass("active_chat");
     $(this).addClass("active_chat"); 
     chatmessage_get(data_val); 
-    update_notification_count(data_val); 
-    $("span.notication-count").remove(); 
+    // update_notification_count(data_val);  
+    $("span.notication-count."+data_val+"").remove(); 
 })
 $(document).on("click",".con-reply-btn",function(e){
       e.preventDefault();    
@@ -679,7 +767,8 @@ $(document).on("click",".con-reply-btn",function(e){
                                   chat_id: response.data.chat_id, 
                                   from_id: response.data.from_id,  
                                   to_id: response.data.to_id,  
-                                  unseen_count: response.count,
+                                  count: response.count,
+                                  new_chat: 0, 
                                   user_timezone: response.data.user_timezone
                                 }); 
                            

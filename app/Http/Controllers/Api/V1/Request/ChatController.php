@@ -165,10 +165,16 @@ class ChatController extends BaseController
             {
                 $v->user_timezone = Carbon::parse($v->created_at)->setTimezone($timezone)->format('jS M h:i A'); 
             }
-            $response_array = array("success"=>true,'data'=>$chat_messages,"new_chat"=>0,'chat_id'=>$check_data_exists->id);
+            $data['chats'] = $chat_messages;
+            $data['new_chat'] = 0;
+            $data['chat_id'] = $check_data_exists->id; 
+            $data['count'] = 0;  
+            $response_array = array("success"=>true,'data'=>$data);
         }
         else{ 
-            $response_array = array("success"=>true,"new_chat"=>1);
+            $data['chats'] = [];
+            $data['new_chat'] = 1;  
+            $response_array = array("success"=>true,'data'=>$data);
         }
         return response()->json($response_array);  
     }
@@ -203,18 +209,29 @@ class ChatController extends BaseController
         $chat_messages->from_id = auth()->user()->id;
         $chat_messages->to_id = 1;
         $chat_messages->message = $request->message;
-        $chat_messages->save(); 
+        $chat_messages->save();  
         $data = [
             'message' => $request->message, 
             'chat_id' => $chat_id, 
             'from_id' => auth()->user()->id, 
             'to_id' => 1, 
-            'unseen_count' => 0, 
+            'count' => 0, 
+            'new_chat'=> $request->new_chat,
             'created_at'=> Database::SERVER_TIMESTAMP
         ]; 
         $chatRef = $this->database->getReference('chats/'.$chat_id);
         $NewchatRef = $chatRef->set($data);
         $chat_id = $NewchatRef->getKey(); 
-        return response()->json(["success"=>true,'message' => 'Data inserted successfully', 'chat_id' => $chat_id]); 
+        $data['message_success'] = "Data inserted successfully"; 
+        $country = auth()->user()->country;
+        $timezone = ServiceLocation::where('country',$country)->pluck('timezone')->first()?:'UTC'; 
+        $data['user_timezone'] = Carbon::parse($chat_messages->created_at)->setTimezone($timezone)->format('jS M h:i A'); 
+        return response()->json(["success"=>true,'data' => $data]); 
     }  
+    public function update_notication_count(Request $request)
+    {  
+      ChatMessage::where('chat_id',$request->chat_id)->update(['unseen_count'=>1]);
+      return response()->json(array("success"=>true,"message"=>"Updated successfully"));
+    }
 }
+  

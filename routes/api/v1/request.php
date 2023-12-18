@@ -88,7 +88,17 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
     Route::get('admin-chat-history','ChatController@chat_initiate');
     //Send Sms
     Route::post('send-message','ChatController@send_message'); 
-    Route::post('seen-message-update','ChatController@updateSeenmessage'); 
+    Route::post('seen-message-update','ChatController@updateSeenmessage');
+
+    Route::get('update-notification-count','ChatController@update_notication_count'); 
     
 });
  
+// Adhoc Web Booking
+Route::prefix('request')->namespace('Request')->group(function () {
+
+    Route::post('adhoc-eta','AdhocWebBookingController@eta');
+    Route::post('adhoc-create-request','AdhocWebBookingController@createRequest');
+    Route::post('adhoc-list-packages','AdhocWebBookingController@listPackages');
+
+});

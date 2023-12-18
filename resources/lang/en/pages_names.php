@@ -159,5 +159,6 @@ return array (
   'delivery_rides' => 'Delivery Rides',
   'banner_image' => 'Banner Image',
   'modules' => 'Modules',
+  'live_chat'=>'Live Chat'
   
 );

@@ -114,11 +114,11 @@ if(str_contains((string)request()->path(),'translations')){
             <a href="{{url('/package_type')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.package_type')</a>
           </li>
           @endif
-<!--           @if(auth()->user()->can('banner_image'))
+          @if(auth()->user()->can('banner_image'))
           <li class="{{ 'banner_image' == $sub_menu ? 'active' : '' }}">
             <a href="{{url('/banner_image')}}"><i class="fa fa-circle-thin"></i>@lang('pages_names.banner_image')</a>
           </li>
-          @endif  -->
+          @endif 
           
         </ul>
       </li>
@@ -486,14 +486,13 @@ if(str_contains((string)request()->path(),'translations')){
         </a>
       </li>
       @endif
-      <!-- @if(auth()->user()->can('chat'))
+      @if(auth()->user()->can('chat'))
       <li class="{{'chat_module' == $main_menu ? 'active' : '' }}">
         <a href="{{url('/chat')}}">
-          <i class="fa fa-heartbeat"></i> <span>Chat</span>
+          <i class="fa fa-question-circle"></i> <span>@lang('pages_names.live_chat')</span>
         </a>
       </li>
-       
-        @endif  -->
+        @endif 
 
       @if(auth()->user()->can('manage-promo'))
       <li class="{{'manage-promo' == $main_menu ? 'active' : '' }}">

@@ -190,7 +190,7 @@
                                                 <div class="col-7 my-3">
                                                     <p class="mb-1 f-12">
                                                        @lang('view_pages.plate_no'):
-                                                        <b>{{ $item->driverDetail ? $item->driverDetail->vehicle_number : '-' }}</b>
+                                                        <b>{{ $item->driverDetail ? $item->driverDetail->car_number : '-' }}</b>
                                                     </p>
                                                     <p class="mb-1 f-12">
                                                         Color :

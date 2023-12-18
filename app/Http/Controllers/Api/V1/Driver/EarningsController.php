@@ -57,11 +57,13 @@ class EarningsController extends BaseController
         $total_cash_trip_amount = RequestBill::whereHas('requestDetail', function ($query) use ($driver,$current_date) {
             $query->where('driver_id', $driver->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date)->where('payment_opt', '1'); //cash
         })->sum('driver_commision');
+        
+        $today = Carbon::today();
 
         // Driver duties
-        $driver_duties = DriverAvailability::whereDate('online_at', $current_date)->select(DB::raw(" driver_id, date(online_at) AS working_date, SUM(duration) AS total_hours_worked"))->groupBy(DB::raw("driver_id, date(online_at)"))->first();
-
-        $total_hours_worked = $driver_duties?$driver_duties->total_hours_worked:0;
+        $total_hours_worked = DriverAvailability::where('driver_id',$driver->id)->where('created_at', '>=', $today)
+    ->where('created_at', '<', $today->copy()->addDay())
+    ->sum('duration');
 
         $total_hours_worked = $total_hours_worked>60?round($total_hours_worked/60, 3).' Hrs':$total_hours_worked.' Mins';
 

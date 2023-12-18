@@ -47,6 +47,7 @@ class OwnerProfileTransformer extends Transformer
     {
         $params = [
             'id' => $user->id,
+            'user_id' => $user->user_id,
             'company_name' => $user->company_name,
             'address' => $user->address,
             'postal_code' => $user->postal_code,
@@ -120,8 +121,8 @@ class OwnerProfileTransformer extends Transformer
             $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
 
             $params['low_balance'] = $low_balance;
-            $params['chat_id'] = "";
-            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            $params['chat_id'] = null;
+            $get_chat_data = Chat::where('user_id',$user->user_id)->first();
             if($get_chat_data)
             {
                 $params['chat_id'] = $get_chat_data->id;

@@ -191,37 +191,37 @@ class DriverEndRequestController extends BaseController
             $exceeding_range = 0;
             $package= null;            
 
-        $zone_type_package_prices = $zone_type->zoneTypePackage()->orderBy('free_min','asc')->get();
+        // $zone_type_package_prices = $zone_type->zoneTypePackage()->orderBy('free_min','asc')->get();
 
 
-        foreach ($zone_type_package_prices as $key => $zone_type_package_price) {            
+        // foreach ($zone_type_package_prices as $key => $zone_type_package_price) {            
             
-            if($zone_type_package_price->free_min == $duration){
-                $package = $zone_type_package_price;
+        //     if($zone_type_package_price->free_min == $duration){
+        //         $package = $zone_type_package_price;
                 
-                break;
-            }
-            elseif($zone_type_package_price->free_min < $duration){
-                $previous_range = $zone_type_package_price->free_min;
-                $previous_zone_type = $zone_type_package_price;
-            }
-            else{
-                $exceeding_range = $zone_type_package_price->free_min;
-                $exceeding_zone_type = $zone_type_package_price;
-            }
+        //         break;
+        //     }
+        //     elseif($zone_type_package_price->free_min < $duration){
+        //         $previous_range = $zone_type_package_price->free_min;
+        //         $previous_zone_type = $zone_type_package_price;
+        //     }
+        //     else{
+        //         $exceeding_range = $zone_type_package_price->free_min;
+        //         $exceeding_zone_type = $zone_type_package_price;
+        //     }
 
-            if($exceeding_range != 0 && $package == null){
-                $package = ($previous_range == 0) ? $exceeding_zone_type : $previous_zone_type;
+        //     if($exceeding_range != 0 && $package == null){
+        //         $package = ($previous_range == 0) ? $exceeding_zone_type : $previous_zone_type;
                
 
-                break;
+        //         break;
 
-            } else {
-                $package = $previous_zone_type;
+        //     } else {
+        //         $package = $previous_zone_type;
 
                
-            }
-        }
+        //     }
+        // }
 
         if($package){
 

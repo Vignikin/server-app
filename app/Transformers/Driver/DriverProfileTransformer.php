@@ -20,6 +20,8 @@ use App\Models\Admin\UserDriverNotification;
 use App\Transformers\Common\DriverVehicleTypeTransformer;
 use App\Transformers\Driver\DriverWalletTransformer;
 use App\Models\Chat;
+use App\Models\Admin\DriverAvailability;
+use App\Models\Request\Request;
 
 
 class DriverProfileTransformer extends Transformer
@@ -101,11 +103,14 @@ class DriverProfileTransformer extends Transformer
 
         if ($user->owner_id!=null) {
 
+            if($user->vehicleType()->exists()){
             if($user->vehicleType->trip_dispatch_type!='bidding')
              {
                          $params['enable_my_route_booking_feature'] =  get_settings('enable_my_route_booking_feature');
 
-             }
+             }    
+            }
+            
         }
 
         if($user->driverVehicleTypeDetail()->exists()){
@@ -170,6 +175,39 @@ class DriverProfileTransformer extends Transformer
 
         $params['total_earnings'] = $total_earnings;
         $params['current_date'] = $updated_current_date->toDateString();
+
+
+        $today = Carbon::today();
+
+         // Driver duties
+        $total_minutes_online = DriverAvailability::where('driver_id',$user->id)->where('created_at', '>=', $today)
+    ->where('created_at', '<', $today->copy()->addDay())
+    ->sum('duration');
+
+        $params['total_minutes_online'] = $total_minutes_online;
+
+        $lastOnlineRecord = DriverAvailability::where('driver_id',$user->id)->where('is_online', true)
+    ->orderBy('online_at', 'desc')
+    ->first();
+
+        $params['last_online_at'] = null;
+
+        if($lastOnlineRecord){
+
+            $params['last_online_at'] = Carbon::parse($lastOnlineRecord->online_at)->setTimezone($timezone);
+
+        }
+
+        // Total Trip kms
+        $total_trip_kms = Request::where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date)->sum('total_distance');
+
+        $params['total_trip_kms'] = $total_trip_kms;
+
+        $total_trips = Request::where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date)->get()->count();
+
+        $params['total_trips'] = $total_trips;
+
+        //Driver duties update ends
 
         if($user->owner_id){
             $driver_documents = DriverNeededDocument::active()->where(function($query){
@@ -253,8 +291,8 @@ class DriverProfileTransformer extends Transformer
             $params['enable_shipment_load_feature'] = get_settings(Settings::ENABLE_SHIPMENT_LOAD_FEATURE);
             $params['enable_shipment_unload_feature'] = get_settings(Settings::ENABLE_SHIPMENT_UNLOAD_FEATURE);
             $params['enable_digital_signature'] = get_settings(Settings::ENABLE_DIGITAL_SIGNATURE);
-            $params['chat_id'] = "";
-            $get_chat_data = Chat::where('user_id',$user->id)->first();
+            $params['chat_id'] = null;
+            $get_chat_data = Chat::where('user_id',$user->user_id)->first();
             if($get_chat_data)
             {
                 $params['chat_id'] = $get_chat_data->id;
