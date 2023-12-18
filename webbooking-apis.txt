@@ -47,3 +47,6 @@ transport_type -- taxi/delivery
 pick_lat
 pick_lng
 
+
+List Goods Type api - api/v1/common/goods-types
+Method - GET
