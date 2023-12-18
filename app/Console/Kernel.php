@@ -12,6 +12,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ClearDemoDatabase;
 use App\Console\Commands\ClearRequestTable;
 use App\Console\Commands\ClearOtp;
+use App\Console\Commands\CancelRequests;
 
 
 
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
         ClearDemoDatabase::class,
         ClearRequestTable::class,
         ClearOtp::class,
+        CancelRequests::class,
 
     ];
 
@@ -56,6 +58,8 @@ class Kernel extends ConsoleKernel
                  ->everyFiveMinutes();
         // $schedule->command('clear:database')
         //          ->daily();
+         $schedule->command('cancel:request')
+                 ->everyMinute();                 
     }
 
     /**
