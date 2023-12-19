@@ -964,7 +964,7 @@ class FrontPageController extends Controller
             $message = trans('succes_messages.you_are_not_authorised');
 
             return redirect()->back()->with('warning', $message);
-           }
+         }
     
          $data=FrontPage::first();
 
@@ -1315,12 +1315,37 @@ class FrontPageController extends Controller
          $sub_menu = 'cms_frontpage';
          $message="Datas Stored Successfully";
          return redirect()->back()->with('success', $message);
-    }
-
-    
+    } 
     public function uploadPath()
     {
         return config('base.cms.upload.web-picture.path');
+    }
+    public function Saveuser(Request $request)
+    { 
+
+        if($request->mobile)
+        { 
+            $check_user_exist = User::where('mobile',$request->mobile)->first();
+            if($check_user_exist)
+            {
+                $user_data = $check_user_exist;
+            }
+            else{
+                $user_data = User::create([
+                'name'=>$request->name, 
+                'mobile' => $request->mobile 
+            ]);
+            }
+
+            Session::put('user_id', $user_data->id);   
+            Session::put('dial_code', $request->dial_code);  
+          
+
+            return response()->json(["status"=>"success","message"=>"user added successfully"]); 
+        }
+        else{
+             return response()->json(["status"=>"error","message"=>"something went wrong"]); 
+        }
     }
      
 }

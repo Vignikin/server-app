@@ -10,6 +10,7 @@
     <!-- Add this line to your HTML -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <head> 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-FQUi9C-cnnnhGm9QtgjHRnUPDcfBiPg&libraries=places"></script>
     <style> 
@@ -86,7 +87,7 @@ i.fa.fa-bars {
 font-size: 24px;
 color: #7c7a7a;
 }
-.content-wrapper,.content-wrapper1,.content-wrapper2 {
+.content-wrapper,.content-wrapper1,.content-wrapper2,.content-wrapper3 {
 display: block;
 width: 100%;
 height: 100%;
@@ -333,6 +334,7 @@ padding: 10px 10px 10px 11px;
 color: #424242;
 font-size: 12px;
 letter-spacing: 1px;
+display:inline-block;
 }
 .time-arrival {
 line-height: 12px;
@@ -359,7 +361,7 @@ position: absolute;
 height: 60px;
 top: 10px;
 }
-.available-vehicle-details {
+.available-vehicle-details,.package-list {
 padding: 10px;
 position: relative;
 height: 75px;
@@ -474,12 +476,12 @@ input#address,input#address1 {
     box-sizing: border-box;
     border: none;
 }
-.drop-location.input {
+.drop_loc_heading.input {
     line-height: 46px;
     padding-top: 20px;
     padding: 20px 10px;
 }
-.content-wrapper1,.content-wrapper2 {
+.content-wrapper1,.content-wrapper2,.content-wrapper3 {
     background: #f5f5f5;
 }           
 .from.location.text.placeholder.search_pickup_location.actv {
@@ -498,7 +500,17 @@ input#address,input#address1 {
     left: var(--mobile-cont_-_left);
     z-index:2;
 }
-.book_now{
+.confirm_your_location3 {  
+    text-align: center;
+    width: 100%;
+    max-width: var(--mobile-cont_-_max-width);
+    margin: var(--mobile-cont_-_margin);
+    display: var(--mobile-cont_-_display);
+    left: var(--mobile-cont_-_left); 
+    padding-top:30px;
+    padding-bottom:30px;
+}
+.book_now,.book_now1{
        position: absolute;
     bottom: 0px;
     padding: 10px;
@@ -510,18 +522,49 @@ input#address,input#address1 {
     left: var(--mobile-cont_-_left);
     z-index:2;
 }
-.book_now.actv{
-     bottom: 50px;
+.book_now.actv,.book_now1.actv{
+     bottom: 20px;
      transition:3s;
 }
-.confirm_button {
-    background-color: black;
+.confirm_button2 {
+    background-color: #0b4dd8;
     color: white;
     font-size: 20px;
     padding: 10px;
-    border-radius: 6px;
-    cursor:pointer;
-    user-select: none; 
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 90%;
+    margin-left: 10px;
+}
+.confirm_button {
+    background-color: #0b4dd8;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 45%;
+    margin-left: 10px;
+}
+.confirm_button1 {
+    background-color: white;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    width: 45%;
+    margin-left: 10px;
+    display: inline-block;
+    border: 1px solid #d7d7d7;
+    box-sizing: border-box;
+    box-shadow: 1px;
+    color: black;
 }
 .login-page {
     --mobile-cont_-_max-width: 550px;
@@ -612,14 +655,18 @@ input[type="number"] {
 .verify-otp {
     margin-top: 15px;
 }
-.opt-text-button-verify, .opt-text-button{
-    padding: 10px 0px;
-    background-color: #0b4dd8;
-    cursor: pointer;
-    color: black;
-    font-weight: 600;
+.opt-text-button.actv,.opt-text-button-verify.actv{
+    background-color: #0b4dd8 !important; 
+    color: black !important;
 }
-
+.opt-text-button,.opt-text-button-verify{
+    padding: 10px 0px; 
+    cursor: pointer; 
+    font-weight: 600;
+    background-color: #ebebeb;
+    color: #afafaf;
+}
+ 
 .back-to-home {
     position: absolute;
     top: 33px;
@@ -638,7 +685,7 @@ input[type="number"] {
     font-weight: 600;
     transition: 3s;
 }
-input#input-name {
+input#input-name,input#input-name1 {
     height: 100%;
     border: none;
     outline: none;
@@ -646,7 +693,7 @@ input#input-name {
     width: 100%;
     padding-left: 25px;
 }
-input#input-name::placeholder {
+input#input-name::placeholder,input#input-name1::placeholder  {
     opacity: 0.5;
 }
 .load-bar {
@@ -654,14 +701,442 @@ position: relative;
 width: 100%;
 height: 3px; 
 }
-.available-vehicle-details.actv {
+.available-vehicle-details.actv{
     background: #ededed;
 }
+.vehicle-engine.daily_ride_vehicle {
+    height: 50%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.ride.promo_coupon.available_rides{
+    display: inline-block;
+    /* text-align: right; */
+    position: absolute;
+    top: 8p;
+    /* bottom: 10px; */
+    right: 30px;
+    padding-top: 6px;
+}
+.model-init,.model-init1 {
+    height: 100%;
+    width: 100%;
+    display: table;
+    position: absolute;
+    --mobile-cont_-_max-width: 550px;
+    --mobile-cont_-_margin: 0;
+    --mobile-cont_-_display: block;
+    --mobile-cont_-_left: 0;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 9999;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px; 
+    max-width: var(--mobile-cont_-_max-width);
+    margin: var(--mobile-cont_-_margin);    
+}
+.model-wrapper {
+    height: 100%; 
+    width: 100%; 
+    z-index: 10000; 
+    display: table-cell; 
+    vertical-align: middle;
+}
+.model-content1 {
+    top: -50px;
+}
+.model-content,.model-content1 ,.model-content2 {
+    border-radius: 6px; 
+    width: 85%;
+    background-color: white;
+    padding: 22px 15px 20px 25px;
+    margin: 0px 35px 0px 35px;
+    z-index: 2;
+    position: relative;
+}
+.model-head,.model-head1 {
+    font-size: 18px;
+    color: #837c7c;
+    padding-bottom: 12px;
+}
+.model-input {
+    height: 48px;
+    border: 1px solid #d1cbcb;
+    background-color: white;
+    width: 80%;
+}
+.model-input1{
+    height: 48px;
+    border: 1px solid #d1cbcb;
+    background-color: white;
+    width: 100%;
+}
+
+input#model-promo-input {
+    border: none;
+    user-select: none !important;
+    font-size: 17px;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+.promocode { 
+    padding: 8px 0px 8px 0px; 
+    position: relative;
+    height: 75px;
+    top: 24px;
+}
+.promocode-cancel {
+    background-color: #ffffff;
+    color: black;
+    font-size: 18px;
+    padding: 8px 0px 8px 0px;
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 21%;
+    /* margin-left: 10px; */
+    text-align: center;
+    position: absolute;
+    left: 0px;
+    border: 1px solid #d5cece;
+}
+.promocode-submit,.promocode-submit1,.receiver-add,.date-submit {
+    background-color: #0b4dd8;
+    color: white;
+    font-size: 18px;
+    padding: 8px 0px 8px 0px;
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 21%;
+    margin-left: 10px;
+    text-align: center;
+    position: absolute;
+    right: 25px;
+}
+.add-user-details {
+    background-color: #0b4dd8;
+    color: white;
+    font-size: 13px;
+    padding: 7px;
+    /* border-radius: 6px; */
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    width: 22%;
+    margin-left: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+.from-details.rentals {
+    margin-top: 14px;
+}
+.model-head.name {
+    padding: 0px;
+}
+.model-input.data1 {
+    margin-bottom: 10px !important;
+}
+.goods_types {
+    position: relative;
+    height: 48px;
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 15px;
+    border: 1px solid #d5d1d1;
+}
+.goods.text {
+    position: absolute;
+    left: 0;
+    top: 18px;
+    font-size: 10px;
+    color: #898989;
+    padding-left: 8px;
+    line-height: 14px;
+    font-size: 13px;
+}
+
+.from.location.text.placeholder.goods_type {
+    left: 70px;
+    top: 5px;
+}
+.promo-code-error {
+    color: red;
+    padding-top: 6px;
+}
+.booking_info {
+    text-align: left;
+    padding: 0px 20px;
+    overflow-y: scroll;
+    height: 95%;
+}
+
+.pick_ups_location {
+    color: grey;
+    font-size: 18px;
+    padding-top: 2px;
+    position: relative;
+}
+.left-text {
+    font-size: 17px;
+    display: inline-block;
+    width: 18%;
+    vertical-align: top;
+}
+.pickup_loc_name {
+    display: inline-block;
+    color: black;
+    font-size: 19px;
+    position: relative;
+    vertical-align: top;
+    top: -1px;
+}
+.tool-tips1 {
+    position: absolute;
+    top: 29px;
+    left: 20px;
+    /* width: 100%; */
+    min-width: 150px;
+    min-height: 30px;
+    /* max-width: 560px !important; */
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1;
+    display: none;
+    padding: 10px;
+}
+.price-details1,.price-details2,.price-details3,.price-details4,.price-details5 {
+    position: relative;
+    height: 30px;
+}
+.price-data {
+    position: absolute;
+    left: 10px;
+    color: grey;
+}
+.price-data-value {
+    position: absolute;
+    right: 25px;
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+}
+.price-vehicle-desc {
+    width: 75%;
+    color: grey;
+    font-size:14px;
+}
+.fare-breaup-details {
+    padding-top: 10px;
+}
+.pickup_loc_name.pickup {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width:80%;
+}
+.price-details-head{
+    padding-bottom: 8px;
+}
+img#vehicle-image {
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+}
+.vehicle-details {
+    position: relative;
+}
+.payment-text {
+    position: absolute;
+}
+.payment-mode {
+    position: relative;
+}
+.data {
+    padding-top: 18px;
+    height: 40px;
+}
+input#model-promo-input-name,input#model-promo-input-number {
+    width: 100%;
+    height: 100%;
+    border: none;
+    user-select: none;
+    outline: none;
+}
+.payment-mode-details {
+    height: 20px;
+    padding-top: 5px;
+}
+select#timepicker,.datepicker {
+    padding: 10px;
+}
+
         </style>
     </head>
     <body> 
         <div class="load-bar"><div class="bar"></div> </div>
         <div class="content-initiate">
+            <div class="model-init1" style="display: none;">
+            <div class="model-wrapper">
+             <div class="model-content" style="display: none;">
+            <div class="model-head">
+                Enter Promo code 
+            </div>
+            <div class="model-input">
+                <input type="text" id="model-promo-input">
+                <div class="promo-code-error"></div>
+            </div>
+            <div class="promocode"> 
+                    <div class="promocode-cancel"> 
+                    Cancel</div>
+                    <div class="promocode-submit">  
+                    Submit</div></div>  
+            </div>  
+            <div class="model-content2" style="display: none;">
+            <div class="model-head">
+                Add Date and time
+            </div>
+            <div class="model-input">
+                <input type="date" id="model-promo-input" class="datepicker" name="date" required>
+                <div class="promo-code-error"></div>
+            </div>
+            <br>
+            <div class="model-input">
+                <select id="timepicker" class="select-rt ola-select" name="time" required>
+                                    
+                                        <option value="12:00 AM">12:00 AM</option>
+                                        <option value="12:15 AM">12:15 AM</option>
+                                        <option value="12:30 AM">12:30 AM</option>
+                                        <option value="12:45 AM">12:45 AM</option>
+                                        <option value="1:00 AM">1:00 AM</option>
+                                        <option value="1:15 AM">1:15 AM</option>
+                                        <option value="1:30 AM">1:30 AM</option>
+                                        <option value="1:45 AM">1:45 AM</option>
+                                        <option value="2:00 AM">2:00 AM</option>
+                                        <option value="2:15 AM">2:15 AM</option>
+                                        <option value="2:30 AM">2:30 AM</option>
+                                        <option value="2:45 AM">2:45 AM</option>
+                                        <option value="3:00 AM">3:00 AM</option>
+                                        <option value="3:15 AM">3:15 AM</option>
+                                        <option value="3:30 AM">3:30 AM</option>
+                                        <option value="3:45 AM">3:45 AM</option>
+                                        <option value="4:00 AM">4:00 AM</option>
+                                        <option value="4:15 AM">4:15 AM</option>
+                                        <option value="4:30 AM">4:30 AM</option>
+                                        <option value="4:45 AM">4:45 AM</option>
+                                        <option value="5:00 AM">5:00 AM</option>
+                                        <option value="5:15 AM">5:15 AM</option>
+                                        <option value="5:30 AM">5:30 AM</option>
+                                        <option value="5:45 AM">5:45 AM</option>
+                                        <option value="6:00 AM">6:00 AM</option>
+                                        <option value="6:15 AM">6:15 AM</option>
+                                        <option value="6:30 AM">6:30 AM</option>
+                                        <option value="6:45 AM">6:45 AM</option>
+                                        <option value="7:00 AM">7:00 AM</option>
+                                        <option value="7:15 AM">7:15 AM</option>
+                                        <option value="7:30 AM">7:30 AM</option>
+                                        <option value="7:45 AM">7:45 AM</option>
+                                        <option value="8:00 AM">8:00 AM</option>
+                                        <option value="8:15 AM">8:15 AM</option>
+                                        <option value="8:30 AM">8:30 AM</option>
+                                        <option value="8:45 AM">8:45 AM</option>
+                                        <option value="9:00 AM">9:00 AM</option>
+                                        <option value="9:15 AM">9:15 AM</option>
+                                        <option value="9:30 AM">9:30 AM</option>
+                                        <option value="9:45 AM">9:45 AM</option>
+                                        <option value="10:00 AM">10:00 AM</option>
+                                        <option value="10:15 AM">10:15 AM</option>
+                                        <option value="10:30 AM">10:30 AM</option>
+                                        <option value="10:45 AM">10:45 AM</option>
+                                        <option value="11:00 AM">11:00 AM</option>
+                                        <option value="11:15 AM">11:15 AM</option>
+                                        <option value="11:30 AM">11:30 AM</option>
+                                        <option value="11:45 AM">11:45 AM</option>
+                                        <option value="12:00 PM">12:00 PM</option> 
+                                        <option value="1:00 PM">1:00 PM</option> 
+                                        <option value="1:15 PM">1:15 PM</option> 
+                                        <option value="1:30 PM">1:30 PM</option> 
+                                        <option value="1:45 PM">1:45 PM</option> 
+                                        <option value="2:00 PM">2:00 PM</option>
+                                        <option value="2:15 PM">2:15 PM</option> 
+                                        <option value="2:30 PM">2:30 PM</option> 
+                                        <option value="2:45 PM">2:45 PM</option> 
+                                        <option value="3:00 PM">3:00 PM</option>
+                                        <option value="3:15 PM">1:15 PM</option> 
+                                        <option value="3:30 PM">1:30 PM</option> 
+                                        <option value="3:45 PM">1:45 PM</option> 
+                                        <option value="4:00 PM">2:00 PM</option>
+                                        <option value="4:15 PM">1:15 PM</option> 
+                                        <option value="4:30 PM">1:30 PM</option> 
+                                        <option value="4:45 PM">1:45 PM</option> 
+                                        <option value="5:00 PM">2:00 PM</option>
+                                        <option value="5:15 PM">5:15 PM</option> 
+                                        <option value="5:30 PM">5:30 PM</option> 
+                                        <option value="5:45 PM">5:45 PM</option> 
+                                        <option value="6:00 PM">6:00 PM</option>
+                                        <option value="6:15 PM">6:15 PM</option> 
+                                        <option value="6:30 PM">6:30 PM</option> 
+                                        <option value="6:45 PM">6:45 PM</option>  
+                                        <option value="7:00 PM">7:00 PM</option>
+                                    
+                                        <option value="7:15 PM">7:15 PM</option>
+                                    
+                                        <option value="7:30 PM">7:30 PM</option>
+                                    
+                                        <option value="7:45 PM">7:45 PM</option>
+                                    
+                                        <option value="8:00 PM">8:00 PM</option>
+                                    
+                                        <option value="8:15 PM">8:15 PM</option>
+                                    
+                                        <option value="8:30 PM">8:30 PM</option>
+                                    
+                                        <option value="8:45 PM">8:45 PM</option>
+                                    
+                                        <option value="9:00 PM">9:00 PM</option>
+                                    
+                                        <option value="9:15 PM">9:15 PM</option>
+                                    
+                                        <option value="9:30 PM">9:30 PM</option>
+                                    
+                                        <option value="9:45 PM">9:45 PM</option>
+                                    
+                                        <option value="10:00 PM">10:00 PM</option>
+                                    
+                                        <option value="10:15 PM">10:15 PM</option>
+                                    
+                                        <option value="10:30 PM">10:30 PM</option>
+                                    
+                                        <option value="10:45 PM">10:45 PM</option>
+                                    
+                                        <option value="11:00 PM">11:00 PM</option>
+                                    
+                                        <option value="11:15 PM">11:15 PM</option>
+                                    
+                                        <option value="11:30 PM">11:30 PM</option>
+                                    
+                                        <option value="11:45 PM">11:45 PM</option>
+                                    <dom-repeat style="display: none;"><template is="dom-repeat"></template></dom-repeat>
+                                </select>
+                                <div class="date-error"style=" color: red;display:none"> Please select date</div>
+            </div>
+            <div class="promocode"> 
+                    <div class="promocode-cancel"> 
+                    Cancel</div>
+                    <div class="date-submit">  
+                    Submit</div></div>  
+            </div>  
+                    </div>
+                    </div>
+                @if(!Session('user_id'))
                         <div class="login-page"> 
                             <div class="otp-number">
                                 <div class="verify-otps" style="display:none">
@@ -672,7 +1147,7 @@ height: 3px;
                                     <div class="otp_content">Enter the OTP sent to your mobile <span class="entered-no">9566754418</span></div>
                                     
                                     <div class="intel-input" style="margin-top: 16px;"> 
-                                        <input type="text" id="input-name" style="/* height: 100%; */" placeholder="Enter 4-digit OTP"> 
+                                        <input type="text" id="input-name1"  style="/* height: 100%; */" placeholder="Enter 4-digit OTP"> 
                                         <div class="otp-error-message-verify" style="display:none">Please enter the mobile number</div>
                                     <div class="verify-otp">
 
@@ -681,35 +1156,39 @@ height: 3px;
                                     </div>
                                 </div>
                                 </div>
-                                <div class="otp-design">
+                                <div class="otp-design" method="post">
+                                    
+                                    <form id="Adduser" >
+                                        @csrf
                                     <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div> 
 
                                     <div class="mobile_no"> Enter Your Mobile Number</div>
                                     <div class="otp_content"> A 4-digit OTP will be sent on SMS</div>
                                     <div class="name-opt" style=" text-align: left; margin-top: 15px;opacity: 0.7;">Name (optional)</div>
                                     <div class="intel-input" style="margin-top: 8px;"> 
-                                        <input type="text" id="input-name" style="/* height: 100%; */">
+                                        <input type="text" id="input-name" name="name" style="/* height: 100%; */">
                                     </div> 
                                     <div class="intel-input">
 
-                                    <div class="flag"><img id="flag" src=""></div>
+                                    <div class="flag img_src"><img id="flag" src=""></div>
 
-                                    <div class="dial code">+91</div><div class="dial_number">
+                                    <div class="dial code dial_code"></div><div class="dial_number">
+                                    <input type="hidden" id="dial_code" name="dial_code" value="">
 
-                                    <input type="number" id="input-dial-number" style="
-                                    /* height: 100%; */
-                                    ">
+                                    <input type="number" id="input-dial-number" name="mobile">
                                     </div>
                                     </div>
-                                    <div class="otp-error-message" style="display:none">Please enter the mobile number</div>
-
-                                    <div class="verify-otp">
-
+                                    <div  id="recaptcha" ></div>
+                                    <div class="otp-error-message" style="display:none">Please enter the mobile number</div> 
                                     <div class="text opt-text-button">NEXT</div>
-
+                                    
+                                    </form>
                                     </div>
-                                </div> </div>
-                    </div>
+                               
+                                </div> 
+                            </div>
+                            @endif 
+        @if(Session('user_id'))
             <div class="content-wrapper">
                 <div id="head">
                     <div class="header-menu">
@@ -727,16 +1206,19 @@ height: 3px;
                 </div> 
      
         </div>
+        @endif
+        <form id="eta_calculaion" method="post">
+        @csrf
            <div class="content-wrapper1" style="display: none;">
                 <div id="head" class="head1">
                     <div class="header-menu"> 
-                        <div class="right-arrow1"><i class="fa fa-arrow-left"></i></div> 
+                        <div class="right-arrow1 drop-locations"><i class="fa fa-arrow-left"></i></div> 
                         <div class="drop_location">Enter drop location</div>
-                        <div class="drop-location input" style=" line-height: 46px;background: #f7f7f7;">
+                        <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
                             <input type="text" class="autocomplete" id="address" placeholder="Enter address..">
-                            <input type="hidden" value="" id="lat">
-                            <input type="hidden" value="" id="lng">
-                            <input type="hidden" value="" id="formattedAddress">
+                            <input type="hidden" value="" name="drop_lat" id="lat">
+                            <input type="hidden" value="" name="drop_lng" id="lng">
+                            <input type="hidden" value="" name="drop_address" id="formattedAddress">
                         </div>
                         <div id="map" style="height: 600px;">
                             
@@ -746,26 +1228,27 @@ height: 3px;
                 </div> 
                    <div class="confirm_your_location" style="display:none">
 
-                <div class="confirm_button">
+                <div class="confirm_button2">
                       <input type="hidden" value="" id="confirm_lat">
                     <input type="hidden" value="" id="confirm_lng">
                     <input type="hidden" value="" id="confirm_formattedAddress">
                     Confirm your location
                     
                     </div>
+
                 </div>
      
         </div>
            <div class="content-wrapper2" style="display: none;">
                 <div id="head" class="head1">
                     <div class="header-menu"> 
-                        <div class="right-arrow1"><i class="fa fa-arrow-left"></i></div> 
+                        <div class="right-arrow1 drop-location"><i class="fa fa-arrow-left"></i></div> 
                         <div class="drop_location">Enter Pickup location</div>
-                        <div class="drop-location input" style=" line-height: 46px;background: #f7f7f7;">
+                        <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
                             <input type="text" class="autocomplete" id="address1" placeholder="Enter address..">
-                             <input type="hidden" value="" id="lat1">
-                            <input type="hidden" value="" id="lng1">
-                            <input type="hidden" value="" id="formattedAddress1">
+                             <input type="hidden" value="" name="pick_lat" id="lat1">
+                            <input type="hidden" value="" name="pick_lng" id="lng1">
+                            <input type="hidden" value="" name="pick_address" id="formattedAddress1">
 
                         </div>
                         <div id="map1" style="height: 600px;"></div>
@@ -784,20 +1267,24 @@ height: 3px;
                 </div>
      
         </div>
+    </form>
+         <div class="content-wrapper3" style="display: none;"> 
+        </div>
         <div class="desktop-bg p2p"><div></div></div>
+        @if(Session('user_id'))
         <div class="detail-engine-data">
         <div class="detail-engine">
         <div class="nav-list">
             <div class="nav-tab">
-                    <a class="item-name daily-ride actv">DAILY RIDES</a>
+                    <a class="item-name daily-ride actv" data-val="taxi">TAXI</a>
                     <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
             </div>
-           <!--  <div class="nav-tab">
-                 <a class="item-name out_station">OUTSTATION</a>
+           <div class="nav-tab">
+                 <a class="item-name out_station" data-val="delivery">DELIVERY</a>
                  <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
-            </div> -->
+            </div>  
             <div class="nav-tab">
-                 <a class="item-name rental">RENTALS</a>
+                 <a class="item-name rental" data-val="rentals">RENTALS</a>
                  <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
             </div>
         </div>
@@ -816,30 +1303,24 @@ height: 3px;
           <!--   <div class="from-details out_station" style="display: none;">
                 <div class="from text">TO</div>
                 <div class="from location text placeholder search_location">Enter a City,hotel or Address</div>
-            </div> -->
-            <div class="from-details rentals" style="display: none;">
-                <div class="from text">Package</div>
+            </div>  -->
+               <div class="from-details booking_type" style="display: none;">
+                <div class="from text">Type</div>
                 <div class="from location text placeholder">
-                    <select id="packagePicker" class="depart-select ola-select">
-            <option value="select" disabled="" selected="">Select a package</option>
+                    <select id="rental_type" class="depart-select ola-select">
+            <option value="select" disabled="" selected="">Select a Rental Type</option>
             
-              <option value="1H_10K">1 hrs 10 km</option>
+              <option value="taxi">Taxi</option>
+              <option value="delivery">Delivery</option>
+              <option value="both">Both</option>
             
-              <option value="2H_20K">2 hrs 20 km</option>
-            
-              <option value="2H_30K">2 hrs 30 km</option>
-            
-              <option value="4H_40K">4 hrs 40 km</option>
-            
-              <option value="6H_60K">6 hrs 60 km</option>
-            
-              <option value="8H_80K">8 hrs 80 km</option>
-            
-              <option value="10H_100K">10 hrs 100 km</option>
+               
             <dom-repeat style="display: none;"><template is="dom-repeat"></template></dom-repeat>
           </select>
 
                 </div>
+            </div>
+            <div class="from-details rentals" style="display: none;"> 
             </div>
         </div>
             
@@ -847,85 +1328,15 @@ height: 3px;
         <div class="ride title available_ride" style="display:none">
             <div>AVAILABLE RIDES</div>
         </div>
+        <div class="ride promo_coupon available_rides" style="display:none">
+            <div style="display: inline-block;cursor: pointer; color: #1313ff;font-weight: 600;padding-left: 10px;font-size: 14px;">+ Apply coupon code</div>
+        </div> 
         <div class="ride title rental_ride" style="display:none">
             <div>SELECT VEHILCLE TYPE</div>
         </div>
      
-     <div class="vehicle-engine daily_ride_vehicle" style="display:none">
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_auto.png">
-<div class="time-arrival">2 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">Auto</div><div class="vehicle-content">Get an auto at your doorstep</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div>
-
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_mini.png">
-<div class="time-arrival">25 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">MIni</div><div class="vehicle-content">Comfy hatchbacks at pocket-friendly fares</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div>
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_bike.png">
-<div class="time-arrival">10 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">Bike</div><div class="vehicle-content">Zip through traffic at affordable fares</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div><div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_prime.png">
-<div class="time-arrival">15 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">Prime Sedan</div><div class="vehicle-content">Sedans with free wifi and top drivers</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-
-          <div class="horizontal-line"></div>
-            </div>
+         <div class="vehicle-engine daily_ride_vehicle" style="display:none"> 
+         </div>
 
 
 <!--- Package Vechile types start -->
@@ -992,37 +1403,89 @@ height: 3px;
        
         <div class="book_now" style="display: none;">
 
-                <div class="confirm_button">
-                      <input type="hidden" value="11.0168445" id="confirm_lat">
-                    <input type="hidden" value="76.9558321" id="confirm_lng">
-                    <input type="hidden" value="Coimbatore, Tamil Nadu, India" id="confirm_formattedAddress">
-                    Book Now
-                    
+                <div class="confirm_button book_now_details"> 
+                    Book Now 
+                    </div>
+                      <div class="confirm_button1"> 
+                        Book Later 
                     </div>
                 </div>
+                 <div class="book_now1" style="display: none;">
+
+                <div class="confirm_button book_now_details"> 
+                    Book Now 
+                    </div> 
+                </div>
         </div>
+
+        @endif
          </div>
 
 
     <!--     <div id="map" style="height: 600px;"></div>
 <div id="marker-position"></div>
 <div id="address"></div> -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-auth.min.js"></script>
+     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer></script>
 
-
-        <script> 
+        <script>   
             var latitude;
                             var longitude;
                             let map;
                             let marker,marker1;
+                            var widgetid;
+                            var otp_btn_active = false;
+              // Your web app's Firebase configuration
+        var firebaseConfig = {
+                apiKey: "{{get_settings('firebase-api-key')}}",
+                authDomain: "{{get_settings('firebase-auth-domain')}}",
+                databaseURL: "{{get_settings('firebase-db-url')}}",
+                projectId: "{{get_settings('firebase-project-id')}}",
+                storageBucket: "{{get_settings('firebase-storage-bucket')}}",
+                messagingSenderId: "{{get_settings('firebase-messaging-sender-id')}}",
+                appId: "{{get_settings('firebase-app-id')}}",
+                measurementId: "{{get_settings('firebase-measurement-id')}}"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);  
+      // Example: Rendering reCAPTCHA widget 
+        var verifyCallback = function(response) { 
+            if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined)
+            {
+                $(".opt-text-button").addClass("actv");
+            }
+            
+        };
+         var onloadCallback = function() {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', {
+        'size': 'normal',
+        'callback': verifyCallback
+        });
+        recaptchaVerifier.render().then((widgetId) => {
+        window.recaptchaWidgetId = widgetId;
+        console.log("widgetId");
+        console.log(window.recaptchaWidgetId);
+        
+        });  
+       
+      };
+      
+            $(document).on("input","#input-dial-number",function(){
+                 var response = grecaptcha.getResponse(widgetid);
+                 if(response != "")
+                 {
+                     $(".opt-text-button").addClass("actv");
+                 }
+            })
             $(document).on("click",".item-name",function(){
                 $(".item-name").removeClass("actv");
                 $(this).addClass("actv");
                 $(".book_now").removeClass("actv");
                 $(".book_now").hide();
             })
-             $(document).on("hover",".item-name",function(){
-                $(this).closest(".nav-tab").find(".tool-tips").show();
-             })
+            
               $('.item-name').hover(
                   function() { 
                      $(this).closest(".nav-tab").find(".tool-tips").show();
@@ -1031,56 +1494,257 @@ height: 3px;
                       $(this).closest(".nav-tab").find(".tool-tips").hide();
                   }
             );
+               $('.fa-info-circle').hover(
+                  function() { 
+                     $(this).closest(".pick_ups_location").find(".tool-tips1").show();
+                  },
+                  function() { 
+                      $(this).closest(".pick_ups_location").find(".tool-tips1").hide();
+                  }
+            );
               $(document).on("click",".daily-ride",function(){  
                
                 $(".bar").addClass("actv"); 
                  setTimeout(function() { 
-                    $(".available_ride").show();
+                    // $(".available_ride").show();
                     $(".rental_ride").hide();
-                    $(".daily_ride_vehicle").show();
+                    $(".available-vehicle-details").removeClass('actv');
                     $(".package").hide();
                     $(".bar").removeClass("actv"); 
+                    $(".book_now").removeClass("actv");
+                    $(".book_now").hide();
+                    $(".book_now1").hide(); 
+                    $(".add-details").hide();
+
+
                     $("#packagePicker option[value='select']").prop("selected", true);
                     $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
                      $(".from-details.out_station").hide();
-                    $(".from-details.rentals").hide();
+                    $(".from-details.booking_type").hide();
                     $(".from-details.daily_rides").show();
+                    $(".from-details.rentals").hide();
+                  }, 200);  
+              }) 
+                $(document).on("click",".out_station",function(){  
+                    if($("#lat").val() != "" && $("#lat1").val() != "")
+                    {
+                        $(".available_ride").show();
+                        $(".promo_coupon").show();
+                        $(".daily_ride_vehicle").show();  
+                        $(".add-details").show();
+                    }
+               
+                $(".bar").addClass("actv"); 
+                 setTimeout(function() { 
+                    
+                    // $(".available_ride").show();
+                    $(".rental_ride").hide();
+                    $(".available-vehicle-details").removeClass('actv');
+                    // $(".daily_ride_vehicle").show();
+                    $(".package").hide();
+                    $(".bar").removeClass("actv"); 
+                    $(".book_now").removeClass("actv");
+                    $(".book_now").hide();
+                    $(".book_now1").hide(); 
+                    $("#packagePicker option[value='select']").prop("selected", true);
+                    $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
+                    $(".from-details.out_station").hide();
+                    $(".from-details.booking_type").hide();
+                    $(".from-details.daily_rides").show();
+                    $(".from-details.rentals").hide();
+
                   }, 200);  
               }) 
                     $(document).on("click",".rental",function(){ 
                         $(".bar").addClass("actv");  
+                        $(".add-details").hide();
                          setTimeout(function() {
                               $(".available_ride").hide();
-                              $(".daily_ride_vehicle").hide();  
+                              $(".promo_coupon").hide();
+
+                              $(".daily_ride_vehicle").hide(); 
+                              $(".book_now1").hide(); 
                         $(".bar").removeClass("actv"); 
+                        $(".available-vehicle-details").removeClass('actv');
                         $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_rentals.jpg")'); 
                         $(".from-details.out_station").hide();
                         $(".from-details.daily_rides").hide();
-                    $(".from-details.rentals").show();
+                        $(".from-details.booking_type").show();
                   }, 200);  
                 
               })
+                    
+                     $(document).on("change","#rental_type",function(){
+                        var form_data = new FormData($("#eta_calculaion")[0]);
+                        var transport_type = $(this).val();
+                        form_data.append("transport_type",transport_type);
+                        $.ajax({
+                            url:'api/v1/request/adhoc-list-packages',
+                            method:'post',
+                            data:form_data,
+                            dataType:'json',
+                            processData:false,
+                            contentType:false,
+                            success:function(response){
+                                if(response.success)
+                                {
+                                    var html_data = '<div class="from text">Package</div><div class="from location text placeholder select_package"><select id="packagePicker" class="depart-select ola-select"> <option value="select" disabled="" selected="">Select a package</option>';
+                                    console.log(response.data.length);
+                                    if(response.data.length > 0)
+                                    { 
+                                    var html_content1 = "";
+                                    
+                                    for(var i=0;i < response.data.length;i++)
+                                    { 
+                                        html_data+='<option value="'+response.data[i].id+'">'+response.data[i].package_name+'</option>';
+                                        html_content1 += '<div class="available-vehicle-details package-list package_'+response.data[i].id+'" data-val="'+response.data[i].typesWithPrice.data[0].zone_type_id+'" style="display:none"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].typesWithPrice.data[0].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].typesWithPrice.data[0].name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].typesWithPrice.data[0].currency+''+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                    }
+                                    $(".vehicle-engine.package").html(html_content1); 
+                                    }
+                                    html_data+='<template is="dom-repeat"></template> </select> </div>';
+                                    $(".rentals").show(); 
+                                    $(".rentals").html(html_data);  
+                                    
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                            // Handle errors
+                            console.error('Error:', xhr.responseText);
+                            }
+                        })
+                        
+
+                    });
 
                     $(document).on("change","#packagePicker",function(){
+                        var data_value = $(this).val();
                         $(".rental_ride").show();
-                        $(".package").show();
-
+                        $(".package").show(); 
+                        $(".book_now1").hide(); 
+                        $(".available-vehicle-details.package-list").hide();
+                        $(".package_"+data_value+"").show();
                     });
                     $(document).on("click",".search_pickup_location",function(){ 
                         $(".content-wrapper").hide();
                         $(".detail-engine-data").hide();
                         $(".content-wrapper1").show();
                         $(".content-wrapper2").hide();
+                        $(".content-wrapper3").hide();
                     });
+                    
+                      $(document).on("click",".date-submit",function(){ 
+                        if($(".datepicker").val() != "" && $(".datepicker").val() !== undefined)
+                        {
+                            $(".date-error").hide();
+                        var transport_type = $(".item-name.actv").attr("data-val");
+                        var booking_type = $(".available-vehicle-details.actv").attr("data-val");
+                        var formattedAddress = $("#formattedAddress").val();
+                        var formattedAddress1 = $("#formattedAddress1").val();
+                        var form_data = new FormData($("#eta_calculaion")[0]);
+                         form_data.append("vehicle_type",booking_type);
+                         form_data.append("country_code",$("#dial_code").val()); 
+                         form_data.append("transport_type",transport_type);
+                         form_data.append("html_type","html");
+                         form_data.append("pickup_address",formattedAddress1);
+                         form_data.append("drop_address",formattedAddress);
+                         form_data.append("booking_type",1);
+                         form_data.append("lat",$("#lat1").val());
+                         form_data.append("lng",$("#lng1").val());
+                         form_data.append("user_id",'{{Session("user_id")}}');
+                         form_data.append("date",$(".datepicker").val()+' '+$("#timepicker").val());
+                         $(".bar").addClass("actv");  
+                                       $.ajax({
+                                                url: 'api/v1/request/adhoc-eta', 
+                                                type: 'POST',
+                                                data: form_data,
+                                                dataType: 'html', 
+                                                processData: false,
+                                                contentType: false, 
+                                                success: function(response) { 
+                                                      setTimeout(function() {
+                                                            $(".content-wrapper").hide();
+                                                            $(".detail-engine-data").hide();
+                                                            $(".content-wrapper1").hide();
+                                                            $(".content-wrapper2").hide();
+                                                            $(".content-wrapper3").html(response);
+                                                            $(".content-wrapper3").show();
+                                                            $(".model-init1").hide();
+                                                            $(".bar").removeClass("actv");  
+                                                         }, 500);   
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                    // Handle errors
+                                                    console.error('Error:', xhr.responseText);
+                                                    }
+                                                }); 
+                        }
+                        else{
+                            $(".date-error").show();
+                        }
+                       
+
+                      
+                    });
+                    $(document).on("click",".book_now_details",function(){ 
+                        var transport_type = $(".item-name.actv").attr("data-val");
+                        var booking_type = $(".available-vehicle-details.actv").attr("data-val");
+                        var formattedAddress = $("#formattedAddress").val();
+                        var formattedAddress1 = $("#formattedAddress1").val();
+                         var form_data = new FormData($("#eta_calculaion")[0]);
+                         form_data.append("vehicle_type",booking_type);
+                         form_data.append("transport_type",transport_type);
+                         form_data.append("html_type","html");
+                         form_data.append("pickup_address",formattedAddress1);
+                         form_data.append("drop_address",formattedAddress);
+                         form_data.append("lat",$("#lat1").val());
+                         form_data.append("lng",$("#lng1").val());
+                         form_data.append("user_id",'{{Session("user_id")}}');
+
+                                       $.ajax({
+                                                url: 'api/v1/request/adhoc-eta', 
+                                                type: 'POST',
+                                                data: form_data,
+                                                dataType: 'html', 
+                                                processData: false,
+                                                contentType: false, 
+                                                success: function(response) {
+                                                    // Handle the successful response
+                                                    console.log('Success:', response); 
+                                                      setTimeout(function() {
+                                                            $(".content-wrapper").hide();
+                                                            $(".detail-engine-data").hide();
+                                                            $(".content-wrapper1").hide();
+                                                            $(".content-wrapper2").hide();
+                                                            $(".content-wrapper3").html(response);
+                                                            $(".content-wrapper3").show();
+                                                         }, 200);   
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                    // Handle errors
+                                                    console.error('Error:', xhr.responseText);
+                                                    }
+                                                }); 
+
+                      
+                    });
+
                     $(document).on("click",".pickup_address",function(){
 
                         $(".content-wrapper").hide();
                         $(".detail-engine-data").hide();
                         $(".content-wrapper1").hide();
+                        $(".content-wrapper3").hide();
                         $(".content-wrapper2").show();
 
                     })
-                     $(document).on("click",".fa-arrow-left",function(){
+                    $(document).on("click",".drop-location",function(){
+                        $(".content-wrapper").show();
+                        $(".detail-engine-data").show();
+                        $(".content-wrapper1").hide();
+                        $(".content-wrapper2").hide();
+
+                    });
+                     $(document).on("click",".drop-locations",function(){
                         $(".content-wrapper").show();
                         $(".detail-engine-data").show();
                         $(".content-wrapper1").hide();
@@ -1244,8 +1908,10 @@ height: 3px;
                                      if(response.status == "success")
                                      {
                                         // $("#flag").attr("src", response.flag.flag); 
-                                        $(".dial code").html(response.flag.dial);
-                                         $("#flag").attr("src", 'http://localhost/Tagxi-Super-App/public/images/country/flags/IN.png');
+                                        $(".dial_code").html(response.flag.dial_code); 
+                                        $("#dial_code").val(response.flag.dial_code); 
+                                        console.log(response.flag);
+                                         $(".img_src").html('<img id="flag" alt="Superbidding Logo" src="'+response.flag.flag+'">');
                                      }
                                      else{
                                         $("#flag").attr("src", 'http://localhost/Tagxi-Super-App/public/images/country/flags/AD.png');
@@ -1350,128 +2016,444 @@ function updateAddress(latLng) {
        $("#lng").val($("#confirm_lng").val());
        $("#formattedAddress").val($("#confirm_formattedAddress").val());
        $(".bar").addClass("actv");  
-                         setTimeout(function() {
-                                $(".search_pickup_location").html($("#confirm_formattedAddress").val());
-                               $(".content-wrapper").show();
-                                $(".detail-engine-data").show();
-                                $(".content-wrapper1").hide();
-                                $(".content-wrapper2").hide();
-                                $(".bar").removeClass("actv"); 
-                                 }, 200); 
-                                 $(".search_pickup_location").addClass("actv"); 
-                                 if($("#lat").val() != "" && $("#lat1").val() != "")
+
+                        
+                                 if($("#lat").val() != "")
                                  {
-                                    $(".available_ride").show();
-                                    $(".daily_ride_vehicle").show(); 
+                                    var form_data = new FormData($("#eta_calculaion")[0]);
+                                       $.ajax({
+                                                url: 'api/v1/request/adhoc-eta', 
+                                                type: 'POST',
+                                                data: form_data,
+                                                dataType: 'json', 
+                                                processData: false,
+                                                contentType: false, 
+                                                success: function(response) {
+                                                    // Handle the successful response
+                                                    console.log('Success:', response);
+                                                   if(response.success)
+                                                    {
+                                                        var html_content = "";
+                                                    for(var i=0;i<response.data.length;i++)
+                                                    {
+                                                        var distance = response.data[i].distance;
+                                                        var base_distance = response.data[i].base_distance; 
+                                                        var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                    }
+                                                    $(".daily_ride_vehicle").html(html_content)
+                                                    console.log(response);
+                                                      setTimeout(function() {
+                                                        $(".search_pickup_location").html($("#confirm_formattedAddress").val());
+                                                       $(".content-wrapper").show();
+                                                        $(".detail-engine-data").show();
+                                                        $(".content-wrapper1").hide();
+                                                        $(".content-wrapper2").hide();
+                                                        $(".content-wrapper3").hide();
+                                                        $(".bar").removeClass("actv"); 
+                                                         }, 200); 
+                                                         $(".search_pickup_location").addClass("actv"); 
+                                                         $(".available_ride").show();
+                                                         $(".promo_coupon").show();
+                                                         $(".daily_ride_vehicle").show(); 
+                                                      $(".pickup_address").addClass("actv");
+                                                    }
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                    // Handle errors
+                                                    console.error('Error:', xhr.responseText);
+                                                    }
+                                                }); 
+
+                                    
                                  }
                                  else{
+                                      setTimeout(function() {
+                                                        $(".search_pickup_location").html($("#confirm_formattedAddress").val());
+                                                       $(".content-wrapper").show();
+                                                        $(".detail-engine-data").show();
+                                                        $(".content-wrapper1").hide();
+                                                        $(".content-wrapper2").hide();
+                                                        $(".content-wrapper3").hide();
+                                                        $(".bar").removeClass("actv"); 
+                                                         }, 200); 
+                                                         $(".search_pickup_location").addClass("actv"); 
                                     $(".available_ride").hide();
+                                     $(".promo_coupon").hide();
                                     $(".daily_ride_vehicle").hide();
                                  }
 
   })
    $(document).on("click",".confirm_your_location1",function(){
+
        $("#lat1").val($("#confirm_lat1").val());
-       $("#lng1").val($("#confirm_lng1").val());
+       $("#lng1").val($("#confirm_lng1").val()); 
        $("#formattedAddress1").val($("#confirm_formattedAddress1").val());
                         $(".bar").addClass("actv");  
 
-                         setTimeout(function() {
-                            $(".pickup_address").html($("#confirm_formattedAddress1").val());
-                                $(".content-wrapper").show();
-                                $(".detail-engine-data").show();
-                                $(".content-wrapper1").hide();
-                                $(".content-wrapper2").hide();
-                                $(".bar").removeClass("actv"); 
-                                 }, 200);  
-                          $(".pickup_address").addClass("actv");
-                           if($("#lat").val() != "" && $("#lat1").val() != "")
-                                 {
-                                    $(".available_ride").show();
-                                    $(".daily_ride_vehicle").show(); 
+                        
+                           if($("#lat").val() != "")
+                                 { 
+
+                                    var form_data = new FormData($("#eta_calculaion")[0]);
+                                       $.ajax({
+                                                url: 'api/v1/request/adhoc-eta', 
+                                                type: 'POST',
+                                                data: form_data,
+                                                dataType: 'json', 
+                                                processData: false,
+                                                contentType: false, 
+                                                success: function(response) {
+                                                    // Handle the successful response
+                                                    console.log('Success:', response);
+                                                   if(response.success)
+                                                    {
+                                                        var html_content = "";
+                                                    for(var i=0;i<response.data.length;i++)
+                                                    {
+                                                        var distance = response.data[i].distance;
+                                                        var base_distance = response.data[i].base_distance; 
+                                                        var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+response.data[i].total.toFixed(2)+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                    }
+                                                    $(".daily_ride_vehicle").html(html_content)
+                                                    console.log(response);
+                                                      setTimeout(function() {
+                                                        $(".pickup_address").html($("#confirm_formattedAddress1").val());
+                                                        $(".content-wrapper").show();
+                                                        $(".detail-engine-data").show();
+                                                        $(".content-wrapper1").hide();
+                                                        $(".content-wrapper2").hide();
+                                                        $(".content-wrapper3").hide();
+                                                        $(".bar").removeClass("actv"); 
+                                                         }, 200); 
+                                                         $(".search_pickup_location").addClass("actv"); 
+                                                         $(".pickup_address").addClass("actv");
+                                                         if($(".item-name.actv").attr("data-val") == "rentals")
+                                                         {
+                                                            $(".available_ride").hide();
+                                                            $(".promo_coupon").hide();
+                                                            $(".daily_ride_vehicle").hide();
+                                                         }
+                                                         else{
+                                                            $(".available_ride").show();
+                                                         $(".promo_coupon").show();
+                                                         $(".daily_ride_vehicle").show(); 
+                                                     } 
+                                                        
+                                                    }
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                    // Handle errors
+                                                    console.error('Error:', xhr.responseText);
+                                                    }
+                                                }); 
+                                                
                                  }
                                  else{
+                                      setTimeout(function() {
+                                                        $(".pickup_address").html($("#confirm_formattedAddress1").val());
+                                                            $(".content-wrapper").show();
+                                                            $(".detail-engine-data").show();
+                                                            $(".content-wrapper1").hide();
+                                                            $(".content-wrapper2").hide();
+                                                            $(".bar").removeClass("actv"); 
+                                        }, 200);  
                                     $(".available_ride").hide();
+                                    $(".promo_coupon").hide();
                                     $(".daily_ride_vehicle").hide();
                                  }
   }) 
-   $(document).on("click",".opt-text-button",function(){
-    console.log($(".input-dial-number").val());
-    if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined){
-     $(".bar").addClass("actv");  
-      $(this).addClass("actv"); 
-      setTimeout(function() { 
-    $(".otp-design").hide();
-    $(".verify-otps").show();
-     $(".bar").removeClass("actv"); 
-     $(this).removeClass("actv"); 
-       }, 1000);  
 
+   $(document).on("click",".opt-text-button",function(){   
+
+    var response = grecaptcha.getResponse(window.recaptchaWidgetId);  
+    $(".opt-text-button").removeClass("actv");
+    // grecaptcha.reset(widgetid);   
+    if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined && response !="") { 
+        $(".otp-error-message").hide();
+        const phoneNumber = $("#dial_code").val()+""+$("#input-dial-number").val()+""; 
+        const name = $("#input-name").val();
+        const appVerifier = window.recaptchaVerifier;
+        $(".bar").addClass("actv");  
+        var this_data = $(this);
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult;
+          console.log("confirmationResult");
+          console.log(confirmationResult);
+           this_data.addClass("actv");  
+            $(".otp-design").hide();
+            $(".verify-otps").show();
+            $(".bar").removeClass("actv"); 
+            this_data.removeClass("actv");  
+            $(".entered-no").html($("#input-dial-number").val());
+            $(".otp-error-message-verify").html('');
+            $(".otp-error-message-verify").hide();
+            $(".opt-text-button-verify").removeClass("actv");
+            $("#input-name1").val('');
+          // ...
+        }).catch((error) => {
+            $(".otp-error-message").html('OTP Not sent . Please check the Number');
+            $(".otp-error-message").show();
+            $(".bar").removeClass("actv"); 
+        }); 
    }
-   else{
-        $(".otp-error-message").show();
-   } 
+   // else{
+   //       $(".otp-error-message").show();
+   //      $(".otp-error-message").html('Please Enter the mobile number');
+   // }
+   
    });
    $(document).on("click",".back-to-home",function(){
+     $("#input-dial-number").val('');
+     $("#input-name").val(''); 
+     grecaptcha.reset(window.recaptchaWidgetId);
      $(".verify-otps").hide();
      $(".otp-design").show();
      $(".content-wrapper").hide();
         $(".detail-engine-data").hide();
         $(".opt-text-button").removeClass("actv");
+        $(".otp-error-message").hide();
+        $(".otp-error-message").html('');
     });
 
-
+ // function clearUser(uid) {
+ //      // Use the UID to delete the user
+ //      firebase.auth().deleteUser(uid);
+       
+ //    }
    $(document).on("click",".opt-text-button-verify",function(){
-     if($("#input-name").val() != "" && $("#input-name").val() !== undefined){
-        $(".bar").addClass("actv");  
-      $(this).addClass("actv"); 
-      setTimeout(function() { 
-        $(".otp-design").hide();
-        $(".verify-otps").hide();
-        $(".content-wrapper").show();
-        $(".detail-engine-data").show();
-        $(".content-wrapper1").hide();
-        $(".content-wrapper2").hide();
-        $(".bar").removeClass("actv"); 
-        $(this).removeClass("actv"); 
-       }, 3000);  
+     $(".otp-error-message-verify").html('');
+    $(".otp-error-message-verify").hide();
+    $(this).removeClass("actv");
+    $(".bar").addClass("actv");  
+    var this_dt = $(this);
+     if($("#input-name1").val() != "" && $("#input-name1").val() !== undefined){ 
+        var code = $("#input-name1").val(); 
+        var form_data = new FormData($("#Adduser")[0]);
+       
+        confirmationResult.confirm(code).then((result) => {
+            console.log(result);
+            // User signed in successfully. 
+                grecaptcha.reset(window.recaptchaWidgetId);    
+                  $.ajax({
+                url: 'Adduser', 
+                type: 'POST',
+                data: form_data,
+                dataType: 'json', 
+                processData: false,
+                contentType: false, 
+                success: function(response) {
+                    // Handle the successful response
+                    console.log('Success:', response);
+                    if(response.status == "success")
+                    {
+                        const phoneNumber = $("#dial_code").val()+""+$("#input-dial-number").val()+""; 
+                        const name = $("#input-name").val();
+                        $("#model-promo-input-name").val(name);
+                        $("#model-promo-input-number").val(phoneNumber); 
+                        window.location.reload();
+                        // this_dt.addClass("actv");   
+                        // $(".otp-design").hide();
+                        // $(".verify-otps").hide();
+                        // $(".content-wrapper").show();
+                        // $(".detail-engine-data").show();
+                        // $(".content-wrapper1").hide();
+                        // $(".content-wrapper2").hide();
+                        // $(".bar").removeClass("actv"); 
+                        // this_dt.removeClass("actv");   
+                    }
+                    },
+                    error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error('Error:', xhr.responseText);
+                    }
+                }); 
+               
+            
+            // ...
+            }).catch((error) => {
+                console.log("bad verification codesss");
+                $(".otp-error-message-verify").html('OTP is Invalid');
+                $(".otp-error-message-verify").show();
+                $(".opt-text-button-verify").addClass("actv"); 
+                $(".bar").removeClass("actv"); 
+            }); 
      }
      else{
+            $(".otp-error-message-verify").html('Please Enter the OTP');
             $(".otp-error-message-verify").show();
      }
    })
-    $(document).on("click",".fa-arrow-left",function(){
-                        $(".content-wrapper").show();
-                        $(".detail-engine-data").show();
-                        $(".content-wrapper1").hide();
-                        $(".content-wrapper2").hide(); 
-
-                    });
-      var result_status = true;
-    $(document).ready(function(){
-        if(result_status)
-        {
-             $(".content-wrapper").hide();
-             $(".detail-engine-data").hide();
-             $(".otp-design").show();
-
+    $(document).on("input","#input-name1",function(){
+        if($(this).val() != ""){
+             $(".opt-text-button-verify").addClass("actv");
+        }
+                  
+            })
+    
+    $(document).on("click",".available-vehicle-details",function(){
+        $(".available-vehicle-details").removeClass("actv"); 
+        $(this).addClass("actv"); 
+        if($(this).hasClass("package-list"))
+        { 
+            $(".book_now1").addClass("actv");
+            $(".book_now1").show(); 
         }
         else{
-            $(".otp-design").hide(); 
+            $(".book_now").addClass("actv");
+            $(".book_now").show(); 
         }
+         
+
+       
+    }) 
+    $(document).on("click",".promocode-cancel",function(){
+        $(".model-init1").hide();
+        $(".model-init").hide();
 
     })
-    $(document).on("click",".available-vehicle-details",function(){
-        $(".book_now").addClass("actv");
-        $(".book_now").show();
-        $(".available-vehicle-details").removeClass("actv");
-        $(this).addClass("actv"); 
+    $(document).on("click",".receiver-add",function(){
+         $(".model-init1").hide();
+        $(".model-init").hide();
+
+    })
+    
+
+    $(document).on("click",".promocode-submit",function(){
+        if($("#model-promo-input") != "")
+        {
+             var form_data = new FormData($("#eta_calculaion")[0]);
+         form_data.append("promo_code",$("#model-promo-input").val());
+         $.ajax({
+                                                url: 'api/v1/request/adhoc-eta', 
+                                                type: 'POST',
+                                                data: form_data,
+                                                dataType: 'json', 
+                                                processData: false,
+                                                contentType: false, 
+                                                success: function(response) {
+
+                                                    // Handle the successful response
+                                                    console.log('Success:', response);
+                                                   if(response.success)
+                                                    {
+                                                        $(".model-init1").hide();
+                                                        $(".model-init").hide();
+                                                        var html_content = "";
+                                                    for(var i=0;i<response.data.length;i++)
+                                                    {
+                                                        var distance = response.data[i].distance;
+                                                        var base_distance = response.data[i].base_distance; 
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                    }
+                                                    $(".daily_ride_vehicle").html(html_content)
+                                                    console.log(response);
+                                                      setTimeout(function() {
+                                                        $(".search_pickup_location").html($("#confirm_formattedAddress").val());
+                                                       $(".content-wrapper").show();
+                                                        $(".detail-engine-data").show();
+                                                        $(".content-wrapper1").hide();
+                                                        $(".content-wrapper2").hide();
+                                                        $(".content-wrapper3").hide();
+                                                        $(".bar").removeClass("actv"); 
+                                                         }, 200); 
+                                                         $(".search_pickup_location").addClass("actv"); 
+                                                         $(".available_ride").show();
+                                                         $(".promo_coupon").show();
+                                                         $(".daily_ride_vehicle").show(); 
+                                                      $(".pickup_address").addClass("actv");
+                                                    }
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                    // Handle errors
+                                                    console.error('Status Code:', xhr.status); 
+                                                    var response =JSON.parse(xhr.responseText); 
+                                                    console.error('Error:', JSON.parse(xhr.responseText));
+                                                    if(xhr.status == 500)
+                                                    {
+                                                        $(".promo-code-error").html(response.message);
+                                                    } 
+                                                    }
+                                                }); 
+        }
+        else{
+         $(".promo-code-error").html('Please enthe the promo code');
+        }
+        
+       
+    })
+    $(document).on("click",".promo_coupon",function(){
+        $(".model-init1").show();
+        $(".model-content").show();
+        $(".model-content1").hide();
+    }) 
+    $(document).on("click",".receiver-dt",function(){
+          $(".model-init").show();
+          $(".model-content1").show();
+          $(".model-content").hide();
+    })
+      $(document).on("click",".confirm_button1",function(){ 
+                      $(".model-init1").show();
+                      $(".model-content1").hide();
+                      $(".model-content").hide();
+                      $(".model-content2").show(); 
+                        
+                    }); 
+        $(document).on("click",".date-edit",function(){ 
+                      $(".model-init1").show();
+                      $(".model-content1").hide();
+                      $(".model-content").hide();
+                      $(".model-content2").show(); 
+
+                        
+                    }); 
+
+    $(document).on('change', '.radio-option', function() { 
+        var selectedValue = $(this).val();
+        if(selectedValue == "qty")
+        {
+            $(".qunatity-input").show();
+        }
+        else{
+            $(".qunatity-input").hide();
+        }
+    });
+    $(document).on("click",".booking-back",function(){ 
+          $(".bar").addClass("actv"); 
+
+                 setTimeout(function() { 
+                    // $(".available_ride").show();
+                    $(".content-wrapper3").hide();
+                    $(".rental_ride").hide();
+                    $(".available-vehicle-details").removeClass('actv');
+                    $(".package").hide();
+                    $(".bar").removeClass("actv"); 
+                    $(".book_now").removeClass("actv");
+                    $(".book_now").hide();
+                    $(".add-details").hide();
+                    $(".detail-engine-data").show();
+                    $(".content-wrapper").show();
+
+
+                    $("#packagePicker option[value='select']").prop("selected", true);
+                    $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
+                     $(".from-details.out_station").hide();
+                    $(".from-details.booking_type").hide();
+                    $(".from-details.daily_rides").show();
+                    $(".from-details.rentals").hide();
+                  }, 200);  
     })
 
-   
-                            google.maps.event.addDomListener(window, 'load', initAutocomplete);
-                            google.maps.event.addDomListener(window, 'load', initAutocomplete1);
-                            google.maps.event.addDomListener(window, 'load', initMap);
+
+
+    
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
+    google.maps.event.addDomListener(window, 'load', initAutocomplete1);
+    google.maps.event.addDomListener(window, 'load', initMap);
 
         </script>
 

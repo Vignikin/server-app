@@ -103,12 +103,15 @@ class VehicleTypeController extends BaseController
      */
     public function store(CreateVehicleTypeRequest $request)
     {
+      
         //  if (env('APP_FOR')=='demo') {
         //     $message = trans('succes_messages.you_are_not_authorised');
 
         //     return redirect('types')->with('warning', $message);
         // }
         // dd($request->transport_type);
+        // echo "test";
+        // exit;
         $created_params = $request->only(['name', 'capacity','is_accept_share_ride','description','supported_vehicles','short_description', 'transport_type', 'is_taxi','icon_types_for','trip_dispatch_type']);
            
              $is_taxi = $request->transport_type;

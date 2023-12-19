@@ -15,7 +15,7 @@ class CreateVehicleTypeRequest extends BaseRequest
     {
         return [
             'name' => 'required|max:50',
-            'icon'=>$this->vechicleTypeImageRule(),
+            // 'icon'=>$this->vechicleTypeImageRule(),
             // 'capacity'=>'required|min:1',
             'description'=>'required|max:300',
             'short_description'=>'required|max:35',
