@@ -35,6 +35,9 @@ rental_package_id
 request_eta_amount
 goods_type_id
 goods_type_quantity
+drop_poc_instruction
+drop_poc_name
+drop_poc_mobile
 
 ----------------------------------------------------
 List Packages - api/v1/request/adhoc-list-packages
@@ -47,3 +50,6 @@ transport_type -- taxi/delivery
 pick_lat
 pick_lng
 
+
+List Goods Type api - api/v1/common/goods-types
+Method - GET

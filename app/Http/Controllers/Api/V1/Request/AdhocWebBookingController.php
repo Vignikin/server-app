@@ -87,6 +87,23 @@ class AdhocWebBookingController extends BaseController
 
         }
 
+        
+        if ($request->has('vehicle_type')) {
+
+            if($request->has('transport_type')){      
+
+                $type = $zone_detail->zoneType()->where(function($query)use($request){
+                    $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
+                })->where('id', $request->input('vehicle_type'))->active()->get();
+
+
+        }else{
+
+                $type = $zone_detail->zoneType()->where('id', $request->input('vehicle_type'))->active()->get();
+
+        }
+
+        }
 
         $result = fractal($type, new EtaTransformer);
 
@@ -222,7 +239,10 @@ class AdhocWebBookingController extends BaseController
             'drop_lat'=>$request->drop_lat,
             'drop_lng'=>$request->drop_lng,
             'pick_address'=>$request->pick_address,
-            'drop_address'=>$request->drop_address];
+            'drop_address'=>$request->drop_address,
+            'drop_poc_instruction'=>$request->drop_poc_instruction,
+            'drop_poc_name'=>$request->drop_poc_name,
+            'drop_poc_mobile'=>$request->drop_poc_mobile];
         // store request place details
         $request_detail->requestPlace()->create($request_place_params);
 
