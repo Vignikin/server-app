@@ -43,7 +43,13 @@ Route::namespace('Web')->group(function () {
     Route::get('sadad-checkout',function(){
         return view('sadad.checkout');
     });
-
+       Route::get('/web-booking',function(){
+        // Session::flush();
+          echo $value = Session::get('user_id');
+            echo $value1 = Session::get('dial_code');
+            exit;
+        return view('web_booking');
+    });
     Route::post('Adduser','FrontPageController@Saveuser');
     Route::get('get-country-data','FrontPageController@country_code');
     Route::get('mercadopago-success','MercadopagoController@success');
@@ -58,6 +64,7 @@ Route::namespace('Web')->group(function () {
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
- Route::get('/web-booking',function(){  
-        return view('web_booking'); 
+ Route::get('/web-booking',function(){
+        // Session::flush(); 
+        return view('web_booking');
     });

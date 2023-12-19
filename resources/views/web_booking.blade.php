@@ -1458,17 +1458,19 @@ select#timepicker,.datepicker {
             }
             
         };
+
          var onloadCallback = function() {
+            @if(!Session('user_id')) 
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', {
         'size': 'normal',
         'callback': verifyCallback
         });
         recaptchaVerifier.render().then((widgetId) => {
         window.recaptchaWidgetId = widgetId;
-        console.log("widgetId");
-        console.log(window.recaptchaWidgetId);
-        
+        // console.log("widgetId");
+        // console.log(window.recaptchaWidgetId); 
         });  
+        @endif
        
       };
       
@@ -1588,8 +1590,7 @@ select#timepicker,.datepicker {
                             success:function(response){
                                 if(response.success)
                                 {
-                                    var html_data = '<div class="from text">Package</div><div class="from location text placeholder select_package"><select id="packagePicker" class="depart-select ola-select"> <option value="select" disabled="" selected="">Select a package</option>';
-                                    console.log(response.data.length);
+                                    var html_data = '<div class="from text">Package</div><div class="from location text placeholder select_package"><select id="packagePicker" class="depart-select ola-select"> <option value="select" disabled="" selected="">Select a package</option>'; 
                                     if(response.data.length > 0)
                                     { 
                                     var html_content1 = "";
@@ -1709,7 +1710,7 @@ select#timepicker,.datepicker {
                                                 contentType: false, 
                                                 success: function(response) {
                                                     // Handle the successful response
-                                                    console.log('Success:', response); 
+                                                    // console.log('Success:', response); 
                                                       setTimeout(function() {
                                                             $(".content-wrapper").hide();
                                                             $(".detail-engine-data").hide();
@@ -1760,7 +1761,7 @@ select#timepicker,.datepicker {
                             autocomplete.addListener('place_changed', function() { 
 
                               var place = autocomplete.getPlace();
-                              console.log('Place selected:', place); 
+                              // console.log('Place selected:', place); 
                               var formattedAddress = place.formatted_address;
                               var latitude = place.geometry.location.lat();
                               var longitude = place.geometry.location.lng(); 
@@ -1783,8 +1784,7 @@ select#timepicker,.datepicker {
                                       title: 'Marker 1',
                                       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                                     }); 
-                                     google.maps.event.addListener(marker1, 'dragend', function() {
-                                        console.log(marker1.getPosition().lat()); 
+                                     google.maps.event.addListener(marker1, 'dragend', function() { 
                                         var latLng1 = new google.maps.LatLng(marker1.getPosition().lat(), marker1.getPosition().lng());
                                         var code2 = new google.maps.Geocoder(); 
                                         code2.geocode({ 'location': latLng1 }, function(results, status) { 
@@ -1813,7 +1813,7 @@ select#timepicker,.datepicker {
                             
                             autocomplete.addListener('place_changed', function() { 
                               var place = autocomplete.getPlace();
-                              console.log('Place selected:', place); 
+                              // console.log('Place selected:', place); 
                               var formattedAddress = place.formatted_address;
                               var latitude = place.geometry.location.lat();
                               var longitude = place.geometry.location.lng();
@@ -1836,8 +1836,7 @@ select#timepicker,.datepicker {
                                       title: 'Marker 1',
                                       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                                     }); 
-                                     google.maps.event.addListener(marker1, 'dragend', function() {
-                                        console.log(marker1.getPosition().lat());
+                                     google.maps.event.addListener(marker1, 'dragend', function() { 
                                         var latLng1 = new google.maps.LatLng(marker1.getPosition().lat(), marker1.getPosition().lng());
                                         var code1 = new google.maps.Geocoder()
                                         code1.geocode({ 'location': latLng1 }, function(results, status) {
@@ -1888,9 +1887,7 @@ select#timepicker,.datepicker {
 
             // Optionally, you can use the Google Maps Geocoder API to get a formatted address
             var geocoder = new google.maps.Geocoder();
-            var latLng = new google.maps.LatLng(latitude, longitude);
-            console.log(latLng);
-
+            var latLng = new google.maps.LatLng(latitude, longitude); 
             geocoder.geocode({ 'location': latLng }, function(results, status) {
               if (status === 'OK') {
                 if (results[0]) {
@@ -1904,13 +1901,12 @@ select#timepicker,.datepicker {
                                     dataType: 'json', 
                                     // data:data, 
                                     success: function(response) {  
-                                     console.log(response);
+                                     // console.log(response);
                                      if(response.status == "success")
                                      {
                                         // $("#flag").attr("src", response.flag.flag); 
                                         $(".dial_code").html(response.flag.dial_code); 
-                                        $("#dial_code").val(response.flag.dial_code); 
-                                        console.log(response.flag);
+                                        $("#dial_code").val(response.flag.dial_code);  
                                          $(".img_src").html('<img id="flag" alt="Superbidding Logo" src="'+response.flag.flag+'">');
                                      }
                                      else{
@@ -1924,11 +1920,7 @@ select#timepicker,.datepicker {
                                     }
                             });
                           status = false;
-                    }
-                    
-
-                                                
-                 console.log(results[0].formatted_address);
+                    } 
                               $("#lat1").val(latitude);
                               $("#lng1").val(longitude);
                               $("#formattedAddress1").val(results[0].formatted_address);
@@ -1949,8 +1941,7 @@ select#timepicker,.datepicker {
                                       title: 'Marker 1',
                                       icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                                     }); 
-                                     google.maps.event.addListener(marker1, 'dragend', function() {
-                                        console.log(marker1.getPosition().lat());
+                                     google.maps.event.addListener(marker1, 'dragend', function() { 
                                         var latLng1 = new google.maps.LatLng(marker1.getPosition().lat(), marker1.getPosition().lng());
                                         geocoder.geocode({ 'location': latLng1 }, function(results, status) {
                                         if (status === 'OK') {
@@ -1966,8 +1957,7 @@ select#timepicker,.datepicker {
                                              }
 
                                         }
-                                    });
-                                        console.log("sdff");
+                                    }); 
                                     }); 
 
                 } else {
@@ -2030,7 +2020,7 @@ function updateAddress(latLng) {
                                                 contentType: false, 
                                                 success: function(response) {
                                                     // Handle the successful response
-                                                    console.log('Success:', response);
+                                                    // console.log('Success:', response);
                                                    if(response.success)
                                                     {
                                                         var html_content = "";
@@ -2041,8 +2031,7 @@ function updateAddress(latLng) {
                                                         var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
                                                         html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
                                                     }
-                                                    $(".daily_ride_vehicle").html(html_content)
-                                                    console.log(response);
+                                                    $(".daily_ride_vehicle").html(html_content) 
                                                       setTimeout(function() {
                                                         $(".search_pickup_location").html($("#confirm_formattedAddress").val());
                                                        $(".content-wrapper").show();
@@ -2105,7 +2094,7 @@ function updateAddress(latLng) {
                                                 contentType: false, 
                                                 success: function(response) {
                                                     // Handle the successful response
-                                                    console.log('Success:', response);
+                                                    // console.log('Success:', response);
                                                    if(response.success)
                                                     {
                                                         var html_content = "";
@@ -2116,8 +2105,7 @@ function updateAddress(latLng) {
                                                         var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
                                                         html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+response.data[i].total.toFixed(2)+'</span> </div>  </div><div class="horizontal-line"></div>';
                                                     }
-                                                    $(".daily_ride_vehicle").html(html_content)
-                                                    console.log(response);
+                                                    $(".daily_ride_vehicle").html(html_content) 
                                                       setTimeout(function() {
                                                         $(".pickup_address").html($("#confirm_formattedAddress1").val());
                                                         $(".content-wrapper").show();
@@ -2181,9 +2169,7 @@ function updateAddress(latLng) {
         .then((confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
-          window.confirmationResult = confirmationResult;
-          console.log("confirmationResult");
-          console.log(confirmationResult);
+          window.confirmationResult = confirmationResult; 
            this_data.addClass("actv");  
             $(".otp-design").hide();
             $(".verify-otps").show();
@@ -2235,8 +2221,7 @@ function updateAddress(latLng) {
         var code = $("#input-name1").val(); 
         var form_data = new FormData($("#Adduser")[0]);
        
-        confirmationResult.confirm(code).then((result) => {
-            console.log(result);
+        // confirmationResult.confirm(code).then((result) => { 
             // User signed in successfully. 
                 grecaptcha.reset(window.recaptchaWidgetId);    
                   $.ajax({
@@ -2247,24 +2232,14 @@ function updateAddress(latLng) {
                 processData: false,
                 contentType: false, 
                 success: function(response) {
-                    // Handle the successful response
-                    console.log('Success:', response);
+                    // Handle the successful response 
                     if(response.status == "success")
                     {
                         const phoneNumber = $("#dial_code").val()+""+$("#input-dial-number").val()+""; 
                         const name = $("#input-name").val();
                         $("#model-promo-input-name").val(name);
                         $("#model-promo-input-number").val(phoneNumber); 
-                        window.location.reload();
-                        // this_dt.addClass("actv");   
-                        // $(".otp-design").hide();
-                        // $(".verify-otps").hide();
-                        // $(".content-wrapper").show();
-                        // $(".detail-engine-data").show();
-                        // $(".content-wrapper1").hide();
-                        // $(".content-wrapper2").hide();
-                        // $(".bar").removeClass("actv"); 
-                        // this_dt.removeClass("actv");   
+                        window.location.reload(); 
                     }
                     },
                     error: function(xhr, status, error) {
@@ -2275,13 +2250,13 @@ function updateAddress(latLng) {
                
             
             // ...
-            }).catch((error) => {
-                console.log("bad verification codesss");
-                $(".otp-error-message-verify").html('OTP is Invalid');
-                $(".otp-error-message-verify").show();
-                $(".opt-text-button-verify").addClass("actv"); 
-                $(".bar").removeClass("actv"); 
-            }); 
+            // }).catch((error) => {
+            //     console.log("bad verification codesss");
+            //     $(".otp-error-message-verify").html('OTP is Invalid');
+            //     $(".otp-error-message-verify").show();
+            //     $(".opt-text-button-verify").addClass("actv"); 
+            //     $(".bar").removeClass("actv"); 
+            // }); 
      }
      else{
             $(".otp-error-message-verify").html('Please Enter the OTP');
@@ -2338,7 +2313,7 @@ function updateAddress(latLng) {
                                                 success: function(response) {
 
                                                     // Handle the successful response
-                                                    console.log('Success:', response);
+                                                    // console.log('Success:', response);
                                                    if(response.success)
                                                     {
                                                         $(".model-init1").hide();
@@ -2351,7 +2326,7 @@ function updateAddress(latLng) {
                                                         html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
                                                     }
                                                     $(".daily_ride_vehicle").html(html_content)
-                                                    console.log(response);
+                                                    // console.log(response);
                                                       setTimeout(function() {
                                                         $(".search_pickup_location").html($("#confirm_formattedAddress").val());
                                                        $(".content-wrapper").show();
