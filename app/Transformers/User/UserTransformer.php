@@ -18,6 +18,8 @@ use App\Models\Master\BannerImage;
 use App\Transformers\Payment\WalletTransformer;
 use App\Models\Chat;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Log;
 
 class UserTransformer extends Transformer
 {
@@ -195,7 +197,8 @@ class UserTransformer extends Transformer
     */
     public function includeSos(User $user)
     {
-        if(auth()->user())
+        Log::info('test');
+        if(Auth::check()) 
         {
             $user_id = auth()->user()->id;
         }
