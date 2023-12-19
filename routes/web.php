@@ -58,6 +58,6 @@ Route::namespace('Web')->group(function () {
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
- Route::get('/web-booking',function(){ 
-        return view('web_booking');
+ Route::get('/web-booking',function(){  
+        return view('web_booking'); 
     });

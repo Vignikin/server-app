@@ -239,7 +239,7 @@ class AdhocWebBookingController extends BaseController
             foreach (json_decode($request->stops) as $key => $stop) {
                 $request_detail->requestStops()->create([
                 'address'=>$stop->address,
-                'latitude'=>$stop->latitude,
+                'latitude'=>$stop->latitude, 
                 'longitude'=>$stop->longitude,
                 'order'=>$stop->order]);
 
