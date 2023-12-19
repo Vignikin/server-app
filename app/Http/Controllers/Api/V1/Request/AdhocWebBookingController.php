@@ -87,6 +87,23 @@ class AdhocWebBookingController extends BaseController
 
         }
 
+        
+        if ($request->has('vehicle_type')) {
+
+            if($request->has('transport_type')){      
+
+                $type = $zone_detail->zoneType()->where(function($query)use($request){
+                    $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
+                })->where('id', $request->input('vehicle_type'))->active()->get();
+
+
+        }else{
+
+                $type = $zone_detail->zoneType()->where('id', $request->input('vehicle_type'))->active()->get();
+
+        }
+
+        }
 
         $result = fractal($type, new EtaTransformer);
 
