@@ -206,7 +206,7 @@ class UserTransformer extends Transformer
              $user_id = Session::get('user_id');
         }
         $request = Sos::select('id', 'name', 'number', 'user_type', 'created_by')
-        ->where('created_by', auth()->user()->id)
+        ->where('created_by', $user_id)
         ->orWhere('user_type', 'admin')
         ->orderBy('created_at', 'Desc')
         ->companyKey()->get();
