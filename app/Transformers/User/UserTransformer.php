@@ -195,7 +195,7 @@ class UserTransformer extends Transformer
     */
     public function includeSos(User $user)
     {
-        if(auth()->user()->id)
+        if(auth()->user())
         {
             $user_id = auth()->user()->id;
         }
