@@ -267,6 +267,8 @@ class AdhocWebBookingController extends BaseController
 
             goto no_drivers_available;
          }
+         echo "test";
+         exit;
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
 
 
