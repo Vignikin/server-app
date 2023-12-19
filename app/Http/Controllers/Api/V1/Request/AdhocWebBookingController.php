@@ -222,7 +222,10 @@ class AdhocWebBookingController extends BaseController
             'drop_lat'=>$request->drop_lat,
             'drop_lng'=>$request->drop_lng,
             'pick_address'=>$request->pick_address,
-            'drop_address'=>$request->drop_address];
+            'drop_address'=>$request->drop_address,
+            'drop_poc_instruction'=>$request->drop_poc_instruction,
+            'drop_poc_name'=>$request->drop_poc_name,
+            'drop_poc_mobile'=>$request->drop_poc_mobile];
         // store request place details
         $request_detail->requestPlace()->create($request_place_params);
 
