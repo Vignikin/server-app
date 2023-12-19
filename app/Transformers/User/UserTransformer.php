@@ -17,6 +17,7 @@ use App\Transformers\Common\BannerImageTransformer;
 use App\Models\Master\BannerImage;
 use App\Transformers\Payment\WalletTransformer;
 use App\Models\Chat;
+use Illuminate\Support\Facades\Session;
 
 class UserTransformer extends Transformer
 {
@@ -194,6 +195,13 @@ class UserTransformer extends Transformer
     */
     public function includeSos(User $user)
     {
+        if(auth()->user()->id)
+        {
+            $user_id = auth()->user()->id;
+        }
+        else{
+             $user_id = Session::get('user_id');
+        }
         $request = Sos::select('id', 'name', 'number', 'user_type', 'created_by')
         ->where('created_by', auth()->user()->id)
         ->orWhere('user_type', 'admin')
