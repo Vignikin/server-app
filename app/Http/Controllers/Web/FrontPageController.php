@@ -1336,6 +1336,7 @@ class FrontPageController extends Controller
         if($request->mobile)
         { 
             $check_user_exist = User::where('mobile',$request->mobile)->first();
+            $country_id =  Country::where('dial_code', $request->input('dial_code'))->pluck('id')->first(); 
             if($check_user_exist)
             {
                 $user = $check_user_exist;
@@ -1343,19 +1344,17 @@ class FrontPageController extends Controller
             else{
                 $user = User::create([
                 'name'=>$request->name, 
-                'mobile' => $request->mobile 
+                'mobile' => $request->mobile,
+                'country' => $country_id
             ]);
-            } 
+            }  
             
-              // Create Empty Wallet to the user
+            // Create Empty Wallet to the user
             $user->userWallet()->create(['amount_added'=>0]);
 
-            $user->attachRole(Role::USER);
-            // Auth::guard('web')->attempt($user);
-            // Auth::guard('web')->attempt(['email' => 'test', 'password' => 'testt'], true);
+            $user->attachRole(Role::USER); 
 
-            auth('web')->login($user, true); 
-
+            auth('web')->login($user, true);  
             Session::put('user_id', $user->id);   
             Session::put('dial_code', $request->dial_code);  
 
