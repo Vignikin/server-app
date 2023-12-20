@@ -8,6 +8,7 @@ use App\Jobs\NotifyViaMqtt;
 use App\Models\Admin\Driver;
 use App\Jobs\NotifyViaSocket;
 use App\Models\Admin\ZoneType;
+use App\Models\Master\GoodsType;
 use App\Models\Request\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Request\RequestMeta;
@@ -25,11 +26,12 @@ use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Http\Request as ValidatorRequest;
 use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 use App\Transformers\User\EtaTransformer;
+use Illuminate\Http\Request as Httprequest;
 use App\Models\User;
 use App\Models\Country;
 use App\Transformers\Requests\PackagesTransformer;
-use App\Models\Master\PackageType;
-
+use App\Models\Master\PackageType; 
+use Illuminate\Support\Facades\Session;
 
 /**
  * @group User-trips-apis
@@ -68,6 +70,8 @@ class AdhocWebBookingController extends BaseController
             'drop_lat'  =>'sometimes|required',
             'drop_lng'  =>'sometimes|required',
         ]);
+        // print_r($request->all());
+        // exit;
 
         $zone_detail = find_zone($request->input('pick_lat'), $request->input('pick_lng'));
         if (!$zone_detail) {
@@ -87,9 +91,35 @@ class AdhocWebBookingController extends BaseController
 
         }
 
+        
+        if ($request->has('vehicle_type')) {
+
+            if($request->has('transport_type')){      
+
+                $type = $zone_detail->zoneType()->where(function($query)use($request){
+                    $query->where('transport_type',$request->transport_type)->orWhere('transport_type','both');
+                })->where('id', $request->input('vehicle_type'))->active()->get();
+
+
+        }else{
+
+                $type = $zone_detail->zoneType()->where('id', $request->input('vehicle_type'))->active()->get();
+
+        }
+
+        }
 
         $result = fractal($type, new EtaTransformer);
-
+        if(isset($request->html_type))
+        {  
+            $goods_type = GoodsType::where('active',1)->get();  
+            $response = $this->respondSuccess($result);
+            $result_data = $response->getData();
+            $booking_data = $result_data->data;  
+            $transport_type = $request->transport_type;
+            $user_detail = User::find($request->user_id);  
+            return view('web-booking-details',compact('booking_data','goods_type','transport_type','user_detail','request'));   
+        } 
         return $this->respondSuccess($result);
 
     }
@@ -115,6 +145,7 @@ class AdhocWebBookingController extends BaseController
     */
     public function createRequest(CreateTripRequest $request)
     {
+      
 
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;
@@ -130,16 +161,16 @@ class AdhocWebBookingController extends BaseController
         // fetch unit from zone
         $unit = $zone_type_detail->zone->unit;
 
-        $user_detail = User::belongsTorole('user')->where('mobile', $mobile)->first();
+        $user_detail = User::belongsTorole('user')->where('mobile', $request->mobile)->first();
 
-        $country_id =  Country::where('dial_code', $request->input('country_code'))->pluck('id')->first();
+        $country_id =  Country::where('dial_code', $request->input('country_code'))->pluck('id')->first(); 
 
         if(!$user_detail){
 
             $user_detail = User::create([
                 'country'=>$country_id,
                 'refferal_code'=>str_random(6),
-                'mobile' => $mobile,
+                'mobile' => $request->mobile,
                 'timezone'=>$service_location->timezone
             ]);
         }
@@ -208,7 +239,7 @@ class AdhocWebBookingController extends BaseController
             foreach (json_decode($request->stops) as $key => $stop) {
                 $request_detail->requestStops()->create([
                 'address'=>$stop->address,
-                'latitude'=>$stop->latitude,
+                'latitude'=>$stop->latitude, 
                 'longitude'=>$stop->longitude,
                 'order'=>$stop->order]);
 
@@ -222,9 +253,12 @@ class AdhocWebBookingController extends BaseController
             'drop_lat'=>$request->drop_lat,
             'drop_lng'=>$request->drop_lng,
             'pick_address'=>$request->pick_address,
-            'drop_address'=>$request->drop_address];
+            'drop_address'=>$request->drop_address,
+            'drop_poc_instruction'=>$request->drop_poc_instruction,
+            'drop_poc_name'=>$request->drop_poc_name,
+            'drop_poc_mobile'=>$request->drop_poc_mobile];
         // store request place details
-        $request_detail->requestPlace()->create($request_place_params);
+        $request_detail->requestPlace()->create($request_place_params);  
 
         // Add Request detail to firebase database
          $this->database->getReference('requests/'.$request_detail->id)->update(['request_id'=>$request_detail->id,'request_number'=>$request_detail->request_number,'service_location_id'=>$service_location->id,'user_id'=>$request_detail->user_id,'pick_address'=>$request->pick_address,'active'=>1,'date'=>$request_detail->converted_created_at,'updated_at'=> Database::SERVER_TIMESTAMP]);
@@ -233,6 +267,7 @@ class AdhocWebBookingController extends BaseController
 
             goto no_drivers_available;
          }
+         
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
 
 
@@ -261,7 +296,7 @@ class AdhocWebBookingController extends BaseController
     * @bodyParam pick_lng double required pikup lng of the user
     *
     */
-    public function listPackages(Request $request){
+    public function listPackages(Httprequest $request){
 
         $request->validate([
             'pick_lat'  => 'required',
@@ -270,6 +305,7 @@ class AdhocWebBookingController extends BaseController
 
         
         $type = PackageType::where('transport_type',$request->transport_type)->orWhere('transport_type', 'both')->active()->get();
+       
 
         $result = fractal($type, new PackagesTransformer);
 

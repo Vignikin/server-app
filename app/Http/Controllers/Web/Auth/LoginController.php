@@ -169,7 +169,7 @@ class LoginController extends ApiController
      */
     protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [])
     {
-        
+       
 
         if ($request->has('social_id')) {
             return $this->setLoginIdentifier('social_id')
