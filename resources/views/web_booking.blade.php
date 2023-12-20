@@ -774,7 +774,7 @@ height: 3px;
     width: 100%;
 }
 
-input#model-promo-input,input#model-promo-input1 {
+input#model-promo-input,input#model-promo-input1 ,input#model-promo-input-qty{
     border: none;
     user-select: none !important;
     font-size: 17px;
@@ -2440,13 +2440,12 @@ function updateAddress(latLng) {
                            form_data.append("rental_package_id",rental_package_id); 
                            form_data.append("request_eta_amount",request_eta_amount);  
                            form_data.append("country_code",'{{Session("dial_code")}}');
-                           form_data.append("mobile",'{{Session("mobile")}}');
-                           
+                           form_data.append("mobile",'{{Session("mobile")}}'); 
                            $.ajax({
                                     url: 'adhoc-create-request', 
                                     type: 'POST',
                                     data: form_data,
-                                    dataType: 'html', 
+                                    dataType: 'json', 
                                     processData: false,
                                     contentType: false, 
                                     success: function(response) {
