@@ -291,10 +291,10 @@ class LoginController extends ApiController
             $this->throwInvalidCredentialsException($identifier);
         }
 
-        if (!$user->isActive() || !$this->validateChecks($user, $conditions, $identifier)) {
+        // if (!$user->isActive() || !$this->validateChecks($user, $conditions, $identifier)) {
 
-            $this->throwAccountDisabledException($identifier);
-        }
+        //     $this->throwAccountDisabledException($identifier);
+        // }
        
         return $this->authenticateAndRespond($user, $request, $needsToken);
     }
@@ -515,7 +515,6 @@ class LoginController extends ApiController
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
 
-         
         event(new UserLogin($user));
 
         DB::table('oauth_access_tokens')->where('user_id',$user->id)->delete();
