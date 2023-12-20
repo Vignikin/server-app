@@ -180,6 +180,8 @@ class AdhocWebBookingController extends BaseController
 
         $user_detail->timezone = $service_location->timezone;
         $user_detail->save();
+        // print_r($user_detail);
+        // exit;
 
         // Get last request's request_number
         $request_number = $this->request->orderBy('created_at', 'DESC')->pluck('request_number')->first();
@@ -266,12 +268,15 @@ class AdhocWebBookingController extends BaseController
         // Add Request detail to firebase database
          $this->database->getReference('requests/'.$request_detail->id)->update(['request_id'=>$request_detail->id,'request_number'=>$request_detail->request_number,'service_location_id'=>$service_location->id,'user_id'=>$request_detail->user_id,'pick_address'=>$request->pick_address,'active'=>1,'date'=>$request_detail->converted_created_at,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
+        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+
          if($request->is_later){
+
 
             goto no_drivers_available;
          }
-         
-        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+
+        
 
 
         if ($request->has('is_bid_ride') && $request->input('is_bid_ride')==1) {
