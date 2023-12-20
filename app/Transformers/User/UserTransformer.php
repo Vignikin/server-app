@@ -197,7 +197,7 @@ class UserTransformer extends Transformer
     */
     public function includeSos(User $user)
     {
-        Log::info('test');
+        // Log::info('test');
         if(Auth::check()) 
         {
             $user_id = auth()->user()->id;

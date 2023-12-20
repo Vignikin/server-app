@@ -169,7 +169,7 @@ class LoginController extends ApiController
      */
     protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [])
     {
-       
+        
 
         if ($request->has('social_id')) {
             return $this->setLoginIdentifier('social_id')
@@ -291,10 +291,10 @@ class LoginController extends ApiController
             $this->throwInvalidCredentialsException($identifier);
         }
 
-        // if (!$user->isActive() || !$this->validateChecks($user, $conditions, $identifier)) {
+        if (!$user->isActive() || !$this->validateChecks($user, $conditions, $identifier)) {
 
-        //     $this->throwAccountDisabledException($identifier);
-        // }
+            $this->throwAccountDisabledException($identifier);
+        }
        
         return $this->authenticateAndRespond($user, $request, $needsToken);
     }
