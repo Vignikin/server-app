@@ -21,7 +21,7 @@ class CreateTripRequest extends BaseRequest
             'vehicle_type'=>'sometimes|required|exists:zone_types,id',
             'payment_opt'=>'sometimes|required|in:0,1,2',
             'pick_address'=>'required',
-            'drop_address'=>'sometimes|required',
+            // 'drop_address'=>'sometimes|required',
             'drivers'=>'sometimes|required',
             'is_later'=>'sometimes|required|in:1',
             'trip_start_time'=>'sometimes|required|date_format:Y-m-d H:i:s',
