@@ -18,7 +18,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = 'web')
     {
+
         if (Auth::guard($guard)->check()) {
+
             // dd(Auth::guard($guard)->user());
             if (Auth::guard($guard)->user()->hasRole(Role::DISPATCHER)) {
                 return redirect('/dispatch/dashboard');
@@ -26,7 +28,7 @@ class RedirectIfAuthenticated
                 return redirect('/delivery-dispatch/dashboard');
             }
             return redirect('/dashboard');
-        }
+        } 
 
         return $next($request);
     }

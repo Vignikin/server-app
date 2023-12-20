@@ -152,7 +152,7 @@
                            form_data.append("mobile",'{{$user_detail->mobile}}');
                            form_data.append("country_code",'{{Session("dial_code")}}');
                            $.ajax({
-                                    url: 'api/v1/request/adhoc-create-request', 
+                                    url: 'adhoc-create-request', 
                                     type: 'POST',
                                     data: form_data,
                                     dataType: 'html', 

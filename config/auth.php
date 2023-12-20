@@ -126,7 +126,7 @@ return [
             |
     */
 
-    'token_cookie' => 'future_token',
+    'token_cookie' => 'bidding_token',
 
     /*
             |--------------------------------------------------------------------------

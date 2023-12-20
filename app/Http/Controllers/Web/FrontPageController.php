@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Base\Constants\Auth\Role;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Cms\FrontPage;
 use App\Models\User;
@@ -11,7 +12,8 @@ use App\Models\Country;
 use App\Jobs\Notifications\Auth\Registration\ContactusNotification;
 use DB;
 use Auth;
-use Session;
+use Session; 
+
 
 class FrontPageController extends Controller
 {
@@ -1320,6 +1322,14 @@ class FrontPageController extends Controller
     {
         return config('base.cms.upload.web-picture.path');
     }
+     public function web_booking()
+    {
+        // Session::flush(); 
+        if(auth('web')->user())
+        {   
+          return view('web_booking'); 
+        }  
+    }
     public function Saveuser(Request $request)
     { 
 
@@ -1328,18 +1338,26 @@ class FrontPageController extends Controller
             $check_user_exist = User::where('mobile',$request->mobile)->first();
             if($check_user_exist)
             {
-                $user_data = $check_user_exist;
+                $user = $check_user_exist;
             }
             else{
-                $user_data = User::create([
+                $user = User::create([
                 'name'=>$request->name, 
                 'mobile' => $request->mobile 
             ]);
-            }
+            } 
+            
+              // Create Empty Wallet to the user
+            $user->userWallet()->create(['amount_added'=>0]);
 
-            Session::put('user_id', $user_data->id);   
+            $user->attachRole(Role::USER);
+            // Auth::guard('web')->attempt($user);
+            // Auth::guard('web')->attempt(['email' => 'test', 'password' => 'testt'], true);
+
+            auth('web')->login($user, true); 
+
+            Session::put('user_id', $user->id);   
             Session::put('dial_code', $request->dial_code);  
-          
 
             return response()->json(["status"=>"success","message"=>"user added successfully"]); 
         }
