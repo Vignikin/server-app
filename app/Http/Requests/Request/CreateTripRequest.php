@@ -16,8 +16,8 @@ class CreateTripRequest extends BaseRequest
         return [
             'pick_lat'  => 'required',
             'pick_lng'  => 'required',
-            'drop_lat'  =>'sometimes|required',
-            'drop_lng'  =>'sometimes|required',
+            // 'drop_lat'  =>'sometimes|required',
+            // 'drop_lng'  =>'sometimes|required',
             'vehicle_type'=>'sometimes|required|exists:zone_types,id',
             'payment_opt'=>'sometimes|required|in:0,1,2',
             'pick_address'=>'required',
