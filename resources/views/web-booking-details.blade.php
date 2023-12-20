@@ -22,7 +22,7 @@
                 Instruction
             </div>
             <div class="model-input1 data1" style="height: 65px;">
-                <textarea id="model-promo-input" style="height: 100%;width: 100%;border: none;outline: none;"></textarea>
+                <textarea id="model-promo-input-ins" style="height: 100%;width: 100%;border: none;outline: none;"></textarea>
             </div> 
             <div class="promocode"> 
                 <div class="promocode-cancel"> 
@@ -128,17 +128,19 @@
                     &nbsp; <label for="qty">Quantity</label>
 
                     <div class="model-input1 data1 qunatity-input" style="display:none">
-                         <input type="text" id="model-promo-input">
+                         <input type="text" id="model-promo-input-qty">
                     </div>
     
                     </div> 
                 </div> 
                 @endif
-                         <div class="confirm_your_location3 confirm_to_book" style="bottom: 10px;">
+                 
+                <div class="confirm_your_location3 confirm_to_book" onclick="confirm_booking()" style="bottom: 10px;">
 
                 <div class="confirm_button" style="width: 90%;"> 
                     Confirm to Book</div>
-                </div>
+                </div> 
+
                           
                         </div> 
                     </div>
@@ -146,8 +148,8 @@
                 </div>   
                 <script>
 
- $(document).on("click",".confirm_to_book",function(){
-                           var form_data = new FormData($("#eta_calculaion")[0]);
+                function confirm_booking(){ 
+                    var form_data = new FormData($("#eta_calculaion")[0]);
                            form_data.append("vehicle_type",'{{$booking_data[0]->zone_type_id}}'); 
                            form_data.append("mobile",'{{$user_detail->mobile}}');
                            form_data.append("country_code",'{{Session("dial_code")}}');
@@ -155,6 +157,22 @@
                             form_data.append("is_later",1);
                             form_data.append("trip_start_time",'{{date("Y-m-d H:i:s",strtotime($request->date))}}');
                            @endif
+                           @if($transport_type == "delivery")
+                           const goods_types_name = document.querySelector('input[name="goods_types"]:checked');
+                            const selectedValue = goods_types_name.value;
+                            form_data.append("drop_poc_name",$("#model-promo-input-name").val());
+                            form_data.append("drop_poc_mobile",$("#model-promo-input-number").val());
+                            form_data.append("drop_poc_instruction",$("#model-promo-input-ins").val());
+                            if(selectedValue == "qty")
+                            {
+                                form_data.append("goods_type_quantity",$("#model-promo-input-qty").val());
+                            }
+                            else{
+                                form_data.append("goods_type_quantity",selectedValue);
+                            }
+                            
+                            form_data.append("goods_type_id",$("#goods_type").val());
+                            @endif
                            $.ajax({
                                     url: 'adhoc-create-request', 
                                     type: 'POST',
@@ -176,8 +194,9 @@
                                         // Handle errors
                                         console.error('Error:', xhr.responseText);
                                         }
-                                    });  
-                      
-});
+                                    }); 
+
+                } 
+
 </script>
 @endif

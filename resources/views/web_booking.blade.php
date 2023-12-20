@@ -774,7 +774,7 @@ height: 3px;
     width: 100%;
 }
 
-input#model-promo-input {
+input#model-promo-input,input#model-promo-input1 {
     border: none;
     user-select: none !important;
     font-size: 17px;
@@ -1413,7 +1413,7 @@ select#timepicker,.datepicker {
                 </div>
                  <div class="book_now1" style="display: none;">
 
-                <div class="confirm_button book_now_details"> 
+                <div class="confirm_button book-package" onclick="package_booking()"> 
                     Book Now 
                     </div> 
                 </div>
@@ -1599,7 +1599,7 @@ select#timepicker,.datepicker {
                                     for(var i=0;i < response.data.length;i++)
                                     { 
                                         html_data+='<option value="'+response.data[i].id+'">'+response.data[i].package_name+'</option>';
-                                        html_content1 += '<div class="available-vehicle-details package-list package_'+response.data[i].id+'" data-val="'+response.data[i].typesWithPrice.data[0].zone_type_id+'" style="display:none"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].typesWithPrice.data[0].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].typesWithPrice.data[0].name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].typesWithPrice.data[0].currency+''+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                        html_content1 += '<div class="available-vehicle-details package-list package_'+response.data[i].id+'" data-val="'+response.data[i].typesWithPrice.data[0].zone_type_id+'" data-id="'+response.data[i].id+'" data-amount="'+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'" style="display:none"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].typesWithPrice.data[0].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].typesWithPrice.data[0].name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].typesWithPrice.data[0].currency+''+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
                                     }
                                     $(".vehicle-engine.package").html(html_content1); 
                                     }
@@ -1636,8 +1636,9 @@ select#timepicker,.datepicker {
                     
                       $(document).on("click",".date-submit",function(){ 
                         if($(".datepicker").val() != "" && $(".datepicker").val() !== undefined)
-                        {
-                            $(".date-error").hide();
+                        {    
+
+                        $(".date-error").hide();
                         var transport_type = $(".item-name.actv").attr("data-val");
                         var booking_type = $(".available-vehicle-details.actv").attr("data-val");
                         var formattedAddress = $("#formattedAddress").val();
@@ -1654,6 +1655,7 @@ select#timepicker,.datepicker {
                          form_data.append("lng",$("#lng1").val());
                          form_data.append("user_id",'{{Session("user_id")}}');
                          form_data.append("date",$(".datepicker").val()+' '+$("#timepicker").val());
+
                          $(".bar").addClass("actv");  
                                        $.ajax({
                                                 url: 'adhoc-eta', 
@@ -1663,6 +1665,7 @@ select#timepicker,.datepicker {
                                                 processData: false,
                                                 contentType: false, 
                                                 success: function(response) { 
+                                                     $(".content-wrapper3").html('');
                                                       setTimeout(function() {
                                                             $(".content-wrapper").hide();
                                                             $(".detail-engine-data").hide();
@@ -2377,6 +2380,7 @@ function updateAddress(latLng) {
           $(".model-content").hide();
     })
       $(document).on("click",".confirm_button1",function(){ 
+                      $(".model-init").hide();
                       $(".model-init1").show();
                       $(".model-content1").hide();
                       $(".model-content").hide();
@@ -2426,11 +2430,42 @@ function updateAddress(latLng) {
                     $(".from-details.daily_rides").show();
                     $(".from-details.rentals").hide();
                   }, 200);  
-    })
+    }) 
+     function package_booking(){ 
+                    var form_data = new FormData($("#eta_calculaion")[0]);
+                        var transport_type = $(".package-list.actv").attr("data-val");
+                        var rental_package_id = $(".package-list.actv").attr("data-id");
+                        var request_eta_amount = $(".package-list.actv").attr("data-amount"); 
+                           form_data.append("vehicle_type",transport_type); 
+                           form_data.append("rental_package_id",rental_package_id); 
+                           form_data.append("request_eta_amount",request_eta_amount);  
+                           form_data.append("country_code",'{{Session("dial_code")}}');
+                           form_data.append("mobile",'{{Session("mobile")}}');
+                           
+                           $.ajax({
+                                    url: 'adhoc-create-request', 
+                                    type: 'POST',
+                                    data: form_data,
+                                    dataType: 'html', 
+                                    processData: false,
+                                    contentType: false, 
+                                    success: function(response) {
+                                        // Handle the successful response
+                                        console.log('Success:', response);  
+                                                // $(".content-wrapper").hide();
+                                                // $(".detail-engine-data").hide();
+                                                // $(".content-wrapper1").hide();
+                                                // $(".content-wrapper2").hide();
+                                                // $(".content-wrapper3").html(response);
+                                                // $(".content-wrapper3").show(); 
+                                        },
+                                        error: function(xhr, status, error) {
+                                        // Handle errors
+                                        console.error('Error:', xhr.responseText);
+                                        }
+                                    }); 
 
-
-
-    
+                } 
     google.maps.event.addDomListener(window, 'load', initAutocomplete);
     google.maps.event.addDomListener(window, 'load', initAutocomplete1);
     google.maps.event.addDomListener(window, 'load', initMap);

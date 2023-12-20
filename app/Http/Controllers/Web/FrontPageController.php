@@ -1324,7 +1324,8 @@ class FrontPageController extends Controller
     }
      public function web_booking()
     {
-        // Session::flush(); 
+
+        Session::flush(); 
         if(auth('web')->user())
         {   
           return view('web_booking'); 
@@ -1356,6 +1357,7 @@ class FrontPageController extends Controller
 
             auth('web')->login($user, true);  
             Session::put('user_id', $user->id);   
+            Session::put('mobile', $request->mobile);   
             Session::put('dial_code', $request->dial_code);  
 
             return response()->json(["status"=>"success","message"=>"user added successfully"]); 

@@ -146,13 +146,14 @@ class AdhocWebBookingController extends BaseController
     */
     public function createRequest(CreateTripRequest $request)
     {
-     
-        print_r($request->all());
-        exit;
+        // print_r($request->all());
+        // exit;
+
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;
          // Get currency code of Request
         $service_location = $zone_type_detail->zone->serviceLocation;
+
         $currency_code = $service_location->currency_code;
         $currency_symbol = $service_location->currency_symbol;
 
@@ -215,7 +216,7 @@ class AdhocWebBookingController extends BaseController
 
         if($request->input('is_later')&&$request->has('trip_start_time')){
 
-            $request_params['trip_start_time'] = Carbon::parse($request->trip_start_time, $timezone)->setTimezone('UTC')->toDateTimeString();
+            $request_params['trip_start_time'] = Carbon::parse($request->trip_start_time, $user_detail->timezone)->setTimezone('UTC')->toDateTimeString();
     
         }
         if($request->has('rental_package_id') && $request->rental_package_id){
