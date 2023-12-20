@@ -1325,7 +1325,7 @@ class FrontPageController extends Controller
      public function web_booking()
     {
 
-        Session::flush(); 
+        // Session::flush(); 
         if(auth('web')->user())
         {   
           return view('web_booking'); 
