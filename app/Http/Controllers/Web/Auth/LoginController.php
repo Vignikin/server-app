@@ -169,7 +169,7 @@ class LoginController extends ApiController
      */
     protected function loginUserAccount($request, $role, $needsToken = true, array $conditions = [])
     {
-       
+        
 
         if ($request->has('social_id')) {
             return $this->setLoginIdentifier('social_id')
@@ -515,7 +515,6 @@ class LoginController extends ApiController
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
 
-         
         event(new UserLogin($user));
 
         DB::table('oauth_access_tokens')->where('user_id',$user->id)->delete();
