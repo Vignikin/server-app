@@ -62,8 +62,7 @@ class UserEventSubscriber
      */
     protected function updateUserInfo($user)
     {
-        echo "test";
-        exit;
+        
         $user->last_known_ip = ip();
         $user->last_login_at = now();
         $user->save();
