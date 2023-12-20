@@ -147,7 +147,8 @@ class AdhocWebBookingController extends BaseController
     public function createRequest(CreateTripRequest $request)
     {
      
-
+        print_r($request->all());
+        exit;
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;
          // Get currency code of Request

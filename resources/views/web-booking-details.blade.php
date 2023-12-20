@@ -151,6 +151,10 @@
                            form_data.append("vehicle_type",'{{$booking_data[0]->zone_type_id}}'); 
                            form_data.append("mobile",'{{$user_detail->mobile}}');
                            form_data.append("country_code",'{{Session("dial_code")}}');
+                           @if(isset($request->booking_type))
+                            form_data.append("is_later",1);
+                            form_data.append("trip_start_time",'{{date("Y-m-d H:i:s",strtotime($request->date))}}');
+                           @endif
                            $.ajax({
                                     url: 'adhoc-create-request', 
                                     type: 'POST',
