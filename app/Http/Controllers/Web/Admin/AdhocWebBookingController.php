@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Request;
+namespace App\Http\Controllers\Web\Admin;
 
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
@@ -32,6 +32,7 @@ use App\Models\Country;
 use App\Transformers\Requests\PackagesTransformer;
 use App\Models\Master\PackageType; 
 use Illuminate\Support\Facades\Session;
+use Auth;
 
 /**
  * @group User-trips-apis
@@ -71,7 +72,7 @@ class AdhocWebBookingController extends BaseController
             'drop_lng'  =>'sometimes|required',
         ]);
         // print_r($request->all());
-        // exit;
+        // exit; 
 
         $zone_detail = find_zone($request->input('pick_lat'), $request->input('pick_lng'));
         if (!$zone_detail) {
@@ -145,7 +146,7 @@ class AdhocWebBookingController extends BaseController
     */
     public function createRequest(CreateTripRequest $request)
     {
-      
+     
 
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;

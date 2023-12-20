@@ -515,6 +515,7 @@ class LoginController extends ApiController
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
 
+         
         event(new UserLogin($user));
 
         DB::table('oauth_access_tokens')->where('user_id',$user->id)->delete();

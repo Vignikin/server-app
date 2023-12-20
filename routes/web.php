@@ -43,14 +43,8 @@ Route::namespace('Web')->group(function () {
     Route::get('sadad-checkout',function(){
         return view('sadad.checkout');
     });
-       Route::get('/web-booking',function(){
-        // Session::flush();
-          echo $value = Session::get('user_id');
-            echo $value1 = Session::get('dial_code');
-            exit;
-        return view('web_booking');
-    });
-    Route::post('Adduser','FrontPageController@Saveuser');
+     
+    
     Route::get('get-country-data','FrontPageController@country_code');
     Route::get('mercadopago-success','MercadopagoController@success');
     Route::post('flutter-wave','MercadopagoController@flutterWaveSuceess');
@@ -60,11 +54,15 @@ Route::namespace('Web')->group(function () {
     Route::view("success",'success');
     Route::view("failure",'failure');
     Route::view("pending",'pending');
-
+ 
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
- Route::get('/web-booking',function(){
-        // Session::flush(); 
-        return view('web_booking');
-    });
+Route::namespace('Web')->group(function () {
+Route::get('web-booking','FrontPageController@web_booking');
+Route::post('Adduser','FrontPageController@Saveuser');
+});
+// Route::middleware('auth:web')->group(function () {
+
+ 
+// });

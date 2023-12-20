@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Taxi</title>
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
@@ -1159,7 +1160,7 @@ select#timepicker,.datepicker {
                                 <div class="otp-design" method="post">
                                     
                                     <form id="Adduser" >
-                                        @csrf
+                                    @csrf
                                     <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div> 
 
                                     <div class="mobile_no"> Enter Your Mobile Number</div>
@@ -1581,7 +1582,7 @@ select#timepicker,.datepicker {
                         var transport_type = $(this).val();
                         form_data.append("transport_type",transport_type);
                         $.ajax({
-                            url:'api/v1/request/adhoc-list-packages',
+                            url:'adhoc-list-packages',
                             method:'post',
                             data:form_data,
                             dataType:'json',
@@ -1655,7 +1656,7 @@ select#timepicker,.datepicker {
                          form_data.append("date",$(".datepicker").val()+' '+$("#timepicker").val());
                          $(".bar").addClass("actv");  
                                        $.ajax({
-                                                url: 'api/v1/request/adhoc-eta', 
+                                                url: 'adhoc-eta', 
                                                 type: 'POST',
                                                 data: form_data,
                                                 dataType: 'html', 
@@ -1702,7 +1703,7 @@ select#timepicker,.datepicker {
                          form_data.append("user_id",'{{Session("user_id")}}');
 
                                        $.ajax({
-                                                url: 'api/v1/request/adhoc-eta', 
+                                                url: 'adhoc-eta', 
                                                 type: 'POST',
                                                 data: form_data,
                                                 dataType: 'html', 
@@ -2003,7 +2004,7 @@ function updateAddress(latLng) {
   }
   $(document).on("click",".confirm_your_location",function(){
        $("#lat").val($("#confirm_lat").val());
-       $("#lng").val($("#confirm_lng").val());
+       $("#lng").val($("#confirm_lng").val());  
        $("#formattedAddress").val($("#confirm_formattedAddress").val());
        $(".bar").addClass("actv");  
 
@@ -2012,7 +2013,7 @@ function updateAddress(latLng) {
                                  {
                                     var form_data = new FormData($("#eta_calculaion")[0]);
                                        $.ajax({
-                                                url: 'api/v1/request/adhoc-eta', 
+                                                url: 'adhoc-eta', 
                                                 type: 'POST',
                                                 data: form_data,
                                                 dataType: 'json', 
@@ -2086,7 +2087,7 @@ function updateAddress(latLng) {
 
                                     var form_data = new FormData($("#eta_calculaion")[0]);
                                        $.ajax({
-                                                url: 'api/v1/request/adhoc-eta', 
+                                                url: 'adhoc-eta', 
                                                 type: 'POST',
                                                 data: form_data,
                                                 dataType: 'json', 
@@ -2165,11 +2166,12 @@ function updateAddress(latLng) {
         const appVerifier = window.recaptchaVerifier;
         $(".bar").addClass("actv");  
         var this_data = $(this);
-        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then((confirmationResult) => {
+        // firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        // .then((confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
-          window.confirmationResult = confirmationResult; 
+          // window.confirmationResult = confirmationResult; 
+          // console.log(confirmationResult);
            this_data.addClass("actv");  
             $(".otp-design").hide();
             $(".verify-otps").show();
@@ -2181,11 +2183,11 @@ function updateAddress(latLng) {
             $(".opt-text-button-verify").removeClass("actv");
             $("#input-name1").val('');
           // ...
-        }).catch((error) => {
-            $(".otp-error-message").html('OTP Not sent . Please check the Number');
-            $(".otp-error-message").show();
-            $(".bar").removeClass("actv"); 
-        }); 
+        // }).catch((error) => {
+        //     $(".otp-error-message").html('OTP Not sent . Please check the Number');
+        //     $(".otp-error-message").show();
+        //     $(".bar").removeClass("actv"); 
+        // }); 
    }
    // else{
    //       $(".otp-error-message").show();
@@ -2219,12 +2221,16 @@ function updateAddress(latLng) {
     var this_dt = $(this);
      if($("#input-name1").val() != "" && $("#input-name1").val() !== undefined){ 
         var code = $("#input-name1").val(); 
+        var csrfToken = $('meta[name="csrf-token"]').attr('content'); 
         var form_data = new FormData($("#Adduser")[0]);
        
         // confirmationResult.confirm(code).then((result) => { 
             // User signed in successfully. 
                 grecaptcha.reset(window.recaptchaWidgetId);    
                   $.ajax({
+                    headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
                 url: 'Adduser', 
                 type: 'POST',
                 data: form_data,
@@ -2248,8 +2254,7 @@ function updateAddress(latLng) {
                     }
                 }); 
                
-            
-            // ...
+             
             // }).catch((error) => {
             //     console.log("bad verification codesss");
             //     $(".otp-error-message-verify").html('OTP is Invalid');
@@ -2304,7 +2309,7 @@ function updateAddress(latLng) {
              var form_data = new FormData($("#eta_calculaion")[0]);
          form_data.append("promo_code",$("#model-promo-input").val());
          $.ajax({
-                                                url: 'api/v1/request/adhoc-eta', 
+                                                url: 'adhoc-eta', 
                                                 type: 'POST',
                                                 data: form_data,
                                                 dataType: 'json', 

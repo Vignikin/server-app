@@ -95,7 +95,7 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
 });
  
 // Adhoc Web Booking
-Route::prefix('request')->namespace('Request')->group(function () {
+Route::prefix('request')->middleware('auth')->namespace('Request')->group(function () {
 
     Route::post('adhoc-eta','AdhocWebBookingController@eta');
     Route::post('adhoc-create-request','AdhocWebBookingController@createRequest');
