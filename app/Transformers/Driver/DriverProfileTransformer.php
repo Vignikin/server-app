@@ -22,6 +22,7 @@ use App\Transformers\Driver\DriverWalletTransformer;
 use App\Models\Chat;
 use App\Models\Admin\DriverAvailability;
 use App\Models\Request\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class DriverProfileTransformer extends Transformer
@@ -169,8 +170,12 @@ class DriverProfileTransformer extends Transformer
             $query->where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date);
         })->sum('driver_commision');
 
-        $timezone = $user->user->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
 
+        $timezone = $user->user->timezone;
+
+        if($timezone==null){
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
         $updated_current_date =  $current_date->setTimezone($timezone);
 
         $params['total_earnings'] = $total_earnings;
@@ -186,7 +191,7 @@ class DriverProfileTransformer extends Transformer
 
         $params['total_minutes_online'] = $total_minutes_online;
 
-        $lastOnlineRecord = DriverAvailability::where('driver_id',$user->id)->where('is_online', true)
+        $lastOnlineRecord = DriverAvailability::where('driver_id',$user->id)
     ->orderBy('online_at', 'desc')
     ->first();
 
@@ -194,7 +199,24 @@ class DriverProfileTransformer extends Transformer
 
         if($lastOnlineRecord){
 
-            $params['last_online_at'] = Carbon::parse($lastOnlineRecord->online_at)->setTimezone($timezone);
+            if($lastOnlineRecord->is_online){
+
+                $currentDateTime = Carbon::now();
+
+                $targetTime = Carbon::parse($lastOnlineRecord->online_at);
+
+                $differenceInMinutes = $currentDateTime->diffInMinutes($targetTime);
+
+                $params['total_minutes_online'] = $total_minutes_online + $differenceInMinutes;
+
+
+            }
+
+            $last_online_at = Carbon::parse($lastOnlineRecord->online_at)->setTimezone($timezone);
+
+            // Log::info($last_online_at);
+
+             $params['last_online_at'] = $last_online_at->toDateTimeString();
 
         }
 
