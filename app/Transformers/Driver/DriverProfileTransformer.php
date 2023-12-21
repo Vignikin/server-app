@@ -220,7 +220,7 @@ class DriverProfileTransformer extends Transformer
 
             Log::info($last_online_at);
 
-             // $params['last_online_at'] = $last_online_at;
+             $params['last_online_at'] = $last_online_at;
 
         }
 
