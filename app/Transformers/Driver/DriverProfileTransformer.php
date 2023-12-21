@@ -169,8 +169,12 @@ class DriverProfileTransformer extends Transformer
             $query->where('driver_id', $user->id)->where('is_completed', 1)->whereDate('trip_start_time', $current_date);
         })->sum('driver_commision');
 
-        $timezone = $user->user->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
 
+        $timezone = $user->user->timezone;
+
+        if($timezone==null){
+            $timezone = env('SYSTEM_DEFAULT_TIMEZONE');
+        }
         $updated_current_date =  $current_date->setTimezone($timezone);
 
         $params['total_earnings'] = $total_earnings;
