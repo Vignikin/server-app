@@ -1498,7 +1498,7 @@ function updateAddress(latLng) {
                                         $(".bar").removeClass("actv"); 
                                           var stateObj = { data: response.data }; // You can pass any data as the state object
                                           var title = "New Page Title";
-                                          var newUrl = "{{ url('/') }}/new-booking?request_id="+response.data.id+"";
+                                          var newUrl = "{{ url('/') }}/web-booking?request_id="+response.data.id+"";
                                           history.pushState(stateObj, title, newUrl); 
                                           setTimeout(function() {  
                                             $(".content-wrapper3").hide();

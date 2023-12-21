@@ -182,21 +182,25 @@
                                     contentType: false, 
                                     success: function(response) {
                                         // Handle the successful response
-                                        console.log('Success:', response);   
+                                        console.log('Success:', response); 
+                                        var response_data - JSON.parse(response);  
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
-                                          var stateObj = { data: response.data }; // You can pass any data as the state object
+                                          var stateObj = { data: response_data.data }; // You can pass any data as the state object
                                           var title = "New Page Title";
-                                          var newUrl = "{{ url('/') }}/new-booking?request_id="+response.data.id+"";
+                                          var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
                                           history.pushState(stateObj, title, newUrl); 
                                           setTimeout(function() {  
+                                            @if($transport_type == "delivery")
+                                            window.location.reload();
+                                            @endif
                                             $(".content-wrapper3").hide();
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
                                             $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey Ranjith Kumar, Your Booking has Confirmed Successfully.</h5><img src="{{asset("images/taxi.gif")  }}"" id="taxi""><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
-                                           }, 500); 
+                                           }, 2000); 
                                                  setTimeout(function() { 
                                                     $(".waiting_fr_driver").html('Taking more than time.....');
                                                     $(".waiting-for-booking").append('<div class="cancel-booking" style=""><div class="cancel_button">Cancel Booking</div></div>');
