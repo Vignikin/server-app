@@ -190,7 +190,7 @@
                                         $(".bar").removeClass("actv"); 
                                         
                                           setTimeout(function() {  
-                                            @if($transport_type == "delivery")
+                                            @if(isset($request->booking_type))
                                             window.location.reload();
                                             @endif
                                             var stateObj = { data: response_data.data }; // You can pass any data as the state object
