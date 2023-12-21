@@ -117,8 +117,8 @@ class AdhocWebBookingController extends BaseController
             $response = $this->respondSuccess($result);
             $result_data = $response->getData();
             $booking_data = $result_data->data;  
-            $transport_type = $request->transport_type;
-            $user_detail = User::find($request->user_id);  
+            $transport_type = $request->transport_type; 
+            $user_detail = User::find(auth()->user()->id);   
             return view('web-booking-details',compact('booking_data','goods_type','transport_type','user_detail','request'));   
         } 
         return $this->respondSuccess($result);

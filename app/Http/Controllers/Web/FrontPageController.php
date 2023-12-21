@@ -1328,6 +1328,10 @@ class FrontPageController extends Controller
           // Session::flush();  
           return view('web_booking');  
     }
+    public function new_booking()
+    {
+        echo "test";
+    }
     public function Saveuser(Request $request)
     { 
 
