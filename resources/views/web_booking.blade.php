@@ -1481,7 +1481,7 @@ function updateAddress(latLng) {
                            form_data.append("country_code",'{{Session("dial_code")}}');
                            form_data.append("mobile",'{{Session("mobile")}}'); 
                            $(".bar").addClass("actv"); 
-                           $(".content-wrapper").show(); 
+                           
                             
                            $.ajax({
                                     url: 'adhoc-create-request', 
@@ -1492,6 +1492,7 @@ function updateAddress(latLng) {
                                     contentType: false, 
                                     success: function(response) {
                                         // Handle the successful response
+                                        $(".content-wrapper").show(); 
                                         console.log('Success:', response);   
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 

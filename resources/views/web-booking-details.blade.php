@@ -183,18 +183,20 @@
                                     success: function(response) {
                                         // Handle the successful response
                                         console.log('Success:', response); 
+                                        $(".content-wrapper").show(); 
                                         var response_data = JSON.parse(response);  
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
-                                          var stateObj = { data: response_data.data }; // You can pass any data as the state object
-                                          var title = "New Page Title";
-                                          var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
-                                          history.pushState(stateObj, title, newUrl); 
+                                        
                                           setTimeout(function() {  
                                             @if($transport_type == "delivery")
                                             window.location.reload();
                                             @endif
+                                            var stateObj = { data: response_data.data }; // You can pass any data as the state object
+                                            var title = "New Page Title";
+                                            var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
+                                            history.pushState(stateObj, title, newUrl); 
                                             $(".content-wrapper3").hide();
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
