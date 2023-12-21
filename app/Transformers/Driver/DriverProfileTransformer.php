@@ -195,7 +195,7 @@ class DriverProfileTransformer extends Transformer
     ->orderBy('online_at', 'desc')
     ->first();
 
-        $params['cv_last_online_at'] = null;
+        $params['last_online_at'] = null;
 
         if($lastOnlineRecord){
 
@@ -220,7 +220,7 @@ class DriverProfileTransformer extends Transformer
 
             Log::info($last_online_at);
 
-             $params['cv_last_online_at'] = $last_online_at;
+             $params['last_online_at'] = $last_online_at->toDateTimeString();
 
         }
 
