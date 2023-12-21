@@ -183,7 +183,7 @@
                                     success: function(response) {
                                         // Handle the successful response
                                         console.log('Success:', response); 
-                                        var response_data - JSON.parse(response);  
+                                        var response_data = JSON.parse(response);  
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
