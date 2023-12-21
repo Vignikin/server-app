@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Base\Constants\Auth\Role;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Cms\FrontPage;
 use App\Models\User;
+use App\Models\Country;
 use App\Jobs\Notifications\Auth\Registration\ContactusNotification;
 use DB;
 use Auth;
-use Session;
+use Session; 
+
 
 class FrontPageController extends Controller
 {
@@ -64,6 +67,20 @@ class FrontPageController extends Controller
         $p=Storage::disk(env('FILESYSTEM_DRIVER'))->url(file_path($this->uploadPath(),''));
         //return view('admin.layouts.web_header',compact('data','p'));
         return view ('webfront.index',compact('data','p'));   
+    }
+    public function country_code(Request $request)
+    {
+        $check_data_exist = Country::where('code',$request->countryCode)->first();
+        if($check_data_exist)
+        {
+            $flag = $check_data_exist->flag;
+             return response()->json(['status'=>'success','flag'=>$check_data_exist,'image'=>$flag]);
+        }
+        else{
+            $flag = "IN.png";
+            return response()->json(['status'=>'error','flag'=>$flag]);
+        }
+        
     }
     public function driverp()
     {
@@ -949,7 +966,7 @@ class FrontPageController extends Controller
             $message = trans('succes_messages.you_are_not_authorised');
 
             return redirect()->back()->with('warning', $message);
-           }
+         }
     
          $data=FrontPage::first();
 
@@ -1300,12 +1317,51 @@ class FrontPageController extends Controller
          $sub_menu = 'cms_frontpage';
          $message="Datas Stored Successfully";
          return redirect()->back()->with('success', $message);
-    }
-
-    
+    } 
     public function uploadPath()
     {
         return config('base.cms.upload.web-picture.path');
+    }
+     public function web_booking()
+    {
+
+          // Session::flush();  
+          return view('web_booking');  
+    }
+    public function Saveuser(Request $request)
+    { 
+
+        if($request->mobile)
+        { 
+            $check_user_exist = User::where('mobile',$request->mobile)->first();
+            $country_id =  Country::where('dial_code', $request->input('dial_code'))->pluck('id')->first(); 
+            if($check_user_exist)
+            {
+                $user = $check_user_exist;
+            }
+            else{
+                $user = User::create([
+                'name'=>$request->name, 
+                'mobile' => $request->mobile,
+                'country' => $country_id
+            ]);
+            }  
+            
+            // Create Empty Wallet to the user
+            $user->userWallet()->create(['amount_added'=>0]);
+
+            $user->attachRole(Role::USER); 
+
+            auth('web')->login($user, true);  
+            Session::put('user_id', $user->id);   
+            Session::put('mobile', $request->mobile);   
+            Session::put('dial_code', $request->dial_code);  
+
+            return response()->json(["status"=>"success","message"=>"user added successfully"]); 
+        }
+        else{
+             return response()->json(["status"=>"error","message"=>"something went wrong"]); 
+        }
     }
      
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Request;
+namespace App\Http\Controllers\Web\Admin;
 
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
@@ -8,6 +8,7 @@ use App\Jobs\NotifyViaMqtt;
 use App\Models\Admin\Driver;
 use App\Jobs\NotifyViaSocket;
 use App\Models\Admin\ZoneType;
+use App\Models\Master\GoodsType;
 use App\Models\Request\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Request\RequestMeta;
@@ -25,11 +26,13 @@ use App\Jobs\Notifications\SendPushNotification;
 use Illuminate\Http\Request as ValidatorRequest;
 use App\Helpers\Rides\FetchDriversFromFirebaseHelpers;
 use App\Transformers\User\EtaTransformer;
+use Illuminate\Http\Request as Httprequest;
 use App\Models\User;
 use App\Models\Country;
 use App\Transformers\Requests\PackagesTransformer;
-use App\Models\Master\PackageType;
-
+use App\Models\Master\PackageType; 
+use Illuminate\Support\Facades\Session;
+use Auth;
 
 /**
  * @group User-trips-apis
@@ -68,6 +71,8 @@ class AdhocWebBookingController extends BaseController
             'drop_lat'  =>'sometimes|required',
             'drop_lng'  =>'sometimes|required',
         ]);
+        // print_r($request->all());
+        // exit; 
 
         $zone_detail = find_zone($request->input('pick_lat'), $request->input('pick_lng'));
         if (!$zone_detail) {
@@ -106,7 +111,16 @@ class AdhocWebBookingController extends BaseController
         }
 
         $result = fractal($type, new EtaTransformer);
-
+        if(isset($request->html_type))
+        {  
+            $goods_type = GoodsType::where('active',1)->get();  
+            $response = $this->respondSuccess($result);
+            $result_data = $response->getData();
+            $booking_data = $result_data->data;  
+            $transport_type = $request->transport_type;
+            $user_detail = User::find($request->user_id);  
+            return view('web-booking-details',compact('booking_data','goods_type','transport_type','user_detail','request'));   
+        } 
         return $this->respondSuccess($result);
 
     }
@@ -132,11 +146,14 @@ class AdhocWebBookingController extends BaseController
     */
     public function createRequest(CreateTripRequest $request)
     {
+        // print_r($request->all());
+        // exit;
 
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;
          // Get currency code of Request
         $service_location = $zone_type_detail->zone->serviceLocation;
+
         $currency_code = $service_location->currency_code;
         $currency_symbol = $service_location->currency_symbol;
 
@@ -147,22 +164,24 @@ class AdhocWebBookingController extends BaseController
         // fetch unit from zone
         $unit = $zone_type_detail->zone->unit;
 
-        $user_detail = User::belongsTorole('user')->where('mobile', $mobile)->first();
+        $user_detail = User::belongsTorole('user')->where('mobile', $request->mobile)->first();
 
-        $country_id =  Country::where('dial_code', $request->input('country_code'))->pluck('id')->first();
+        $country_id =  Country::where('dial_code', $request->input('country_code'))->pluck('id')->first(); 
 
         if(!$user_detail){
 
             $user_detail = User::create([
                 'country'=>$country_id,
                 'refferal_code'=>str_random(6),
-                'mobile' => $mobile,
+                'mobile' => $request->mobile,
                 'timezone'=>$service_location->timezone
             ]);
         }
 
         $user_detail->timezone = $service_location->timezone;
         $user_detail->save();
+        // print_r($user_detail);
+        // exit;
 
         // Get last request's request_number
         $request_number = $this->request->orderBy('created_at', 'DESC')->pluck('request_number')->first();
@@ -199,7 +218,7 @@ class AdhocWebBookingController extends BaseController
 
         if($request->input('is_later')&&$request->has('trip_start_time')){
 
-            $request_params['trip_start_time'] = Carbon::parse($request->trip_start_time, $timezone)->setTimezone('UTC')->toDateTimeString();
+            $request_params['trip_start_time'] = Carbon::parse($request->trip_start_time, $user_detail->timezone)->setTimezone('UTC')->toDateTimeString();
     
         }
         if($request->has('rental_package_id') && $request->rental_package_id){
@@ -225,7 +244,7 @@ class AdhocWebBookingController extends BaseController
             foreach (json_decode($request->stops) as $key => $stop) {
                 $request_detail->requestStops()->create([
                 'address'=>$stop->address,
-                'latitude'=>$stop->latitude,
+                'latitude'=>$stop->latitude, 
                 'longitude'=>$stop->longitude,
                 'order'=>$stop->order]);
 
@@ -244,16 +263,20 @@ class AdhocWebBookingController extends BaseController
             'drop_poc_name'=>$request->drop_poc_name,
             'drop_poc_mobile'=>$request->drop_poc_mobile];
         // store request place details
-        $request_detail->requestPlace()->create($request_place_params);
+        $request_detail->requestPlace()->create($request_place_params);  
 
         // Add Request detail to firebase database
          $this->database->getReference('requests/'.$request_detail->id)->update(['request_id'=>$request_detail->id,'request_number'=>$request_detail->request_number,'service_location_id'=>$service_location->id,'user_id'=>$request_detail->user_id,'pick_address'=>$request->pick_address,'active'=>1,'date'=>$request_detail->converted_created_at,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
+        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+
          if($request->is_later){
+
 
             goto no_drivers_available;
          }
-        $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
+
+        
 
 
         if ($request->has('is_bid_ride') && $request->input('is_bid_ride')==1) {
@@ -281,7 +304,7 @@ class AdhocWebBookingController extends BaseController
     * @bodyParam pick_lng double required pikup lng of the user
     *
     */
-    public function listPackages(Request $request){
+    public function listPackages(Httprequest $request){
 
         $request->validate([
             'pick_lat'  => 'required',
@@ -290,6 +313,7 @@ class AdhocWebBookingController extends BaseController
 
         
         $type = PackageType::where('transport_type',$request->transport_type)->orWhere('transport_type', 'both')->active()->get();
+       
 
         $result = fractal($type, new PackagesTransformer);
 

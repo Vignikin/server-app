@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,15 +43,26 @@ Route::namespace('Web')->group(function () {
     Route::get('sadad-checkout',function(){
         return view('sadad.checkout');
     });
+     
     
+    Route::get('get-country-data','FrontPageController@country_code');
     Route::get('mercadopago-success','MercadopagoController@success');
     Route::post('flutter-wave','MercadopagoController@flutterWaveSuceess');
+    
 
 
     Route::view("success",'success');
     Route::view("failure",'failure');
     Route::view("pending",'pending');
-
+ 
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
+Route::namespace('Web')->group(function () {
+Route::get('web-booking','FrontPageController@web_booking');
+Route::post('Adduser','FrontPageController@Saveuser');
+});
+// Route::middleware('auth:web')->group(function () {
+
+ 
+// });

@@ -302,6 +302,7 @@ class ImageUploader implements ImageUploaderContract
         $this->validateFile();
 
         $config = $this->config('types.upload.images');
+       
 
         $this->setDefaultResize(data_get($config, 'image.store_resolution'));
 

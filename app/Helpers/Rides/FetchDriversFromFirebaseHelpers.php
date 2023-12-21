@@ -41,6 +41,7 @@ trait FetchDriversFromFirebaseHelpers
              
              return null;   
         }
+       
 
         $pick_lat = $request_detail->pick_lat;
         $pick_lng = $request_detail->pick_lng;
@@ -72,6 +73,8 @@ trait FetchDriversFromFirebaseHelpers
         $conditional_timestamp = Carbon::now()->subMinutes(7)->timestamp;
 
         $vehicle_type = $type_id;
+
+
 
         $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
         

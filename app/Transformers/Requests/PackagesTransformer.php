@@ -54,15 +54,17 @@ class PackagesTransformer extends Transformer
 
 
         // userWallet
-        if(!auth()->user()->hasRole(Role::DRIVER))
-        {
+        if(auth()->user()){
+            if(!auth()->user()->hasRole(Role::DRIVER))
+            {
 
-        $user = auth()->user();
+            $user = auth()->user();
 
-        // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
+            // $user_balance = $user->userWallet ? $user->userWallet->amount_balance : 0;
 
-        $user_balance =  $user->userWallet->amount_balance;
-        }
+            $user_balance =  $user->userWallet->amount_balance;
+            }
+        } 
 
 
         $params['user_wallet_balance'] = $user_balance;
