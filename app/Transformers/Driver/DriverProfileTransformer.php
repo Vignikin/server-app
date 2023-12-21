@@ -22,6 +22,7 @@ use App\Transformers\Driver\DriverWalletTransformer;
 use App\Models\Chat;
 use App\Models\Admin\DriverAvailability;
 use App\Models\Request\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class DriverProfileTransformer extends Transformer
@@ -197,6 +198,22 @@ class DriverProfileTransformer extends Transformer
         $params['last_online_at'] = null;
 
         if($lastOnlineRecord){
+
+            if($lastOnlineRecord->is_online){
+
+                $currentDateTime = Carbon::now();
+
+                $targetTime = Carbon::parse($lastOnlineRecord->online_at);
+
+                $differenceInMinutes = $currentDateTime->diffInMinutes($targetTime);
+
+                $params['total_minutes_online'] = $total_minutes_online + $differenceInMinutes;
+
+
+            }
+
+            Log::info("timezone");
+            Log::info($timezone);
 
             $params['last_online_at'] = Carbon::parse($lastOnlineRecord->online_at)->setTimezone($timezone);
 
