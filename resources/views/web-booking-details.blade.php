@@ -69,6 +69,10 @@
                <div class="price-data">Ditstance Price</div>
                <div class="price-data-value">{{$booking_data[0]->currency}}{{number_format($booking_data[0]->distance_price,2,'.',',')}}</div>
             </div>
+             <div class="price-details1">
+               <div class="price-data">Time Price</div>
+               <div class="price-data-value" >{{$booking_data[0]->currency}}{{number_format($booking_data[0]->time_price,2,'.',',')}}</div>
+            </div>
             <div class="price-details3">
                <div class="price-data">service tax</div>
                <div class="price-data-value">{{$booking_data[0]->currency}}{{number_format($booking_data[0]->tax_amount,2,'.',',')}}</div>
@@ -83,6 +87,7 @@
                   @endif
                </div>
             </div>
+
             <div class="price-details5">
                <div class="price-data">Total Price</div>
                <div class="price-data-value">{{$booking_data[0]->currency}}{{number_format($booking_data[0]->total,2,'.',',')}}</div>

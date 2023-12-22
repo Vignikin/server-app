@@ -282,30 +282,37 @@
          <div class="detail-engine-data">
             <div class="detail-engine">
                <div class="nav-list">
+
+                  @if($modules == "both" || $modules == "taxi")
                   <div class="nav-tab">
                      <a class="item-name daily-ride actv" data-val="taxi">TAXI</a>
                      <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
                   </div>
+                  @endif
+                  @if($modules == "both" || $modules == "delivery")
                   <div class="nav-tab">
                      <a class="item-name out_station" data-val="delivery">DELIVERY</a>
                      <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
                   </div>
+                  @endif
+                  @if($show_rental_ride_feature == 1)
                   <div class="nav-tab">
                      <a class="item-name rental" data-val="rentals">RENTALS</a>
                      <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
                   </div>
+                  @endif
                </div>
                <div class="book-details">
                   <div class="from-container" >
                      <div class="from-details" >
                         <div class="from text">FROM</div>
-                        <div class="from location pickup_address"></div>
+                        <div class="from location text placeholder pickup_address">Search Your pick up location</div>
                      </div>
                   </div>
                   <div class="to-container">
                      <div class="from-details daily_rides">
                         <div class="from text">TO</div>
-                        <div class="from location text placeholder search_pickup_location">Search Your pick up location</div>
+                        <div class="from location text placeholder search_pickup_location">Search Your Drop location</div>
                      </div>
                      <!--   <div class="from-details out_station" style="display: none;">
                         <div class="from text">TO</div>
@@ -861,7 +868,7 @@
                                     initAutocomplete1();
                                 }
                             })
-         function default_image(){
+         function default_image(){ 
             var countryCode = 'in';
              $.ajax({
                                     url: 'get-country-data?countryCode='+countryCode+'', 
@@ -876,6 +883,7 @@
                                         $(".dial_code").html(response.flag.dial_code); 
                                         $("#dial_code").val(response.flag.dial_code);  
                                          $(".img_src").html('<img id="flag" alt="Superbidding Logo" src="'+response.flag.flag+'">');
+                                    
                                      }
                                      else{
                                          $("#flag").attr("src", 'url({{asset("images/country/flags/IN.png")  }})');
@@ -944,6 +952,7 @@
                               $("#lng1").val(longitude);
                               $("#formattedAddress1").val(results[0].formatted_address);
                               $(".pickup_address").html(results[0].formatted_address);
+                              $(".pickup_address").addClass("actv");
                                 var mapOptions = {
                                       center: { lat: latitude, lng: longitude }, // Example: San Francisco, CA
                                       zoom: 18,
@@ -1126,11 +1135,13 @@
                                                         var distance = response.data[i].distance;
                                                         var base_distance = response.data[i].base_distance; 
                                                         var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
-                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+response.data[i].total.toFixed(2)+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+response.data[i].total.toFixed(2)+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        // <div class="time-arrival">2 min</div>
                                                     }
                                                     $(".daily_ride_vehicle").html(html_content) 
                                                       setTimeout(function() {
                                                         $(".pickup_address").html($("#confirm_formattedAddress1").val());
+                                                        $(".pickup_address").addClass("actv");
                                                         $(".content-wrapper").show();
                                                         $(".detail-engine-data").show();
                                                         $(".content-wrapper1").hide();
@@ -1164,6 +1175,7 @@
                                  else{
                                       setTimeout(function() {
                                                         $(".pickup_address").html($("#confirm_formattedAddress1").val());
+                                                        $(".pickup_address").addClass("actv");
                                                             $(".content-wrapper").show();
                                                             $(".detail-engine-data").show();
                                                             $(".content-wrapper1").hide();
@@ -1350,7 +1362,8 @@
                                                     {
                                                         var distance = response.data[i].distance;
                                                         var base_distance = response.data[i].base_distance; 
-                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        // <div class="time-arrival">2 min</div>
                                                     }
                                                     $(".daily_ride_vehicle").html(html_content)
                                                     // console.log(response);

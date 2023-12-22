@@ -1325,6 +1325,8 @@ class FrontPageController extends Controller
     }
      public function web_booking()
     {
+        $modules = get_settings('enable_modules_for_applications'); 
+        $show_rental_ride_feature = get_settings('show_rental_ride_feature'); 
         $user_name = 'User';
         if(auth('web')->user())
         { 
@@ -1334,7 +1336,7 @@ class FrontPageController extends Controller
             //     {
             //         if($get_request_data->is_completed == 0 && $get_request_data->is_cancelled == 0)
             //         {
-                        
+
             //         }
             //     }
             // }
@@ -1343,7 +1345,7 @@ class FrontPageController extends Controller
 
      
           // Session::flush();  
-          return view('web_booking',compact('user_name'));  
+          return view('web_booking',compact('user_name','modules','show_rental_ride_feature'));  
     }
     public function new_booking()
     {
