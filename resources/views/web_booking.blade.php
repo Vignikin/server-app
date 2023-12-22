@@ -9,7 +9,7 @@
       <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
       <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
       <!-- Add this line to your HTML -->
-      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
       <head>
