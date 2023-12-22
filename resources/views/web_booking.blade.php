@@ -402,7 +402,7 @@
                   console.log("accepted"); 
                   $(".cancel-booking").html('');
                   $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
-                  $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
+                  $(".waiting_fr_driver").html('<div class="booking-accepted">owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.</div>');
                }
             }
             if (data.hasOwnProperty("is_cancel")) { 
