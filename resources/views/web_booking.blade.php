@@ -364,6 +364,7 @@
          <div id="marker-position"></div>
          <div id="address"></div> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-auth.min.js"></script>
       <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
          async defer></script> 
@@ -387,10 +388,10 @@
          };
          // Initialize Firebase
          firebase.initializeApp(firebaseConfig);   
-         
+         var database = firebase.database();
          function Listenrequestdata(request_id){ 
-            var dataref = firebase.database().ref('requests/'+request_id);
-             starCountRef.on('value', (snapshot) => {
+            var dataref = database.ref('requests/'+request_id);
+             dataref.on('value', (snapshot) => {
             const data = snapshot.val();
             console.log(data);
             });
