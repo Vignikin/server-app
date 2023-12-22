@@ -388,8 +388,7 @@
          // Initialize Firebase
          firebase.initializeApp(firebaseConfig);   
          
-         function Listenrequestdata(request_id){
-            alert("test");
+         function Listenrequestdata(request_id){ 
             var dataref = firebase.database().ref('requests/'+request_id);
              starCountRef.on('value', (snapshot) => {
             const data = snapshot.val();
@@ -1406,7 +1405,7 @@
                                           var title = "New Page Title";
                                           var newUrl = "{{ url('/') }}/web-booking?request_id="+response.data.id+"";
                                           history.pushState(stateObj, title, newUrl); 
-                                          Listenrequestdata(response.data.id); 
+                                          Listenrequestdata(response.data.id);
                                           setTimeout(function() {  
                                             $(".content-wrapper3").hide();
                                             $(".detail-engine-data").hide();
