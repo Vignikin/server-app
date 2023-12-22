@@ -1,476 +1,373 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Taxi</title>
-    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
-    <!-- Add this line to your HTML -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <head> 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-FQUi9C-cnnnhGm9QtgjHRnUPDcfBiPg&libraries=places"></script>
-    
-    </head>
-    <body> 
-        <div class="load-bar"><div class="bar"></div> </div>
-        <div class="content-initiate">
-            <div class="model-init1" style="display: none;">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Taxi</title>
+      <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+      <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
+      <!-- Add this line to your HTML -->
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <head>
+         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-FQUi9C-cnnnhGm9QtgjHRnUPDcfBiPg&libraries=places"></script>
+   </head>
+   <body>
+      <div class="load-bar">
+         <div class="bar"></div>
+      </div>
+      <div class="content-initiate">
+         <div class="model-init1" style="display: none;">
             <div class="model-wrapper">
-             <div class="model-content" style="display: none;">
-            <div class="model-head">
-                Enter Promo code 
+               <div class="model-content" style="display: none;">
+                  <div class="model-head">
+                     Enter Promo code 
+                  </div>
+                  <div class="model-input">
+                     <input type="text" id="model-promo-input">
+                     <div class="promo-code-error"></div>
+                  </div>
+                  <div class="promocode">
+                     <div class="promocode-cancel"> 
+                        Cancel
+                     </div>
+                     <div class="promocode-submit">  
+                        Submit
+                     </div>
+                  </div>
+               </div>
+               <div class="model-content2" style="display: none;">
+                  <div class="model-head">
+                     Add Date and time
+                  </div>
+                  <div class="model-input">
+                     <input type="date" id="model-promo-input" class="datepicker" name="date" required>
+                     <div class="promo-code-error"></div>
+                  </div>
+                  <br>
+                  <div class="model-input">
+                     <select id="timepicker" class="select-rt ola-select" name="time" required>
+                        <option value="12:00 AM">12:00 AM</option>
+                        <option value="12:15 AM">12:15 AM</option>
+                        <option value="12:30 AM">12:30 AM</option>
+                        <option value="12:45 AM">12:45 AM</option>
+                        <option value="1:00 AM">1:00 AM</option>
+                        <option value="1:15 AM">1:15 AM</option>
+                        <option value="1:30 AM">1:30 AM</option>
+                        <option value="1:45 AM">1:45 AM</option>
+                        <option value="2:00 AM">2:00 AM</option>
+                        <option value="2:15 AM">2:15 AM</option>
+                        <option value="2:30 AM">2:30 AM</option>
+                        <option value="2:45 AM">2:45 AM</option>
+                        <option value="3:00 AM">3:00 AM</option>
+                        <option value="3:15 AM">3:15 AM</option>
+                        <option value="3:30 AM">3:30 AM</option>
+                        <option value="3:45 AM">3:45 AM</option>
+                        <option value="4:00 AM">4:00 AM</option>
+                        <option value="4:15 AM">4:15 AM</option>
+                        <option value="4:30 AM">4:30 AM</option>
+                        <option value="4:45 AM">4:45 AM</option>
+                        <option value="5:00 AM">5:00 AM</option>
+                        <option value="5:15 AM">5:15 AM</option>
+                        <option value="5:30 AM">5:30 AM</option>
+                        <option value="5:45 AM">5:45 AM</option>
+                        <option value="6:00 AM">6:00 AM</option>
+                        <option value="6:15 AM">6:15 AM</option>
+                        <option value="6:30 AM">6:30 AM</option>
+                        <option value="6:45 AM">6:45 AM</option>
+                        <option value="7:00 AM">7:00 AM</option>
+                        <option value="7:15 AM">7:15 AM</option>
+                        <option value="7:30 AM">7:30 AM</option>
+                        <option value="7:45 AM">7:45 AM</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="8:15 AM">8:15 AM</option>
+                        <option value="8:30 AM">8:30 AM</option>
+                        <option value="8:45 AM">8:45 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="9:15 AM">9:15 AM</option>
+                        <option value="9:30 AM">9:30 AM</option>
+                        <option value="9:45 AM">9:45 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="10:15 AM">10:15 AM</option>
+                        <option value="10:30 AM">10:30 AM</option>
+                        <option value="10:45 AM">10:45 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="11:15 AM">11:15 AM</option>
+                        <option value="11:30 AM">11:30 AM</option>
+                        <option value="11:45 AM">11:45 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="1:15 PM">1:15 PM</option>
+                        <option value="1:30 PM">1:30 PM</option>
+                        <option value="1:45 PM">1:45 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="2:15 PM">2:15 PM</option>
+                        <option value="2:30 PM">2:30 PM</option>
+                        <option value="2:45 PM">2:45 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="3:15 PM">1:15 PM</option>
+                        <option value="3:30 PM">1:30 PM</option>
+                        <option value="3:45 PM">1:45 PM</option>
+                        <option value="4:00 PM">2:00 PM</option>
+                        <option value="4:15 PM">1:15 PM</option>
+                        <option value="4:30 PM">1:30 PM</option>
+                        <option value="4:45 PM">1:45 PM</option>
+                        <option value="5:00 PM">2:00 PM</option>
+                        <option value="5:15 PM">5:15 PM</option>
+                        <option value="5:30 PM">5:30 PM</option>
+                        <option value="5:45 PM">5:45 PM</option>
+                        <option value="6:00 PM">6:00 PM</option>
+                        <option value="6:15 PM">6:15 PM</option>
+                        <option value="6:30 PM">6:30 PM</option>
+                        <option value="6:45 PM">6:45 PM</option>
+                        <option value="7:00 PM">7:00 PM</option>
+                        <option value="7:15 PM">7:15 PM</option>
+                        <option value="7:30 PM">7:30 PM</option>
+                        <option value="7:45 PM">7:45 PM</option>
+                        <option value="8:00 PM">8:00 PM</option>
+                        <option value="8:15 PM">8:15 PM</option>
+                        <option value="8:30 PM">8:30 PM</option>
+                        <option value="8:45 PM">8:45 PM</option>
+                        <option value="9:00 PM">9:00 PM</option>
+                        <option value="9:15 PM">9:15 PM</option>
+                        <option value="9:30 PM">9:30 PM</option>
+                        <option value="9:45 PM">9:45 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
+                        <option value="10:15 PM">10:15 PM</option>
+                        <option value="10:30 PM">10:30 PM</option>
+                        <option value="10:45 PM">10:45 PM</option>
+                        <option value="11:00 PM">11:00 PM</option>
+                        <option value="11:15 PM">11:15 PM</option>
+                        <option value="11:30 PM">11:30 PM</option>
+                        <option value="11:45 PM">11:45 PM</option>
+                        <dom-repeat style="display: none;">
+                           <template is="dom-repeat"></template>
+                        </dom-repeat>
+                     </select>
+                     <div class="date-error"style=" color: red;display:none"> Please select date</div>
+                  </div>
+                  <div class="promocode">
+                     <div class="promocode-cancel"> 
+                        Cancel
+                     </div>
+                     <div class="date-submit">  
+                        Submit
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="model-input">
-                <input type="text" id="model-promo-input">
-                <div class="promo-code-error"></div>
-            </div>
-            <div class="promocode"> 
-                    <div class="promocode-cancel"> 
-                    Cancel</div>
-                    <div class="promocode-submit">  
-                    Submit</div></div>  
-            </div>  
-            <div class="model-content2" style="display: none;">
-            <div class="model-head">
-                Add Date and time
-            </div>
-            <div class="model-input">
-                <input type="date" id="model-promo-input" class="datepicker" name="date" required>
-                <div class="promo-code-error"></div>
-            </div>
-            <br>
-            <div class="model-input">
-                <select id="timepicker" class="select-rt ola-select" name="time" required>
-                                    
-                                        <option value="12:00 AM">12:00 AM</option>
-                                        <option value="12:15 AM">12:15 AM</option>
-                                        <option value="12:30 AM">12:30 AM</option>
-                                        <option value="12:45 AM">12:45 AM</option>
-                                        <option value="1:00 AM">1:00 AM</option>
-                                        <option value="1:15 AM">1:15 AM</option>
-                                        <option value="1:30 AM">1:30 AM</option>
-                                        <option value="1:45 AM">1:45 AM</option>
-                                        <option value="2:00 AM">2:00 AM</option>
-                                        <option value="2:15 AM">2:15 AM</option>
-                                        <option value="2:30 AM">2:30 AM</option>
-                                        <option value="2:45 AM">2:45 AM</option>
-                                        <option value="3:00 AM">3:00 AM</option>
-                                        <option value="3:15 AM">3:15 AM</option>
-                                        <option value="3:30 AM">3:30 AM</option>
-                                        <option value="3:45 AM">3:45 AM</option>
-                                        <option value="4:00 AM">4:00 AM</option>
-                                        <option value="4:15 AM">4:15 AM</option>
-                                        <option value="4:30 AM">4:30 AM</option>
-                                        <option value="4:45 AM">4:45 AM</option>
-                                        <option value="5:00 AM">5:00 AM</option>
-                                        <option value="5:15 AM">5:15 AM</option>
-                                        <option value="5:30 AM">5:30 AM</option>
-                                        <option value="5:45 AM">5:45 AM</option>
-                                        <option value="6:00 AM">6:00 AM</option>
-                                        <option value="6:15 AM">6:15 AM</option>
-                                        <option value="6:30 AM">6:30 AM</option>
-                                        <option value="6:45 AM">6:45 AM</option>
-                                        <option value="7:00 AM">7:00 AM</option>
-                                        <option value="7:15 AM">7:15 AM</option>
-                                        <option value="7:30 AM">7:30 AM</option>
-                                        <option value="7:45 AM">7:45 AM</option>
-                                        <option value="8:00 AM">8:00 AM</option>
-                                        <option value="8:15 AM">8:15 AM</option>
-                                        <option value="8:30 AM">8:30 AM</option>
-                                        <option value="8:45 AM">8:45 AM</option>
-                                        <option value="9:00 AM">9:00 AM</option>
-                                        <option value="9:15 AM">9:15 AM</option>
-                                        <option value="9:30 AM">9:30 AM</option>
-                                        <option value="9:45 AM">9:45 AM</option>
-                                        <option value="10:00 AM">10:00 AM</option>
-                                        <option value="10:15 AM">10:15 AM</option>
-                                        <option value="10:30 AM">10:30 AM</option>
-                                        <option value="10:45 AM">10:45 AM</option>
-                                        <option value="11:00 AM">11:00 AM</option>
-                                        <option value="11:15 AM">11:15 AM</option>
-                                        <option value="11:30 AM">11:30 AM</option>
-                                        <option value="11:45 AM">11:45 AM</option>
-                                        <option value="12:00 PM">12:00 PM</option> 
-                                        <option value="1:00 PM">1:00 PM</option> 
-                                        <option value="1:15 PM">1:15 PM</option> 
-                                        <option value="1:30 PM">1:30 PM</option> 
-                                        <option value="1:45 PM">1:45 PM</option> 
-                                        <option value="2:00 PM">2:00 PM</option>
-                                        <option value="2:15 PM">2:15 PM</option> 
-                                        <option value="2:30 PM">2:30 PM</option> 
-                                        <option value="2:45 PM">2:45 PM</option> 
-                                        <option value="3:00 PM">3:00 PM</option>
-                                        <option value="3:15 PM">1:15 PM</option> 
-                                        <option value="3:30 PM">1:30 PM</option> 
-                                        <option value="3:45 PM">1:45 PM</option> 
-                                        <option value="4:00 PM">2:00 PM</option>
-                                        <option value="4:15 PM">1:15 PM</option> 
-                                        <option value="4:30 PM">1:30 PM</option> 
-                                        <option value="4:45 PM">1:45 PM</option> 
-                                        <option value="5:00 PM">2:00 PM</option>
-                                        <option value="5:15 PM">5:15 PM</option> 
-                                        <option value="5:30 PM">5:30 PM</option> 
-                                        <option value="5:45 PM">5:45 PM</option> 
-                                        <option value="6:00 PM">6:00 PM</option>
-                                        <option value="6:15 PM">6:15 PM</option> 
-                                        <option value="6:30 PM">6:30 PM</option> 
-                                        <option value="6:45 PM">6:45 PM</option>  
-                                        <option value="7:00 PM">7:00 PM</option>
-                                    
-                                        <option value="7:15 PM">7:15 PM</option>
-                                    
-                                        <option value="7:30 PM">7:30 PM</option>
-                                    
-                                        <option value="7:45 PM">7:45 PM</option>
-                                    
-                                        <option value="8:00 PM">8:00 PM</option>
-                                    
-                                        <option value="8:15 PM">8:15 PM</option>
-                                    
-                                        <option value="8:30 PM">8:30 PM</option>
-                                    
-                                        <option value="8:45 PM">8:45 PM</option>
-                                    
-                                        <option value="9:00 PM">9:00 PM</option>
-                                    
-                                        <option value="9:15 PM">9:15 PM</option>
-                                    
-                                        <option value="9:30 PM">9:30 PM</option>
-                                    
-                                        <option value="9:45 PM">9:45 PM</option>
-                                    
-                                        <option value="10:00 PM">10:00 PM</option>
-                                    
-                                        <option value="10:15 PM">10:15 PM</option>
-                                    
-                                        <option value="10:30 PM">10:30 PM</option>
-                                    
-                                        <option value="10:45 PM">10:45 PM</option>
-                                    
-                                        <option value="11:00 PM">11:00 PM</option>
-                                    
-                                        <option value="11:15 PM">11:15 PM</option>
-                                    
-                                        <option value="11:30 PM">11:30 PM</option>
-                                    
-                                        <option value="11:45 PM">11:45 PM</option>
-                                    <dom-repeat style="display: none;"><template is="dom-repeat"></template></dom-repeat>
-                                </select>
-                                <div class="date-error"style=" color: red;display:none"> Please select date</div>
-            </div>
-            <div class="promocode"> 
-                    <div class="promocode-cancel"> 
-                    Cancel</div>
-                    <div class="date-submit">  
-                    Submit</div></div>  
-            </div>  
-                    </div>
-                    </div>
-                @if(!Session('user_id'))
-                        <div class="login-page"> 
-                            <div class="otp-number">
-                                <div class="verify-otps" style="display:none">
-                                    <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div>
-                                     <div class="back-to-home"><i class="fa fa-arrow-left"></i></div> 
-
-                                    <div class="mobile_no">Verify OTP</div>
-                                    <div class="otp_content">Enter the OTP sent to your mobile <span class="entered-no">9566754418</span></div>
-                                    
-                                    <div class="intel-input" style="margin-top: 16px;"> 
-                                        <input type="text" id="input-name1"  style="/* height: 100%; */" placeholder="Enter 4-digit OTP"> 
-                                        <div class="otp-error-message-verify" style="display:none">Please enter the mobile number</div>
-                                    <div class="verify-otp">
-
-                                    <div class="text opt-text-button-verify">VERIFY OTP</div>
-
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="otp-design" method="post">
-                                    
-                                    <form id="Adduser" >
-                                    @csrf
-                                    <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div> 
-
-                                    <div class="mobile_no"> Enter Your Mobile Number</div>
-                                    <div class="otp_content"> A 4-digit OTP will be sent on SMS</div>
-                                    <div class="name-opt" style=" text-align: left; margin-top: 15px;opacity: 0.7;">Name (optional)</div>
-                                    <div class="intel-input" style="margin-top: 8px;"> 
-                                        <input type="text" id="input-name" name="name" style="/* height: 100%; */">
-                                    </div> 
-                                    <div class="intel-input">
-
-                                    <div class="flag img_src"><img id="flag" src=""></div>
-
-                                    <div class="dial code dial_code"></div><div class="dial_number">
-                                    <input type="hidden" id="dial_code" name="dial_code" value="">
-
-                                    <input type="number" id="input-dial-number" name="mobile">
-                                    </div>
-                                    </div>
-                                    <div  id="recaptcha" ></div>
-                                    <div class="otp-error-message" style="display:none">Please enter the mobile number</div> 
-                                    <div class="text opt-text-button">NEXT</div>
-                                    
-                                    </form>
-                                    </div>
-                               
-                                </div> 
-                            </div>
-                            @endif 
-        @if(Session('user_id'))
-            <div class="content-wrapper">
-                <div id="head">
-                    <div class="header-menu">
-                      <!--   <span id="menuIcon" class="menu-icon"> 
-                           <i class="fa fa-bars"></i> 
-
-                        </span> -->
-                        <a>
-                            <img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg">
-                        </a>
-                    <!--     <span id="login">
-                            LOG IN
-                        </span>  -->
-                    </div>
-                </div> 
-     
-        </div>
-        @endif
-        <form id="eta_calculaion" method="post">
-        @csrf
-           <div class="content-wrapper1" style="display: none;">
-                <div id="head" class="head1">
-                    <div class="header-menu"> 
-                        <div class="right-arrow1 drop-locations"><i class="fa fa-arrow-left"></i></div> 
-                        <div class="drop_location">Enter drop location</div>
-                        <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
-                            <input type="text" class="autocomplete" id="address" placeholder="Enter address..">
-                            <input type="hidden" value="" name="drop_lat" id="lat">
-                            <input type="hidden" value="" name="drop_lng" id="lng">
-                            <input type="hidden" value="" name="drop_address" id="formattedAddress">
+         </div>
+         @if(!Session('user_id'))
+         <div class="login-page">
+            <div class="otp-number">
+               <div class="verify-otps" style="display:none">
+                  <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div>
+                  <div class="back-to-home"><i class="fa fa-arrow-left"></i></div>
+                  <div class="mobile_no">Verify OTP</div>
+                  <div class="otp_content">Enter the OTP sent to your mobile <span class="entered-no">9566754418</span></div>
+                  <div class="intel-input" style="margin-top: 16px;">
+                     <input type="text" id="input-name1"  style="/* height: 100%; */" placeholder="Enter 4-digit OTP"> 
+                     <div class="otp-error-message-verify" style="display:none">Please enter the mobile number</div>
+                     <div class="verify-otp">
+                        <div class="text opt-text-button-verify">VERIFY OTP</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="otp-design" method="post">
+                  <form id="Adduser" >
+                     @csrf
+                     <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div>
+                     <div class="mobile_no"> Enter Your Mobile Number</div>
+                     <div class="otp_content"> A 4-digit OTP will be sent on SMS</div>
+                     <div class="name-opt" style=" text-align: left; margin-top: 15px;opacity: 0.7;">Name (optional)</div>
+                     <div class="intel-input" style="margin-top: 8px;"> 
+                        <input type="text" id="input-name" name="name" style="/* height: 100%; */">
+                     </div>
+                     <div class="intel-input">
+                        <div class="flag img_src"><img id="flag" src=""></div>
+                        <div class="dial code dial_code"></div>
+                        <div class="dial_number">
+                           <input type="hidden" id="dial_code" name="dial_code" value="">
+                           <input type="number" id="input-dial-number" name="mobile">
                         </div>
-                        <div id="map" style="height: 600px;">
-                            
-                        </div>
-                       
-                    </div>
-                </div> 
-                   <div class="confirm_your_location" style="display:none">
-
-                <div class="confirm_button2">
-                      <input type="hidden" value="" id="confirm_lat">
-                    <input type="hidden" value="" id="confirm_lng">
-                    <input type="hidden" value="" id="confirm_formattedAddress">
-                    Confirm your location
-                    
-                    </div>
-
-                </div>
-     
-        </div>
-           <div class="content-wrapper2" style="display: none;">
-                <div id="head" class="head1">
-                    <div class="header-menu"> 
-                        <div class="right-arrow1 drop-location"><i class="fa fa-arrow-left"></i></div> 
-                        <div class="drop_location">Enter Pickup location</div>
-                        <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
-                            <input type="text" class="autocomplete" id="address1" placeholder="Enter address..">
-                             <input type="hidden" value="" name="pick_lat" id="lat1">
-                            <input type="hidden" value="" name="pick_lng" id="lng1">
-                            <input type="hidden" value="" name="pick_address" id="formattedAddress1">
-
-                        </div>
-                        <div id="map1" style="height: 600px;"></div>
-                       
-                    </div>
-                </div> 
-                <div class="confirm_your_location1" style="display:none">
-
-                <div class="confirm_button">
-                      <input type="hidden" value="" id="confirm_lat1">
-                    <input type="hidden" value="" id="confirm_lng1">
-                    <input type="hidden" value="" id="confirm_formattedAddress1">
-                    Confirm your location
-                    
-                    </div>
-                </div>
-     
-        </div>
-    </form>
+                     </div>
+                     <div  id="recaptcha" ></div>
+                     <div class="otp-error-message" style="display:none">Please enter the mobile number</div>
+                     <div class="text opt-text-button">NEXT</div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         @endif 
+         @if(Session('user_id'))
+         <div class="content-wrapper">
+            <div id="head">
+               <div class="header-menu">
+                  <!--   <span id="menuIcon" class="menu-icon"> 
+                     <i class="fa fa-bars"></i> 
+                     
+                     </span> -->
+                  <a>
+                  <img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg">
+                  </a>
+                  <!--     <span id="login">
+                     LOG IN
+                     </span>  -->
+               </div>
+            </div>
+         </div>
+         @endif
+         <form id="eta_calculaion" method="post">
+            @csrf
+            <div class="content-wrapper1" style="display: none;">
+               <div id="head" class="head1">
+                  <div class="header-menu">
+                     <div class="right-arrow1 drop-locations"><i class="fa fa-arrow-left"></i></div>
+                     <div class="drop_location">Enter drop location</div>
+                     <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
+                        <input type="text" class="autocomplete" id="address" placeholder="Enter address..">
+                        <input type="hidden" value="" name="drop_lat" id="lat">
+                        <input type="hidden" value="" name="drop_lng" id="lng">
+                        <input type="hidden" value="" name="drop_address" id="formattedAddress">
+                     </div>
+                     <div id="map" style="height: 600px;">
+                     </div>
+                  </div>
+               </div>
+               <div class="confirm_your_location" style="display:none">
+                  <div class="confirm_button2">
+                     <input type="hidden" value="" id="confirm_lat">
+                     <input type="hidden" value="" id="confirm_lng">
+                     <input type="hidden" value="" id="confirm_formattedAddress">
+                     Confirm your location
+                  </div>
+               </div>
+            </div>
+            <div class="content-wrapper2" style="display: none;">
+               <div id="head" class="head1">
+                  <div class="header-menu">
+                     <div class="right-arrow1 drop-location"><i class="fa fa-arrow-left"></i></div>
+                     <div class="drop_location">Enter Pickup location</div>
+                     <div class="drop_loc_heading input" style=" line-height: 46px;background: #f7f7f7;">
+                        <input type="text" class="autocomplete" id="address1" placeholder="Enter address..">
+                        <input type="hidden" value="" name="pick_lat" id="lat1">
+                        <input type="hidden" value="" name="pick_lng" id="lng1">
+                        <input type="hidden" value="" name="pick_address" id="formattedAddress1">
+                     </div>
+                     <div id="map1" style="height: 600px;"></div>
+                  </div>
+               </div>
+               <div class="confirm_your_location1" style="display:none">
+                  <div class="confirm_button">
+                     <input type="hidden" value="" id="confirm_lat1">
+                     <input type="hidden" value="" id="confirm_lng1">
+                     <input type="hidden" value="" id="confirm_formattedAddress1">
+                     Confirm your location
+                  </div>
+               </div>
+            </div>
+         </form>
          <div class="content-wrapper3" style="display: none;"> 
-        </div>
-        <div class="content-wrapper4" style="display: none;">  
-        </div>
-        <div class="desktop-bg p2p"><div></div></div>
-        @if(Session('user_id'))
-        <div class="detail-engine-data">
-        <div class="detail-engine">
-        <div class="nav-list">
-            <div class="nav-tab">
-                    <a class="item-name daily-ride actv" data-val="taxi">TAXI</a>
-                    <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
-            </div>
-           <div class="nav-tab">
-                 <a class="item-name out_station" data-val="delivery">DELIVERY</a>
-                 <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
-            </div>  
-            <div class="nav-tab">
-                 <a class="item-name rental" data-val="rentals">RENTALS</a>
-                 <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
-            </div>
-        </div>
-        <div class="book-details">
-        <div class="from-container" >
-            <div class="from-details" >
-                <div class="from text">FROM</div>
-                <div class="from location pickup_address"></div>
-            </div>
-        </div>
-        <div class="to-container">
-            <div class="from-details daily_rides">
-                <div class="from text">TO</div>
-                <div class="from location text placeholder search_pickup_location">Search Your pick up location</div>
-            </div>
-          <!--   <div class="from-details out_station" style="display: none;">
-                <div class="from text">TO</div>
-                <div class="from location text placeholder search_location">Enter a City,hotel or Address</div>
-            </div>  -->
-               <div class="from-details booking_type" style="display: none;">
-                <div class="from text">Type</div>
-                <div class="from location text placeholder">
-                    <select id="rental_type" class="depart-select ola-select">
-            <option value="select" disabled="" selected="">Select a Rental Type</option>
-            
-              <option value="taxi">Taxi</option>
-              <option value="delivery">Delivery</option>
-              <option value="both">Both</option>
-            
-               
-            <dom-repeat style="display: none;"><template is="dom-repeat"></template></dom-repeat>
-          </select>
-
-                </div>
-            </div>
-            <div class="from-details rentals" style="display: none;"> 
-            </div>
-        </div>
-            
-        </div>
-        <div class="ride title available_ride" style="display:none">
-            <div>AVAILABLE RIDES</div>
-        </div>
-        <div class="ride promo_coupon available_rides" style="display:none">
-            <div style="display: inline-block;cursor: pointer; color: #1313ff;font-weight: 600;padding-left: 10px;font-size: 14px;">+ Apply coupon code</div>
-        </div> 
-        <div class="ride title rental_ride" style="display:none">
-            <div>SELECT VEHILCLE TYPE</div>
-        </div>
-     
-         <div class="vehicle-engine daily_ride_vehicle" style="display:none"> 
          </div>
-
-
-<!--- Package Vechile types start -->
-
- <div class="vehicle-engine package" style="display:none">
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_auto.png">
-<div class="time-arrival">2 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">Auto</div><div class="vehicle-content">Get an auto at your doorstep</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div>
-
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_mini.png">
-<div class="time-arrival">25 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">MIni</div><div class="vehicle-content">Comfy hatchbacks at pocket-friendly fares</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div>
-<div class="available-vehicle-details">
-    <div class="vehicle-info">
-        <div class="vehicle-image"><img src="https://olawebcdn.com/images/v1/cabs/sl/ic_bike.png">
-<div class="time-arrival">10 min</div>
-</div>
-        
-       
-    </div><div class="vehicle-info-details">
-        <div class="vehicle-names">Bike</div><div class="vehicle-content">Zip through traffic at affordable fares</div>
-</div>
-    
-<div class="right-arrow">
-     <span class="price">₹865</span> 
-
-</div> 
-    
-          </div>
-          <div class="horizontal-line"></div>  
-            </div>
-<!-- package vehile type End --> 
-        </div>
-       
-        <div class="book_now" style="display: none;">
-
-                <div class="confirm_button book_now_details"> 
-                    Book Now 
-                    </div>
-                      <div class="confirm_button1"> 
-                        Book Later 
-                    </div>
-                </div>
-                 <div class="book_now1" style="display: none;">
-
-                <div class="confirm_button book-package" onclick="package_booking()"> 
-                    Book Now 
-                    </div> 
-                </div>
-        </div>
-
-        @endif
+         <div class="content-wrapper4" style="display: none;">  
          </div>
-
-
-    <!--     <div id="map" style="height: 600px;"></div>
-<div id="marker-position"></div>
-<div id="address"></div> -->
-
-    
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-auth.min.js"></script>
-     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer></script> 
-     <script>
-        
+         <div class="desktop-bg p2p">
+            <div></div>
+         </div>
+         @if(Session('user_id'))
+         <div class="detail-engine-data">
+            <div class="detail-engine">
+               <div class="nav-list">
+                  <div class="nav-tab">
+                     <a class="item-name daily-ride actv" data-val="taxi">TAXI</a>
+                     <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
+                  </div>
+                  <div class="nav-tab">
+                     <a class="item-name out_station" data-val="delivery">DELIVERY</a>
+                     <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
+                  </div>
+                  <div class="nav-tab">
+                     <a class="item-name rental" data-val="rentals">RENTALS</a>
+                     <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
+                  </div>
+               </div>
+               <div class="book-details">
+                  <div class="from-container" >
+                     <div class="from-details" >
+                        <div class="from text">FROM</div>
+                        <div class="from location pickup_address"></div>
+                     </div>
+                  </div>
+                  <div class="to-container">
+                     <div class="from-details daily_rides">
+                        <div class="from text">TO</div>
+                        <div class="from location text placeholder search_pickup_location">Search Your pick up location</div>
+                     </div>
+                     <!--   <div class="from-details out_station" style="display: none;">
+                        <div class="from text">TO</div>
+                        <div class="from location text placeholder search_location">Enter a City,hotel or Address</div>
+                        </div>  -->
+                     <div class="from-details booking_type" style="display: none;">
+                        <div class="from text">Type</div>
+                        <div class="from location text placeholder">
+                           <select id="rental_type" class="depart-select ola-select">
+                              <option value="select" disabled="" selected="">Select a Rental Type</option>
+                              <option value="taxi">Taxi</option>
+                              <option value="delivery">Delivery</option>
+                              <option value="both">Both</option>
+                              <dom-repeat style="display: none;">
+                                 <template is="dom-repeat"></template>
+                              </dom-repeat>
+                           </select>
+                        </div>
+                     </div>
+                     <div class="from-details rentals" style="display: none;"> 
+                     </div>
+                  </div>
+               </div>
+               <div class="ride title available_ride" style="display:none">
+                  <div>AVAILABLE RIDES</div>
+               </div>
+               <div class="ride promo_coupon available_rides" style="display:none">
+                  <div style="display: inline-block;cursor: pointer; color: #1313ff;font-weight: 600;padding-left: 10px;font-size: 14px;">+ Apply coupon code</div>
+               </div>
+               <div class="ride title rental_ride" style="display:none">
+                  <div>SELECT VEHILCLE TYPE</div>
+               </div>
+               <div class="vehicle-engine daily_ride_vehicle" style="display:none"> 
+               </div>
+               <!--- Package Vechile types start -->
+               <div class="vehicle-engine package" style="display:none"> 
+               </div>
+               <!-- package vehile type End --> 
+            </div>
+            <div class="book_now" style="display: none;">
+               <div class="confirm_button book_now_details"> 
+                  Book Now 
+               </div>
+               <div class="confirm_button1"> 
+                  Book Later 
+               </div>
+            </div>
+            <div class="book_now1" style="display: none;">
+               <div class="confirm_button book-package" onclick="package_booking()"> 
+                  Book Now 
+               </div>
+            </div>
+         </div>
+         @endif
+      </div>
+      <!--     <div id="map" style="height: 600px;"></div>
+         <div id="marker-position"></div>
+         <div id="address"></div> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-auth.min.js"></script>
+      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+         async defer></script> 
+      <script>
          var latitude;
                             var longitude;
                             let map;
@@ -478,7 +375,7 @@
                             var widgetid;
                             var otp_btn_active = false;
               // Your web app's Firebase configuration
-        var firebaseConfig = {
+         var firebaseConfig = {
                 apiKey: "{{get_settings('firebase-api-key')}}",
                 authDomain: "{{get_settings('firebase-auth-domain')}}",
                 databaseURL: "{{get_settings('firebase-db-url')}}",
@@ -487,33 +384,33 @@
                 messagingSenderId: "{{get_settings('firebase-messaging-sender-id')}}",
                 appId: "{{get_settings('firebase-app-id')}}",
                 measurementId: "{{get_settings('firebase-measurement-id')}}"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);  
-      // Example: Rendering reCAPTCHA widget 
-        var verifyCallback = function(response) { 
+         };
+         // Initialize Firebase
+         firebase.initializeApp(firebaseConfig);  
+         // Example: Rendering reCAPTCHA widget 
+         var verifyCallback = function(response) { 
             if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined)
             {
                 $(".opt-text-button").addClass("actv");
             }
             
-        };
-
+         };
+         
          var onloadCallback = function() {
             @if(!Session('user_id')) 
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', {
-        'size': 'normal',
-        'callback': verifyCallback
-        });
-        recaptchaVerifier.render().then((widgetId) => {
-        window.recaptchaWidgetId = widgetId;
-        // console.log("widgetId");
-        // console.log(window.recaptchaWidgetId); 
-        });  
-        @endif
-       
-      };
-      
+         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', {
+         'size': 'normal',
+         'callback': verifyCallback
+         });
+         recaptchaVerifier.render().then((widgetId) => {
+         window.recaptchaWidgetId = widgetId;
+         // console.log("widgetId");
+         // console.log(window.recaptchaWidgetId); 
+         });  
+         @endif
+         
+         };
+         
             $(document).on("input","#input-dial-number",function(){
                  var response = grecaptcha.getResponse(widgetid);
                  if(response != "")
@@ -557,8 +454,8 @@
                     $(".book_now").hide();
                     $(".book_now1").hide(); 
                     $(".add-details").hide();
-
-
+         
+         
                     $("#packagePicker option[value='select']").prop("selected", true);
                     $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
                      $(".from-details.out_station").hide();
@@ -594,7 +491,7 @@
                     $(".from-details.booking_type").hide();
                     $(".from-details.daily_rides").show();
                     $(".from-details.rentals").hide();
-
+         
                   }, 200);  
               }) 
                     $(document).on("click",".rental",function(){ 
@@ -603,7 +500,7 @@
                          setTimeout(function() {
                               $(".available_ride").hide();
                               $(".promo_coupon").hide();
-
+         
                               $(".daily_ride_vehicle").hide(); 
                               $(".book_now1").hide(); 
                         $(".bar").removeClass("actv"); 
@@ -638,7 +535,8 @@
                                     for(var i=0;i < response.data.length;i++)
                                     { 
                                         html_data+='<option value="'+response.data[i].id+'">'+response.data[i].package_name+'</option>';
-                                        html_content1 += '<div class="available-vehicle-details package-list package_'+response.data[i].id+'" data-val="'+response.data[i].typesWithPrice.data[0].zone_type_id+'" data-id="'+response.data[i].id+'" data-amount="'+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'" style="display:none"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].typesWithPrice.data[0].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].typesWithPrice.data[0].name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].typesWithPrice.data[0].currency+''+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                        html_content1 += '<div class="available-vehicle-details package-list package_'+response.data[i].id+'" data-val="'+response.data[i].typesWithPrice.data[0].zone_type_id+'" data-id="'+response.data[i].id+'" data-amount="'+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'" style="display:none"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].typesWithPrice.data[0].icon+'"></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].typesWithPrice.data[0].name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].typesWithPrice.data[0].currency+''+parseFloat(response.data[i].typesWithPrice.data[0].fare_amount.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                        // <div class="time-arrival">2 min</div>
                                     }
                                     $(".vehicle-engine.package").html(html_content1); 
                                     }
@@ -652,11 +550,9 @@
                             // Handle errors
                             console.error('Error:', xhr.responseText);
                             }
-                        })
-                        
-
+                        }) 
                     });
-
+         
                     $(document).on("change","#packagePicker",function(){
                         var data_value = $(this).val();
                         $(".rental_ride").show();
@@ -676,7 +572,7 @@
                       $(document).on("click",".date-submit",function(){ 
                         if($(".datepicker").val() != "" && $(".datepicker").val() !== undefined)
                         {    
-
+         
                         $(".date-error").hide();
                         var transport_type = $(".item-name.actv").attr("data-val");
                         var booking_type = $(".available-vehicle-details.actv").attr("data-val");
@@ -694,7 +590,7 @@
                          form_data.append("lng",$("#lng1").val());
                          form_data.append("user_id",'{{Session("user_id")}}');
                          form_data.append("date",$(".datepicker").val()+' '+$("#timepicker").val());
-
+         
                          $(".bar").addClass("actv");  
                                        $.ajax({
                                                 url: 'adhoc-eta', 
@@ -724,9 +620,7 @@
                         }
                         else{
                             $(".date-error").show();
-                        }
-                       
-
+                        } 
                       
                     });
                     $(document).on("click",".book_now_details",function(){ 
@@ -743,7 +637,7 @@
                          form_data.append("lat",$("#lat1").val());
                          form_data.append("lng",$("#lng1").val());
                          form_data.append("user_id",'{{Session("user_id")}}');
-
+         
                                        $.ajax({
                                                 url: 'adhoc-eta', 
                                                 type: 'POST',
@@ -768,32 +662,32 @@
                                                     console.error('Error:', xhr.responseText);
                                                     }
                                                 }); 
-
+         
                       
                     });
-
+         
                     $(document).on("click",".pickup_address",function(){
-
+         
                         $(".content-wrapper").hide();
                         $(".detail-engine-data").hide();
                         $(".content-wrapper1").hide();
                         $(".content-wrapper3").hide();
                         $(".content-wrapper2").show();
-
+         
                     })
                     $(document).on("click",".drop-location",function(){
                         $(".content-wrapper").show();
                         $(".detail-engine-data").show();
                         $(".content-wrapper1").hide();
                         $(".content-wrapper2").hide();
-
+         
                     });
                      $(document).on("click",".drop-locations",function(){
                         $(".content-wrapper").show();
                         $(".detail-engine-data").show();
                         $(".content-wrapper1").hide();
                         $(".content-wrapper2").hide();
-
+         
                     });
                       function initAutocomplete() { 
                             var autocomplete = new google.maps.places.Autocomplete(
@@ -802,7 +696,7 @@
                             );
                             
                             autocomplete.addListener('place_changed', function() { 
-
+         
                               var place = autocomplete.getPlace();
                               // console.log('Place selected:', place); 
                               var formattedAddress = place.formatted_address;
@@ -812,13 +706,13 @@
                               $("#confirm_lng").val(longitude);
                               $("#confirm_formattedAddress").val(formattedAddress);
                               $(".confirm_your_location").show(); 
-
+         
                                var options = {
                                       center: { lat: latitude, lng: longitude }, // Example: San Francisco, CA
                                       zoom: 18,
                                     };
                                      map = new google.maps.Map(document.getElementById('map'), options);
-
+         
                                     // Add markers
                                      marker1 = new google.maps.Marker({
                                       position: { lat: latitude, lng: longitude }, // 
@@ -831,7 +725,7 @@
                                         var latLng1 = new google.maps.LatLng(marker1.getPosition().lat(), marker1.getPosition().lng());
                                         var code2 = new google.maps.Geocoder(); 
                                         code2.geocode({ 'location': latLng1 }, function(results, status) { 
-
+         
                                         if (status === 'OK') {  
                                              if (results[0]) { 
                                                  $("#confirm_lat").val(marker1.getPosition().lat());
@@ -839,9 +733,9 @@
                                                  $("#confirm_formattedAddress").val(results[0].formatted_address);  
                                                  $(".confirm_your_location").show(); 
                                                  $("#address").val(results[0].formatted_address);
-
+         
                                              }
-
+         
                                         }
                                     });
                                     }); 
@@ -870,7 +764,7 @@
                                       zoom: 18,
                                     };
                                      map = new google.maps.Map(document.getElementById('map1'), options);
-
+         
                                     // Add markers
                                      marker1 = new google.maps.Marker({
                                       position: { lat: latitude, lng: longitude }, // 
@@ -890,9 +784,9 @@
                                                  $("#confirm_formattedAddress1").val(results[0].formatted_address);  
                                                  $(".confirm_your_location1").show();
                                                  $("#address1").val(results[0].formatted_address);
-
+         
                                              }
-
+         
                                         }
                                     });
                                        
@@ -911,23 +805,23 @@
                                     initAutocomplete1();
                                 }
                             })
-
+         
                             var status = true;
                             function getCurrentLocation() {
-      var locationInfo = document.getElementById('location-info');
-
-      // Check if geolocation is supported
-      if (navigator.geolocation) {
-        // Get current position
-        navigator.geolocation.getCurrentPosition(
+         var locationInfo = document.getElementById('location-info');
+         
+         // Check if geolocation is supported
+         if (navigator.geolocation) {
+         // Get current position
+         navigator.geolocation.getCurrentPosition(
           function(position) {
             // Get latitude and longitude
              latitude = position.coords.latitude;
              longitude = position.coords.longitude;
-
+         
             // Display location information
             // locationInfo.innerHTML = 'Latitude: ' + latitude + '<br>Longitude: ' + longitude;
-
+         
             // Optionally, you can use the Google Maps Geocoder API to get a formatted address
             var geocoder = new google.maps.Geocoder();
             var latLng = new google.maps.LatLng(latitude, longitude); 
@@ -972,10 +866,10 @@
                                       center: { lat: latitude, lng: longitude }, // Example: San Francisco, CA
                                       zoom: 18,
                                     };
-
+         
                                     // Create a map
                                      map = new google.maps.Map(document.getElementById('map1'), mapOptions);
-
+         
                                     // Add markers
                                      marker1 = new google.maps.Marker({
                                       position: { lat: latitude, lng: longitude }, // 
@@ -998,11 +892,11 @@
                                                  $(".confirm_your_location1").show(); 
                                                  $("#address1").val(results[0].formatted_address);
                                              }
-
+         
                                         }
                                     }); 
                                     }); 
-
+         
                 } else {
                   console.log('No results found');
                 }
@@ -1014,42 +908,42 @@
           function(error) {
             console.log('Error getting location:', error.message);
           }
-        );
-      } else {
-        locationInfo.innerHTML = 'Geolocation is not supported by this browser.';
-      }
-    } 
-function updateMarkerPosition(latLng) {
-    // Update the marker position on the UI
-    document.getElementById('marker-position').innerHTML = `Marker Position: ${latLng.lat()}, ${latLng.lng()}`;
-}
-
-function updateAddress(latLng) {
-    // Use the Geocoder to get the address based on the marker's position
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'location': latLng}, function(results, status) {
-        if (status === 'OK') {
+         );
+         } else {
+         locationInfo.innerHTML = 'Geolocation is not supported by this browser.';
+         }
+         } 
+         function updateMarkerPosition(latLng) {
+         // Update the marker position on the UI
+         document.getElementById('marker-position').innerHTML = `Marker Position: ${latLng.lat()}, ${latLng.lng()}`;
+         }
+         
+         function updateAddress(latLng) {
+         // Use the Geocoder to get the address based on the marker's position
+         let geocoder = new google.maps.Geocoder();
+         geocoder.geocode({'location': latLng}, function(results, status) {
+         if (status === 'OK') {
             if (results[0]) {
                 // Update the address on the UI
                 document.getElementById('address').innerHTML = `Address: ${results[0].formatted_address}`;
             } else {
                 console.error('No results found');
             }
-        } else {
+         } else {
             console.error(`Geocoder failed due to: ${status}`);
-        }
-    });
-}
-
- function initMap() {
-    getCurrentLocation();  
-  }
-  $(document).on("click",".confirm_your_location",function(){
-       $("#lat").val($("#confirm_lat").val());
-       $("#lng").val($("#confirm_lng").val());  
-       $("#formattedAddress").val($("#confirm_formattedAddress").val());
-       $(".bar").addClass("actv");  
-
+         }
+         });
+         } 
+         
+         function initMap() {
+         getCurrentLocation();  
+         }
+         $(document).on("click",".confirm_your_location",function(){
+         $("#lat").val($("#confirm_lat").val());
+         $("#lng").val($("#confirm_lng").val());  
+         $("#formattedAddress").val($("#confirm_formattedAddress").val());
+         $(".bar").addClass("actv");  
+         
                         
                                  if($("#lat").val() != "")
                                  {
@@ -1072,7 +966,8 @@ function updateAddress(latLng) {
                                                         var distance = response.data[i].distance;
                                                         var base_distance = response.data[i].base_distance; 
                                                         var base_price = parseFloat(response.data[i].base_price) + parseFloat(response.data[i].distance_price);  
-                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"><div class="time-arrival">2 min</div></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        html_content += '<div class="available-vehicle-details" data-val="'+response.data[i].zone_type_id+'"><div class="vehicle-info"> <div class="vehicle-image"><img src="'+response.data[i].icon+'"></div></div><div class="vehicle-info-details"> <div class="vehicle-names">'+response.data[i].type_name+'</div><div class="vehicle-content">Get an auto at your doorstep</div></div><div class="right-arrow"><span class="price">'+response.data[i].currency+''+parseFloat(response.data[i].total.toFixed(2))+'</span> </div>  </div><div class="horizontal-line"></div>';
+                                                        // <div class="time-arrival">2 min</div>
                                                     }
                                                     $(".daily_ride_vehicle").html(html_content) 
                                                       setTimeout(function() {
@@ -1096,7 +991,7 @@ function updateAddress(latLng) {
                                                     console.error('Error:', xhr.responseText);
                                                     }
                                                 }); 
-
+         
                                     
                                  }
                                  else{
@@ -1114,19 +1009,19 @@ function updateAddress(latLng) {
                                      $(".promo_coupon").hide();
                                     $(".daily_ride_vehicle").hide();
                                  }
-
-  })
-   $(document).on("click",".confirm_your_location1",function(){
-
-       $("#lat1").val($("#confirm_lat1").val());
-       $("#lng1").val($("#confirm_lng1").val()); 
-       $("#formattedAddress1").val($("#confirm_formattedAddress1").val());
+         
+         })
+         $(document).on("click",".confirm_your_location1",function(){
+         
+         $("#lat1").val($("#confirm_lat1").val());
+         $("#lng1").val($("#confirm_lng1").val()); 
+         $("#formattedAddress1").val($("#confirm_formattedAddress1").val());
                         $(".bar").addClass("actv");  
-
+         
                         
                            if($("#lat").val() != "")
                                  { 
-
+         
                                     var form_data = new FormData($("#eta_calculaion")[0]);
                                        $.ajax({
                                                 url: 'adhoc-eta', 
@@ -1194,22 +1089,22 @@ function updateAddress(latLng) {
                                     $(".promo_coupon").hide();
                                     $(".daily_ride_vehicle").hide();
                                  }
-  }) 
-
-   $(document).on("click",".opt-text-button",function(){   
-
-    var response = grecaptcha.getResponse(window.recaptchaWidgetId);  
-    $(".opt-text-button").removeClass("actv");
-    // grecaptcha.reset(widgetid);   
-    if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined && response !="") { 
-        $(".otp-error-message").hide();
-        const phoneNumber = $("#dial_code").val()+""+$("#input-dial-number").val()+""; 
-        const name = $("#input-name").val();
-        const appVerifier = window.recaptchaVerifier;
-        $(".bar").addClass("actv");  
-        var this_data = $(this);
-        // firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-        // .then((confirmationResult) => {
+         }) 
+         
+         $(document).on("click",".opt-text-button",function(){   
+         
+         var response = grecaptcha.getResponse(window.recaptchaWidgetId);  
+         $(".opt-text-button").removeClass("actv");
+         // grecaptcha.reset(widgetid);   
+         if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined && response !="") { 
+         $(".otp-error-message").hide();
+         const phoneNumber = $("#dial_code").val()+""+$("#input-dial-number").val()+""; 
+         const name = $("#input-name").val();
+         const appVerifier = window.recaptchaVerifier;
+         $(".bar").addClass("actv");  
+         var this_data = $(this);
+         // firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+         // .then((confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
           // window.confirmationResult = confirmationResult; 
@@ -1225,48 +1120,48 @@ function updateAddress(latLng) {
             $(".opt-text-button-verify").removeClass("actv");
             $("#input-name1").val('');
           // ...
-        // }).catch((error) => {
-        //     $(".otp-error-message").html('OTP Not sent . Please check the Number');
-        //     $(".otp-error-message").show();
-        //     $(".bar").removeClass("actv"); 
-        // }); 
-   }
-   // else{
-   //       $(".otp-error-message").show();
-   //      $(".otp-error-message").html('Please Enter the mobile number');
-   // }
-   
-   });
-   $(document).on("click",".back-to-home",function(){
-     $("#input-dial-number").val('');
-     $("#input-name").val(''); 
-     grecaptcha.reset(window.recaptchaWidgetId);
-     $(".verify-otps").hide();
-     $(".otp-design").show();
-     $(".content-wrapper").hide();
-        $(".detail-engine-data").hide();
-        $(".opt-text-button").removeClass("actv");
-        $(".otp-error-message").hide();
-        $(".otp-error-message").html('');
-    });
-
- // function clearUser(uid) {
- //      // Use the UID to delete the user
- //      firebase.auth().deleteUser(uid);
-       
- //    }
-   $(document).on("click",".opt-text-button-verify",function(){
-     $(".otp-error-message-verify").html('');
-    $(".otp-error-message-verify").hide();
-    $(this).removeClass("actv");
-    $(".bar").addClass("actv");  
-    var this_dt = $(this);
-     if($("#input-name1").val() != "" && $("#input-name1").val() !== undefined){ 
-        var code = $("#input-name1").val(); 
-        var csrfToken = $('meta[name="csrf-token"]').attr('content'); 
-        var form_data = new FormData($("#Adduser")[0]);
-       
-        // confirmationResult.confirm(code).then((result) => { 
+         // }).catch((error) => {
+         //     $(".otp-error-message").html('OTP Not sent . Please check the Number');
+         //     $(".otp-error-message").show();
+         //     $(".bar").removeClass("actv"); 
+         // }); 
+         }
+         // else{
+         //       $(".otp-error-message").show();
+         //      $(".otp-error-message").html('Please Enter the mobile number');
+         // }
+         
+         });
+         $(document).on("click",".back-to-home",function(){
+         $("#input-dial-number").val('');
+         $("#input-name").val(''); 
+         grecaptcha.reset(window.recaptchaWidgetId);
+         $(".verify-otps").hide();
+         $(".otp-design").show();
+         $(".content-wrapper").hide();
+         $(".detail-engine-data").hide();
+         $(".opt-text-button").removeClass("actv");
+         $(".otp-error-message").hide();
+         $(".otp-error-message").html('');
+         });
+         
+         // function clearUser(uid) {
+         //      // Use the UID to delete the user
+         //      firebase.auth().deleteUser(uid);
+         
+         //    }
+         $(document).on("click",".opt-text-button-verify",function(){
+         $(".otp-error-message-verify").html('');
+         $(".otp-error-message-verify").hide();
+         $(this).removeClass("actv");
+         $(".bar").addClass("actv");  
+         var this_dt = $(this);
+         if($("#input-name1").val() != "" && $("#input-name1").val() !== undefined){ 
+         var code = $("#input-name1").val(); 
+         var csrfToken = $('meta[name="csrf-token"]').attr('content'); 
+         var form_data = new FormData($("#Adduser")[0]);
+         
+         // confirmationResult.confirm(code).then((result) => { 
             // User signed in successfully. 
                 grecaptcha.reset(window.recaptchaWidgetId);    
                   $.ajax({
@@ -1304,50 +1199,50 @@ function updateAddress(latLng) {
             //     $(".opt-text-button-verify").addClass("actv"); 
             //     $(".bar").removeClass("actv"); 
             // }); 
-     }
-     else{
+         }
+         else{
             $(".otp-error-message-verify").html('Please Enter the OTP');
             $(".otp-error-message-verify").show();
-     }
-   })
-    $(document).on("input","#input-name1",function(){
-        if($(this).val() != ""){
+         }
+         })
+         $(document).on("input","#input-name1",function(){
+         if($(this).val() != ""){
              $(".opt-text-button-verify").addClass("actv");
-        }
+         }
                   
             })
-    
-    $(document).on("click",".available-vehicle-details",function(){
-        $(".available-vehicle-details").removeClass("actv"); 
-        $(this).addClass("actv"); 
-        if($(this).hasClass("package-list"))
-        { 
+         
+         $(document).on("click",".available-vehicle-details",function(){
+         $(".available-vehicle-details").removeClass("actv"); 
+         $(this).addClass("actv"); 
+         if($(this).hasClass("package-list"))
+         { 
             $(".book_now1").addClass("actv");
             $(".book_now1").show(); 
-        }
-        else{
+         }
+         else{
             $(".book_now").addClass("actv");
             $(".book_now").show(); 
-        }
+         }
          
-
-       
-    }) 
-    $(document).on("click",".promocode-cancel",function(){
-        $(".model-init1").hide();
-        $(".model-init").hide();
-
-    })
-    $(document).on("click",".receiver-add",function(){
+         
+         
+         }) 
+         $(document).on("click",".promocode-cancel",function(){
          $(".model-init1").hide();
-        $(".model-init").hide();
-
-    })
-    
-
-    $(document).on("click",".promocode-submit",function(){
-        if($("#model-promo-input") != "")
-        {
+         $(".model-init").hide();
+         
+         })
+         $(document).on("click",".receiver-add",function(){
+         $(".model-init1").hide();
+         $(".model-init").hide();
+         
+         })
+         
+         
+         $(document).on("click",".promocode-submit",function(){
+         if($("#model-promo-input") != "")
+         {
              var form_data = new FormData($("#eta_calculaion")[0]);
          form_data.append("promo_code",$("#model-promo-input").val());
          $.ajax({
@@ -1358,7 +1253,7 @@ function updateAddress(latLng) {
                                                 processData: false,
                                                 contentType: false, 
                                                 success: function(response) {
-
+         
                                                     // Handle the successful response
                                                     // console.log('Success:', response);
                                                    if(response.success)
@@ -1401,24 +1296,24 @@ function updateAddress(latLng) {
                                                     } 
                                                     }
                                                 }); 
-        }
-        else{
+         }
+         else{
          $(".promo-code-error").html('Please enthe the promo code');
-        }
-        
-       
-    })
-    $(document).on("click",".promo_coupon",function(){
-        $(".model-init1").show();
-        $(".model-content").show();
-        $(".model-content1").hide();
-    }) 
-    $(document).on("click",".receiver-dt",function(){
+         }
+         
+         
+         })
+         $(document).on("click",".promo_coupon",function(){
+         $(".model-init1").show();
+         $(".model-content").show();
+         $(".model-content1").hide();
+         }) 
+         $(document).on("click",".receiver-dt",function(){
           $(".model-init").show();
           $(".model-content1").show();
           $(".model-content").hide();
-    })
-      $(document).on("click",".confirm_button1",function(){ 
+         })
+         $(document).on("click",".confirm_button1",function(){ 
                       $(".model-init").hide();
                       $(".model-init1").show();
                       $(".model-content1").hide();
@@ -1426,28 +1321,28 @@ function updateAddress(latLng) {
                       $(".model-content2").show(); 
                         
                     }); 
-        $(document).on("click",".date-edit",function(){ 
+         $(document).on("click",".date-edit",function(){ 
                       $(".model-init1").show();
                       $(".model-content1").hide();
                       $(".model-content").hide();
                       $(".model-content2").show(); 
-
+         
                         
                     }); 
-
-    $(document).on('change', '.radio-option', function() { 
-        var selectedValue = $(this).val();
-        if(selectedValue == "qty")
-        {
+         
+         $(document).on('change', '.radio-option', function() { 
+         var selectedValue = $(this).val();
+         if(selectedValue == "qty")
+         {
             $(".qunatity-input").show();
-        }
-        else{
+         }
+         else{
             $(".qunatity-input").hide();
-        }
-    });
-    $(document).on("click",".booking-back",function(){ 
+         }
+         });
+         $(document).on("click",".booking-back",function(){ 
           $(".bar").addClass("actv"); 
-
+         
                  setTimeout(function() { 
                     // $(".available_ride").show();
                     $(".content-wrapper3").hide();
@@ -1460,8 +1355,8 @@ function updateAddress(latLng) {
                     $(".add-details").hide();
                     $(".detail-engine-data").show();
                     $(".content-wrapper").show();
-
-
+         
+         
                     $("#packagePicker option[value='select']").prop("selected", true);
                     $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
                      $(".from-details.out_station").hide();
@@ -1469,8 +1364,8 @@ function updateAddress(latLng) {
                     $(".from-details.daily_rides").show();
                     $(".from-details.rentals").hide();
                   }, 200);  
-    }) 
-     function package_booking(){   
+         }) 
+         function package_booking(){   
                     var form_data = new FormData($("#eta_calculaion")[0]);
                         var transport_type = $(".package-list.actv").attr("data-val");
                         var rental_package_id = $(".package-list.actv").attr("data-id");
@@ -1518,14 +1413,11 @@ function updateAddress(latLng) {
                                         console.error('Error:', xhr.responseText);
                                         }
                                     }); 
-
+         
                 } 
-    google.maps.event.addDomListener(window, 'load', initAutocomplete);
-    google.maps.event.addDomListener(window, 'load', initAutocomplete1);
-    google.maps.event.addDomListener(window, 'load', initMap);
-    </script>
-
-        
-
-    </body>
+         google.maps.event.addDomListener(window, 'load', initAutocomplete);
+         google.maps.event.addDomListener(window, 'load', initAutocomplete1);
+         google.maps.event.addDomListener(window, 'load', initMap);
+      </script>
+   </body>
 </html>
