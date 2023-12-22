@@ -11,6 +11,7 @@
       <!-- Add this line to your HTML -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
       <head>
          <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-FQUi9C-cnnnhGm9QtgjHRnUPDcfBiPg&libraries=places"></script>
@@ -392,14 +393,14 @@
          function Listenrequestdata(request_id){ 
             var dataref = database.ref('requests/'+request_id);
              dataref.on('value', (snapshot) => {
-            const data = snapshot.val();
-            console.log("test");
+            const data = snapshot.val(); 
             if (data.hasOwnProperty("is_accept")) {
                console.log("exists");
 
                if(data.is_accept == 1)
                {
                   console.log("accepted"); 
+                  $(".cancel-booking").html('');
                   $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
                }
@@ -411,7 +412,21 @@
                   console.log("cancelled");
                   dataref.off('value');
                   $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
-                  $(".waiting_fr_driver").html('Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span>');
+                  $(".waiting_fr_driver").html('<div class="booking-cancelled">Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span></div>');
+               }
+            }
+            if (data.hasOwnProperty("is_completed")) { 
+
+               if(data.is_completed == 1 || data.is_completed === true)
+               {
+                  console.log("Completed");
+                  dataref.off('value');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".waiting_fr_driver").html('<div class="booking-cancelled">Your booking has been completed.</div>');
+                   setTimeout(function() { 
+                    window.location.reload();
+                  }, 1000);  
+                 
                }
             }
             });
@@ -440,6 +455,9 @@
          @endif
          
          };
+         $(document).ready(function(){ 
+            $('.desktop-bg.p2p').css('background-image', 'url({{asset("images/TAXI.png")  }})'); 
+         })
             $(document).on("click",".track_request",function(){
                var data_val = $(this).attr("data-val"); 
                window.open('{{url("/")}}/track/request/'+data_val, '_blank'); 
@@ -495,7 +513,7 @@
          
          
                     $("#packagePicker option[value='select']").prop("selected", true);
-                    $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
+                    $('.desktop-bg.p2p').css('background-image', 'url({{asset("images/TAXI.png")  }})'); 
                      $(".from-details.out_station").hide();
                     $(".from-details.booking_type").hide();
                     $(".from-details.daily_rides").show();
@@ -524,7 +542,7 @@
                     $(".book_now").hide();
                     $(".book_now1").hide(); 
                     $("#packagePicker option[value='select']").prop("selected", true);
-                    $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
+                    $('.desktop-bg.p2p').css('background-image', 'url({{asset("images/DELIVERY.png")  }})'); 
                     $(".from-details.out_station").hide();
                     $(".from-details.booking_type").hide();
                     $(".from-details.daily_rides").show();
@@ -543,7 +561,7 @@
                               $(".book_now1").hide(); 
                         $(".bar").removeClass("actv"); 
                         $(".available-vehicle-details").removeClass('actv');
-                        $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_rentals.jpg")'); 
+                        $('.desktop-bg.p2p').css('background-image', 'url({{asset("images/RENTAL.png")  }})'); 
                         $(".from-details.out_station").hide();
                         $(".from-details.daily_rides").hide();
                         $(".from-details.booking_type").show();
@@ -1396,7 +1414,7 @@
          
          
                     $("#packagePicker option[value='select']").prop("selected", true);
-                    $('.desktop-bg.p2p').css('background-image', 'url("https://olawebcdn.com/images/v1/bg_city.jpg")'); 
+                    $('.desktop-bg.p2p').css('background-image', 'url({{asset("images/TAXI.png")  }})'); 
                      $(".from-details.out_station").hide();
                     $(".from-details.booking_type").hide();
                     $(".from-details.daily_rides").show();
@@ -1405,20 +1423,22 @@
          }) 
          $(document).on("click",".cancel-booking",function(){ 
              $(".bar").addClass("actv"); 
+             var request_id = {request_id : $(this).attr("data-val")}; 
                $.ajax({
+                                    headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                             },
                                     url: 'adhoc-cancel-booking', 
                                     type: 'POST',
-                                    data: form_data,
-                                    dataType: 'json', 
-                                    processData: false,
-                                    contentType: false, 
+                                    data: request_id,
+                                    dataType: 'json',  
                                     success: function(response) {
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Cancelled Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
                                        console.log(response);
-                                       setTimeout(function() {  
-                                          window.location.reload();
+                                       setTimeout(function() {    
+                                           window.location.href='{{url("/")}}/web-booking';
                                             }, 2000); 
 
                                     },
@@ -1467,19 +1487,18 @@
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
-                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/taxi.gif")  }}"" id="taxi""></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
+                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/taxi.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
                                            }, 500); 
                                                  setTimeout(function() { 
                                                     $(".waiting_fr_driver").html('Taking more than time.....');
-                                                    $(".waiting-for-booking").append('<div class="cancel-booking" style=""><div class="cancel_button">Cancel Booking</div></div>');
+                                                    $(".waiting-for-booking").append('<div class="cancel-booking" data-val="'+response.data.id+'" style=""><div class="cancel_button">Cancel Booking</div></div>');
                                            }, 10000); 
                                         },
                                         error: function(xhr, status, error) {
                                         // Handle errors
                                         console.error('Error:', xhr.responseText);
                                         }
-                                    }); 
-         
+                                    });  
                 } 
          google.maps.event.addDomListener(window, 'load', initAutocomplete);
          google.maps.event.addDomListener(window, 'load', initAutocomplete1);

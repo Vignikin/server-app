@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Request\Request as RequestData;
 use App\Base\Constants\Auth\Role;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Cms\FrontPage;
@@ -1326,9 +1327,20 @@ class FrontPageController extends Controller
     {
         $user_name = 'User';
         if(auth('web')->user())
-        {
+        { 
+            // if ($request->has('request_id')) {
+            //     $get_request_data = RequestData::find($request->has('request_id'));
+            //     if($get_request_data)
+            //     {
+            //         if($get_request_data->is_completed == 0 && $get_request_data->is_cancelled == 0)
+            //         {
+                        
+            //         }
+            //     }
+            // }
             $user_name = auth('web')->user()->name;
         }
+
      
           // Session::flush();  
           return view('web_booking',compact('user_name'));  

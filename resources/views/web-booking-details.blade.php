@@ -209,11 +209,10 @@
                                }
                               
                               }, 2000); 
-                                    setTimeout(function() { 
-                                       $(".waiting_fr_driver").html('Taking more than time.....');
-                                       $(".waiting-for-booking").append('<div class="cancel-booking" style=""><div class="cancel_button">Cancel Booking</div></div>');
-                              }, 10000); 
-                               
+                                     setTimeout(function() { 
+                                                    $(".waiting_fr_driver").html('Taking more than time.....');
+                                                    $(".waiting-for-booking").append('<div class="cancel-booking" data-val="'+response_data.data.id+'" style=""><div class="cancel_button">Cancel Booking</div></div>');
+                                           }, 10000);                                
                                 
                            },
                            error: function(xhr, status, error) {

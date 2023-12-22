@@ -337,7 +337,7 @@ class AdhocWebBookingController extends BaseController
      * 
      * */
     public function cancelRide(ValidatorRequest $request){
-
+          
         // Validate Request id
         $request->validate([
             'request_id'=>'required|exists:requests,id',
