@@ -404,9 +404,9 @@
                   $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
                }
             }
-            if (data.hasOwnProperty("is_cancelled")) { 
+            if (data.hasOwnProperty("is_cancel")) { 
 
-               if(data.is_cancelled == 1)
+               if(data.is_cancel == 1)
                {
                   console.log("cancelled");
                   dataref.off('value');
@@ -1428,7 +1428,7 @@
                                      }
          });
          });
-               
+
          
          function package_booking(){   
                     var form_data = new FormData($("#eta_calculaion")[0]);
