@@ -307,8 +307,8 @@ tl-item.active .tl-dot:before {
                     </div>
                     </li>
                      <li>
-                        <p class="ml-2 text-gray-900">{{ $request->driverDetail->carMake->name }}</p>
-                        <p class="ml-2 text-gray-900">{{ $request->driverDetail->carModel->name }}</p>
+                        <p class="ml-2 text-gray-900">{{ $request->driverDetail->car_make_name }}</p>
+                        <p class="ml-2 text-gray-900">{{ $request->driverDetail->car_model_name }}</p>
                     </li>
                         </div>
                     </ul>
