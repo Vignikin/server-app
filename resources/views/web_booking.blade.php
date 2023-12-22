@@ -1427,6 +1427,8 @@
                                      console.error('Error:', xhr.responseText);
                                      }
          });
+         });
+               
          
          function package_booking(){   
                     var form_data = new FormData($("#eta_calculaion")[0]);
