@@ -190,7 +190,7 @@
                            $(".bar").removeClass("actv"); 
                            
                              setTimeout(function() {  
-                               if(response_data.data.is_later == 1)
+                               if(response_data.data.is_later == 1) 
                                {
                                  window.location.reload();
 
@@ -200,6 +200,7 @@
                                var title = "New Page Title";
                                var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
                                history.pushState(stateObj, title, newUrl); 
+                               Listenrequestdata(response_data.data.id);
                                $(".content-wrapper3").hide();
                                $(".detail-engine-data").hide();
                                $(".content-wrapper4").show(); 

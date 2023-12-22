@@ -386,7 +386,17 @@
                 measurementId: "{{get_settings('firebase-measurement-id')}}"
          };
          // Initialize Firebase
-         firebase.initializeApp(firebaseConfig);  
+         firebase.initializeApp(firebaseConfig);   
+         
+         function Listenrequestdata(request_id){
+            alert("test");
+            var dataref = firebase.database().ref('requests/'+request_id);
+             starCountRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+            });
+         }
+        
          // Example: Rendering reCAPTCHA widget 
          var verifyCallback = function(response) { 
             if($("#input-dial-number").val() != "" && $("#input-dial-number").val() !== undefined)
@@ -1396,6 +1406,7 @@
                                           var title = "New Page Title";
                                           var newUrl = "{{ url('/') }}/web-booking?request_id="+response.data.id+"";
                                           history.pushState(stateObj, title, newUrl); 
+                                          Listenrequestdata(response.data.id); 
                                           setTimeout(function() {  
                                             $(".content-wrapper3").hide();
                                             $(".detail-engine-data").hide();
