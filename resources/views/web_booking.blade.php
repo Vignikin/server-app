@@ -164,8 +164,8 @@
          @if(!Session('user_id'))
          <div class="login-page">
             <div class="otp-number">
-               <div class="verify-otps" style="display:none">
-                  <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div>
+               <div class="verify-otps" style="display:none"> 
+                  <div><img class="logo" alt="Superbidding Logo" src="{{asset('images/email/logo1.jpeg')  }}"></div>
                   <div class="back-to-home"><i class="fa fa-arrow-left"></i></div>
                   <div class="mobile_no">Verify OTP</div>
                   <div class="otp_content">Enter the OTP sent to your mobile <span class="entered-no">9566754418</span></div>
@@ -180,7 +180,7 @@
                <div class="otp-design" method="post">
                   <form id="Adduser" >
                      @csrf
-                     <div><img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg"></div>
+                     <div><img class="logo" alt="Superbidding Logo" src="{{asset('images/email/logo1.jpeg')  }}"></div>
                      <div class="mobile_no"> Enter Your Mobile Number</div>
                      <div class="otp_content"> A 4-digit OTP will be sent on SMS</div>
                      <div class="name-opt" style=" text-align: left; margin-top: 15px;opacity: 0.7;">Name (optional)</div>
@@ -212,7 +212,7 @@
                      
                      </span> -->
                   <a>
-                  <img class="logo" alt="Superbidding Logo" src="http://localhost/Tagxi-Super-App/public/images/email/logo1.jpeg">
+                  <img class="logo" alt="Superbidding Logo" src="{{asset('images/email/logo1.jpeg')  }}">
                   </a>
                   <!--     <span id="login">
                      LOG IN
@@ -861,16 +861,43 @@
                                     initAutocomplete1();
                                 }
                             })
-         
+         function default_image(){
+            var countryCode = 'in';
+             $.ajax({
+                                    url: 'get-country-data?countryCode='+countryCode+'', 
+                                    method: 'GET',
+                                    dataType: 'json', 
+                                    // data:data, 
+                                    success: function(response) {  
+                                     // console.log(response);
+                                     if(response.status == "success")
+                                     {
+                                        // $("#flag").attr("src", response.flag.flag); 
+                                        $(".dial_code").html(response.flag.dial_code); 
+                                        $("#dial_code").val(response.flag.dial_code);  
+                                         $(".img_src").html('<img id="flag" alt="Superbidding Logo" src="'+response.flag.flag+'">');
+                                     }
+                                     else{
+                                         $("#flag").attr("src", 'url({{asset("images/country/flags/IN.png")  }})');
+                                     } 
+                                   
+                                    },
+                                    error: function(error) {
+                                    // Handle errors
+                                    console.log('Error:', error);
+                                    }
+                            });
+         }
                             var status = true;
                             function getCurrentLocation() {
          var locationInfo = document.getElementById('location-info');
          
          // Check if geolocation is supported
          if (navigator.geolocation) {
+
          // Get current position
          navigator.geolocation.getCurrentPosition(
-          function(position) {
+          function(position) { 
             // Get latitude and longitude
              latitude = position.coords.latitude;
              longitude = position.coords.longitude;
@@ -885,11 +912,8 @@
               if (status === 'OK') {
                 if (results[0]) {
                     if(status)
-                    {
-                     alert("test");
-
-                         countryCode = results[0].address_components.find(component => component.types.includes('country')).short_name; 
-                         // alert("dfsdf");
+                    { 
+                         countryCode = results[0].address_components.find(component => component.types.includes('country')).short_name;  
                           $.ajax({
                                     url: 'get-country-data?countryCode='+countryCode+'', 
                                     method: 'GET',
@@ -905,7 +929,7 @@
                                          $(".img_src").html('<img id="flag" alt="Superbidding Logo" src="'+response.flag.flag+'">');
                                      }
                                      else{
-                                        $("#flag").attr("src", 'http://localhost/Tagxi-Super-App/public/images/country/flags/AD.png');
+                                        $("#flag").attr("src", 'url({{asset("images/country/flags/IN.png")  }})');
                                      } 
                                    
                                     },
@@ -956,19 +980,22 @@
                                     }); 
          
                 } else {
-                  console.log('No results found');
+                  default_image();
                 }
               } else {
                 console.log('Geocoder failed due to: ' + status);
+                default_image();
               }
             });
           },
           function(error) {
             console.log('Error getting location:', error.message);
+            default_image();
           }
          );
          } else {
          locationInfo.innerHTML = 'Geolocation is not supported by this browser.';
+         default_image();
          }
          } 
          function updateMarkerPosition(latLng) {
