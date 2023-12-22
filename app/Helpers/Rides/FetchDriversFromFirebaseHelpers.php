@@ -183,7 +183,7 @@ trait FetchDriversFromFirebaseHelpers
             if(count($nearest_driver_ids)==0){
 
                 $request_detail->attempt_for_schedule += 1;
-                $request->save();
+                $request_detail->save();
 
                 $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
 
@@ -220,7 +220,7 @@ trait FetchDriversFromFirebaseHelpers
                 if ($nearest_drivers->count()==0) {
                     
                 $request_detail->attempt_for_schedule += 1;
-                $request->save();
+                $request_detail->save();
 
                 $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
 
@@ -296,7 +296,7 @@ trait FetchDriversFromFirebaseHelpers
         } else {
 
             $request_detail->attempt_for_schedule += 1;
-                $request->save();
+                $request_detail->save();
 
                 $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
 
