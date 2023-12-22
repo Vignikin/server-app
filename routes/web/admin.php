@@ -81,6 +81,9 @@ Route::middleware('auth:web')->group(function () {
         Route::post('adhoc-eta','AdhocWebBookingController@eta');
         Route::post('adhoc-create-request','AdhocWebBookingController@createRequest');
         Route::post('adhoc-list-packages','AdhocWebBookingController@listPackages'); 
+
+        Route::post('adhoc-cancel-booking','AdhocWebBookingController@cancelRide');
+        
     // Owner Management (Company Management)
     Route::group(['prefix' => 'owners'], function () {
         // Route::get('/', 'OwnerController@index')->name('ownerView');
