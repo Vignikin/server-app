@@ -73,8 +73,6 @@ Route::middleware('auth:web')->group(function () {
 
     });
 
-   
-
     Route::namespace('Admin')->group(function () {
         Route::get('dispatcher-request','AdminViewController@dispatchRequest');
          // Adhoc Web Booking 
@@ -83,7 +81,7 @@ Route::middleware('auth:web')->group(function () {
         Route::post('adhoc-list-packages','AdhocWebBookingController@listPackages'); 
 
         Route::post('adhoc-cancel-booking','AdhocWebBookingController@cancelRide');
-        
+
     // Owner Management (Company Management)
     Route::group(['prefix' => 'owners'], function () {
         // Route::get('/', 'OwnerController@index')->name('ownerView');

@@ -13,6 +13,7 @@ use App\Base\Constants\Setting\Settings;
 use App\Models\Admin\Driver;
 use App\Jobs\Notifications\SendPushNotification;
 use App\Models\Request\DriverRejectedRequest;
+use App\Jobs\NoDriverFoundNotifyJob;
 
 trait FetchDriversFromFirebaseHelpers
 {
@@ -158,10 +159,6 @@ trait FetchDriversFromFirebaseHelpers
 
                             if($current_location_of_driver){
 
-                            // $distance_between_current_location_to_drop = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $drop_lat, $drop_lng,'K');
-
-                            // $distance_between_current_location_to_my_route = distance_between_two_coordinates($current_location_of_driver->current_lat, $current_location_of_driver->current_lng, $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
-
                          $distance_between_drop_to_my_route = distance_between_two_coordinates($drop_lat, $drop_lng, $has_enabled_my_route_drivers->my_route_lat, $has_enabled_my_route_drivers->my_route_lng,'K');
 
                         if($distance_between_drop_to_my_route > 5){
@@ -169,22 +166,7 @@ trait FetchDriversFromFirebaseHelpers
                                 $removable_driver_ids[]=$key;
 
                         }
-                            // Difference between both of above values
-
-                            // $difference = $distance_between_current_location_to_drop - $distance_between_current_location_to_my_route;
                             
-                            // Log::info($distance_between_current_location_to_drop);
-
-                            // Log::info($distance_between_current_location_to_my_route);
-
-
-                            // $difference=$difference < 0 ? (-1) * $difference : $difference;
-
-                            // if($difference>2){
-
-                            //     $removable_driver_ids[]=$key;
-
-                            // }
     
                             }
                             
@@ -200,7 +182,25 @@ trait FetchDriversFromFirebaseHelpers
 
             if(count($nearest_driver_ids)==0){
 
+                $request_detail->attempt_for_schedule += 1;
+                $request->save();
+
+                $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
+
+                $no_of_attempts +=3;
+
+                if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+                        
+                        // Update cancel param in firebase
+                        $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
+                        $no_driver_request_ids = [];
+                        $no_driver_request_ids[0] = $request_detail->id;
+                        dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
+                }
+
                 return null; 
+
 
                 }
 
@@ -218,7 +218,23 @@ trait FetchDriversFromFirebaseHelpers
                 $nearest_drivers = Driver::where('active', 1)->where('approve', 1)->where('available', 1)->whereIn('id', $nearest_driver_ids)->whereNotIn('id', $meta_drivers)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $nearest_driver_ids) . ")"))->limit(10)->get();
 
                 if ($nearest_drivers->count()==0) {
-                
+                    
+                $request_detail->attempt_for_schedule += 1;
+                $request->save();
+
+                $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
+
+                $no_of_attempts +=3;
+
+                if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+
+                        $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
+                        $no_driver_request_ids = [];
+                        $no_driver_request_ids[0] = $request_detail->id;
+                        dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
+                }
+
                     return null; 
                 }
         //Create Meta & Send Ride Request to the Nearest Drivers
@@ -279,6 +295,21 @@ trait FetchDriversFromFirebaseHelpers
             
         } else {
 
+            $request_detail->attempt_for_schedule += 1;
+                $request->save();
+
+                $no_of_attempts = get_settings('maximum_time_for_find_drivers_for_regular_ride');
+
+                $no_of_attempts +=3;
+
+                if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+
+                    $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
+                        $no_driver_request_ids = [];
+                        $no_driver_request_ids[0] = $request_detail->id;
+                        dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
+            }
             return null;
 
         }
