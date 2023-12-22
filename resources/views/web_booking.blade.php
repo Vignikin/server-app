@@ -399,10 +399,19 @@
 
                if(data.is_accept == 1)
                {
-                  console.log("accepted");
+                  console.log("accepted"); 
+                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
+               }
+            }
+            if (data.hasOwnProperty("is_cancelled")) { 
+
+               if(data.is_cancelled == 1)
+               {
+                  console.log("cancelled");
                   dataref.off('value');
-                  $(".owner-accept-data").html('<img src="https://i.gifer.com/7efs.gif" id="taxi"">');
-                  $(".waiting_fr_driver").html('Owner accepted your request . Please visit <a href="{{url("/")}}/track/request/'+data.request_id+'">here</a> to track the owner. ');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".waiting_fr_driver").html('Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span>');
                }
             }
             });
@@ -431,7 +440,15 @@
          @endif
          
          };
-         
+            $(document).on("click",".track_request",function(){
+               var data_val = $(this).attr("data-val"); 
+               window.open('{{url("/")}}/track/request/'+data_val, '_blank'); 
+               // window.location.href='{{url("/")}}/track/request/'+data_val;
+            })
+             $(document).on("click",".home-screen",function(){  
+               window.location.href='{{url("/")}}/web-booking';
+            })
+            
             $(document).on("input","#input-dial-number",function(){
                  var response = grecaptcha.getResponse(widgetid);
                  if(response != "")
@@ -1386,6 +1403,31 @@
                     $(".from-details.rentals").hide();
                   }, 200);  
          }) 
+         $(document).on("click",".cancel-booking",function(){ 
+             $(".bar").addClass("actv"); 
+               $.ajax({
+                                    url: 'adhoc-cancel-booking', 
+                                    type: 'POST',
+                                    data: form_data,
+                                    dataType: 'json', 
+                                    processData: false,
+                                    contentType: false, 
+                                    success: function(response) {
+                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Cancelled Successfully</div>  </div>  </div>');
+                                        $(".model-init1").show(); 
+                                        $(".bar").removeClass("actv"); 
+                                       console.log(response);
+                                       setTimeout(function() {  
+                                          window.location.reload();
+                                            }, 2000); 
+
+                                    },
+                                     error: function(xhr, status, error) {
+                                     // Handle errors
+                                     console.error('Error:', xhr.responseText);
+                                     }
+         });
+         
          function package_booking(){   
                     var form_data = new FormData($("#eta_calculaion")[0]);
                         var transport_type = $(".package-list.actv").attr("data-val");

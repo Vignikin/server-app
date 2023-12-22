@@ -124,7 +124,7 @@ class AdhocWebBookingController extends BaseController
             $result_data = $response->getData();
             $booking_data = $result_data->data;  
             $transport_type = $request->transport_type; 
-            $user_detail = User::find(auth()->user()->id);   
+            $user_detail = User::find(auth('web')->user()->id);   
             return view('web-booking-details',compact('booking_data','goods_type','transport_type','user_detail','request'));   
         } 
         return $this->respondSuccess($result);
@@ -345,7 +345,7 @@ class AdhocWebBookingController extends BaseController
             'custom_reason'=>'sometimes|required|min:2|max:100',
         ]);
 
-        $user = auth()->user();
+        $user = auth('web')->user();
         $request_detail = $user->requestDetail()->where('id', $request->request_id)->first();
         // Throw an exception if the user is not authorised for this request
         if (!$request_detail) {
