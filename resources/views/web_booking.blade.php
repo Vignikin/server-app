@@ -1403,6 +1403,31 @@
                     $(".from-details.rentals").hide();
                   }, 200);  
          }) 
+         $(document).on("click",".cancel-booking",function(){ 
+             $(".bar").addClass("actv"); 
+               $.ajax({
+                                    url: 'adhoc-cancel-booking', 
+                                    type: 'POST',
+                                    data: form_data,
+                                    dataType: 'json', 
+                                    processData: false,
+                                    contentType: false, 
+                                    success: function(response) {
+                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Cancelled Successfully</div>  </div>  </div>');
+                                        $(".model-init1").show(); 
+                                        $(".bar").removeClass("actv"); 
+                                       console.log(response);
+                                       setTimeout(function() {  
+                                          window.location.reload();
+                                            }, 2000); 
+
+                                    },
+                                     error: function(xhr, status, error) {
+                                     // Handle errors
+                                     console.error('Error:', xhr.responseText);
+                                     }
+         });
+         
          function package_booking(){   
                     var form_data = new FormData($("#eta_calculaion")[0]);
                         var transport_type = $(".package-list.actv").attr("data-val");
