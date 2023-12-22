@@ -1060,6 +1060,6 @@ img#success-image {
     left: var(--mobile-cont_-_left);
     z-index: 2;
 }
-span.track_request{
+span.track_request,.home-screen{
     color: blue; text-decoration: underline;font-weight: 600;cursor:pointer
 }

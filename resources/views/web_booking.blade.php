@@ -399,10 +399,19 @@
 
                if(data.is_accept == 1)
                {
-                  console.log("accepted");
-                  dataref.off('value');
+                  console.log("accepted"); 
                   $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
+               }
+            }
+            if (data.hasOwnProperty("is_cancelled")) { 
+
+               if(data.is_cancelled == 1)
+               {
+                  console.log("cancelled");
+                  dataref.off('value');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".waiting_fr_driver").html('Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span>');
                }
             }
             });
@@ -436,6 +445,10 @@
                window.open('{{url("/")}}/track/request/'+data_val, '_blank'); 
                // window.location.href='{{url("/")}}/track/request/'+data_val;
             })
+             $(document).on("click",".home-screen",function(){  
+               window.location.href='{{url("/")}}/web-booking';
+            })
+            
             $(document).on("input","#input-dial-number",function(){
                  var response = grecaptcha.getResponse(widgetid);
                  if(response != "")
