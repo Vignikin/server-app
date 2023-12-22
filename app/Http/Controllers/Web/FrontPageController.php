@@ -1324,9 +1324,14 @@ class FrontPageController extends Controller
     }
      public function web_booking()
     {
-
+        $user_name = 'User';
+        if(auth('web')->user())
+        {
+            $user_name = auth('web')->user()->name;
+        }
+     
           // Session::flush();  
-          return view('web_booking');  
+          return view('web_booking',compact('user_name'));  
     }
     public function new_booking()
     {

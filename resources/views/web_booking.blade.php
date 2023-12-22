@@ -364,6 +364,7 @@
          <div id="marker-position"></div>
          <div id="address"></div> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-auth.min.js"></script>
       <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
          async defer></script> 
@@ -387,13 +388,23 @@
          };
          // Initialize Firebase
          firebase.initializeApp(firebaseConfig);   
-         
-         function Listenrequestdata(request_id){
-            alert("test");
-            var dataref = firebase.database().ref('requests/'+request_id);
-             starCountRef.on('value', (snapshot) => {
+         var database = firebase.database();
+         function Listenrequestdata(request_id){ 
+            var dataref = database.ref('requests/'+request_id);
+             dataref.on('value', (snapshot) => {
             const data = snapshot.val();
-            console.log(data);
+            console.log("test");
+            if (data.hasOwnProperty("is_accept")) {
+               console.log("exists");
+
+               if(data.is_accept == 1)
+               {
+                  console.log("accepted");
+                  dataref.off('value');
+                  $(".owner-accept-data").html('<img src="https://i.gifer.com/7efs.gif" id="taxi"">');
+                  $(".waiting_fr_driver").html('Owner accepted your request . Please visit <a href="{{url("/")}}/track/request/'+data.request_id+'">here</a> to track the owner. ');
+               }
+            }
             });
          }
         
@@ -1406,13 +1417,13 @@
                                           var title = "New Page Title";
                                           var newUrl = "{{ url('/') }}/web-booking?request_id="+response.data.id+"";
                                           history.pushState(stateObj, title, newUrl); 
-                                          Listenrequestdata(response.data.id); 
+                                          Listenrequestdata(response.data.id);
                                           setTimeout(function() {  
                                             $(".content-wrapper3").hide();
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
-                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey Ranjith Kumar, Your Booking has Confirmed Successfully.</h5><img src="{{asset("images/taxi.gif")  }}"" id="taxi""><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
+                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/taxi.gif")  }}"" id="taxi""></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
                                            }, 500); 
                                                  setTimeout(function() { 
                                                     $(".waiting_fr_driver").html('Taking more than time.....');
