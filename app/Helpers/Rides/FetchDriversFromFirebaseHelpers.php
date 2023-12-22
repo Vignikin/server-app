@@ -190,6 +190,10 @@ trait FetchDriversFromFirebaseHelpers
                 $no_of_attempts +=3;
 
                 if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+                        
+                        // Update cancel param in firebase
+                        $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
                         $no_driver_request_ids = [];
                         $no_driver_request_ids[0] = $request_detail->id;
                         dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
@@ -223,6 +227,9 @@ trait FetchDriversFromFirebaseHelpers
                 $no_of_attempts +=3;
 
                 if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+
+                        $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
                         $no_driver_request_ids = [];
                         $no_driver_request_ids[0] = $request_detail->id;
                         dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
@@ -296,6 +303,9 @@ trait FetchDriversFromFirebaseHelpers
                 $no_of_attempts +=3;
 
                 if ($request_detail->attempt_for_schedule>$no_of_attempts) {
+
+                    $this->database->getReference('requests/'.$request_detail->id)->update(['is_cancel' => 1]);
+
                         $no_driver_request_ids = [];
                         $no_driver_request_ids[0] = $request_detail->id;
                         dispatch(new NoDriverFoundNotifyJob($no_driver_request_ids));
