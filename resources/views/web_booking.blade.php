@@ -886,6 +886,8 @@
                 if (results[0]) {
                     if(status)
                     {
+                     alert("test");
+
                          countryCode = results[0].address_components.find(component => component.types.includes('country')).short_name; 
                          // alert("dfsdf");
                           $.ajax({
