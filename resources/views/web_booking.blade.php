@@ -401,8 +401,8 @@
                {
                   console.log("accepted");
                   dataref.off('value');
-                  $(".owner-accept-data").html('<img src="https://i.gifer.com/7efs.gif" id="taxi"">');
-                  $(".waiting_fr_driver").html('Owner accepted your request . Please visit <a href="{{url("/")}}/track/request/'+data.request_id+'">here</a> to track the owner. ');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".waiting_fr_driver").html('owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.');
                }
             }
             });
@@ -431,7 +431,11 @@
          @endif
          
          };
-         
+            $(document).on("click",".track_request",function(){
+               var data_val = $(this).attr("data-val"); 
+               window.open('{{url("/")}}/track/request/'+data_val, '_blank'); 
+               // window.location.href='{{url("/")}}/track/request/'+data_val;
+            })
             $(document).on("input","#input-dial-number",function(){
                  var response = grecaptcha.getResponse(widgetid);
                  if(response != "")
