@@ -73,7 +73,11 @@ class RequestAcceptRejectController extends BaseController
 
         // $this->database->getReference('request-meta/'.$request_detail->id.'/'.$driver->id)->remove();
 
-        if ($request->input('is_accept')) {
+
+
+        if ($request->input('is_accept')) { 
+
+            $this->database->getReference('requests/'.$request_detail->id)->update(['is_accept' => 1]);
 
             $this->database->getReference('request-meta/'.$request_detail->id)->remove();
 
