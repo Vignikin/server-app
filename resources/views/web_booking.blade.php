@@ -393,7 +393,18 @@
             var dataref = database.ref('requests/'+request_id);
              dataref.on('value', (snapshot) => {
             const data = snapshot.val();
-            console.log(data);
+            console.log("test");
+            if (data.hasOwnProperty("is_accept")) {
+               console.log("exists");
+
+               if(data.is_accept == 1)
+               {
+                  console.log("accepted");
+                  dataref.off('value');
+                  $(".owner-accept-data").html('<img src="https://i.gifer.com/7efs.gif" id="taxi"">');
+                  $(".waiting_fr_driver").html('Owner accepted your request . Please visit <a href="{{url("/")}}/track/request/'+data.request_id+'">here</a> to track the owner. ');
+               }
+            }
             });
          }
         
@@ -1412,7 +1423,7 @@
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
-                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey Ranjith Kumar, Your Booking has Confirmed Successfully.</h5><img src="{{asset("images/taxi.gif")  }}"" id="taxi""><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
+                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/taxi.gif")  }}"" id="taxi""></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
                                            }, 500); 
                                                  setTimeout(function() { 
                                                     $(".waiting_fr_driver").html('Taking more than time.....');
