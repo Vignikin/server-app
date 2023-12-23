@@ -191,8 +191,10 @@
                            console.log('Success:', response); 
                            $(".content-wrapper").show(); 
                            var response_data = JSON.parse(response);  
-                           $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
-                           $(".model-init1").show(); 
+                         setTimeout(function() { 
+                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/confirmation.gif") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
+                                        $(".model-init1").show(); 
+                                         }, 1500); 
                            $(".bar").removeClass("actv"); 
                              
                                if(response_data.data.is_later == 1) 
