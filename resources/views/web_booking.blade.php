@@ -408,11 +408,13 @@
                if(data.is_accept == 1)
                {
                   cancel_button_showing = true;
-                  console.log("accepted"); 
-                  $(".cancel-booking").html('');
-                  $(".owner-accept-data").html('<img src="{{ asset("images/Accept_ride.gif") }}" id="taxi"">');
-                  $(".waiting_fr_driver").html('<div class="booking-accepted">owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.</div>');
-                  alert("test");
+                  window.location.href='{{url("/")}}/track/request/'+data.request_id;
+                  // cancel_button_showing = true;
+                  // console.log("accepted"); 
+                  // $(".cancel-booking").html('');
+                  // $(".owner-accept-data").html('<img src="{{ asset("images/Accept_ride.gif") }}" id="taxi"">');
+                  // $(".waiting_fr_driver").html('<div class="booking-accepted">owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.</div>');
+                  // alert("test");
                }
             }
             if (data.hasOwnProperty("is_cancel")) { 
@@ -421,7 +423,10 @@
                { 
                   dataref.off('value');
                   $(".owner-accept-data").html('<img src="{{ asset("images/automatic_cancellation.gif") }}" id="taxi"">');
-                  $(".waiting_fr_driver").html('<div class="booking-cancelled">Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span></div>');
+                  $(".waiting_fr_driver").html('<div class="booking-cancelled"> Trip has been cancelled . </div>');
+                    setTimeout(function() { 
+                    window.location.reload();
+                  }, 500);  
                }
             }
             if (data.hasOwnProperty("is_completed")) { 
@@ -434,7 +439,7 @@
                   $(".waiting_fr_driver").html('<div class="booking-cancelled">Your booking has been completed.</div>');
                    setTimeout(function() { 
                     window.location.reload();
-                  }, 200);  
+                  }, 500);  
                  
                }
             }
@@ -1548,7 +1553,7 @@
                                         }
                                     });  
                 } 
-                 
+
          google.maps.event.addDomListener(window, 'load', initAutocomplete);
          google.maps.event.addDomListener(window, 'load', initAutocomplete1);
          google.maps.event.addDomListener(window, 'load', initMap);
