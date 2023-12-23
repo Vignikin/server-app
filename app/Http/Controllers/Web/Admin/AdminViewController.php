@@ -525,7 +525,8 @@ class AdminViewController extends BaseController
 
     public function trackTripDetails(Request $request)
     {
-            
+        print_r($request);
+        exit;
         return view('track-request', compact('request'));
     }
     public function viewServices()
