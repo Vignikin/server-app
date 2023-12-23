@@ -170,7 +170,7 @@
                   <div class="mobile_no">Verify OTP</div>
                   <div class="otp_content">Enter the OTP sent to your mobile <span class="entered-no">9566754418</span></div>
                   <div class="intel-input" style="margin-top: 16px;">
-                     <input type="text" id="input-name1"  style="/* height: 100%; */" placeholder="Enter 4-digit OTP"> 
+                     <input type="text" id="input-name1"  style="/* height: 100%; */" placeholder="Enter 6-digit OTP"> 
                      <div class="otp-error-message-verify" style="display:none">Please enter the mobile number</div>
                      <div class="verify-otp">
                         <div class="text opt-text-button-verify">VERIFY OTP</div>
@@ -182,7 +182,7 @@
                      @csrf
                      <div><img class="logo" alt="Superbidding Logo" src="{{asset('images/email/logo1.jpeg')  }}"></div>
                      <div class="mobile_no"> Enter Your Mobile Number</div>
-                     <div class="otp_content"> A 4-digit OTP will be sent on SMS</div>
+                     <div class="otp_content"> A 6-digit OTP will be sent on SMS</div>
                      <div class="name-opt" style=" text-align: left; margin-top: 15px;opacity: 0.7;">Name (optional)</div>
                      <div class="intel-input" style="margin-top: 8px;"> 
                         <input type="text" id="input-name" name="name" style="/* height: 100%; */">
