@@ -1541,7 +1541,7 @@
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
                                             $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>'); 
-                                           }, 500); 
+                                           }, 1000); 
                                                  setTimeout(function() { 
                                                    if(cancel_button_showing === false)
                                                    {
