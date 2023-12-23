@@ -222,8 +222,8 @@ class AdhocWebBookingController extends BaseController
             $request_params['offerred_ride_fare']=$request->offerred_ride_fare;
         }
 
-        if($request->input('is_later')&&$request->has('trip_start_time')){
-
+        if($request->input('is_later') == 1 && $request->has('trip_start_time')){ 
+             $request_params['is_later']=1;
             $request_params['trip_start_time'] = Carbon::parse($request->trip_start_time, $user_detail->timezone)->setTimezone('UTC')->toDateTimeString();
     
         }
@@ -337,7 +337,7 @@ class AdhocWebBookingController extends BaseController
      * 
      * */
     public function cancelRide(ValidatorRequest $request){
-          
+
         // Validate Request id
         $request->validate([
             'request_id'=>'required|exists:requests,id',

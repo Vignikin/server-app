@@ -56,7 +56,7 @@
                   {{$booking_data[0]->name}} 
                   <div class="price-vehicle-desc">{{$booking_data[0]->short_description}}</div>
                </div>
-               <div class="price-data-value" style="top: 0px;right:5px"><img src="http://localhost/super-bidding/public/storage/uploads/types/images/GvThL6KmrKzt6rVwtEi2xzVHybl7ML9zutl3pfra.jpg" id="vehicle-image"></div>
+               <div class="price-data-value" style="top: 0px;right:5px"><img src="{{$booking_data[0]->vehicle_icon}}" id="vehicle-image"></div>
             </div>
          </div>
          <div class="fare-breaup-details">

@@ -45,6 +45,7 @@ class EtaTransformer extends Transformer
         $response =  [
             'zone_type_id' => $zone_type->id,
             'name' => $zone_type->vehicleType->name,
+            'vehicle_icon' => $zone_type->vehicleType->icon,
             'description'=> $zone_type->vehicleType->description,
             'short_description'=> $zone_type->vehicleType->short_description,
             'supported_vehicles'=> $zone_type->vehicleType->supported_vehicles,
