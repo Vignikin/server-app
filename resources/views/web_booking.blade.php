@@ -291,7 +291,7 @@
                   @endif
                   @if($modules == "both" || $modules == "delivery")
                   <div class="nav-tab">
-                     <a class="item-name out_station" data-val="delivery">DELIVERY</a>
+                     <a class="item-name out_station @if($modules == 'delivery') actv @endif" data-val="delivery">DELIVERY</a>
                      <span class="tool-tips">One-way and Round-trip options for inter-city travel</span>
                   </div>
                   @endif
@@ -395,6 +395,7 @@
                 measurementId: "{{get_settings('firebase-measurement-id')}}"
          };
          // Initialize Firebase
+         var cancel_button_showing = false;
          firebase.initializeApp(firebaseConfig);   
          var database = firebase.database();
          function Listenrequestdata(request_id){ 
@@ -406,19 +407,20 @@
 
                if(data.is_accept == 1)
                {
+                  cancel_button_showing = true;
                   console.log("accepted"); 
                   $(".cancel-booking").html('');
-                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/Accept_ride.gif") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('<div class="booking-accepted">owner accepted your request. please visit <span class="track_request" data-val='+data.request_id+'>here</span> to track the owner.</div>');
+                  alert("test");
                }
             }
             if (data.hasOwnProperty("is_cancel")) { 
-
+ 
                if(data.is_cancel == 1)
-               {
-                  console.log("cancelled");
+               { 
                   dataref.off('value');
-                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/automatic_cancellation.gif") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('<div class="booking-cancelled">Sorry No drivers avilable! Trip has been cancelled . Go to <span class="home-screen">homepage</span></div>');
                }
             }
@@ -428,11 +430,11 @@
                {
                   console.log("Completed");
                   dataref.off('value');
-                  $(".owner-accept-data").html('<img src="{{ asset("images/success.jpeg") }}" id="taxi"">');
+                  $(".owner-accept-data").html('<img src="{{ asset("images/confirmation.gif") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('<div class="booking-cancelled">Your booking has been completed.</div>');
                    setTimeout(function() { 
                     window.location.reload();
-                  }, 1000);  
+                  }, 200);  
                  
                }
             }
@@ -1475,7 +1477,7 @@
                                     data: request_id,
                                     dataType: 'json',  
                                     success: function(response) {
-                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Cancelled Successfully</div>  </div>  </div>');
+                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/cancellation.png") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Cancelled Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
                                        console.log(response);
@@ -1516,7 +1518,7 @@
                                         // Handle the successful response
                                         $(".content-wrapper").show(); 
                                         console.log('Success:', response);   
-                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
+                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/confirmation.gif") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
                                         $(".bar").removeClass("actv"); 
                                           var stateObj = { data: response.data }; // You can pass any data as the state object
@@ -1529,11 +1531,15 @@
                                             $(".detail-engine-data").hide();
                                             $(".content-wrapper4").show(); 
                                             $(".model-init1").hide(); 
-                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/taxi.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: -28px;">waiting for Driver\'s accept....</div></div>'); 
+                                            $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>'); 
                                            }, 500); 
                                                  setTimeout(function() { 
-                                                    $(".waiting_fr_driver").html('Taking more than time.....');
-                                                    $(".waiting-for-booking").append('<div class="cancel-booking" data-val="'+response.data.id+'" style=""><div class="cancel_button">Cancel Booking</div></div>');
+                                                   if(cancel_button_showing === false)
+                                                   {
+                                                      $(".waiting_fr_driver").html('Taking more than time.....');
+                                                      $(".waiting-for-booking").append('<div class="cancel-booking" data-val="'+response.data.id+'" style=""><div class="cancel_button">Cancel Booking</div></div>');
+                                                   }
+                                                    
                                            }, 10000); 
                                         },
                                         error: function(xhr, status, error) {

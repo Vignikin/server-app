@@ -1328,6 +1328,7 @@ class FrontPageController extends Controller
         $modules = get_settings('enable_modules_for_applications'); 
         $show_rental_ride_feature = get_settings('show_rental_ride_feature'); 
         $user_name = 'User';
+         
         if(auth('web')->user())
         { 
             // if ($request->has('request_id')) {
