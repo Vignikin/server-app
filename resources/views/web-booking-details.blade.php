@@ -158,6 +158,7 @@
               form_data.append("vehicle_type",'{{$booking_data[0]->zone_type_id}}'); 
               form_data.append("mobile",'{{$user_detail->mobile}}');
               form_data.append("country_code",'{{Session("dial_code")}}');
+              var poc_name = $("#model-promo-input-name").val();
               @if(isset($request->booking_type))
                form_data.append("is_later",1);
                form_data.append("trip_start_time",'{{date("Y-m-d H:i:s",strtotime($request->date))}}');
@@ -210,7 +211,7 @@
                                $(".detail-engine-data").hide();
                                $(".content-wrapper4").show(); 
                                $(".model-init1").hide(); 
-                               $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>');  
+                               $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey '+poc_name+', Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>');  
                                                  setTimeout(function() { 
                                                    if(cancel_button_showing === false)
                                                    {
