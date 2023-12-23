@@ -408,7 +408,9 @@
                if(data.is_accept == 1)
                {
                   cancel_button_showing = true;
+                   setTimeout(function() { 
                   window.location.href='{{url("/")}}/track/request/'+data.request_id;
+                   }, 1000);  
                   // cancel_button_showing = true;
                   // console.log("accepted"); 
                   // $(".cancel-booking").html('');
