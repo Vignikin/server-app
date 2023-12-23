@@ -152,5 +152,82 @@
       </div>
    </div>
 </div>
- 
+<script>
+   function confirm_booking(){ 
+       var form_data = new FormData($("#eta_calculaion")[0]);
+              form_data.append("vehicle_type",'{{$booking_data[0]->zone_type_id}}'); 
+              form_data.append("mobile",'{{$user_detail->mobile}}');
+              form_data.append("country_code",'{{Session("dial_code")}}');
+              @if(isset($request->booking_type))
+               form_data.append("is_later",1);
+               form_data.append("trip_start_time",'{{date("Y-m-d H:i:s",strtotime($request->date))}}');
+              @endif
+              @if($transport_type == "delivery")
+              const goods_types_name = document.querySelector('input[name="goods_types"]:checked');
+               const selectedValue = goods_types_name.value;
+               form_data.append("drop_poc_name",$("#model-promo-input-name").val());
+               form_data.append("drop_poc_mobile",$("#model-promo-input-number").val());
+               form_data.append("drop_poc_instruction",$("#model-promo-input-ins").val());
+               if(selectedValue == "qty")
+               {
+                   form_data.append("goods_type_quantity",$("#model-promo-input-qty").val());
+               }
+               else{
+                   form_data.append("goods_type_quantity",selectedValue);
+               }
+               
+               form_data.append("goods_type_id",$("#goods_type").val());
+               @endif
+              $.ajax({
+                       url: 'adhoc-create-request', 
+                       type: 'POST',
+                       data: form_data,
+                       dataType: 'html', 
+                       processData: false,
+                       contentType: false, 
+                       success: function(response) {
+                           // Handle the successful response
+                           console.log('Success:', response); 
+                           $(".content-wrapper").show(); 
+                           var response_data = JSON.parse(response);  
+                           $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
+                           $(".model-init1").show(); 
+                           $(".bar").removeClass("actv"); 
+                           
+                             setTimeout(function() {  
+                               if(response_data.data.is_later == 1) 
+                               {
+                                 window.location.reload();
+
+                               }
+                               else{
+                                 var stateObj = { data: response_data.data }; // You can pass any data as the state object
+                               var title = "New Page Title";
+                               var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
+                               history.pushState(stateObj, title, newUrl); 
+                               Listenrequestdata(response_data.data.id);
+                               $(".content-wrapper3").hide();
+                               $(".detail-engine-data").hide();
+                               $(".content-wrapper4").show(); 
+                               $(".model-init1").hide(); 
+                               $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey {{$user_name}}, Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>');  
+                                                 setTimeout(function() { 
+                                                   if(cancel_button_showing === false)
+                                                   {
+                                                      $(".waiting_fr_driver").html('Taking more than time.....');
+                                                      $(".waiting-for-booking").append('<div class="cancel-booking" data-val="'+response.data.id+'" style=""><div class="cancel_button">Cancel Booking</div></div>');
+                                                   }
+                                                    
+                                           }, 10000);                             
+                                
+                           },
+                           error: function(xhr, status, error) {
+                           // Handle errors
+                           console.error('Error:', xhr.responseText);
+                           }
+                       }); 
+   
+   } 
+   
+</script>
 @endif
