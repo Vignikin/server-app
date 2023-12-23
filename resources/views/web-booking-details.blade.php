@@ -194,8 +194,7 @@
                            $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/success.jpeg") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                            $(".model-init1").show(); 
                            $(".bar").removeClass("actv"); 
-                           
-                             setTimeout(function() {  
+                             
                                if(response_data.data.is_later == 1) 
                                {
                                  window.location.reload();
@@ -221,7 +220,8 @@
                                                     
                                            }, 10000);                             
                                 
-                           },
+                           }
+                        },
                            error: function(xhr, status, error) {
                            // Handle errors
                            console.error('Error:', xhr.responseText);
