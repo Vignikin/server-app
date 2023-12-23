@@ -1209,8 +1209,8 @@
          const appVerifier = window.recaptchaVerifier;
          $(".bar").addClass("actv");  
          var this_data = $(this);
-         // firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-         // .then((confirmationResult) => {
+         firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+         .then((confirmationResult) => {
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code).
           // window.confirmationResult = confirmationResult; 
@@ -1226,11 +1226,11 @@
             $(".opt-text-button-verify").removeClass("actv");
             $("#input-name1").val('');
           // ...
-         // }).catch((error) => {
-         //     $(".otp-error-message").html('OTP Not sent . Please check the Number');
-         //     $(".otp-error-message").show();
-         //     $(".bar").removeClass("actv"); 
-         // }); 
+         }).catch((error) => {
+             $(".otp-error-message").html('OTP Not sent . Please check the Number');
+             $(".otp-error-message").show();
+             $(".bar").removeClass("actv"); 
+         }); 
          }
          // else{
          //       $(".otp-error-message").show();
@@ -1267,7 +1267,7 @@
          var csrfToken = $('meta[name="csrf-token"]').attr('content'); 
          var form_data = new FormData($("#Adduser")[0]);
          
-         // confirmationResult.confirm(code).then((result) => { 
+         confirmationResult.confirm(code).then((result) => { 
             // User signed in successfully. 
                 grecaptcha.reset(window.recaptchaWidgetId);    
                   $.ajax({
@@ -1298,13 +1298,13 @@
                 }); 
                
              
-            // }).catch((error) => {
-            //     console.log("bad verification codesss");
-            //     $(".otp-error-message-verify").html('OTP is Invalid');
-            //     $(".otp-error-message-verify").show();
-            //     $(".opt-text-button-verify").addClass("actv"); 
-            //     $(".bar").removeClass("actv"); 
-            // }); 
+            }).catch((error) => {
+                console.log("bad verification codesss");
+                $(".otp-error-message-verify").html('OTP is Invalid');
+                $(".otp-error-message-verify").show();
+                $(".opt-text-button-verify").addClass("actv"); 
+                $(".bar").removeClass("actv"); 
+            }); 
          }
          else{
             $(".otp-error-message-verify").html('Please Enter the OTP');
