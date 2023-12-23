@@ -1526,8 +1526,8 @@
                                         $(".content-wrapper").show(); 
                                         console.log('Success:', response);   
                                         
-                                        $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/confirmation.gif") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
-                                        $(".model-init1").show(); 
+                                        // $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/confirmation.gif") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
+                                        // $(".model-init1").show(); 
                                        
                                         $(".bar").removeClass("actv"); 
                                           var stateObj = { data: response.data }; // You can pass any data as the state object
