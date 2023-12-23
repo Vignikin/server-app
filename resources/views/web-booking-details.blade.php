@@ -40,7 +40,7 @@
       <div class="drop_location" style="padding-bottom: 10px;">Booking Information</div>
       <div class="booking_info">
          <div id="mapImageContainer">
-            <img id="mapImage" style="width:513px;height:250px" src="https://maps.googleapis.com/maps/api/staticmap?center={{$request->lat}},{{$request->lng}}&amp;zoom=15&amp;size=600x300&amp;markers=icon:http://maps.google.com/mapfiles/ms/icons/blue-dot.png|{{$request->lat}},{{$request->lng}}&amp;key=AIzaSyA-n6_B74MUzv2walwhMHqyfWqH92J6Nno">
+            <img id="mapImage" style="width:100%" src="https://maps.googleapis.com/maps/api/staticmap?center={{$request->lat}},{{$request->lng}}&amp;zoom=15&amp;size=600x300&amp;markers=icon:http://maps.google.com/mapfiles/ms/icons/blue-dot.png|{{$request->lat}},{{$request->lng}}&amp;key=AIzaSyA-n6_B74MUzv2walwhMHqyfWqH92J6Nno">
          </div>
          <div class="pick_ups_location" style="padding-top:10px">
             <div class="left-text">Pickup </div>
