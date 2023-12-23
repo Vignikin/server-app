@@ -427,7 +427,7 @@
                   $(".owner-accept-data").html('<img src="{{ asset("images/automatic_cancellation.gif") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('<div class="booking-cancelled"> Trip has been cancelled . </div>');
                     setTimeout(function() { 
-                    window.location.reload();
+                    window.location.href='{{url("/")}}/web-booking';
                   }, 500);  
                }
             }
@@ -440,7 +440,7 @@
                   $(".owner-accept-data").html('<img src="{{ asset("images/confirmation.gif") }}" id="taxi"">');
                   $(".waiting_fr_driver").html('<div class="booking-cancelled">Your booking has been completed.</div>');
                    setTimeout(function() { 
-                    window.location.reload();
+                     window.location.href='{{url("/")}}/web-booking';
                   }, 500);  
                  
                }
