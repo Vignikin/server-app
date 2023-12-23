@@ -1345,7 +1345,7 @@ class FrontPageController extends Controller
         }
 
      
-          // Session::flush();  
+          Session::flush();  
           return view('web_booking',compact('user_name','modules','show_rental_ride_feature'));  
     }
     public function new_booking()
