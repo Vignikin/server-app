@@ -191,10 +191,10 @@
                            console.log('Success:', response); 
                            $(".content-wrapper").show(); 
                            var response_data = JSON.parse(response);  
-                         setTimeout(function() { 
+                         
                                         $(".model-init1").html('<div class="model-wrapper"><div class="model-content">  <div class="booking-confirmation image"> <img src="{{ asset("images/confirmation.gif") }}" id="success-image"> </div>   <div class="booking-confirmation-text">Booking Confirmed Successfully</div>  </div>  </div>');
                                         $(".model-init1").show(); 
-                                         }, 1500); 
+                                        
                            $(".bar").removeClass("actv"); 
                              
                                if(response_data.data.is_later == 1) 
@@ -208,11 +208,13 @@
                                var newUrl = "{{ url('/') }}/web-booking?request_id="+response_data.data.id+"";
                                history.pushState(stateObj, title, newUrl); 
                                Listenrequestdata(response_data.data.id);
+                               setTimeout(function() { 
                                $(".content-wrapper3").hide();
                                $(".detail-engine-data").hide();
                                $(".content-wrapper4").show(); 
                                $(".model-init1").hide(); 
                                $(".content-wrapper4").html('<div class="waiting-for-booking"><h5 style="line-height: 32px;">Hey '+poc_name+', Your Booking has Confirmed Successfully.</h5><div class="owner-accept-data"><img src="{{asset("images/ride search.gif")  }}" id="taxi"></div><div class="waiting_fr_driver" style="font-size: 22px;color: black;font-weight: 600; position: relative;text-align: center !important;display: flex; justify-content: center;top: 0px;">waiting for Driver\'s accept....</div></div>');  
+                            }, 500);  
                                                  setTimeout(function() { 
                                                    if(cancel_button_showing === false)
                                                    {
