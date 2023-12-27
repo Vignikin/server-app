@@ -673,7 +673,13 @@ class SettingsSeeder extends Seeder
         //     'option_value' => null,
         //     'group_name' => null,
         // ],
-
+        SettingSlug::ENABLE_VASE_MAP => [
+            'category'=>SettingCategory::MAP_SETTINGS,
+            'value' => '1',
+            'field' => SettingValueType::SELECT,
+            'option_value' => '{"yes":1,"no":0}',
+            'group_name' => null,
+        ],
         SettingSlug::GOOGLE_MAP_KEY => [
             'category'=>SettingCategory::MAP_SETTINGS,
             'value' => 'AIzaSyB4KttZBNVcz6Q52gaIgKK8-3h2Qk8RA3Y',
