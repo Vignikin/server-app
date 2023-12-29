@@ -1,9 +1,9 @@
 <div class="msg_history">
           <div class="card-header profile" style=" box-shadow: none !important; background:none">
         <div class="chat-user-info d-flex align-items-center">
-            <div class="chat-user-info-img">
+          <!--   <div class="chat-user-info-img">
                 <img class="avatar-img" src="{{$user_data->profile_picture}}"  alt="Image Description">
-            </div>
+            </div> -->
             <div class="chat-user-info-content">
                 <h5 class="mb-0 text-capitalize"> 
                     {{$user_data->name}}</h5>
