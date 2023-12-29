@@ -80,7 +80,7 @@ class UserTransformer extends Transformer
         $params['contact_us_mobile1'] =  get_settings('contact_us_mobile1');
         $params['contact_us_mobile2'] =  get_settings('contact_us_mobile2');
         $params['contact_us_link'] =  get_settings('contact_us_link');
-        $params['shoW_wallet_money_transfer_feature_on_mobile_app'] = get_settings('shoW_wallet_money_transfer_feature_on_mobile_app');
+        $params['show_wallet_money_transfer_feature_on_mobile_app'] = get_settings('shoW_wallet_money_transfer_feature_on_mobile_app');
         $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');
         $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app');
         $notifications_count= UserDriverNotification::where('user_id',$user->id)
