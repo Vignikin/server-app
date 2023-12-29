@@ -98,15 +98,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('user.upload.profile-picture');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -122,15 +118,12 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('driver.upload.documents');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename, $driver_id);
-
-        Storage::put($filePath, $image);
 
         return $filename;
     }
@@ -145,16 +138,12 @@ class ImageUploader implements ImageUploaderContract
         $this->validateFile();
 
         $config = $this->config('request.upload.delivery-proof');
-
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+    
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -170,15 +159,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('fleets.upload.images');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename, $fleet_id);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -194,15 +179,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('driver.upload.profile-picture');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -218,15 +199,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('pushnotification.upload.images');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -292,31 +269,33 @@ class ImageUploader implements ImageUploaderContract
     }
 
 
-    /**
-     * Save the VehicleType Image.
-     *
-     * @return string Returns the saved filename
-     */
     public function saveVehicleTypeImage()
     {
         $this->validateFile();
 
         $config = $this->config('types.upload.images');
-       
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+        // $this->setDefaultResize(data_get($config, 'image.store_resolution'));
 
-        $image = $this->encodeImage();
+        // $image = $this->encodeImage();
+        // $image = $this->file;
 
-        $filename = $this->hashGenerator->extension($this->format)->make();
+        // $image_extension = $this->file->getClientOriginalExtension();
 
-        $filePath = file_path(data_get($config, 'path'), $filename);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
-        Storage::put($filePath, $image);
+        // $filename = $this->hashGenerator->extension($this->format)->make();
 
+        // $filePath = file_path(data_get($config, 'path'), $filename); 
+      
         return $filename;
-    }
 
+
+    }
     /**
      * Save the VehicleType Image.
      *
@@ -328,15 +307,12 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('company.upload.images');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename, $admin_id);
-
-        Storage::put($filePath, $image);
 
         return $filename;
     }
@@ -346,16 +322,12 @@ class ImageUploader implements ImageUploaderContract
         $this->validateFile();
 
         $config = $this->config('owner.upload.documents');
-
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename, $ownerId);
-
-        Storage::put($filePath, $image);
+     
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -531,15 +503,12 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('fleets.upload.images');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
 
         return $filename;
     }
@@ -556,15 +525,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('fleets.upload.images');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }
@@ -579,15 +544,11 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('banner.upload.banner-image');
 
-        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
-
-        $image = $this->encodeImage();
-
-        $filename = $this->hashGenerator->extension($this->format)->make();
-
-        $filePath = file_path(data_get($config, 'path'), $filename);
-
-        Storage::put($filePath, $image);
+        $image = $this->file;
+        $file_format = $image->getClientOriginalExtension(); 
+        $filename = $this->hashGenerator->extension($file_format)->make();  
+        $filePath = file_path(data_get($config, 'path'),''); 
+        $path = Storage::putFileAs($filePath, $image, $filename); 
 
         return $filename;
     }

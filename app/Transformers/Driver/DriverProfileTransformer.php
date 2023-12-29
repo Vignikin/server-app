@@ -321,6 +321,8 @@ class DriverProfileTransformer extends Transformer
             } 
 
 
+            $params['enable_vase_map'] = get_settings(Settings::ENABLE_VASE_MAP);
+
 
         return $params;
     }

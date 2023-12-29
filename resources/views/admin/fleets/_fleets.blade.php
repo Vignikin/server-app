@@ -35,9 +35,9 @@
                                 <tr class="odd">
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $result->driverDetail ? $result->driverDetail->name : '-' }}</td>
-                                    <td>{{ $result->vehicleType->name }}</td>
-                                    <td>{{ $result->carBrand->name }}</td>
-                                    <td>{{ $result->carModel->name }}</td>
+                                    <td>{{ $result->vehicleType->name ?? '-' }}</td>
+                                    <td>{{ $result->carBrand->name ?? '-' }}</td>
+                                    <td>{{ $result->carModel->name ?? '-' }}</td>
                                     <td class="manage-driver text-center">
                                     <a href="{{url('fleets/document/view', $result->id) }}" class="btn btn-social-icon btn-bitbucket">
                                     <i class="fa fa-file-code-o"></i>
