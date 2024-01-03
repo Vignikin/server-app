@@ -41,14 +41,6 @@ class LeaderBoardEarningsTransformer extends Transformer
 
         $params['profile_picture'] =  $driver->profile_picture;
 
-        // $params =  [
-        //     'driver_id' => $request['driver_id'],
-        //     'driver_name' => $request['name'],
-        //     'commission' => $request['commission'],
-
-        // ];
-
-
         return $params;
     }
 
