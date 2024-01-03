@@ -28,9 +28,11 @@ class EarningsController extends BaseController
 {
     protected $request;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request,Database $database)
     {
         $this->request = $request;
+        $this->database = $database;
+        
     }
     /**
     * Today-Earnings
