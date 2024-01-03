@@ -196,9 +196,9 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
             $date_array = [$current_date->startOfWeek()->toDateString(),$current_date->endOfWeek()->toDateString()];
         } elseif ($date_option == DateOptions::LAST_WEEK) {
             $date_array = [$current_date->subWeek()->toDateString(), $current_date->startOfWeek()->toDateString()];
-        } elseif ($date_option == DateOptions::MONTH) {
+        } elseif ($date_option == DateOptions::CURRENT_MONTH) {
             $date_array = [$current_date->startOfMonth()->toDateString(), $current_date->endOfMonth()->toDateString()];
-        } elseif ($date_option == DateOptions::YEAR) {
+        } elseif ($date_option == DateOptions::CURRENT_YEAR) {
             $date_array = [$current_date->startOfYear()->toDateString(), $current_date->endOfYear()->toDateString()];
         } else {
             $date_array = [];
