@@ -182,7 +182,7 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
     $vehicle_type = $request->vehicle_type;
     $trip_status = $request->trip_status;
     $payment_opt = $request->payment_opt;
-        $current_date = Carbon::now(auth()->user()->timezone);
+     $current_date = Carbon::now(auth()->user()->timezone);
 
     // Initialize an empty date array
     $date_array = [];
@@ -192,13 +192,13 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
         } elseif ($date_option == DateOptions::YESTERDAY) {
             $yesterday_date = Carbon::yesterday()->format('Y-m-d');
             $date_array = [$yesterday_date,$yesterday_date];
-        } elseif ($date_option == DateOptions::LAST_WEEK) {
+        } elseif ($date_option == DateOptions::WEEK) {
             $date_array = [$current_date->startOfWeek()->toDateString(),$current_date->endOfWeek()->toDateString()];
         } elseif ($date_option == DateOptions::LAST_WEEK) {
             $date_array = [$current_date->subWeek()->toDateString(), $current_date->startOfWeek()->toDateString()];
-        } elseif ($date_option == DateOptions::CURRENT_MONTH) {
+        } elseif ($date_option == DateOptions::MONTH) {
             $date_array = [$current_date->startOfMonth()->toDateString(), $current_date->endOfMonth()->toDateString()];
-        } elseif ($date_option == DateOptions::CURRENT_YEAR) {
+        } elseif ($date_option == DateOptions::YEAR) {
             $date_array = [$current_date->startOfYear()->toDateString(), $current_date->endOfYear()->toDateString()];
         } else {
             $date_array = [];
@@ -220,11 +220,9 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
     {
     $data = RequestRequest::whereDate('created_at', $current_date->format("Y-m-d"));
 
-    // Query your RequestRequest model
     }
 
 
-    // Now, apply custom filters using RequestFilter
     $filteredData = $queryFilter->builder($data)->customFilter(new RequestFilter)->defaultSort('created_at')->get();
 
         $filename = "$request->model Report-".date('ymdis').'.'.$format;
@@ -233,13 +231,6 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
 
         return $filename;
 
-
-    // $filename = "$request->model Report-".date('ymdis').'.'.$format;
-
-    // // Export the filtered data
-    // Excel::store(new TravelExport($filteredData), $filename, 'local');
-
-    // return response()->download(storage_path("app/$filename"));
 }
     public function downloadOwnerReport(Request $request, QueryFilterContract $queryFilter)
     {
