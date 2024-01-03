@@ -39,7 +39,7 @@ class LeaderBoardEarningsTransformer extends Transformer
         
         $driver = Driver::where('id', $request['driver_id'])->first();
 
-        $params['profile_picture'] =  $driver->profile_picture,;
+        $params['profile_picture'] =  $driver->profile_picture;
 
         // $params =  [
         //     'driver_id' => $request['driver_id'],
