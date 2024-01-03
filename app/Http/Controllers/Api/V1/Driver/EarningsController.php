@@ -11,6 +11,13 @@ use App\Base\Constants\Master\PaymentType;
 use App\Http\Controllers\Api\V1\BaseController;
 use App\Base\Constants\Setting\Settings;
 use App\Base\Constants\Auth\Role;
+use Illuminate\Http\Request as ValidatorRequest;
+use Kreait\Firebase\Contract\Database;
+use Sk\Geohash\Geohash;
+use App\Transformers\Driver\LeaderBoardEarningsTransformer;
+use App\Transformers\Driver\LeaderBoardTripsTransformer;
+use App\Models\Request\DriverRejectedRequest;
+use App\Models\Request\RequestRating;
 
 /**
  * @group Driver Earnings
@@ -482,4 +489,208 @@ class EarningsController extends BaseController
         return response()->json(['success'=>true,'message'=>'earnings_report','data'=>['from_date'=>$converted_from_date,'to_date'=>$converted_to_date,'total_trips_count'=>$total_trips,'total_trip_kms'=>$total_trip_kms,'total_earnings'=>$total_earnings,'total_cash_trip_amount'=>$total_cash_trip_amount,'total_wallet_trip_amount'=>$total_wallet_trip_amount,'total_cash_trip_count'=>$total_cash_trip_count,'total_wallet_trip_count'=>$total_wallet_trip_count,'currency_symbol'=>$currency_symbol,'total_hours_worked'=>$total_hours_worked]]);
 
     }
+    /**
+     * Driver Leaderboard by their earnings
+     * @bodyParam current_lat double required current lat of the driver
+     * @bodyParam current_lng double required current lng of the driver
+     * 
+     * */
+    public function leaderBoardEarnings(ValidatorRequest $request)
+    {
+       $nearest_driver_ids = $this->getFirebaseDrivers($request);
+
+
+    // Get the current date
+    $currentDate = Carbon::today();
+
+    $request = Request::whereDate('trip_start_time', $currentDate)
+        ->join('request_bills', 'requests.id', '=', 'request_bills.request_id')
+        ->join('drivers', 'requests.driver_id', '=', 'drivers.id')
+        ->select('drivers.name', 'requests.driver_id', DB::raw('COUNT(request_bills.id) as request_count'), DB::raw('ROUND(SUM(driver_commision), 2) as commission'))
+        ->groupBy('requests.driver_id', 'drivers.name')
+        ->orderBy('commission', 'desc')
+        ->whereIn('requests.driver_id', $nearest_driver_ids)
+        ->limit(10)
+        ->get()
+        ->toArray();
+
+        $requests = fractal($request, new LeaderBoardEarningsTransformer);
+
+
+        return $this->respondSuccess($requests);
+
+
+    }
+    /**
+     * Driver Leaderboard by their earnings
+     * @bodyParam current_lat double required current lat of the driver
+     * @bodyParam current_lng double required current lng of the driver
+     * 
+     * */
+    public function leaderBoardTrips(ValidatorRequest $request)
+    {
+
+        $nearest_driver_ids = $this->getFirebaseDrivers($request);
+
+        // Get the current date
+        $currentDate = Carbon::today();
+
+        $driver_trip = DB::table('requests')
+            ->join('drivers', 'requests.driver_id', '=', 'drivers.id')
+            ->whereIn('requests.driver_id', $nearest_driver_ids)
+            ->whereDate('requests.trip_start_time', '=', $currentDate)
+            ->select('drivers.name', 'drivers.id as driver_id', DB::raw('count(*) as total'))
+            ->groupBy('drivers.id', 'drivers.name')
+            ->orderBy('total', 'desc')
+            ->limit(10)
+            ->get()
+            ->toArray();
+        // dd($driver_trip);
+
+        $driver_trips = fractal($driver_trip, new LeaderBoardTripsTransformer);
+
+        return $this->respondSuccess($driver_trips);
+
+
+    }
+   /**
+    * Get Drivers from firebase
+    */
+    public function getFirebaseDrivers($request)
+    {
+        $pick_lat = $request->current_lat;
+        $pick_lng = $request->current_lng;
+
+        // NEW flow
+        $driver_search_radius = get_settings('driver_search_radius')?:30;
+
+
+        $radius = kilometer_to_miles($driver_search_radius);
+
+        $calculatable_radius = ($radius/2);
+
+        $calulatable_lat = 0.0144927536231884 * $calculatable_radius;
+        $calulatable_long = 0.0181818181818182 * $calculatable_radius;
+
+        $lower_lat = ($pick_lat - $calulatable_lat);
+        $lower_long = ($pick_lng - $calulatable_long);
+
+
+        $higher_lat = ($pick_lat + $calulatable_lat);
+        $higher_long = ($pick_lng + $calulatable_long);
+
+        $g = new Geohash();
+
+        $lower_hash = $g->encode($lower_lat,$lower_long, 12);
+        $higher_hash = $g->encode($higher_lat,$higher_long, 12);
+
+        $conditional_timestamp = Carbon::now()->subMinutes(7)->timestamp;
+
+        $fire_drivers = $this->database->getReference('drivers')->orderByChild('g')->startAt($lower_hash)->endAt($higher_hash)->getValue();
+
+                $firebase_drivers = [];
+
+        $i=-1;
+
+        foreach ($fire_drivers as $key => $fire_driver) {
+            $i +=1;
+
+                $distance = distance_between_two_coordinates($pick_lat,$pick_lng,$fire_driver['l'][0],$fire_driver['l'][1],'K');
+
+                if($distance <= $driver_search_radius){
+
+                    $firebase_drivers[$fire_driver['id']]['distance']= $distance;
+
+                }   
+
+        }
+
+
+           if (!empty($firebase_drivers)) {
+
+            $nearest_driver_ids = [];
+
+                foreach ($firebase_drivers as $key => $firebase_driver) {
+
+                    $nearest_driver_ids[]=$key;
+                }
+
+            }else{
+
+                $nearest_driver_ids=[];
+            }
+
+
+
+            return $nearest_driver_ids;
+
+    
+    }
+    /**
+    * All-Earnings
+    * @responseFile responses/driver/today-earnings.json
+    */
+    public function allEarnings()
+    {
+        if(access()->hasRole(Role::OWNER)){
+
+            return $this->ownerEarningsIndex();
+
+        }
+        $driver = auth()->user()->driver;
+
+        $current_date = Carbon::now();//->subDays(1)
+
+        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+
+        $converted_current_date = Carbon::parse($current_date)->setTimezone($timezone)->format('jS M Y');
+
+        $total_trips = $this->request->where('driver_id', $driver->id)->where('is_completed', 1)->get()->count();
+// Request rejected
+
+        $rejected_rides = DriverRejectedRequest::where('driver_id', $driver->id)->get()->count();
+
+        $overall_trips_today = $total_trips + $rejected_rides;
+
+        // Total Trip kms
+        $total_trip_kms = $this->request->where('driver_id', $driver->id)->where('is_completed', 1)->sum('total_distance');
+        // Total Earnings
+        $total_earnings = RequestBill::whereHas('requestDetail', function ($query) use ($driver) {
+            $query->where('driver_id', $driver->id)->where('is_completed', 1);
+        })->sum('driver_commision');
+
+        //Total cash trip amount
+        $total_cash_trip_amount = RequestBill::whereHas('requestDetail', function ($query) use ($driver) {
+            $query->where('driver_id', $driver->id)->where('is_completed', 1)->where('payment_opt', '1'); //cash
+        })->sum('driver_commision');
+
+        // Driver duties
+        $driver_duties = DriverAvailability::select(DB::raw(" driver_id, date(online_at) AS working_date, SUM(duration) AS total_hours_worked"))->groupBy(DB::raw("driver_id, date(online_at)"))->first();
+
+        $total_hours_worked = $driver_duties?$driver_duties->total_hours_worked:0;
+
+        $total_hours_worked = $total_hours_worked>60?round($total_hours_worked/60, 3).' Hrs':$total_hours_worked.' Mins';
+
+        // Total Wallet trip amount
+        $total_wallet_trip_amount = RequestBill::whereHas('requestDetail', function ($query) use ($driver) {
+            $query->where('driver_id', $driver->id)->where('is_completed', 1)->where('payment_opt', '2'); //cash
+        })->sum('driver_commision');
+
+        $total_cash_trip_count = $this->request->where('driver_id', $driver->id)->where('is_completed', 1)->where('payment_opt', '1')->get()->count();
+
+        $total_wallet_trip_count = $this->request->where('driver_id', $driver->id)->where('is_completed', 1)->where('payment_opt', '2')->get()->count();
+
+        $currency_symbol = auth()->user()->countryDetail->currency_symbol;
+
+// total_request_recevied
+
+        $total_request_recevied = $rejected_rides +  $total_trips;
+
+        $rating = round($driver->rating, 2);
+
+
+        return response()->json(['success'=>true,'message'=>'overall_earnings','data'=>['current_date'=>$converted_current_date,'total_trips_count'=>$total_trips,'total_trip_kms'=>$total_trip_kms,'total_earnings'=>$total_earnings,'total_cash_trip_amount'=>$total_cash_trip_amount,'total_wallet_trip_amount'=>$total_wallet_trip_amount,'total_cash_trip_count'=>$total_cash_trip_count,'total_wallet_trip_count'=>$total_wallet_trip_count,'currency_symbol'=>$currency_symbol,'total_hours_worked'=>$total_hours_worked,'total_recevied_requests'=>$total_request_recevied,'rating'=>$rating]]);
+    }
+
+
 }
