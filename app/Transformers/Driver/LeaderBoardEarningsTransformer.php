@@ -3,6 +3,8 @@
 namespace App\Transformers\Driver;
 
 use App\Transformers\Transformer;
+use App\Models\Admin\Driver;
+
 
 class LeaderBoardEarningsTransformer extends Transformer
 {
@@ -35,7 +37,9 @@ class LeaderBoardEarningsTransformer extends Transformer
         $params['driver_name'] =  $request['name'];
         $params['commission'] =  $request['commission'];
         
+        $driver = Driver::where('id', $request['driver_id'])->first();
 
+        $params['profile_picture'] =  $driver->profile_picture,;
 
         // $params =  [
         //     'driver_id' => $request['driver_id'],
