@@ -30,12 +30,19 @@ class LeaderBoardEarningsTransformer extends Transformer
     {
 
         // dd($request-);
-        $params =  [
-            'driver_id' => $request['driver_id'],
-            'driver_name' => $request['name'],
-            'commission' => $request['commission'],
 
-        ];
+        $params['driver_id'] =  $request['driver_id'];
+        $params['driver_name'] =  $request['name'];
+        $params['commission'] =  $request['commission'];
+        
+
+
+        // $params =  [
+        //     'driver_id' => $request['driver_id'],
+        //     'driver_name' => $request['name'],
+        //     'commission' => $request['commission'],
+
+        // ];
 
 
         return $params;

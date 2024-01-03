@@ -192,7 +192,7 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
         } elseif ($date_option == DateOptions::YESTERDAY) {
             $yesterday_date = Carbon::yesterday()->format('Y-m-d');
             $date_array = [$yesterday_date,$yesterday_date];
-        } elseif ($date_option == DateOptions::WEEK) {
+        } elseif ($date_option == DateOptions::LAST_WEEK) {
             $date_array = [$current_date->startOfWeek()->toDateString(),$current_date->endOfWeek()->toDateString()];
         } elseif ($date_option == DateOptions::LAST_WEEK) {
             $date_array = [$current_date->subWeek()->toDateString(), $current_date->startOfWeek()->toDateString()];
