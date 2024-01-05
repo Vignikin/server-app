@@ -431,8 +431,8 @@
                 };
 
                 function initialize() {
-                    var centerLat = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lat')->first() ?? get_settings('default_latitude')}}");
-                    var centerLng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lng')->first() ?? get_settings('default_longitude')}}");
+                   var centerLat = parseFloat("{{11.015956}}");
+        var centerLng = parseFloat("{{76.968985}}");
                     var pickup = document.getElementById('pickup');
                     var drop = document.getElementById('drop');//11.018511, 76.969897
                     var latlng = new google.maps.LatLng(centerLat,centerLng);

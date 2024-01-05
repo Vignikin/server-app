@@ -142,8 +142,8 @@
                                 <td class="py-2 align-middle">
                                     {{ $item->converted_created_at ?? '-' }}
                                 </td>
-                                <td class="py-2 align-middle pl-5">
-                                    {{ str_limit($item->requestPlace->pick_address, 30) }}
+                                <td class="py-2 align-middle pl-5"> 
+                                    {{ str_limit($item->requestPlace->pick_address, 30) }}   
                                 </td>
                                 <td class="align-middle fs-0" id="{{ $item->id }}">
                                     @if ($item->is_cancelled == 1)

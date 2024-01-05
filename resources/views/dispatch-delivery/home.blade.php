@@ -271,8 +271,8 @@ rel="stylesheet">
 src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=places"></script>
 
 <script>
-var lat = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lat')->first() ?? 11.015956}}");
-var lng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lng')->first() ?? 76.968985}}");
+  var lat = parseFloat("{{11.015956}}");
+        var lng = parseFloat("{{76.968985}}");
 
 // Get user current location
 // if (navigator.geolocation) {
@@ -303,7 +303,7 @@ if (column && value)
 query = column + '=' + value
 
 $(function() {
-var url = '{{ url('fetch/dispatch-delivery-request_lists') }}?' + query;
+var url = '{{ url("fetch/dispatch-delivery-request_lists") }}?' + query;
 fetch(url)
 .then(response => response.text())
 .then(html => {

@@ -105,6 +105,7 @@ class EtaTransformer extends Transformer
             if(request()->has('stops') && request()->stops){
 
             $requested_stops = json_decode(request()->stops);
+          
 
             foreach ($requested_stops as $key => $stop) {
 
@@ -164,12 +165,13 @@ class EtaTransformer extends Transformer
 
             $requested_stops = json_decode(request()->stops);
 
+
             foreach ($requested_stops as $key => $stop) {
 
             if($key==0){
                 $previous_pickup_dropoff = $this->db_query_previous_pickup_dropoff($pick_lat, $pick_lng, $stop->latitude, $stop->longitude);
 
-            $place_details = json_decode($previous_pickup_dropoff->json_result);
+            $place_details = json_decode($previous_pickup_dropoff->json_result); 
 
             $dropoff_distance_in_meters+= get_distance_value_from_distance_matrix($place_details);
 
@@ -182,9 +184,7 @@ class EtaTransformer extends Transformer
                 }else{
                     $distance_in_unit+=$stop_distance_in_unit;
                 }
-            }
-
-    
+            } 
             }else{
 
             $previous_pickup_dropoff = $this->db_query_previous_pickup_dropoff($requested_stops[$key-1]->latitude, $requested_stops[$key-1]->longitude, $stop->latitude, $stop->longitude);

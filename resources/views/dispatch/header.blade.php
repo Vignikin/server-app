@@ -27,13 +27,13 @@
                 <li class="nav-item dropdown"><a class="nav-link pe-0" id="navbarDropdownUser" href="#"
                         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar avatar-xl">
-                            <img class="rounded-circle" src="{{ auth()->user()->profile_picture ?? asset('dispatcher/assets/img/team/3-thumb.png') }}" alt="" />
+                            <img class="rounded-circle" src="{{asset('dispatcher/assets/img/team/3-thumb.png') }}" alt="" />
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
                         <div class="bg-white dark__bg-1000 rounded-2 py-2">
                             <span class="dropdown-item fw-bold text-warning"><span
-                                    class="fas fa-crown me-1"></span><span>{{ ucfirst(auth()->user()->name) }}</span></span>
+                                    class="fas fa-crown me-1"></span><span>{{ ucfirst("test") }}</span></span>
                             <div class="dropdown-divider"></div>
     
                             {{-- <a class="dropdown-item" href="{{ url('dispatch/profile') }}">@lang('view_pages.profile')</a> --}}

@@ -1,3 +1,12 @@
+<style>
+    
+    span.add_stop {
+    float: right;
+    color: red;
+    cursor: pointer;
+    font-size: 14px;
+}
+</style>
 <div id="book-now" class="modal fade" role="dialog">
     <div class="modal-dialog container">
         <!-- Modal content-->
@@ -104,7 +113,7 @@
                                     <div class="card p-3 mb-3 book">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h6 class="box-title">@lang('view_pages.location_details')</h6>
+                                                <h6 class="box-title">@lang('view_pages.location_details')<span class="add_stop">+ Add Stop</span></h6>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="input-group mb-3">
@@ -120,7 +129,7 @@
                                                         name="pickup_lng">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 drop-loc">
                                                 <div class="input-group mb-3">
                                                     <input class="form-control w-100 required_for_valid" type="text"
                                                         placeholder="Drop Location" name="drop" id="drop"
@@ -463,8 +472,305 @@
 
 @push('booking-scripts')
 
+
+
     <script src="{{ asset('assets/build/js/intlTelInput.js') }}"></script>
     <script type="text/javascript">
+        // $(document).on("click",".add_stop",function(){
+        var stop_arr = 0;
+        var waypoints = [];
+        var stop_data = [];
+         var delivery_map;
+                var pickUpMarker, dropMarker;
+                var pickUpLocation, dropLocation;
+                var pickUpLat, pickUpLng, dropLat, dropLng;
+                var directionsService,directionsRenderer;
+                var geocoder;
+                var stopMarkers = []; 
+                var stopMarker ; 
+                  // Draw path from pickup to drop - map api
+
+                  // Fetch vehicle types - validate pickup and drop
+                function getVehicleTypes() {
+                    if (pickUpLocation && dropLocation) {
+                        let vehicleDiv = document.getElementById('vehicleTypeDiv');
+                        fetchVehicleTypes(vehicleDiv);
+                    } else {
+                        showfancyerror('Choose Pickup Drop Location');
+                        return false;
+                    }
+                }
+
+                // Fetch vehicle types by lat lng and get packages - api
+                function fetchVehicleTypes(vehicleDiv, bodyType) {
+                    let truckBodyMap = ['closed', 'open', 'both'];
+                    let typesArr = '';
+                    let packagesArr = '';
+                    var vehiclesContainer = document.getElementById('vehicles');
+                    var packageContainer = document.getElementById('packageList');
+
+                    var pick_lat = document.getElementById('pickup_lat').value;
+                    var pick_lng = document.getElementById('pickup_lng').value;
+                    var url = '{{ url('api/v1/delivery-dispatcher/request/eta') }}';
+
+                    var etaData = {
+                        'pick_lat': pickUpLat,
+                        'pick_lng': pickUpLng,
+                        'drop_lat': dropLat,
+                        'drop_lng': dropLng,
+                        'stops': JSON.stringify(stop_data),
+                        'ride_type': 1,
+                        'transport_type':'delivery',
+                    };
+
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            },
+                            body: JSON.stringify(etaData)
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            var data = result.data;
+                            data.forEach(element => {
+                                vehicleDiv.classList.remove("d-none")
+
+                                var defaultIcon =
+                                    "{{ asset('dispatcher/assets/img/truck/taxi.png') }}";
+                                var vehicleIcon = element.icon ? element.icon : defaultIcon;
+                                typesArr += `<div class="swiper-slide col-2 truck-types book" data-id="${element.zone_type_id}" data-type-id="${element.type_id}">
+                                        <img class="rounded-1 img-fluid" src="${vehicleIcon}" alt="" />
+                                        <p>${element.name}</p>
+                                    </div>`;
+
+                                // var packageData = element.zoneTypePrice.data;
+                                // packageData.forEach(packagePrice => {
+                                //     if(packagePrice.price_type == 1){
+                                //         packagesArr += `<div class="fs--1 m-auto mb-2 selectTypePackage d-none" style="max-width: 25rem;" data-truck-id="${element.id}" data-package-id="${packagePrice.fare_type_id}">
+                                //                 <a class="notification" href="#!">
+                                //                     <div class="notification-body">
+                                //                         <h5 class="m-0 package_name">
+                                //                             ${packagePrice.fare_type_name}
+                                //                         </h5>
+                                //                         <p class="mb-1" style="text-align:left;" data-package-min="${packagePrice.free_minutes}" data-package-dis="${packagePrice.base_distance}" data-package-currency="${packagePrice.currency}">
+                                //                             <br>
+                                //                             ${packagePrice.currency} ${packagePrice.price_per_time} / Min after ${packagePrice.free_minutes} Min<br>
+                                //                             ${packagePrice.currency} ${packagePrice.price_per_distance} / Km after ${packagePrice.base_distance} Km
+                                //                         </p>
+                                //                     </div>
+                                //                     <div class="notification-avatar">
+                                //                         <div class="btn btn-success packagePrice" data-package-price="${packagePrice.base_price}">
+                                //                             ${packagePrice.currency} ${packagePrice.base_price}
+                                //                         </div>
+                                //                     </div>
+                                //                 </a>
+                                //             </div>`;    
+                                //     }
+                                // });
+                            });
+                            vehiclesContainer.innerHTML = typesArr;
+                            // packageContainer.innerHTML = packagesArr;
+                        });
+                }
+
+                // To capitalize first letter of a string
+                function capitalizeFirstLetter(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1);
+                }
+
+                function calcRoute(pickup, drop) {
+                    // alert(pickup);
+                    // alert(drop);
+                    // to get vehicle type with vehicle body type Both {open or closed}
+                    getVehicleTypes();  
+                    var request = {
+                        origin: pickup,
+                        destination: drop,
+                        waypoints: waypoints,
+                        travelMode: google.maps.TravelMode['DRIVING']
+                    }; 
+                    directionsService.route(request, function(response, status) {
+                        if (status == 'OK') {
+                            directionsRenderer.setDirections(response); 
+                        }
+                    });
+                }
+                 function geocodewaypointPosition(pos,i) { 
+                      geocoder.geocode({
+                        latLng: pos
+                      }, function(responses) {
+                        if (responses && responses.length > 0) {
+                            
+                             waypoints[i] = {
+                                    location: new google.maps.LatLng(pos.lat(), pos.lng()),
+                                    stopover: true
+                                };  
+                             stop_data[i] = {
+                                 latitude: pos.lat(),
+                                  longitude: pos.lng(),
+                                  address: responses[0].formatted_address
+                            };  
+
+                          stopMarkers[i].formatted_address = responses[0].formatted_address; 
+                            $("#stop_"+i+"").val(responses[0].formatted_address);
+                            var pickup = new google.maps.LatLng(pickUpMarker
+                                        .getPosition().lat(), pickUpMarker.getPosition()
+                                        .lng());
+                                    var drop = new google.maps.LatLng(dropMarker
+                                        .getPosition().lat(), dropMarker.getPosition()
+                                        .lng()); 
+                            calcRoute(pickup, drop);
+
+                        } else {
+                          stopMarker.formatted_address = 'Cannot determine address at this location.';
+                        }
+                        // infowindow.setContent(dropMarker.formatted_address + "<br>coordinates: " + dropMarker.getPosition().toUrlValue(6));
+                        // infowindow.open(map, dropMarker);
+                      });
+                    }
+                function clearStopMarkers(index=null) { 
+                    if(index !== null)
+                    {
+                        stopMarkers[index].setMap(null);
+                        var indexToRemove = stopMarkers.indexOf(index); 
+                        // Check if the element is found
+                        if (indexToRemove !== -1) {
+                        // Remove the element using splice
+                        stopMarkers.splice(indexToRemove, 1);
+                        }
+                    }
+                    else{
+                         for (var i = 0; i < stopMarkers.length; i++) {
+                        stopMarkers[i].setMap(null);
+                        }
+                        stopMarkers = [];
+                    }
+
+                   
+                    }
+                function animateMapToLocation(location) { 
+                    map.panTo(location);
+                }
+                function findWaypointIndexByLocation(location) {
+                for (var i = 0; i < waypoints.length; i++) {
+                    if (waypoints[i].location.equals(location)) {
+                        return i;  // Return the index of the waypoint with the same location
+                    }
+                }
+                return -1;  // Return -1 if the location is not found in the waypoints array
+                }
+                function handlePlaceChanged(place,type,stopindex)
+                {  
+                     clearStopMarkers();
+                     var places = place.getPlace();   
+                     if(stop_arr > waypoints.length)
+                     { 
+                         waypoints.push({
+                          location: places.geometry.location,
+                          stopover: true
+                         });
+                         stop_data.push({
+                          latitude: places.geometry.location.lat(),
+                          longitude: places.geometry.location.lng(),
+                          address: places.formatted_address
+                         });
+                     } 
+                     else{  
+                            // Update the waypoint at the found index 
+                                waypoints[stopindex] = {
+                                    location: places.geometry.location,
+                                    stopover: true
+                                }; 
+                                  stop_data[stopindex] = {
+                                      latitude: places.geometry.location.lat(),
+                                      longitude: places.geometry.location.lng(),
+                                      address: places.formatted_address
+                                }; 
+
+                     }
+                     $("#stop_"+stopindex+"").val(places.formatted_address);
+                     if(pickUpLocation && dropLocation) 
+                      updateDirections(pickUpLocation, dropLocation)   
+                }
+                function updateDirections() { 
+                    getVehicleTypes();  
+                     var request = {
+                        origin: pickUpLocation,
+                        destination: dropLocation,
+                        waypoints: waypoints,
+                        travelMode: 'DRIVING'
+                        };
+                        directionsService.route(request, function(response, status) {
+                                if (status == 'OK') {
+                                        directionsRenderer.setDirections(response);
+                                     var route = response.routes[0];
+                                    var leg = route.legs[0];
+
+                                         var index_1 = 0;
+                                         var index_no = 1;
+                                     for (var i = 0; i < waypoints.length; i++) {
+                          (function (index_1) {
+                    // Add marker for each waypoint 
+                     iconBase = '{{ asset('map/icon/') }}'; 
+                   
+                    var stopMarker = new google.maps.Marker({
+                        map: delivery_map,
+                        icon: iconBase+"/"+index_no+".png",
+                        // position: leg.steps[i].end_location,
+                        draggable: true
+                    });
+                    index_no++;
+
+                    stopMarkers.push(stopMarker);
+                    stopMarker.setPosition(waypoints[index_1].location);
+                    stopMarker.setVisible(true);
+
+                    google.maps.event.addListener(stopMarker, 'dragend', function () {
+                        geocodewaypointPosition(stopMarker.getPosition(), index_1);
+                    });
+
+                    // Animate the map along the route to the stop position
+                    animateMapToLocation(leg.steps[i].end_location);
+                    })(i);
+                    }
+                                
+                                }
+                            });
+                }
+                 $(document).on('click', '.delete_icon', function() {
+                    var data_val = $(this).attr("data-val"); 
+                   
+                     waypoints.splice(data_val, 1);  
+                     stop_data.splice(data_val, 1);   
+                    $(this).closest(".stop").remove();
+                    if(pickUpLocation && dropLocation)
+                    { 
+                        calcRoute(pickUpLocation, dropLocation);
+                    }
+                    clearStopMarkers(data_val);
+                    
+                 });
+                $(document).on('click', '.add_stop', function() {
+                    
+                    var newContent = '<div class="col-md-12 stop"><div class="input-group mb-3" style=" position: relative; width: 94%;"><input class="form-control w-100 required_for_valid stop" type="text" placeholder="Stop Location" name="stop" id="stop_'+stop_arr+'" aria-label="Username" aria-describedby="basic-addon1" style=" /* width: 66%; */" data-index="'+stop_arr+'">  <input type="hidden" class="form-control" id="stop_lat_'+stop_arr+'" name="stop_lat[]"> <input type="hidden" class="form-control" id="stop_lng_'+stop_arr+'" name="stop_lng[]"><span class="delete_icon" data-val="'+stop_arr+'" style="position: absolute; right: -30px; top: 5px; cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 d-block mx-auto"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></span></div> </div>'; 
+                    $('.drop-loc').before(newContent); 
+                    // Set up autocomplete for the new input field
+                    var stopInput = document.getElementById('stop_' + stop_arr);
+
+                    var stopAutocomplete = new google.maps.places.Autocomplete(stopInput);
+                    var index = stop_arr;
+
+                    // Add event listener for place changed event in the new input field
+                    google.maps.event.addListener(stopAutocomplete, 'place_changed', function () { 
+                         var splace = stopAutocomplete.getPlace(); 
+                         handlePlaceChanged(stopAutocomplete, 'stop',index);
+                    });
+                    // Autocomplete(stop_arr);
+                     
+                    stop_arr++;
+                });
+
         ['DOMContentLoaded'].forEach(function(eve) {
             // On load document
             window.addEventListener(eve, function() {
@@ -480,43 +786,40 @@
 
                
 
-                var directionsService = new google.maps.DirectionsService();
-                var directionsRenderer = new google.maps.DirectionsRenderer({
+                 directionsService = new google.maps.DirectionsService();
+                 directionsRenderer = new google.maps.DirectionsRenderer({
                     suppressMarkers: true,
                     draggable: true,
                     panel: document.getElementById("pickup"),
                 });
-                var map;
-                var pickUpMarker, dropMarker = [];
-                var pickUpLocation, dropLocation;
-                var pickUpLat, pickUpLng, dropLat, dropLng;
+               
                 var infowindow = new google.maps.InfoWindow({
                       size: new google.maps.Size(150, 50)
-                    });
-
+                    }); 
                 var iconBase = '{{ asset('map/icon/') }}';
                 var icons = {
                     pickup: {
                         name: 'Pickup',
-                        icon: iconBase + '/driver_available.png'
+                        icon: iconBase + '/pickup.png'
                     },
                     drop: {
                         name: 'Drop',
-                        icon: iconBase + '/driver_on_trip.png'
+                        icon: iconBase + '/drop.png'
                     }
                 };
 
-                function initialize() {
-                    var centerLat = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lat')->first() ?? get_settings('default_latitude')}}");
-                    var centerLng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lng')->first() ?? get_settings('default_longitude')}}");
+                function initialize() { 
+                       var centerLat = parseFloat("{{11.015956}}");
+                    var centerLng = parseFloat("{{76.968985}}");
                     var pickup = document.getElementById('pickup');
                     var drop = document.getElementById('drop');//11.018511, 76.969897
+                    var stop = document.getElementsByClassName('stop');//11.018511, 76.969897
                     var latlng = new google.maps.LatLng(centerLat,centerLng);
 
-                    map = new google.maps.Map(document.getElementById('book-now-map'), {
+                    delivery_map = new google.maps.Map(document.getElementById('book-now-map'), {
                         center: latlng,
-                        zoom: 5,
-                        mapTypeId: 'roadmap'
+                        zoom: 8,
+                        // mapTypeId: 'roadmap'
                     });
 
                     // google.maps.event.addListener(map, 'click', function() {
@@ -524,47 +827,46 @@
                     //   });
 
               
-                    directionsRenderer.setMap(map);
+                    directionsRenderer.setMap(delivery_map);
                        
-                    var geocoder = new google.maps.Geocoder();
+                     geocoder = new google.maps.Geocoder();
 
                     var pickup_location = new google.maps.places.Autocomplete(pickup);
-                    var drop_location = new google.maps.places.Autocomplete(drop);
-
-                    
-
+                    var drop_location = new google.maps.places.Autocomplete(drop); 
                     pickup_location.addListener('place_changed', function() {
-                      
+
+                        // removeMarkers(dropMarker);
+                        
                         // pickUpMarker.setVisible(false);
 
-                        var place = pickup_location.getPlace();
-                        // console.log(place);
-
+                        var place = pickup_location.getPlace(); 
                         if (!place.geometry) {
                             // window.alert("Autocomplete's returned place contains no geometry");
                             return;
+                        } 
+                        if(pickUpMarker !== undefined){
+                         
+                            pickUpMarker.setMap(null); 
                         }
-
-                        removeMarkers(dropMarker);
                         pickUpLat = place.geometry.location.lat();
                         pickUpLng = place.geometry.location.lng();
-                        pickUpLocation = new google.maps.LatLng(pickUpLat, pickUpLng);
-
-                        pickUpMarker = new google.maps.Marker({
+                        pickUpLocation = new google.maps.LatLng(pickUpLat, pickUpLng); 
+                         pickUpMarker = new google.maps.Marker({
                             position: pickUpLocation,
                             icon: icons['pickup'].icon,
                             draggable: true,
-                            map,
+                            map: delivery_map,
                             // draggable: true,
                             anchorPoint: new google.maps.Point(0, -29)
-                        });
+                        }); 
+                        
 
                          // If the place has a geometry, then present it on a map.
                         if (place.geometry.viewport) {
-                            map.fitBounds(place.geometry.viewport);
+                            delivery_map.fitBounds(place.geometry.viewport);
                         } else {
-                            map.setCenter(place.geometry.location);
-                            map.setZoom(17);
+                            delivery_map.setCenter(place.geometry.location);
+                            delivery_map.setZoom(17);
                         }
 
                         pickUpMarker.setPosition(place.geometry.location);
@@ -582,11 +884,7 @@
                           //   }
                           //   infowindow.open(map, pickUpMarker);
                           // });
-                          google.maps.event.trigger(pickUpMarker, 'click')
-
-                       
-
-                        // console.log(pickUpMarker.setPosition(place.geometry.location));
+                          google.maps.event.trigger(pickUpMarker, 'click') 
 
 
                         if (dropLocation)
@@ -602,29 +900,32 @@
 
                         if (!place.geometry) {
                             return;
-                        }
-
-                        removeMarkers(dropMarker);
+                        }  
+                       if(dropMarker !== undefined)
+                       {  
+                         dropMarker.setMap(null);
+                       }
                         dropLat = place.geometry.location.lat();
                         dropLng = place.geometry.location.lng();
-                        dropLocation = new google.maps.LatLng(dropLat, dropLng);
-
+                        dropLocation = new google.maps.LatLng(dropLat, dropLng); 
                         dropMarker = new google.maps.Marker({
                             position: new google.maps.LatLng(dropLat, dropLng),
                             icon: icons['drop'].icon,
                             draggable: true,
-                            map,
+                            map: delivery_map,
                             draggable: true,
                             anchorPoint: new google.maps.Point(0, -29)
                         });
 
+
                         // If the place has a geometry, then present it on a map.
                         if (place.geometry.viewport) {
-                            map.fitBounds(place.geometry.viewport);
+                            delivery_map.fitBounds(place.geometry.viewport);
                         } else {
-                            map.setCenter(place.geometry.location);
-                            map.setZoom(17);
+                            delivery_map.setCenter(place.geometry.location);
+                            delivery_map.setZoom(17);
                         }
+
 
                         dropMarker.setPosition(place.geometry.location);
                         dropMarker.setVisible(true);
@@ -657,8 +958,7 @@
 
                     // @TODO this function will work on marker move event into map 
                     // google.maps.event.addListener(pickUpMarker, 'dragend', function() {
-                        
-                    //     console.log("hi");
+                         
                     //     geocoder.geocode({
                     //         'latLng': pickUpMarker.getPosition()
                     //     }, function(results, status) {
@@ -734,6 +1034,7 @@
                         // infowindow.open(map, dropMarker);
                       });
                     }
+                   
 
 
                     // calcRoute(pickup, drop);
@@ -747,22 +1048,7 @@
 
 
 
-                // Draw path from pickup to drop - map api
-                function calcRoute(pickup, drop) {
-                    // to get vehicle type with vehicle body type Both {open or closed}
-                    getVehicleTypes();
-
-                    var request = {
-                        origin: pickup,
-                        destination: drop,
-                        travelMode: google.maps.TravelMode['DRIVING']
-                    };
-                    directionsService.route(request, function(response, status) {
-                        if (status == 'OK') {
-                            directionsRenderer.setDirections(response);
-                        }
-                    });
-                }
+              
 
                 // Add pick and drop address,Lat and Lng
                 function bindDataToForm(address, lat, lng, loc) {
@@ -772,7 +1058,7 @@
                 }
 
                 // Remove markers already drawn on map
-                function removeMarkers(markers) {
+                function removeMarkers(markers) { 
                     for (i = 0; i < markers.length; i++) {
                         markers[i].setMap(null);
                     }
@@ -783,7 +1069,7 @@
                 var hasErr = false;
                 var errorCode = '';
 
-                var errorMsg = document.querySelector("#error-msg");
+                var errorMsg = document.querySelector("#error-msg");// $(document).on("click",".add_stop",function(){
                 var receiverErrorMsg = document.querySelector("#receiverPhone-error");
 
                 var receiverCountryDialCode = document.getElementById('receiverDialCode');
@@ -953,93 +1239,7 @@ element.goods_type_name, element.id);
                 });
 
 
-                // Fetch vehicle types - validate pickup and drop
-                function getVehicleTypes() {
-                    if (pickUpLocation && dropLocation) {
-                        let vehicleDiv = document.getElementById('vehicleTypeDiv');
-                        fetchVehicleTypes(vehicleDiv);
-                    } else {
-                        showfancyerror('Choose Pickup Drop Location');
-                        return false;
-                    }
-                }
-
-                // Fetch vehicle types by lat lng and get packages - api
-                function fetchVehicleTypes(vehicleDiv, bodyType) {
-                    let truckBodyMap = ['closed', 'open', 'both'];
-                    let typesArr = '';
-                    let packagesArr = '';
-                    var vehiclesContainer = document.getElementById('vehicles');
-                    var packageContainer = document.getElementById('packageList');
-
-                    var pick_lat = document.getElementById('pickup_lat').value;
-                    var pick_lng = document.getElementById('pickup_lng').value;
-                    var url = '{{ url('api/v1/delivery-dispatcher/request/eta') }}';
-
-                    var etaData = {
-                        'pick_lat': pickUpLat,
-                        'pick_lng': pickUpLng,
-                        'drop_lat': dropLat,
-                        'drop_lng': dropLng,
-                        'ride_type': 1,
-                        'transport_type':'delivery',
-                    };
-
-                    fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json;charset=utf-8'
-                            },
-                            body: JSON.stringify(etaData)
-                        })
-                        .then(response => response.json())
-                        .then(result => {
-                            var data = result.data;
-                            data.forEach(element => {
-                                vehicleDiv.classList.remove("d-none")
-
-                                var defaultIcon =
-                                    "{{ asset('dispatcher/assets/img/truck/taxi.png') }}";
-                                var vehicleIcon = element.icon ? element.icon : defaultIcon;
-                                typesArr += `<div class="swiper-slide col-2 truck-types book" data-id="${element.zone_type_id}" data-type-id="${element.type_id}">
-                                        <img class="rounded-1 img-fluid" src="${vehicleIcon}" alt="" />
-                                        <p>${element.name}</p>
-                                    </div>`;
-
-                                // var packageData = element.zoneTypePrice.data;
-                                // packageData.forEach(packagePrice => {
-                                //     if(packagePrice.price_type == 1){
-                                //         packagesArr += `<div class="fs--1 m-auto mb-2 selectTypePackage d-none" style="max-width: 25rem;" data-truck-id="${element.id}" data-package-id="${packagePrice.fare_type_id}">
-                                //                 <a class="notification" href="#!">
-                                //                     <div class="notification-body">
-                                //                         <h5 class="m-0 package_name">
-                                //                             ${packagePrice.fare_type_name}
-                                //                         </h5>
-                                //                         <p class="mb-1" style="text-align:left;" data-package-min="${packagePrice.free_minutes}" data-package-dis="${packagePrice.base_distance}" data-package-currency="${packagePrice.currency}">
-                                //                             <br>
-                                //                             ${packagePrice.currency} ${packagePrice.price_per_time} / Min after ${packagePrice.free_minutes} Min<br>
-                                //                             ${packagePrice.currency} ${packagePrice.price_per_distance} / Km after ${packagePrice.base_distance} Km
-                                //                         </p>
-                                //                     </div>
-                                //                     <div class="notification-avatar">
-                                //                         <div class="btn btn-success packagePrice" data-package-price="${packagePrice.base_price}">
-                                //                             ${packagePrice.currency} ${packagePrice.base_price}
-                                //                         </div>
-                                //                     </div>
-                                //                 </a>
-                                //             </div>`;    
-                                //     }
-                                // });
-                            });
-                            vehiclesContainer.innerHTML = typesArr;
-                            // packageContainer.innerHTML = packagesArr;
-                        });
-                }
-
-                // To capitalize first letter of a string
-                function capitalizeFirstLetter(string) {
-                    return string.charAt(0).toUpperCase() + string.slice(1);
-                }
+              
 
                 // On click vehicles get packages and calculate eta
                 $(document).on('click', '.truck-types', function() {
@@ -1111,6 +1311,7 @@ element.goods_type_name, element.id);
                         'pick_lng': pickUpLng,
                         'drop_lat': dropLat,
                         'drop_lng': dropLng,
+                        'stops': JSON.stringify(stop_data),
                         'vehicle_type': truckId,
                         'ride_type': 1,
                         'transport_type':'delivery',
@@ -1146,7 +1347,7 @@ element.goods_type_name, element.id);
                 }
 
                 function createTripRequest() {
-                    var typeId = $('#vehicles').find("div.active").attr('data-id');
+                    var typeId = $('#vehicles').find(".truck-types.active").attr('data-id'); 
                     var goodsTypeId = $('#goods-type').find(":selected").val();
 
                     // var fareTypeId = $('.addPackageBtn').find('span.removePackage').attr('id');
@@ -1173,6 +1374,7 @@ element.goods_type_name, element.id);
                         'goods_type_id': goodsTypeId,
                         'pick_address': pickAdd,
                         'drop_address': dropAdd,
+                        'stops': JSON.stringify(stop_data),
                         'pickup_poc_name': sender.name,
                         'pickup_poc_mobile': sender.phone,
                         'drop_poc_name': receiver.name,
@@ -1203,8 +1405,7 @@ element.goods_type_name, element.id);
                             body: JSON.stringify(tripData)
                         })
                         .then(response => response.json())
-                        .then(result => {
-                            console.log(result)
+                        .then(result => { 
                             if (result.success == false) {
                                 showfancyerror(result.message);
                                 return false;
@@ -1222,6 +1423,7 @@ element.goods_type_name, element.id);
                     directionsRenderer.setMap(null);
                     pickUpMarker.setMap(null)
                     dropMarker.setMap(null)
+                    clearStopMarkers();
                 })
 
                 $(document).on('click', '#same_as_sender', function() {

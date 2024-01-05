@@ -2,7 +2,7 @@
 
 use App\Base\Constants\Auth\Role;
 
-Route::middleware('auth:web')->group(function () {
+Route::middleware('auth:web')->group(function () { 
     Route::middleware(role_middleware(Role::DISPATCHER))->group(function () {
     });
 
