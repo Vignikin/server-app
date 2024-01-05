@@ -308,6 +308,7 @@ fetch(url)
 .then(response => response.text())
 .then(html => {
 document.querySelector('#request-lists-target').innerHTML = html;
+window.location.reload();
 });
 });
 }
