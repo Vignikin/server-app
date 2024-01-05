@@ -136,6 +136,13 @@ class ProfileController extends ApiController
         if ($uploadedFile = $this->getValidatedUpload('profile_picture', $request)) {
             $user_params['profile_picture'] = $this->imageUploader->file($uploadedFile)
                 ->saveProfilePicture();
+
+            $driver_params['approve'] = false;
+
+            if(!$owner){
+                $driver_params['reason'] = 'profile-info-updated';
+            }
+
         }
 
         if ($uploadedFile = $this->getValidatedUpload('profile_pic', $request)) {
@@ -153,19 +160,7 @@ class ProfileController extends ApiController
         $user->update($user_params);
 
 
-        if($driver_params['approve']==false){
 
-            $status=0;
-
-
-            if(!$owner){
-                $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
-            }else{
-
-                $driver_params['approve']=true;
-            }
-
-        }
 
         if(env('APP_FOR')=='demo'){
 
@@ -204,10 +199,25 @@ class ProfileController extends ApiController
             
             $status=0;
             
-            $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+            // $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
           }
       }
+
+
+        if($driver_params['approve']==false){
+
+            $status=0;
+
+
+            if(!$owner){
+                $this->database->getReference('drivers/driver_'.$user->driver->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+            }else{
+
+                $driver_params['approve']=true;
+            }
+
+        }
        
         if(!$owner){
             $user->driver()->update($driver_params);
