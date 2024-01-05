@@ -182,7 +182,7 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
     $vehicle_type = $request->vehicle_type;
     $trip_status = $request->trip_status;
     $payment_opt = $request->payment_opt;
-        $current_date = Carbon::now(auth()->user()->timezone);
+     $current_date = Carbon::now(auth()->user()->timezone);
 
     // Initialize an empty date array
     $date_array = [];
@@ -220,11 +220,9 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
     {
     $data = RequestRequest::whereDate('created_at', $current_date->format("Y-m-d"));
 
-    // Query your RequestRequest model
     }
 
 
-    // Now, apply custom filters using RequestFilter
     $filteredData = $queryFilter->builder($data)->customFilter(new RequestFilter)->defaultSort('created_at')->get();
 
         $filename = "$request->model Report-".date('ymdis').'.'.$format;
@@ -233,13 +231,6 @@ public function downloadTravelReport(Request $request, QueryFilterContract $quer
 
         return $filename;
 
-
-    // $filename = "$request->model Report-".date('ymdis').'.'.$format;
-
-    // // Export the filtered data
-    // Excel::store(new TravelExport($filteredData), $filename, 'local');
-
-    // return response()->download(storage_path("app/$filename"));
 }
     public function downloadOwnerReport(Request $request, QueryFilterContract $queryFilter)
     {

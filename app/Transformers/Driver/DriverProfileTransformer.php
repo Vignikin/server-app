@@ -157,7 +157,8 @@ class DriverProfileTransformer extends Transformer
         $params['contact_us_mobile2'] =  get_settings('contact_us_mobile2');
         $params['contact_us_link'] =  get_settings('contact_us_link');
          $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app_driver');
-        $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');       
+        $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');
+
         $params['how_many_times_a_driver_can_enable_the_my_route_booking_per_day'] =  get_settings('how_many_times_a_driver_can_enable_the_my_route_booking_per_day');
 
         $params['show_instant_ride_feature_on_mobile_app'] =  get_settings('show_instant_ride_feature_on_mobile_app');
@@ -320,6 +321,8 @@ class DriverProfileTransformer extends Transformer
                 $params['chat_id'] = $get_chat_data->id;
             } 
 
+
+            $params['enable_vase_map'] = get_settings(Settings::ENABLE_VASE_MAP);
 
 
         return $params;

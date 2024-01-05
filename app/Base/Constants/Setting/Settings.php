@@ -167,5 +167,6 @@ class Settings
     const MAIL_ENCRYPTION='mail_encryption';
     const MAIL_FROM_ADDRESS='mail_from_address';
     const MAIL_FROM_NAME='mail_from_name';    
+    const ENABLE_VASE_MAP="enable_vase_map";
         
 }

@@ -69,7 +69,8 @@
 </div>
     <!-- content -->
 <!-- ck editor -->
-    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 
 <script type="text/javascript">
 

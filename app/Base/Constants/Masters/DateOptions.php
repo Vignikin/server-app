@@ -13,4 +13,9 @@ class DateOptions
     const PREVIOUS_MONTH = 'last-month';
     const CURRENT_YEAR = 'current-year';
     const PREVIOUS_YEAR = 'last-year';
+    const WEEK = 'week';
+    const MONTH = 'month';
+    const YEAR = 'year';
+
+
 }
