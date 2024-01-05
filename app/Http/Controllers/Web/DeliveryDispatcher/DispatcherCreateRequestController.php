@@ -81,6 +81,7 @@ class DispatcherCreateRequestController extends BaseController
         $service_location = $zone_type_detail->zone->serviceLocation;
 
         $currency_code = $service_location->currency_code;
+        $currency_symbol = $service_location->currency_symbol;
 
         // $currency_code = get_settings(Settings::CURRENCY);
 
@@ -107,7 +108,8 @@ class DispatcherCreateRequestController extends BaseController
             'dispatcher_id'=>$user_detail->admin->id,
             'payment_opt'=>$request->payment_opt,
             'unit'=>$unit,
-            'requested_currency_code'=>$currency_code,
+            'requested_currency_code'=>$currency_code, 
+            'requested_currency_symbol'=>$currency_symbol,
             'service_location_id'=>$service_location->id,
             'goods_type_id'=>(integer)$request->goods_type_id,
             'transport_type'=>'delivery',
@@ -137,7 +139,7 @@ class DispatcherCreateRequestController extends BaseController
 
             // Log::info($request->stops);
             $order = 1;
-            
+
             foreach (json_decode($request->stops) as $key => $stop) {
                 $request_detail->requestStops()->create([
                 'address'=>$stop->address,
@@ -340,6 +342,7 @@ class DispatcherCreateRequestController extends BaseController
         // Get currency code of Request
         $service_location = $zone_type_detail->zone->serviceLocation;
         $currency_code = $service_location->currency_code;
+        $currency_symbol = $service_location->currency_symbol;
         
         // $currency_code = get_settings(Settings::CURRENCY);
 
@@ -374,6 +377,7 @@ class DispatcherCreateRequestController extends BaseController
             'payment_opt'=>$request->payment_opt,
             'unit'=>$unit,
             'requested_currency_code'=>$currency_code,
+            'requested_currency_symbol'=>$currency_symbol,
             'goods_type_id'=>(integer)$request->goods_type_id,
             'goods_type_quantity'=>'loose',
             'service_location_id'=>$service_location->id,
