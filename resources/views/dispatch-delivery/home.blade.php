@@ -297,7 +297,7 @@ src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&
 //     });
 // }
 
-function fetchRequestList(column = null, value = null) {
+function fetchRequestList(column = null, value = null,load=0) {
 let query = '';
 if (column && value)
 query = column + '=' + value
@@ -308,7 +308,11 @@ fetch(url)
 .then(response => response.text())
 .then(html => {
 document.querySelector('#request-lists-target').innerHTML = html;
-window.location.reload();
+// window.location.reload();
+  if(load == 1)
+                        {
+                            window.location.reload();
+                        }
 });
 });
 }
@@ -565,6 +569,7 @@ function formInputReset() {
 $('#tripForm').trigger("reset");
 $("#receiverName").prop("readonly", false);
 $("#receiverPhone").prop("readonly", false);
+$(".stop").remove();
 $(".truck-types").removeClass('active');
 $("#vehicleTypeDiv").addClass('d-none');
 $('.etaprice').html(`<i class="fas fa-wallet"></i><span> - - - </span>`);

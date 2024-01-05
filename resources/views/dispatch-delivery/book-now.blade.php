@@ -1411,7 +1411,7 @@ element.goods_type_name, element.id);
                                 return false;
                             }
                             if (result.success == true) {
-                                fetchRequestList();
+                                fetchRequestList(null,null,1);
                                 $('#book-now').modal('toggle');
                                 formInputReset();
                                 showSuccess(result.message)
@@ -1421,8 +1421,8 @@ element.goods_type_name, element.id);
 
                 $('#book-now').on('hidden.bs.modal', function(e) {
                     directionsRenderer.setMap(null);
-                    pickUpMarker.setMap(null)
-                    dropMarker.setMap(null)
+                    pickUpMarker.setMap(null);
+                    dropMarker.setMap(null);
                     clearStopMarkers();
                 })
 
