@@ -73,6 +73,7 @@ class DispatcherCreateRequestController extends BaseController
         }
         // @TODO
         // get type id
+        
         $zone_type_detail = ZoneType::where('id', $request->vehicle_type)->first();
         $type_id = $zone_type_detail->type_id;
 
@@ -80,6 +81,7 @@ class DispatcherCreateRequestController extends BaseController
         $service_location = $zone_type_detail->zone->serviceLocation;
 
         $currency_code = $service_location->currency_code;
+        $currency_symbol = $service_location->currency_symbol;
 
         // $currency_code = get_settings(Settings::CURRENCY);
 
@@ -98,8 +100,7 @@ class DispatcherCreateRequestController extends BaseController
             $request_number = 000000;
         }
         // Generate request number
-        $request_number = 'REQ_'.sprintf("%06d", $request_number+1);
-
+        $request_number = 'REQ_'.sprintf("%06d", $request_number+1); 
         $request_params = [
             'request_number'=>$request_number,
             'zone_type_id'=>$request->vehicle_type,
@@ -107,7 +108,8 @@ class DispatcherCreateRequestController extends BaseController
             'dispatcher_id'=>$user_detail->admin->id,
             'payment_opt'=>$request->payment_opt,
             'unit'=>$unit,
-            'requested_currency_code'=>$currency_code,
+            'requested_currency_code'=>$currency_code, 
+            'requested_currency_symbol'=>$currency_symbol,
             'service_location_id'=>$service_location->id,
             'goods_type_id'=>(integer)$request->goods_type_id,
             'transport_type'=>'delivery',
@@ -133,6 +135,21 @@ class DispatcherCreateRequestController extends BaseController
             'drop_poc_mobile'=>$request->drop_poc_mobile
         ];
         // store request place details
+          if ($request->has('stops')) {
+
+            // Log::info($request->stops);
+            $order = 1;
+
+            foreach (json_decode($request->stops) as $key => $stop) {
+                $request_detail->requestStops()->create([
+                'address'=>$stop->address,
+                'latitude'=>$stop->latitude,
+                'longitude'=>$stop->longitude,
+                'order'=>$order]); 
+                $order++; 
+            }
+        }
+
         $request_detail->requestPlace()->create($request_place_params);
         // $ad_hoc_user_params = $request->only(['name','phone_number']);
         $ad_hoc_user_params['name'] = $request->pickup_poc_name;
@@ -140,6 +157,9 @@ class DispatcherCreateRequestController extends BaseController
 
         // Store ad hoc user detail of this request
         $request_detail->adHocuserDetail()->create($ad_hoc_user_params);
+
+
+
 
         $request_result =  fractal($request_detail, new TripRequestTransformer)->parseIncludes('userDetail');
         
@@ -322,6 +342,7 @@ class DispatcherCreateRequestController extends BaseController
         // Get currency code of Request
         $service_location = $zone_type_detail->zone->serviceLocation;
         $currency_code = $service_location->currency_code;
+        $currency_symbol = $service_location->currency_symbol;
         
         // $currency_code = get_settings(Settings::CURRENCY);
 
@@ -356,6 +377,7 @@ class DispatcherCreateRequestController extends BaseController
             'payment_opt'=>$request->payment_opt,
             'unit'=>$unit,
             'requested_currency_code'=>$currency_code,
+            'requested_currency_symbol'=>$currency_symbol,
             'goods_type_id'=>(integer)$request->goods_type_id,
             'goods_type_quantity'=>'loose',
             'service_location_id'=>$service_location->id,

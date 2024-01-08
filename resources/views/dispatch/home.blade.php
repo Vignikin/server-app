@@ -271,8 +271,8 @@
         src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=places"></script>
 
     <script>
-        var lat = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lat')->first() ?? 11.015956}}");
-        var lng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lng')->first() ?? 76.968985}}");
+        var lat = parseFloat("{{11.015956}}");
+        var lng = parseFloat("{{76.968985}}");
 
         // Get user current location
         // if (navigator.geolocation) {
@@ -297,7 +297,7 @@
         //     });
         // }
 
-        function fetchRequestList(column = null, value = null) {
+        function fetchRequestList(column = null, value = null,load=0) {
             let query = '';
             if (column && value)
                 query = column + '=' + value
@@ -308,6 +308,10 @@
                     .then(response => response.text())
                     .then(html => {
                         document.querySelector('#request-lists-target').innerHTML = html;
+                        if(load == 1)
+                        {
+                            window.location.reload();
+                        }
                     });
             });
         }
@@ -566,6 +570,7 @@
             $("#receiverPhone").prop("readonly", false);
             $(".truck-types").removeClass('active');
             $("#vehicleTypeDiv").addClass('d-none');
+            $(".stop").remove();
             $('.etaprice').html(`<i class="fas fa-wallet"></i><span> - - - </span>`);
             $('.etatime').html(`<i class="far fa-clock"></i> <span> - - - </span>`);
             $('.etadistance').html(`<i class="fas fa-map-marker-alt"></i> - - - </span>`);
@@ -589,6 +594,8 @@
                 $('.datetimepicker').addClass('required_for_valid');
                 $('.datetimepicker').prop('required', true);
                 $('.modal-title').text('Taxi Book Later');
+                clearStopMarkers();
+                waypoints = [];
                 $('#book-now').modal('show');
             } else  if (modal == 'book-now-delivery') {
                 alert('book-now-delivery');

@@ -116,6 +116,23 @@ class DispatcherCreateRequestController extends BaseController
         // DB::beginTransaction();
         // try {
         $request_detail = $this->request->create($request_params);
+
+
+         if ($request->has('stops')) {
+
+            // Log::info($request->stops);
+            $order = 1;
+
+            foreach (json_decode($request->stops) as $key => $stop) {
+                $request_detail->requestStops()->create([
+                'address'=>$stop->address,
+                'latitude'=>$stop->latitude,
+                'longitude'=>$stop->longitude,
+                'order'=>$order]); 
+                $order++; 
+            }
+        }
+        
         // request place detail params
         $request_place_params = [
             'pick_lat'=>$request->pick_lat,

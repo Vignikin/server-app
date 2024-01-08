@@ -271,8 +271,8 @@ rel="stylesheet">
 src="https://maps.google.com/maps/api/js?key={{get_settings('google_map_key')}}&libraries=places"></script>
 
 <script>
-var lat = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lat')->first() ?? 11.015956}}");
-var lng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->pluck('lng')->first() ?? 76.968985}}");
+  var lat = parseFloat("{{11.015956}}");
+        var lng = parseFloat("{{76.968985}}");
 
 // Get user current location
 // if (navigator.geolocation) {
@@ -297,17 +297,22 @@ var lng = parseFloat("{{ auth()->user()->admin->serviceLocationDetail->zones()->
 //     });
 // }
 
-function fetchRequestList(column = null, value = null) {
+function fetchRequestList(column = null, value = null,load=0) {
 let query = '';
 if (column && value)
 query = column + '=' + value
 
 $(function() {
-var url = '{{ url('fetch/dispatch-delivery-request_lists') }}?' + query;
+var url = '{{ url("fetch/dispatch-delivery-request_lists") }}?' + query;
 fetch(url)
 .then(response => response.text())
 .then(html => {
 document.querySelector('#request-lists-target').innerHTML = html;
+// window.location.reload();
+  if(load == 1)
+                        {
+                            window.location.reload();
+                        }
 });
 });
 }
@@ -564,6 +569,7 @@ function formInputReset() {
 $('#tripForm').trigger("reset");
 $("#receiverName").prop("readonly", false);
 $("#receiverPhone").prop("readonly", false);
+$(".stop").remove();
 $(".truck-types").removeClass('active');
 $("#vehicleTypeDiv").addClass('d-none');
 $('.etaprice').html(`<i class="fas fa-wallet"></i><span> - - - </span>`);

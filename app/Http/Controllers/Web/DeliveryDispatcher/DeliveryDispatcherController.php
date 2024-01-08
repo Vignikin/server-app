@@ -71,7 +71,7 @@ class DeliveryDispatcherController extends BaseController
 
         $query = RequestRequest::where('transport_type', 'delivery');
 
-        $results = $queryFilter->builder($query)->customFilter(new RequestFilter)->paginate();
+        $results = $queryFilter->builder($query)->customFilter(new RequestFilter)->paginate(); 
 
         return view('dispatch-delivery.request-list', compact('results'));
     }
