@@ -58,11 +58,4 @@ Route::namespace('Web')->group(function () {
     // Website home route
     //Route::get('/', 'HomeController@index')->name('home');
 });
-Route::namespace('Web')->group(function () {
-Route::get('web-booking','FrontPageController@web_booking'); 
-Route::post('Adduser','FrontPageController@Saveuser');
-});
-// Route::middleware('auth:web')->group(function () {
-
- 
-// });
+  

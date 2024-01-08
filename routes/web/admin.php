@@ -75,12 +75,7 @@ Route::middleware('auth:web')->group(function () {
 
     Route::namespace('Admin')->group(function () {
         Route::get('dispatcher-request','AdminViewController@dispatchRequest');
-         // Adhoc Web Booking 
-        Route::post('adhoc-eta','AdhocWebBookingController@eta');
-        Route::post('adhoc-create-request','AdhocWebBookingController@createRequest');
-        Route::post('adhoc-list-packages','AdhocWebBookingController@listPackages'); 
-
-        Route::post('adhoc-cancel-booking','AdhocWebBookingController@cancelRide');
+        
 
     // Owner Management (Company Management)
     Route::group(['prefix' => 'owners'], function () {
@@ -740,7 +735,7 @@ Route::middleware('auth:web')->namespace('Admin')->group(function () {
     Route::middleware('auth:web')->namespace('Dispatcher')->group(function () {
         Route::prefix('dispatch')->group(function () {
         Route::get('/new', 'DispatcherController@dispatchView');
-        Route::get('/', 'DispatcherController@index');
+        // Route::get('/', 'DispatcherController@index');
         Route::post('create/request', 'DispatcherController@createRequest');
         Route::get('/request/{requestmodel}', 'DispatcherController@fetchSingleRequest');
        

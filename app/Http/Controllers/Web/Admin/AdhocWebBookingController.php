@@ -33,6 +33,7 @@ use App\Transformers\Requests\PackagesTransformer;
 use App\Models\Master\PackageType; 
 use Illuminate\Support\Facades\Session;
 use Auth;
+use App\Base\Constants\Auth\Role;
 use App\Base\Constants\Masters\UserType;
 use App\Base\Constants\Masters\WalletRemarks;
 use App\Base\Constants\Masters\zoneRideType;
@@ -55,6 +56,69 @@ class AdhocWebBookingController extends BaseController
     {
         $this->request = $request;
         $this->database = $database;
+    }
+
+     public function web_booking()
+    {
+        
+        $modules = get_settings('enable_modules_for_applications'); 
+        $show_rental_ride_feature = get_settings('show_rental_ride_feature'); 
+        $user_name = 'User';
+         
+        if(auth('web')->user())
+        { 
+            // if ($request->has('request_id')) {
+            //     $get_request_data = RequestData::find($request->has('request_id'));
+            //     if($get_request_data)
+            //     {
+            //         if($get_request_data->is_completed == 0 && $get_request_data->is_cancelled == 0)
+            //         {
+
+            //         }
+            //     }
+            // }
+            $user_name = auth('web')->user()->name;
+        }
+
+     
+          // Session::flush();  
+          return view('web_booking',compact('user_name','modules','show_rental_ride_feature'));  
+    }
+
+    public function Saveuser(Httprequest $request)
+    { 
+
+        if($request->mobile)
+        { 
+            $check_user_exist = User::where('mobile',$request->mobile)->first();
+            $country_id =  Country::where('dial_code', $request->input('dial_code'))->pluck('id')->first(); 
+            if($check_user_exist)
+            {
+                $user = $check_user_exist;
+            }
+            else{
+                $user = User::create([
+                'name'=>$request->name, 
+                'mobile' => $request->mobile,
+                'country' => $country_id
+            ]);
+            }  
+            
+            // Create Empty Wallet to the user
+            $user->userWallet()->create(['amount_added'=>0]);
+
+            $user->attachRole(Role::USER); 
+
+            auth('web')->login($user, true);  
+            Session::put('user_id', $user->id);   
+            Session::put('mobile', $request->mobile);   
+            Session::put('dial_code', $request->dial_code);  
+
+            return response()->json(["status"=>"success","message"=>"user added successfully"]); 
+        }
+        else{
+             return response()->json(["status"=>"error","message"=>"something went wrong"]); 
+        }
     }
 
 
