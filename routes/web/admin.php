@@ -740,7 +740,7 @@ Route::middleware('auth:web')->namespace('Admin')->group(function () {
     Route::middleware('auth:web')->namespace('Dispatcher')->group(function () {
         Route::prefix('dispatch')->group(function () {
         Route::get('/new', 'DispatcherController@dispatchView');
-        Route::get('/', 'DispatcherController@index');
+        // Route::get('/', 'DispatcherController@index');
         Route::post('create/request', 'DispatcherController@createRequest');
         Route::get('/request/{requestmodel}', 'DispatcherController@fetchSingleRequest');
        
