@@ -390,13 +390,13 @@ class DriverController extends BaseController
         $message = trans('succes_messages.driver_approve_status_changed_succesfully');
         $user = User::find($driver->user_id);
         if ($status) {
-            $title = trans('push_notifications.driver_approved');
-            $body = trans('push_notifications.driver_approved_body');
+            $title = trans('push_notifications.driver_approved',[],$user->lang);
+            $body = trans('push_notifications.driver_approved_body',[],$user->lang);
             $push_data = ['notification_enum'=>PushEnums::DRIVER_ACCOUNT_APPROVED];
             $socket_success_message = PushEnums::DRIVER_ACCOUNT_APPROVED;
         } else {
-            $title = trans('push_notifications.driver_declined_title');
-            $body = trans('push_notifications.driver_declined_body');
+            $title = trans('push_notifications.driver_declined_title',[],$user->lang);
+            $body = trans('push_notifications.driver_declined_body',[],$user->lang);
             $push_data = ['notification_enum'=>PushEnums::DRIVER_ACCOUNT_DECLINED];
             $socket_success_message = PushEnums::DRIVER_ACCOUNT_DECLINED;
         }

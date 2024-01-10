@@ -107,6 +107,25 @@ class ImageUploader implements ImageUploaderContract
         return $filename;
     }
 
+    public function saveOwnerDocument($ownerId)
+    {
+        $this->validateFile();
+
+        $config = $this->config('owner.upload.documents');
+
+        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+
+        $image = $this->encodeImage();
+
+        $filename = $this->hashGenerator->extension($this->format)->make();
+
+        $filePath = file_path(data_get($config, 'path'), $filename, $ownerId);
+
+        Storage::put($filePath, $image);
+
+        return $filename;
+    }
+
     /**
      * Save the user profile picture.
      *
@@ -118,12 +137,38 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('driver.upload.documents');
 
-        $image = $this->file;
-        $file_format = $image->getClientOriginalExtension(); 
-        $filename = $this->hashGenerator->extension($file_format)->make();  
-        $filePath = file_path(data_get($config, 'path'),''); 
-        $path = Storage::putFileAs($filePath, $image, $filename); 
+        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
 
+        $image = $this->encodeImage();
+
+        $filename = $this->hashGenerator->extension($this->format)->make();
+
+        $filePath = file_path(data_get($config, 'path'), $filename, $driver_id);
+
+        Storage::put($filePath, $image);
+
+        return $filename;
+    }
+    /**
+     * Save the user profile picture.
+     *
+     * @return string Returns the saved filename
+     */
+    public function saveFleetDocument($fleet_id)
+    {
+        $this->validateFile();
+
+        $config = $this->config('fleets.upload.images');
+
+        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+
+        $image = $this->encodeImage();
+
+        $filename = $this->hashGenerator->extension($this->format)->make();
+
+        $filePath = file_path(data_get($config, 'path'), $filename, $fleet_id);
+
+        Storage::put($filePath, $image);
 
         return $filename;
     }
@@ -139,26 +184,6 @@ class ImageUploader implements ImageUploaderContract
 
         $config = $this->config('request.upload.delivery-proof');
     
-        $image = $this->file;
-        $file_format = $image->getClientOriginalExtension(); 
-        $filename = $this->hashGenerator->extension($file_format)->make();  
-        $filePath = file_path(data_get($config, 'path'),''); 
-        $path = Storage::putFileAs($filePath, $image, $filename); 
-
-        return $filename;
-    }
-
-    /**
-     * Save the user profile picture.
-     *
-     * @return string Returns the saved filename
-     */
-    public function saveFleetDocument($fleet_id)
-    {
-        $this->validateFile();
-
-        $config = $this->config('fleets.upload.images');
-
         $image = $this->file;
         $file_format = $image->getClientOriginalExtension(); 
         $filename = $this->hashGenerator->extension($file_format)->make();  
@@ -316,23 +341,6 @@ class ImageUploader implements ImageUploaderContract
 
         return $filename;
     }
-
-    public function saveOwnerDocument($ownerId)
-    {
-        $this->validateFile();
-
-        $config = $this->config('owner.upload.documents');
-     
-        $image = $this->file;
-        $file_format = $image->getClientOriginalExtension(); 
-        $filename = $this->hashGenerator->extension($file_format)->make();  
-        $filePath = file_path(data_get($config, 'path'),''); 
-        $path = Storage::putFileAs($filePath, $image, $filename); 
-
-        return $filename;
-    }
-
-
 
     /**
      * Set the uploaded image file to manipulate.

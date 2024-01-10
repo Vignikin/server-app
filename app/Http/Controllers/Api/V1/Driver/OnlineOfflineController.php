@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use App\Transformers\Driver\DriverProfileTransformer;
 use App\Http\Controllers\Api\V1\BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OnlineOfflineController extends BaseController
 {
@@ -31,7 +32,8 @@ class OnlineOfflineController extends BaseController
         $status = $driver->active?0:1;
         $current_date = Carbon::now();
 
-
+        Log::info($status);
+        
         if ($status) {
             // check if any record is exists with same date
             $availability = $driver->driverAvailabilities()->whereDate('online_at', $current_date)->orderBy('online_at', 'desc')->first();
