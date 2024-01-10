@@ -215,7 +215,7 @@ class DriverProfileTransformer extends Transformer
 
             $last_online_at = Carbon::parse($lastOnlineRecord->online_at)->setTimezone($timezone);
 
-            // Log::info($last_online_at);
+            Log::info($last_online_at);
 
              $params['last_online_at'] = $last_online_at->toDateTimeString();
 
