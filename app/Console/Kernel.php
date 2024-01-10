@@ -50,8 +50,8 @@ class Kernel extends ConsoleKernel
                  ->everyMinute();
          $schedule->command('assign_drivers:for_schedule_rides')
                  ->everyFiveMinutes();
-         $schedule->command('offline:drivers')
-                 ->everyFiveMinutes();
+         // $schedule->command('offline:drivers')
+         //         ->everyFiveMinutes();
          $schedule->command('notify:document:expires')
                  ->daily();
          $schedule->command('clear:otp')
