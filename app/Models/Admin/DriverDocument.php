@@ -116,9 +116,7 @@ class DriverDocument extends Model
         if (!$this->driver()->exists()) {
             return null;
         }
-        return config('base.driver.upload.documents.path');
-        
-        // return folder_merge(config('base.driver.upload.documents.path'), $this->driver->id);
+        return folder_merge(config('base.driver.upload.documents.path'), $this->driver->id);
     }
     /**
     * Get formated and converted timezone of user's created at.
