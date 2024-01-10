@@ -193,7 +193,7 @@ class DriverProfileTransformer extends Transformer
         $params['total_minutes_online'] = $total_minutes_online;
 
         $lastOnlineRecord = DriverAvailability::where('driver_id',$user->id)
-    ->orderBy('online_at', 'desc')
+    ->orderBy('online_at', 'asc')
     ->first();
 
         $params['last_online_at'] = null;
