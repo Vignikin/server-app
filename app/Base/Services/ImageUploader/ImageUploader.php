@@ -124,7 +124,6 @@ class ImageUploader implements ImageUploaderContract
         $filePath = file_path(data_get($config, 'path'),''); 
         $path = Storage::putFileAs($filePath, $image, $filename); 
 
-
         return $filename;
     }
 
