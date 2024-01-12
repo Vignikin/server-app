@@ -205,6 +205,7 @@ class LoginController extends ApiController
         if ($needsToken && $request->has(['mobile', 'otp']) && $this->roleAllowedOTPLogin($role)) {
             return $this->loginUserWithOTP($request, $role, $needsToken, $conditions);
         }
+        
         if ($needsToken && $request->has(['email', 'otp']) && $this->roleAllowedOTPLogin($role)) {
             return $this->loginUserWithEmailOtp($request, $role, $needsToken, $conditions);
         }
