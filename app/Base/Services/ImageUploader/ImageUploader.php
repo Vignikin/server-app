@@ -234,6 +234,35 @@ class ImageUploader implements ImageUploaderContract
     }
     
     /**
+     * Save the CountryFlag Image.
+     *
+     * @return string Returns the saved filename
+     */
+    public function saveCountryFlagImage()
+    {
+        $this->validateFile();
+
+        $config = $this->config('country.upload.flag');
+
+        // dd($config);
+
+        $this->setDefaultResize(data_get($config, 'image.store_resolution'));
+
+        $image = $this->encodeImage();
+
+        $filename = $this->hashGenerator->extension($this->format)->make();
+
+        $filePath = file_path(data_get($config, 'path'), $filename);
+
+        // dd($filePath);
+
+        Storage::disk('public')->put($filePath, $image);
+
+        // Storage::put($filePath, $image);
+
+        return $filename;
+    }
+    /**
      * Save the user profile picture.
      *
      * @return string Returns the saved filename

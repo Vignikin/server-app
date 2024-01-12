@@ -372,7 +372,7 @@ class UserRegistrationController extends LoginController
 
       if ($request->has('email')) 
          {
-                $email = $request->input('email');
+            $email = $request->input('email');
 
             $validate_exists_email = $this->user->belongsTorole(Role::USER)->where('email', $email)->exists();
             if ($validate_exists_email) 
