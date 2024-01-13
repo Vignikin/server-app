@@ -3,6 +3,7 @@
 namespace App\Transformers\Driver;
 
 use App\Transformers\Transformer;
+use App\Models\Admin\Driver;
 
 class LeaderBoardTripsTransformer extends Transformer
 {
@@ -37,7 +38,10 @@ class LeaderBoardTripsTransformer extends Transformer
 
         ];
 
+        $driver = Driver::where('id', $request['driver_id'])->first();
 
+        $params['profile_picture'] =  $driver->profile_picture;
+        
         return $params;
     }
 
