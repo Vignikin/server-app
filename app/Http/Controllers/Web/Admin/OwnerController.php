@@ -147,7 +147,7 @@ class OwnerController extends BaseController
             // dd($doc);
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
-            $docController = new OwnerDocumentController($this->imageUploader);
+            $docController = new OwnerDocumentController($this->imageUploader,$this->database);
             $docController->uploadOwnerDoc($name,$expiry_date,$request,$owner,$doc);
         }
         
@@ -182,7 +182,7 @@ class OwnerController extends BaseController
         $userParam = $request->only(['name','email','mobile']);
 
         $service_location = ServiceLocation::find($request->service_location_id);
-        
+
         $userParam['country'] = $service_location->country;
 
         $owner->user->update($userParam);
@@ -198,7 +198,7 @@ class OwnerController extends BaseController
             $doc = OwnerNeededDocument::whereId($document)->first();
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
-            $docController = new OwnerDocumentController($this->imageUploader);
+            $docController = new OwnerDocumentController($this->imageUploader,$this->database);
             $docController->uploadOwnerDoc($name,$expiry_date,$request,$owner,$doc);
         
             }   
