@@ -423,20 +423,20 @@ class DriverSignupController extends LoginController
                 ->saveDriverProfilePicture();
         }
 
-        $validate_exists_email = $this->user->belongsTorole([Role::DRIVER,Role::OWNER])->where('email', $request->email)->exists();
+        // $validate_exists_email = $this->user->belongsTorole([Role::DRIVER,Role::OWNER])->where('email', $request->email)->exists();
 
-        if ($validate_exists_email) {
-            $this->throwCustomException('Provided email has already been taken');
-        }
+        // if ($validate_exists_email) {
+        //     $this->throwCustomException('Provided email has already been taken');
+        // }
 
         // $mobile = $this->otpHandler->getMobileFromUuid($mobileUuid);
         $mobile = $request->mobile;
 
-        $validate_exists_mobile = $this->user->belongsTorole([Role::DRIVER,Role::OWNER])->where('mobile', $mobile)->exists();
+        // $validate_exists_mobile = $this->user->belongsTorole([Role::DRIVER,Role::OWNER])->where('mobile', $mobile)->exists();
 
-        if ($validate_exists_mobile) {
-            $this->throwCustomException('Provided mobile has already been taken');
-        }
+        // if ($validate_exists_mobile) {
+        //     $this->throwCustomException('Provided mobile has already been taken');
+        // }
         if ($request->has('email_confirmed') == true) 
         {
             $data['email_confirmed'] = true;
