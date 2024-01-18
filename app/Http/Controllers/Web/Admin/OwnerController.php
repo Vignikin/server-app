@@ -120,6 +120,10 @@ class OwnerController extends BaseController
         $userParam['password'] = bcrypt($request->input('password'));
         $created_params['password'] = bcrypt($request->input('password'));
 
+        $service_location = ServiceLocation::find($request->service_location_id);
+
+        $userParam['country'] = $service_location->country;
+
         $user = $this->user->create($userParam);
         
         $token = str_random(40);
@@ -143,7 +147,7 @@ class OwnerController extends BaseController
             // dd($doc);
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
-            $docController = new OwnerDocumentController($this->imageUploader);
+            $docController = new OwnerDocumentController($this->imageUploader,$this->database);
             $docController->uploadOwnerDoc($name,$expiry_date,$request,$owner,$doc);
         }
         
@@ -177,6 +181,10 @@ class OwnerController extends BaseController
         $updated_params = $request->only(['service_location_id','company_name','owner_name','name','surname','mobile','phone','email','password','address','postal_code','city','expiry_date','no_of_vehicles','tax_number','bank_name','ifsc','account_no','tansport_type']);
         $userParam = $request->only(['name','email','mobile']);
 
+        $service_location = ServiceLocation::find($request->service_location_id);
+
+        $userParam['country'] = $service_location->country;
+
         $owner->user->update($userParam);
 
         $owner->update($updated_params);
@@ -186,11 +194,14 @@ class OwnerController extends BaseController
 
         foreach($request->needed_document as $key => $document)
         {
-            $name = 'document_'.($key + 1);
             $doc = OwnerNeededDocument::whereId($document)->first();
+
+            
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
-            $docController = new OwnerDocumentController($this->imageUploader);
+            $name = 'document_'.($key + 1);
+
+            $docController = new OwnerDocumentController($this->imageUploader,$this->database);
             $docController->uploadOwnerDoc($name,$expiry_date,$request,$owner,$doc);
         
             }   
