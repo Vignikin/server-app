@@ -111,7 +111,11 @@ class DispatcherCreateRequestController extends BaseController
             'requested_currency_symbol'=>$currency_symbol,
             'service_location_id'=>$service_location->id,
             'transport_type'=>'taxi'];
+        if($request->has('request_eta_amount') && $request->request_eta_amount){
 
+           $request_params['request_eta_amount'] = $request->request_eta_amount;
+
+        }
         // store request details to db
         // DB::beginTransaction();
         // try {
@@ -224,7 +228,11 @@ class DispatcherCreateRequestController extends BaseController
             'requested_currency_symbol'=>$currency_symbol,
             'service_location_id'=>$service_location->id,
             'transport_type'=>'taxi'];
+        if($request->has('request_eta_amount') && $request->request_eta_amount){
 
+           $request_params['request_eta_amount'] = $request->request_eta_amount;
+
+        }
         // store request details to db
         DB::beginTransaction();
         try {

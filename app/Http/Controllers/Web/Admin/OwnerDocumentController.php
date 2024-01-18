@@ -106,7 +106,7 @@ class OwnerDocumentController extends BaseController
 
 
 
-          // $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
+          $this->database->getReference('owners/owner_'.$owner->id)->update(['approve'=>(int)$status,'updated_at'=> Database::SERVER_TIMESTAMP]);
 
         $message = trans('succes_messages.owner_approve_status_changed_succesfully');
 

@@ -309,11 +309,7 @@ class CreateNewRequestController extends BaseController
 
         }
         
-        if($request->has('request_eta_amount') && $request->request_eta_amount){
 
-           $request_params['request_eta_amount'] = $request->request_eta_amount;
-
-        }
         
         if($request->has('rental_pack_id') && $request->rental_pack_id){
 
