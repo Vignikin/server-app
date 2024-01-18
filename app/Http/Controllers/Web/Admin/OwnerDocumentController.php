@@ -31,9 +31,11 @@ class OwnerDocumentController extends BaseController
      *
      * @param \App\Models\Admin\Driver $driver
      */
-    public function __construct(ImageUploaderContract $imageUploader)
+    public function __construct(ImageUploaderContract $imageUploader,Database $database)
     {
         $this->imageUploader = $imageUploader;
+        $this->database = $database;
+        
     }
 
     public function index(Owner $owner)
