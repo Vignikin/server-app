@@ -196,7 +196,6 @@ class OwnerController extends BaseController
         {
             $doc = OwnerNeededDocument::whereId($document)->first();
 
-            dd($request->expiry_date);
             
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
