@@ -96,6 +96,7 @@ class UserRegistrationController extends LoginController
         $newOTP = MailOtp::create([
             'email' => $email, 
             'otp' => $otp,
+            'verified' => false,
         ]);
         
      
@@ -107,7 +108,7 @@ class UserRegistrationController extends LoginController
 
            $otp = mt_rand(100000, 999999);
            
-           $mailOtp->update(['otp' => $otp]);
+           $mailOtp->update(['otp' => $otp,'verified'=>false]);
 
            Mail::to($email)->send(new OtpMail($otp));
 
