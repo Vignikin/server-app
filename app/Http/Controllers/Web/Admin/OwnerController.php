@@ -194,13 +194,13 @@ class OwnerController extends BaseController
 
         foreach($request->needed_document as $key => $document)
         {
-            $name = 'document_'.($key + 1);
             $doc = OwnerNeededDocument::whereId($document)->first();
 
-            dd($request->expiry_date);
-            
+
             $expiry_date = $doc->has_expiry_date ? $request->expiry_date[$key] : null;
 
+            $name = 'document_'.($key + 1);
+            
             $docController = new OwnerDocumentController($this->imageUploader,$this->database);
             $docController->uploadOwnerDoc($name,$expiry_date,$request,$owner,$doc);
         
