@@ -159,6 +159,9 @@ class DriverProfileTransformer extends Transformer
          $params['show_wallet_feature_on_mobile_app'] =  get_settings('show_wallet_feature_on_mobile_app_driver');
         $params['show_bank_info_feature_on_mobile_app'] =  get_settings('show_bank_info_feature_on_mobile_app');
 
+        $params['show_owner_module_feature_on_mobile_app'] =  get_settings('shoW_owner_module_feature_on_mobile_app');
+
+
         $params['how_many_times_a_driver_can_enable_the_my_route_booking_per_day'] =  get_settings('how_many_times_a_driver_can_enable_the_my_route_booking_per_day');
 
         $params['show_instant_ride_feature_on_mobile_app'] =  get_settings('show_instant_ride_feature_on_mobile_app');
