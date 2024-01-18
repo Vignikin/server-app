@@ -302,6 +302,15 @@ class CreateNewRequestController extends BaseController
 
         $request_params['company_key'] = auth()->user()->company_key;
         
+
+        if($request->has('request_eta_amount') && $request->request_eta_amount){
+
+           $request_params['request_eta_amount'] = $request->request_eta_amount;
+
+        }
+        
+
+        
         if($request->has('rental_pack_id') && $request->rental_pack_id){
 
             $request_params['is_rental'] = true;
