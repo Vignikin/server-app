@@ -386,8 +386,8 @@ class DriverSignupController extends LoginController
         $request->validate([
             'company_name' => 'required|unique:owners,company_name,NULL,id,deleted_at,NULL',
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'mobile'=>'required|unique:users,mobile',
+            // 'email' => 'required|email|unique:users,email',
+            // 'mobile'=>'required|unique:users,mobile',
             'address'=>'required|min:10',
             'postal_code'=>'required|numeric',
             'city'=>'required',
