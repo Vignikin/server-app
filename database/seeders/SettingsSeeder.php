@@ -67,27 +67,7 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => null,
         ],
-        // SettingSlug::WALLET_MIN_AMOUNT_FOR_TRIP => [
-        //     'category'=>SettingCategory::WALLET,
-        //     'value' => 50,
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
-        // SettingSlug::WALLET_MIN_AMOUNT_TO_ADD => [
-        //     'category'=>SettingCategory::WALLET,
-        //     'value' => 20,
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
-        // SettingSlug::WALLET_MAX_AMOUNT_TO_ADD => [
-        //     'category'=>SettingCategory::WALLET,
-        //     'value' => 5000,
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
+       
          SettingSlug::DRIVER_SEARCH_RADIUS => [
             'category'=>SettingCategory::TRIP_SETTINGS,
             'value' => 3,
@@ -342,27 +322,7 @@ class SettingsSeeder extends Seeder
              'option_value' => '{"yes":1,"no":0}',
              'group_name' => null,
         ],          
-        // SettingSlug::DEFAULT__LANGUAGE_CODE_FOR_MOBILE_APP => [
-        //     'category'=>SettingCategory::GENERAL,
-        //     'value' =>  'en-GB',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
-        // SettingSlug::HEAD_OFFICE_NUMBER => [
-        //     'category'=>SettingCategory::GENERAL,
-        //     'value' => '+8299600007',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
-        // SettingSlug::HELP_EMAIL_ADDRESS => [
-        //     'category'=>SettingCategory::GENERAL,
-        //     'value' => 'sales@tagyourtaxi.com',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
+       
         SettingSlug::DRIVER_WALLET_MINIMUM_AMOUNT_TO_GET_ORDER => [
             'category'=>SettingCategory::WALLET,
             'value' => -10000,
@@ -377,37 +337,6 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => null,
         ],
-        // Installation settings
-        // SettingSlug::GOOGLE_BROWSER_KEY => [
-        //     'category'=>SettingCategory::INSTALLATION,
-        //     'value' => '**********************',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
-        // SettingSlug::TWILLO_ACCOUNT_SID => [
-        //     'category'=>SettingCategory::INSTALLATION,
-        //     'value' => 'AC75a5048afaf14beaafec1a8c9e92e766',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => SettingSubGroup::TWILLO_SETTINGS,
-        // ],
-        // SettingSlug::TWILLO_AUTH_TOKEN => [
-        //     'category'=>SettingCategory::INSTALLATION,
-        //     'value' => 'b5d1f1cc4517066251673d53fad53734',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => SettingSubGroup::TWILLO_SETTINGS,
-        // ],
-        // SettingSlug::TWILLO_NUMBER => [
-        //     'category'=>SettingCategory::INSTALLATION,
-        //     'value' => '+12562779152',
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => SettingSubGroup::TWILLO_SETTINGS,
-        // ],
-
-        
         
         SettingSlug::ENABLE_PAYSTACK => [
             'category'=>SettingCategory::INSTALLATION,
@@ -424,14 +353,14 @@ class SettingsSeeder extends Seeder
         ],
         SettingSlug::PAYSTACK_TEST_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'sk_test_afe3ea4a86db618f26157dcbb69aa4998db4cb99',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::PAYSTACK_SETTINGS,
         ],
         SettingSlug::PAYSTACK_PRODUCTION_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'sk_test_afe3ea4a86db618f26157dcbb69aa4998db4cb99',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::PAYSTACK_SETTINGS,
@@ -439,14 +368,14 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::PAYSTACK_TEST_PUBLISHABLE_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'pk_test_b4cb479fa0d654cb6db52663b27a019973ecfaf5',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::PAYSTACK_SETTINGS,
         ],
         SettingSlug::PAYSTACK_PRODUCTION_PUBLISHABLE_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'pk_test_b4cb479fa0d654cb6db52663b27a019973ecfaf5',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::PAYSTACK_SETTINGS,
@@ -466,14 +395,14 @@ class SettingsSeeder extends Seeder
         ],
         SettingSlug::FLUTTER_WAVE_TEST_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'FLWPUBK_TEST-9e6ca8625f1660a249809d7d979a0a72-X',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::FLUTTERWAVE_SETTINGS,
         ],
         SettingSlug::FLUTTER_WAVE_PRODUCTION_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'FLWPUBK_TEST-9e6ca8625f1660a249809d7d979a0a72-X',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::FLUTTERWAVE_SETTINGS,
@@ -494,28 +423,28 @@ class SettingsSeeder extends Seeder
         ],
         SettingSlug::CASH_FREE_TEST_APP_ID => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => '159508ae34a76191df96dff52d805951',
+            'value' => 'your-app-id',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::CASH_FREE_SETTINGS,
         ],
         SettingSlug::CASH_FREE_PRODUCTION_APP_ID => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => '159508ae34a76191df96dff52d805951',
+            'value' => 'your-app-id',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::CASH_FREE_SETTINGS,
         ],
             SettingSlug::CASH_FREE_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => '9fbbd7bf43e9470cb3cc6e6a36839258ebcd5ebf',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::CASH_FREE_SETTINGS,
         ],
         SettingSlug::CASH_FREE_PRODUCTION_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => '9fbbd7bf43e9470cb3cc6e6a36839258ebcd5ebf',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::CASH_FREE_SETTINGS,
@@ -538,14 +467,14 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::RAZOR_PAY_TEST_API_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'rzp_test_L58xOhOjEMu6wF',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::RAZOR_PAY_SETTINGS,
         ],
         SettingSlug::RAZOR_PAY_LIVE_API_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'rzp_test_L58xOhOjEMu6wF',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::RAZOR_PAY_SETTINGS,
@@ -568,14 +497,14 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::MERCADOPAGO_TEST_PUBLIC_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'TEST-921f2a24-d29d-4af3-9ec8-3a366275cec8',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
         ],
         SettingSlug::MERCADOPAGO_LIVE_PUBLIC_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'TEST-921f2a24-d29d-4af3-9ec8-3a366275cec8',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
@@ -583,14 +512,14 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::MERCADOPAGO_TEST_ACCESS_TOKEN => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'TEST-8770681523175761-021622-3db3401292f6ae1a11daed3a22b8db62-762016080',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
         ],
         SettingSlug::MERCADOPAGO_LIVE_ACCESS_TOKEN => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'TEST-8770681523175761-021622-3db3401292f6ae1a11daed3a22b8db62-762016080',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::MERCADOPAGO_SETTINGS,
@@ -614,7 +543,7 @@ class SettingsSeeder extends Seeder
 
          SettingSlug::STRIPE_TEST_PUBLISHABLE_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'pk_test_51IuYWUSBCHfacuRqacrdy8IOlL3uUPq1XI0BZaRlqDPPcNsmywe6rSqjpM9HhVmELhXWhx95CH1pvNyQ8pvQEil900eGE0jXN8',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::STRIPE_SETTINGS,
@@ -622,7 +551,7 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::STRIPE_LIVE_PUBLISHABLE_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'pk_test_51IuYWUSBCHfacuRqacrdy8IOlL3uUPq1XI0BZaRlqDPPcNsmywe6rSqjpM9HhVmELhXWhx95CH1pvNyQ8pvQEil900eGE0jXN8',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::STRIPE_SETTINGS,
@@ -630,7 +559,7 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::STRIPE_TEST_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'sk_test_51IuYWUSBCHfacuRqT79sG9pzvqyQqpwClyvlcrEm4ZvshYDdS5TGkYfIS2uYbcxcwhNES1J2cI03l8zxFPelK0yk007d8XvEAd',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::STRIPE_SETTINGS,
@@ -638,7 +567,7 @@ class SettingsSeeder extends Seeder
 
         SettingSlug::STRIPE_LIVE_SECRET_KEY => [
             'category'=>SettingCategory::INSTALLATION,
-            'value' => 'sk_test_51IuYWUSBCHfacuRqT79sG9pzvqyQqpwClyvlcrEm4ZvshYDdS5TGkYfIS2uYbcxcwhNES1J2cI03l8zxFPelK0yk007d8XvEAd',
+            'value' => 'your-key',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => SettingSubGroup::STRIPE_SETTINGS,
@@ -673,13 +602,7 @@ class SettingsSeeder extends Seeder
             'option_value' => null,
             'group_name' => null,
         ],
-        //  SettingSlug::MINIMUM_TRIPS_SHOULD_COMPLETE_TO_REFER_DRIVERS => [
-        //     'category'=>SettingCategory::REFERRAL,
-        //     'value' => 30,
-        //     'field' => SettingValueType::TEXT,
-        //     'option_value' => null,
-        //     'group_name' => null,
-        // ],
+        
         SettingSlug::ENABLE_VASE_MAP => [
             'category'=>SettingCategory::MAP_SETTINGS,
             'value' => '1',
@@ -689,21 +612,21 @@ class SettingsSeeder extends Seeder
         ],
         SettingSlug::GOOGLE_MAP_KEY => [
             'category'=>SettingCategory::MAP_SETTINGS,
-            'value' => 'AIzaSyB4KttZBNVcz6Q52gaIgKK8-3h2Qk8RA3Y',
+            'value' => 'your-key',
             'field' => SettingValueType::PASSWORD,
             'option_value' => null,
             'group_name' => null,
         ], 
         SettingSlug::GOOGLE_MAP_KEY_FOR_DISTANCE_MATRIX => [
             'category'=>SettingCategory::MAP_SETTINGS,
-            'value' => 'AIzaSyBeVRs1icwooRpk7ErjCEQCwu0OQowVt9I',
+            'value' => 'your-key',
             'field' => SettingValueType::PASSWORD,
             'option_value' => null,
             'group_name' => null,
         ], 
         SettingSlug::GOOGLE_SHEET_ID => [
             'category'=>SettingCategory::MAP_SETTINGS,
-            'value' => '1sOIs6oiLv-xrc3cNq2rvOv9ItXoux2MZJE_gdnBT7co',
+            'value' => 'your-sheet-id',
             'field' => SettingValueType::TEXT,
             'option_value' => null,
             'group_name' => null,
@@ -827,13 +750,13 @@ class SettingsSeeder extends Seeder
         ],
         SettingSlug::MAIL_USERNAME => [
             'category'=>SettingCategory::MAIL_CONFIGURATION,
-            'value' => 'misoftwares2021@gmail.com',
+            'value' => 'yourgmail@gmail.com',
             'field' => SettingValueType::PASSWORD,
             'group_name' => null,
         ],
         SettingSlug::MAIL_PASSWORD => [
             'category'=>SettingCategory::MAIL_CONFIGURATION,
-            'value' => 'slmhqzznbrimvbda',
+            'value' => 'your-password',
             'field' => SettingValueType::PASSWORD,
             'group_name' => null,
         ],
@@ -845,7 +768,7 @@ class SettingsSeeder extends Seeder
         ],    
         SettingSlug::MAIL_FROM_ADDRESS => [
             'category'=>SettingCategory::MAIL_CONFIGURATION,
-            'value' => 'misoftwares2021@gmail.com',
+            'value' => 'yourgmail@gmail.com',
             'field' => SettingValueType::TEXT,
             'group_name' => null,
         ], 
@@ -855,37 +778,6 @@ class SettingsSeeder extends Seeder
             'field' => SettingValueType::TEXT,
             'group_name' => null,
         ],  
-         SettingSlug::ENABLE_KHALTI_PAY => [
-            'category'=>SettingCategory::INSTALLATION,
-            'value' => '1',
-            'field' => SettingValueType::SELECT,
-            'option_value' => '{"yes":1,"no":0}',
-            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
-        ],
-
-        SettingSlug::KHALTI_PAY_ENVIRONMENT => [
-            'category'=>SettingCategory::INSTALLATION,
-            'value' => 'test',
-            'field' => SettingValueType::SELECT,
-            'option_value' => '{"test":"test","production":"production"}',
-            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
-        ],
-
-        SettingSlug::KHALTI_PAY_TEST_API_KEY => [
-            'category'=>SettingCategory::INSTALLATION,
-            'value' => 'test_public_key_5066528dae744acb967edfae71959934',
-            'field' => SettingValueType::TEXT,
-            'option_value' => null,
-            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
-        ],
-        SettingSlug::KHALTI_PAY_LIVE_API_KEY => [
-            'category'=>SettingCategory::INSTALLATION,
-            'value' => 'live_public_key_29ae51e22ee44ad088147563405c3b35',
-            'field' => SettingValueType::TEXT,
-            'option_value' => null,
-            'group_name' => SettingSubGroup::KHALTI_PAY_SETTINGS,
-        ],
-
         
     ];
 

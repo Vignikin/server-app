@@ -831,6 +831,6 @@ return array (
   'khalti_settings' => 'Khalti Settings',
   'image'=>'Image',
   'maximum_time_for_find_drivers_for_bitting_ride'=>'Maximum Time to Find Drivers For bidding Ride',
-  'enable_vase_map'=>'Enable VASE Map',
+  'enable_vase_map'=>'Enable Waze Map',
   
   );
